@@ -7,6 +7,12 @@
         "php": ">=5.6"
     },
 
+    "autoload": {
+        "psr-4": {
+            "DJEM\\": "app/"
+        }
+    },
+
     "authors": [
         {
             "name": "Vladimir Soshkin",
