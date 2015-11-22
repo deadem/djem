@@ -1,8 +1,9 @@
 {
-    "name": "djem/djem",
-    "description": "DJEM CMS",
+    "name": "deadem/djem",
+    "description": "DJEM",
+
     "require": {
-        "jenssegers/mongodb": "^2.1"
+        "php": ">=5.6",
     },
 
     "authors": [
