@@ -1,0 +1,31 @@
+.drop-target {
+    position: relative;
+}
+.drop-target::before {
+    content: 'Drop your files here';
+    text-shadow: 1px 1px 1px black, 0px 0px 1em white, 0px 0px 1em white;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 50%;
+    color: #cccccc;
+    text-align: center;
+    font-size: 300%;
+    line-height: 1em;
+    margin-top: -1em;
+    z-index: 1;
+}
+
+.trash-target::before {
+    content: '\0f014';
+    position: absolute;
+    z-index: 100000;
+    font-family: FontAwesome;
+    left: 8px;
+    bottom: 8px;
+    line-height: 1em;
+    font-size: 128px;
+}
+.trash-target.hover::before {
+    content: '\0f1f8';
+}

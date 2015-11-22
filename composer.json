@@ -1,0 +1,14 @@
+{
+    "name": "djem/djem",
+    "description": "DJEM CMS",
+    "require": {
+        "jenssegers/mongodb": "^2.1"
+    },
+
+    "authors": [
+        {
+            "name": "Vladimir Soshkin",
+            "email": "deadem@gmail.com"
+        }
+    ]
+}

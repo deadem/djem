@@ -1,0 +1,11 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text eol=lf
+*.md		text
+*.txt		text
+*.jpg		-text
+*.pdf		-text
+*.eot		-text
+*.svg		-text
+*.ttf		-text
+*.woff		-text
+*.woff2		-text

@@ -1,0 +1,74 @@
+.x-form-crosslink-files-wrap {
+    border: none;
+    margin: 1px;
+    box-shadow: 0px 0px 0px 1px gray;
+}
+
+.thumb-wrap {
+    float: left;
+    margin: 8px 0 0 8px;
+
+   -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    word-wrap: break-word;
+    height:90px;
+    width: 64px;
+    overflow: hidden;
+}
+
+.thumb-wrap.new::before {
+    content: '\0f01b';
+    position:absolute;
+    font-family: FontAwesome;
+    color: white;
+    text-shadow: 0px 0px 6px black;
+    font-size: 28px;
+    padding: 2px;
+    line-height: 1em;
+}
+
+.thumb-wrap.done::before {
+    content: '\0f05d';
+}
+
+.thumb-wrap.upload::before {
+    content: '\0f01e';
+    animation-name: spin;
+    animation-duration: 4000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from { transform:rotate(0deg); }
+    to { transform:rotate(360deg); }
+}
+
+.thumb-wrap.x-grid-item-over {
+    overflow: visible;
+}
+
+.thumb-wrap img {
+     max-height: 64px;
+}
+
+.thumb-wrap .thumb {
+    height: 64px;
+}
+
+.x-form-crosslink-files-single .thumb-wrap {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.x-form-crosslink-files-single .thumb-wrap img, .x-form-crosslink-files-single .thumb-wrap .thumb {
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
