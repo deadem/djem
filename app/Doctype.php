@@ -27,11 +27,6 @@ namespace DJEM;
 class Doctype extends \Illuminate\Routing\Controller
 {
     /**
-     * Код типа документа
-     */
-    const NAME = '';
-
-    /**
      * Поиск данных для отображения по URL
      * @param string $url      URL.
      * @param string $urlModel модель, которая обрабатывает URL и хранит данные о них.
@@ -53,8 +48,7 @@ class Doctype extends \Illuminate\Routing\Controller
         if (!$address) {
             abort(404, 'File not found');
         }
-        $doctype = $this->getDocType($address->doctype);
-        return (new $doctype)->renderView($address->model, $address->refid);
+        return (new $address->doctype)->renderView($address->model, $address->refid);
     }
 
     /**
@@ -66,40 +60,6 @@ class Doctype extends \Illuminate\Routing\Controller
     public function renderView($model, $id)
     {
         return [ 'model' => $model, 'id' => $id ];
-    }
-
-    /**
-     * Получить класс модели по её имени
-     * @param string $modelName название модели.
-     * @return string полное имя класса модели.
-     */
-    public static function getModel($modelName)
-    {
-        static $models = false;
-        if ($models === false) {
-            $models = [];
-            foreach (config('djem.models') as $model) {
-                $models[$model::NAME] = $model;
-            }
-        }
-        return $models[$modelName];
-    }
-
-    /**
-     * Получить класс типа по его имени
-     * @param string $doctypeName название типа документа.
-     * @return string полное имя класса типа документа.
-     */
-    public static function getDoctype($doctypeName)
-    {
-        static $doctypes = false;
-        if ($doctypes === false) {
-            $doctypes = [];
-            foreach (config('djem.doctypes') as $doctype) {
-                $doctypes[$doctype::NAME] = $doctype;
-            }
-        }
-        return $doctypes[$doctypeName];
     }
 
     /**
@@ -185,7 +145,7 @@ class Doctype extends \Illuminate\Routing\Controller
             }
         }
         $options['models'] = $this->getModelList($id);
-        $options['_doctype'] = $this::NAME;
+        $options['_doctype'] = get_class($this);
         return [ 'fields' => $fields, 'columns' => $columns, 'options' => $options ];
     }
 
