@@ -21,6 +21,7 @@ class DJEMServiceProvider extends ServiceProvider
             Route::post('djem/api/files/upload', 'Api\Files@upload');
             Route::post('djem/api/files', 'Api\Files@set');
         });
+        Route::get('djem/{file?}', '\DJEM\Http\Controllers\StaticFiles@get')->where('file', '.*');
     }
     /**
      * Bootstrap the application services.
