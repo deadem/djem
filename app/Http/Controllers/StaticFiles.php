@@ -16,11 +16,17 @@ class StaticFiles extends Controller
         $public = realpath(__DIR__.'/../../../public');
         $file = realpath($public.'/'.preg_replace('|[^-_0-9a-z/.]|i', '', $file));
         if (substr($file, 0, strlen($public)) == $public && is_file($file)) {
-            return new Response(
+            $response = new Response(
                 file_get_contents($file),
                 200,
                 [ 'Content-type' => self::getContentType($file) ]
             );
+
+            $response->setSharedMaxAge(3600);
+            $response->setMaxAge(3600);
+            $response->setExpires(new \DateTime('+1 hour'));
+
+            return $response;
         } else {
             abort(404);
         }

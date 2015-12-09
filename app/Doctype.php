@@ -1,25 +1,8 @@
 <?php
 namespace DJEM;
 
-// @codingStandardsIgnoreStart
-//
-// example route:
-// Route::get('{any}', function ($url) {
-//    return (new App\Doctypes\Doctype)->view('/'.$url, App\Models\Url::class);
-// })->where('any', '(?!(djem|_debugbar)/?).*');
-// 
-// example URL Model
-//     namespace App\Models;
-//     ...
-//     class Url extends ...
-//     {
-//         protected $table = 'url';
-//         protected $primaryKey = 'url';
-//         protected $hidden = [ 'url', 'doctype', 'model', 'refid' ];
-//         ...
-//     }
-//
-// @codingStandardsIgnoreEnd
+use DJEM\GridHeader;
+use Illuminate\Support\Collection;
 
 /**
  * базовый тип документа.
@@ -89,11 +72,11 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Получить список документов для грида
-     * @return array список документов в гриде.
+     * @return Illuminate\Support\Collection список документов в гриде.
      */
-    protected function all()
+    protected function items()
     {
-        return [];
+        return new Collection();
     }
 
     /**
@@ -103,50 +86,12 @@ class Doctype extends \Illuminate\Routing\Controller
      */
     private function header($id)
     {
-        $fields = [];
-        $columns = [];
-        $options = [];
-
-        foreach ($this->fields($id) as $row) {
-            $field = [];
-            $column = [];
-            foreach ($row as $key => $value) {
-                switch ($key) {
-                    case 'name':
-                        $field[$key] = $value;
-                        if (isset($row['title']) && $row['title']) {
-                            $options['title'] = $value;
-                        }
-                        if (isset($row['text'])) {
-                            $column['hideable'] = false;
-                            $column['dataIndex'] = $value;
-                        }
-                        break;
-
-                    case 'type':
-                        $field[$key] = $value;
-                        break;
-
-                    case 'sortable':
-                    case 'text':
-                    case 'flex':
-                    case 'width':
-                        $column[$key] = $value;
-                        break;
-
-                    default:
-                        // неизвестные параметры не обрабатываем
-                        break;
-                }
-            }
-            $fields[] = $field;
-            if (count($column)) {
-                $columns[] = $column;
-            }
-        }
-        $options['models'] = $this->getModelList($id);
-        $options['_doctype'] = get_class($this);
-        return [ 'fields' => $fields, 'columns' => $columns, 'options' => $options ];
+        $fields = (new GridHeader)->getFields($this->fields($id));
+        $fields['options'] += [
+            'models' => $this->getModelList($id),
+            '_doctype' => get_class($this)
+        ];
+        return $fields;
     }
 
     /**
@@ -158,7 +103,7 @@ class Doctype extends \Illuminate\Routing\Controller
     {
         return [
             'metaData' => $this->header($id),
-            'items' => $this->all($id)
+            'items' => $this->items($id)->all()
         ];
     }
 }

@@ -46,7 +46,7 @@ class Main extends \Illuminate\Routing\Controller
         $doctype = null;
         $leaf = $this->findLeaf($id);
         if ($leaf) {
-            $doctype = Doctype::getDoctype($leaf['_doctype']);
+            $doctype = $leaf['_doctype'];
         }
         return new $doctype;
     }
