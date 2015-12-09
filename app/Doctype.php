@@ -45,6 +45,20 @@ class Doctype extends \Illuminate\Routing\Controller
         return [ 'model' => $model, 'id' => $id ];
     }
 
+    public function getContentView($model, $id)
+    {
+        $model;
+        $id; // disable warninigs
+        return [];
+    }
+
+    public function saveModel($model, $values)
+    {
+        $model;
+        $values; // disable warninigs
+        return false;
+    }
+
     /**
      * Получить список моделей, доступных для создания
      * @return array список классов моделей, которые можно создавать внутри этого типа.

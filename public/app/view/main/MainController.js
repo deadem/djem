@@ -32,7 +32,7 @@ Ext.define('djem.view.main.MainController', {
         me.lookupReference('grid').on('openDocument', function(_this, data) {
             var tabs = me.lookupReference('tabs');
             var id = data.id || ++SharedData.nextDocumentNumber;
-            var tabId = 'main-tab-' + data._model + '-' + (data.id || 'x-' + id);
+            var tabId = 'main-tab-' + String(data._model).replace(/[^0-9a-z]+/ig, '_') + '-' + (data.id || 'x-' + id);
             var tab = tabs.query('#' + tabId)[0];
             if (!tab) {
                 tab = tabs.add(Ext.create('widget.main-content', {
