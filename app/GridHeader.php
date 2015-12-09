@@ -9,10 +9,8 @@ class GridHeader
         $column = [];
         if (isset($row['text'])) {
             $column = [
-                'name' => [
-                    'hideable' => false,
-                    'dataIndex' => $row['name']
-                ]
+                'hideable' => false,
+                'dataIndex' => $row['name']
             ];
         }
         return [ 'field' => [ 'name' => $row['name'] ], 'column' => $column ];
