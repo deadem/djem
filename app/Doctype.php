@@ -72,10 +72,12 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Получить список документов для грида
-     * @return Illuminate\Support\Collection список документов в гриде.
+     * @param string $id идентификатор ветки типа.
+     * @return Illuminate\Support\Collection список документов в гриде
      */
-    protected function items()
+    protected function items($id)
     {
+        $id; // disable warning
         return new Collection();
     }
 
