@@ -9,6 +9,7 @@ Ext.define('djem.view.main.Main', {
         'djem.view.main.Toolbar',
 
         'djem.widget.html',
+        'djem.widget.tag',
         'djem.widget.checkbox'
     ],
 
