@@ -27,10 +27,15 @@ Ext.define('djem.view.crosslink.Files',{
         if (data === null) {
             data = [];
         }
-        if (data && typeof data == 'object' && !(data instanceof Ext.Base)) {
-            if (me.single && !Array.isArray(data)) {
-                data = [ data ];
+        if (data && (typeof data == 'object' || typeof data == 'string') && !(data instanceof Ext.Base)) {
+            if (me.single) {
+                if (typeof data == 'string') {
+                    data = [ { 'url': data } ];
+                } else if (!Array.isArray(data)) {
+                    data = [ data ];
+                }
             }
+
             if (Array.isArray(data)) {
                 // если передали массив - создадим с ним новый стор
                 var store = me.getStore() || Ext.create('djem.store.CrossLink', { model: 'djem.model.Files' });
