@@ -13,7 +13,6 @@ Ext.define('djem.view.main.ContentController', {
     },
 
     onSyncData: function() {
-        console.log('syncData');
         var me = this;
         if (me.getView().getForm().isValid()) {
             me.onSave();

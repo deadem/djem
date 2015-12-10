@@ -129,7 +129,6 @@ Ext.define('djem.view.crosslink.FilesController', {
         function uploadNext(i) {
             if (!filePacks[i]) {
                 me.setDirty(true);
-                console.log('done');
                 me.field && me.field.fireEvent('dataReady');
                 return;
             }
@@ -241,6 +240,10 @@ Ext.define('djem.view.crosslink.FilesController', {
         var me = this;
         me.processDropZone(false);
         var form = me.getView().up('form');
+        me.getView().on('initValue', function() {
+            me.setDirty(true);
+            me.field.resetOriginalValue();
+        });
         if (form) {
             var field = Ext.create('djem.view.crosslink.FileField', { name: me.getView().name });
             me.field = form.add(field);
@@ -250,7 +253,6 @@ Ext.define('djem.view.crosslink.FilesController', {
             form.getForm().on('syncFields', function() {
                 if (!me.field.validate()) {
                     // если не загружали файл на сервер - загрузим
-                    console.log('not valid');
                     me.uploadFiles();
                 }
             });

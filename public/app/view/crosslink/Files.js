@@ -42,6 +42,10 @@ Ext.define('djem.view.crosslink.Files',{
                 store.removeAll();
                 store.add(data);
                 arguments[0] = store;
+
+                Ext.defer(function() {
+                    me.fireEvent('initValue');
+                }, 1);
             }
         }
         this.callParent(arguments);
