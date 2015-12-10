@@ -15,17 +15,3 @@
     margin-top: -1em;
     z-index: 1;
 }
-
-.trash-target::before {
-    content: '\0f014';
-    position: absolute;
-    z-index: 100000;
-    font-family: FontAwesome;
-    left: 8px;
-    bottom: 8px;
-    line-height: 1em;
-    font-size: 128px;
-}
-.trash-target.hover::before {
-    content: '\0f1f8';
-}

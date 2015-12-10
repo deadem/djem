@@ -31,16 +31,6 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    deleteRecords: function() {
-        var me = this;
-        var records = me.dragState.getRecords();
-        Ext.each(records, function(record) {
-            window.URL.revokeObjectURL(record.data.url);
-        });
-        me.getView().getStore().remove(records);
-        me.setDirty(true);
-    },
-
     onDestroy: function() {
         var me = this;
         Ext.each(me.lockedUrls, function(obj) {
@@ -180,12 +170,10 @@ Ext.define('djem.view.crosslink.FilesController', {
         if (e.type == 'dragenter') { me.dragState.inc(); }
         if (e.type == 'dragleave') { me.dragState.dec(); }
         if (e.type == 'drop') {
-            if (e.target == document.body) { me.deleteRecords(); }
             me.dragState.dec();
         }
 
         me.getView()[ me.dragState.isDrag() && !me.dragState.isExisting() ? 'addCls' : 'removeCls']('drop-target');
-        Ext.getBody()[ me.dragState.isDrag() && me.dragState.isExisting() ? 'addCls' : 'removeCls']('trash-target')
         Ext.getBody()[ e.target == document.body ? 'addCls' : 'removeCls']('hover');
 
         if (e.type == 'dragend' || e.type == 'drop') {
@@ -268,6 +256,17 @@ Ext.define('djem.view.crosslink.FilesController', {
             me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
         });
         me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener']('drop', me.dropFilesHandler);
+        me.getView().getEl().on('click', function(e) {
+            if (Ext.get(e.target).hasCls('trash')) {
+                var dom = Ext.get(e.target).up('.thumb-wrap');
+                var record = dom && me.getView().getRecord(dom);
+                window.URL.revokeObjectURL(record.data.url);
+                me.getView().getStore().remove(record);
+                me.setDirty(true);
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
     },
 
     initViewModel: function() {

@@ -55,7 +55,7 @@ Ext.define('djem.view.crosslink.Files',{
     itemSelector: 'div.thumb-wrap',
     tpl: [
         '<tpl for=".">',
-            '<div class="thumb-wrap {new}">',
+            '<div class="thumb-wrap {new}"><a href="#" class="trash">&#xf00d;</a>',
                 '<div class="thumb">',
                     '<img src="{url}" />',
                 '</div>',
