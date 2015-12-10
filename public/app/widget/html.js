@@ -1,6 +1,6 @@
 Ext.define('djem.widget.html', {
     extend: 'Ext.form.field.HtmlEditor',
-    alias: 'widget.html',
+    alias: [ 'djem.html', 'widget.html' ],
 
     config: {
         enableFont: false,

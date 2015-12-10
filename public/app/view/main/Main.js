@@ -7,9 +7,9 @@ Ext.define('djem.view.main.Main', {
         'djem.view.main.Grid',
         'djem.view.main.Content',
         'djem.view.main.Toolbar',
-        'djem.view.crosslink.Add.List',
 
-        'djem.widget.html'
+        'djem.widget.html',
+        'djem.widget.checkbox'
     ],
 
     controller: 'main',
