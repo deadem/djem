@@ -194,6 +194,9 @@ Ext.define('djem.view.crosslink.FilesController', {
         if (me.getView().single) {
             me.getView().addCls('x-form-crosslink-files-single');
         }
+        me.getView().emptyText = '<input style="margin:5%;" type="file" ' +
+            (me.getView().single ? '' : ' multiple="" ') +
+            ' onchange="Ext.get(this.parentNode).fireEvent(\'filechange\', this);">';
     },
 
     onBeforeDestroy: function() {
@@ -245,17 +248,13 @@ Ext.define('djem.view.crosslink.FilesController', {
                 }
             });
         }
-    },
-
-    processDropZone: function(remove) {
-        var me = this;
-        Ext.each(['dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'], function(type) {
-            Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler);
+        me.getView().getEl().on('filechange', function(target) {
+            if (target) {
+                me.dropFiles({ dataTransfer: target });
+            }
+            event.preventDefault();
+            event.stopPropagation();
         });
-        Ext.each([ 'dragstart', 'drag' ], function(type) {
-            me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
-        });
-        me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener']('drop', me.dropFilesHandler);
         me.getView().getEl().on('click', function(e) {
             if (Ext.get(e.target).hasCls('trash')) {
                 var dom = Ext.get(e.target).up('.thumb-wrap');
@@ -267,6 +266,17 @@ Ext.define('djem.view.crosslink.FilesController', {
                 e.stopPropagation();
             }
         });
+    },
+
+    processDropZone: function(remove) {
+        var me = this;
+        Ext.each(['dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'], function(type) {
+            Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler);
+        });
+        Ext.each([ 'dragstart', 'drag' ], function(type) {
+            me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
+        });
+        me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener']('drop', me.dropFilesHandler);
     },
 
     initViewModel: function() {
