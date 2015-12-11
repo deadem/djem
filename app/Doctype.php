@@ -117,9 +117,15 @@ class Doctype extends \Illuminate\Routing\Controller
      */
     public function grid($id)
     {
+        $items = $this->items($id);
+        $total = $items->count();
+        if ($total && method_exists($items, 'total')) {
+            $total = $items->total();
+        }
         return [
             'metaData' => $this->header($id),
-            'items' => $this->items($id)->all()
+            'items' => $items->all(),
+            'total' => $total
         ];
     }
 }

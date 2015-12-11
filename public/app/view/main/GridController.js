@@ -11,7 +11,7 @@ Ext.define('djem.view.main.GridController', {
         me.getView().on('load', function(id) {
             var store = me.getView().getStore();
             store.getProxy().setExtraParam('tree', id);
-            store.load();
+            store.loadPage(1);
         });
         me.getView().up('panel').on('click.toolbar', function(ref, params) {
             params = params || {};

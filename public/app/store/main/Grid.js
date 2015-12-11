@@ -8,6 +8,8 @@ Ext.define('djem.store.main.Grid', {
     model: 'Ext.data.Model',
     autoLoad: false,
 
+    pageSize: 100,
+
     proxy: {
         type: 'djem',
         url : 'api/grid'
