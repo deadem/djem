@@ -10,9 +10,8 @@ Ext.define('djem.view.main.GridController', {
         var me = this;
         me.getView().on('load', function(id) {
             var store = me.getView().getStore();
-            store.load({
-                params: { tree: id }
-            });
+            store.getProxy().setExtraParam('tree', id);
+            store.load();
         });
         me.getView().up('panel').on('click.toolbar', function(ref, params) {
             params = params || {};
@@ -25,6 +24,16 @@ Ext.define('djem.view.main.GridController', {
         // новый вид - новый стор
         var store = Ext.create('djem.store.main.Grid');
         me.getView().setStore(store);
+
+        me.getView().addDocked({
+            xtype: 'pagingtoolbar',
+            dock: 'bottom',
+            store: store,
+
+            displayInfo: true,
+            displayMsg: 'Displaying rows {0} - {1} of {2}',
+            emptyMsg: "No rows to display",
+        });
 
         store.on("metachange", function(_store, meta, eOpts) {
             me.titleField = (meta.options || {})['title'];

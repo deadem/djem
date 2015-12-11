@@ -52,9 +52,12 @@ Ext.define('djem.view.main.Toolbar',{
         scale: 'medium',
         glyph: 'xf00d@FontAwesome',
         reference: 'close'
-    }, '->', {
+    }
+/*    , '->', {
         xtype    : 'textfield',
         name     : 'search',
         emptyText: 'enter search term'
-    }]
+    }
+*/
+    ]
 });
