@@ -9,6 +9,7 @@ Ext.define('djem.store.main.Grid', {
     autoLoad: false,
 
     pageSize: 100,
+    remoteSort: true,
 
     proxy: {
         type: 'djem',

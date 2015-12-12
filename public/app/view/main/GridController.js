@@ -11,6 +11,7 @@ Ext.define('djem.view.main.GridController', {
         me.getView().on('load', function(id) {
             var store = me.getView().getStore();
             store.getProxy().setExtraParam('tree', id);
+            store.getSorters().clear();
 
             var filter = me.lookupReference('filter');
             if (filter.getValue()  != '') {
