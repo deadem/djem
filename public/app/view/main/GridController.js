@@ -54,6 +54,7 @@ Ext.define('djem.view.main.GridController', {
             store.getProxy().setExtraParam('filter', this.getValue());
             clearTimeout(filterTimeout);
             Ext.defer(function() {
+                store.getSorters().clear();
                 store.loadPage(1);
             }, this.getValue() ? 300 : 0);
         });

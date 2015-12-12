@@ -2,6 +2,8 @@ Ext.define('djem.view.main.ContentController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.main-content',
 
+    loadingMask: null,
+
     updateButtons: function() {
         var me = this;
         djem.app.fireEvent('update.toolbar', 'save', { action: me.getView().isDirty() ? 'enable' : 'disable' });
@@ -37,11 +39,18 @@ Ext.define('djem.view.main.ContentController', {
             fields.push({ name: obj.name, type: 'string' });
         });
 
+        me.loadingMask && me.loadingMask.show();
+
         var params = Ext.clone(me.store.lastOptions.params);
         me.store.loadData([], false); // drop data
         me.store.setModel(Ext.create('djem.model.Content', { fields: fields }));
         me.store.add([ values ]);
-        me.store.sync({ params: params });
+        me.store.sync({
+            params: params,
+            callback: function() {
+                me.loadingMask && me.loadingMask.hide();
+            }
+        });
     },
 
     onClose: function() {
@@ -77,7 +86,13 @@ Ext.define('djem.view.main.ContentController', {
             .on('load', function() { me.onLoadContent.apply(me, arguments) })
             .on('write', function() { me.onWriteContent.apply(me, arguments) })
             .on('metachange', function() { me.onViewChange.apply(me, arguments) }, me, { single: true })
+            .on('metachange', function() { me.onCodeChange.apply(me, arguments) }, me, { single: true })
             .on('metachange', function() { me.onDataChange.apply(me, arguments) }, me);
+
+        me.loadingMask = new Ext.LoadMask({
+            target: me.getView().up(),
+            store: me.store
+        });
 
         me.store.load({
             params: { _doctype: data._doctype, _model: data._model, id: data.id }
@@ -92,6 +107,14 @@ Ext.define('djem.view.main.ContentController', {
     onWriteContent: function(store, operation, eOpts) {
         var me = this;
         me.initValues();
+    },
+
+    onCodeChange: function(_this, meta, eOpts) {
+        var me = this;
+        function evalContext() {
+            eval(meta.code);
+        }
+        evalContext.call(me.getView());
     },
 
     onViewChange: function(_this, meta, eOpts) {
