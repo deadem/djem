@@ -11,7 +11,10 @@ Ext.define('djem.view.main.Main', {
         'djem.widget.html',
         'djem.widget.image',
         'djem.widget.tag',
-        'djem.widget.checkbox'
+        'djem.widget.text',
+        'djem.widget.checkbox',
+        'djem.widget.date',
+        'djem.widget.time'
     ],
 
     controller: 'main',
