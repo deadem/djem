@@ -8,6 +8,24 @@
         text-decoration: none;
     }
 
+    &.height-scale {
+        .thumb-wrap {
+            img {
+                height: auto;
+                max-width: 100%;
+            }
+        }
+    }
+
+    &.width-scale {
+        .thumb-wrap {
+            img {
+                width: auto;
+                max-height: 100%;
+            }
+        }
+    }
+
     .thumb-wrap {
         float: left;
         margin: 8px 0 0 8px;

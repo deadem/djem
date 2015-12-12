@@ -21,6 +21,7 @@ Ext.define('djem.view.crosslink.Files',{
     viewModel: {
         type: 'crosslink-files'
     },
+    deferEmptyText: false,
 
     bindStore: function(data, initial, propertyName) {
         var me = this;

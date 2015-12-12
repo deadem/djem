@@ -283,5 +283,12 @@ Ext.define('djem.view.crosslink.FilesController', {
         var me = this;
         me.getView().setStore(Ext.create('djem.store.CrossLink', { model: 'djem.model.Files' }));
         me.dragState.reset();
+
+        if (me.getView().height === undefined) {
+            me.getView().addCls('height-scale');
+        }
+        if (me.getView().width === undefined) {
+            me.getView().addCls('width-scale');
+        }
     }
 });
