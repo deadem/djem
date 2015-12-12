@@ -10,6 +10,9 @@ Ext.define('djem.store.main.ContentLoader', {
     model: 'djem.model.Content',
     autoLoad: false,
 
+    pageSize: 100,
+    remoteSort: true,
+
     proxy: {
         type: 'djem',
         url : 'api/content/load'
