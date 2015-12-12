@@ -6,22 +6,40 @@ use Illuminate\Http\Request;
 
 class Content extends \Illuminate\Routing\Controller
 {
-    public function get(Request $request)
+    private $request;
+    public function __construct(Request $request)
     {
-        $doctype = $request->input('_doctype');
-        $model = $request->input('_model');
+        $this->request = $request;
+    }
 
+    private function doctype()
+    {
+        return $this->request->input('_doctype');
+    }
+
+    private function model()
+    {
+        return $this->request->input('_model');
+    }
+
+    public function get()
+    {
+        $doctype = $this->doctype();
         return [
-            'metaData' => (new $doctype)->getContentView($model, $request->input('id'))
+            'metaData' => (new $doctype)->getContentView($this->model(), $this->request->input('id'))
         ];
     }
 
-    public function set(Request $request)
+    public function set()
     {
-        $doctype = $request->input('_doctype');
-        $model = $request->input('_model');
+        $doctype = $this->doctype();
+        (new $doctype)->saveModel($this->model(), $this->request->all());
+        return $this->get();
+    }
 
-        (new $doctype)->saveModel($model, \Input::all());
-        return $this->get($request);
+    public function load()
+    {
+        $doctype = $this->doctype();
+        return (new $doctype)->load($this->model(), $this->request->input('id'), $this->request->input('field'), $this->request->input('filter'));
     }
 }

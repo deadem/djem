@@ -273,10 +273,11 @@ Ext.define('djem.view.crosslink.FilesController', {
         Ext.each(['dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'], function(type) {
             Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler);
         });
+        var view = me.getView().getEl();
         Ext.each([ 'dragstart', 'drag' ], function(type) {
-            me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
+            view && view.dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
         });
-        me.getView().getEl().dom[remove === true ? 'removeEventListener' : 'addEventListener']('drop', me.dropFilesHandler);
+        view && view.dom[remove === true ? 'removeEventListener' : 'addEventListener']('drop', me.dropFilesHandler);
     },
 
     initViewModel: function() {

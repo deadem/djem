@@ -13,6 +13,7 @@ Ext.define('djem.view.main.Main', {
         'djem.widget.tag',
         'djem.widget.text',
         'djem.widget.checkbox',
+        'djem.widget.combobox',
         'djem.widget.date',
         'djem.widget.time'
     ],

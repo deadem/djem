@@ -3,6 +3,7 @@ Ext.define('djem.view.main.ContentModel', {
     alias: 'viewmodel.main-content',
 
     requires: [
-        'djem.store.main.Content'
+        'djem.store.main.Content',
+        'djem.store.main.ContentLoader'
     ]
 });
