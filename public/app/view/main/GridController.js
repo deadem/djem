@@ -11,7 +11,14 @@ Ext.define('djem.view.main.GridController', {
         me.getView().on('load', function(id) {
             var store = me.getView().getStore();
             store.getProxy().setExtraParam('tree', id);
-            store.loadPage(1);
+
+            var filter = me.lookupReference('filter');
+            if (filter.getValue()  != '') {
+                filter.setValue('');
+            } else {
+                store.getProxy().setExtraParam('filter', null);
+                store.loadPage(1);
+            }
         });
         me.getView().up('panel').on('click.toolbar', function(ref, params) {
             params = params || {};
@@ -30,9 +37,24 @@ Ext.define('djem.view.main.GridController', {
             dock: 'bottom',
             store: store,
 
+            items: [
+                '-',
+                { xtype: 'label', text: 'Filter:' },
+                { xtype: 'textfield', reference: 'filter' }
+            ],
             displayInfo: true,
             displayMsg: 'Displaying rows {0} - {1} of {2}',
-            emptyMsg: "No rows to display",
+            emptyMsg: "No rows to display"
+        });
+
+        var filterTimeout;
+        me.lookupReference('filter').on('change', function() {
+            var store = me.getView().getStore();
+            store.getProxy().setExtraParam('filter', this.getValue());
+            clearTimeout(filterTimeout);
+            Ext.defer(function() {
+                store.loadPage(1);
+            }, this.getValue() ? 300 : 0);
         });
 
         store.on("metachange", function(_store, meta, eOpts) {
