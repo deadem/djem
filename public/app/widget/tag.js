@@ -32,11 +32,10 @@ Ext.define('djem.widget.tag', {
         added: function() {
             var me = this;
             var store = me.getStore();
-            if (store) {
+            if (store && me.queryMode == 'remote') {
                 var view = me.up('main-content');
                 store.getProxy().setExtraParams({
                     '_doctype': view.config.data._doctype,
-                    '_model': view.config.data._model,
                     'id': view.config.data.id,
                     'field': me.name
                 });
