@@ -8,7 +8,7 @@ Ext.data.Connection.override({
             if (request.xhr && request.xhr) {
                 djem.app.fireEvent('token', request.xhr.getResponseHeader('x-csrf-token'));
             }
-            if (request.xhr && request.xhr.status != 200 && Math.floor(request.xhr.status / 100) != 4) {
+            if (request.xhr && request.xhr.status != 200 && (Math.floor(request.xhr.status / 100) != 4 || request.xhr.status == 400)) {
                 if (!options.suppressErrors && (!options.proxy || !options.proxy.suppressErrors)) {
                     throw '';
                 }

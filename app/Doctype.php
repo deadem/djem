@@ -59,15 +59,6 @@ class Doctype extends \Illuminate\Routing\Controller
         return false;
     }
 
-    public function load($model, $id, $field, $filter)
-    {
-        $model;
-        $id;
-        $field;
-        $filter; // disable warnings
-        return [];
-    }
-
     /**
      * Получить список моделей, доступных для создания
      * @return array список классов моделей, которые можно создавать внутри этого типа.
