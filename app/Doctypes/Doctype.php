@@ -24,4 +24,9 @@ namespace App\Doctypes;
 
 class Doctype extends \DJEM\Doctype
 {
+    /**
+     * модель, отображением которой занимается тип
+     * @var class
+     */
+    public $model = null;
 }

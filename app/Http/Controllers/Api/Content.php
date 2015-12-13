@@ -18,23 +18,18 @@ class Content extends \Illuminate\Routing\Controller
         return Input::get('_doctype');
     }
 
-    private function model()
-    {
-        return Input::get('_model');
-    }
-
     public function get()
     {
         $doctype = $this->doctype();
         return [
-            'metaData' => (new $doctype)->getContentView($this->model(), Input::get('id'))
+            'metaData' => (new $doctype)->getEditor(Input::get('id'))
         ];
     }
 
     public function set()
     {
         $doctype = $this->doctype();
-        (new $doctype)->saveModel($this->model(), $this->request->all());
+        (new $doctype)->saveModel($this->request->all());
         return $this->get();
     }
 

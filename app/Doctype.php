@@ -31,80 +31,70 @@ class Doctype extends \Illuminate\Routing\Controller
         if (!$address) {
             abort(404);
         }
-        return (new $address->doctype)->renderView($address->model, $address->refid);
+        return (new $address->doctype)->render($address->refid);
     }
 
     /**
      * Перегружаемая функция, рендерит указанную модель
-     * @param string $model модель.
-     * @param string $id    идентификатор.
+     * @param string $id идентификатор.
      * @return object данные для отображения.
      */
-    public function renderView($model, $id)
+    public function render($id)
     {
-        return [ 'model' => $model, 'id' => $id ];
+        return [ 'model' => $this->model, 'id' => $id ];
     }
 
-    public function getContentView($model, $id)
+    public function getModelView()
     {
-        $model;
-        $id; // disable warninigs
         return [];
     }
 
-    public function saveModel($model, $values)
+    public function saveModel($values)
     {
-        $model;
         $values; // disable warninigs
         return false;
     }
 
     /**
      * Получить список моделей, доступных для создания
-     * @return array список классов моделей, которые можно создавать внутри этого типа.
+     * @return array список классов типов, которые можно создавать внутри этого типа.
      */
-    protected function getModelList()
+    protected function getSubtypes()
     {
         return [];
     }
 
     /**
      * Список полей грида для указанного mount-id
-     * @param string $id идентификатор ветки (точки подключения типа документа).
      * @return array массив с типами и именами полей.
      */
-    protected function fields($id)
+    protected function fields()
     {
-        $id; // disable warninig
         return [
             [ 'name' => 'id', 'type' => 'string' ],
             [ 'name' => '_doctype', 'type' => 'string' ],
-            [ 'name' => '_model', 'type' => 'string' ],
             [ 'name' => 'name', 'title' => true, 'text' => 'Name', 'type' => 'string', 'flex' => 1 ]
         ];
     }
 
     /**
      * Получить список документов для грида
-     * @param string $id идентификатор ветки типа.
      * @return Illuminate\Support\Collection список документов в гриде
      */
-    protected function items($id)
+    protected function items()
     {
-        $id; // disable warning
         return new Collection();
     }
 
     /**
      * Получить заголовок грида со служебными данными для указанного mount-id
-     * @param string $id идентификатор ветки (точки подключения типа документа).
      * @return array объект со списком полей, их типами и описанием.
      */
-    private function header($id)
+    private function header()
     {
-        $fields = (new GridHeader)->getFields($this->fields($id));
+        $fields = (new GridHeader)->getFields($this->fields());
         $fields['options'] += [
-            'models' => $this->getModelList($id),
+            'subtypes' => $this->getSubtypes(),
             '_doctype' => get_class($this)
         ];
         return $fields;
@@ -112,18 +102,17 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Подготовить данные для грида в указанном mount-id.
-     * @param string $id идентификатор ветки (точки подключения типа документа).
      * @return array объект, содержащий заголовок грила и собственно данные
      */
-    public function grid($id)
+    public function grid()
     {
-        $items = $this->items($id);
+        $items = $this->items();
         $total = $items->count();
         if ($total && method_exists($items, 'total')) {
             $total = $items->total();
         }
         return [
-            'metaData' => $this->header($id),
+            'metaData' => $this->header(),
             'items' => $items->all(),
             'total' => $total
         ];

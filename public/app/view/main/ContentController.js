@@ -95,7 +95,7 @@ Ext.define('djem.view.main.ContentController', {
         });
 
         me.store.load({
-            params: { _doctype: data._doctype, _model: data._model, id: data.id }
+            params: { _doctype: data._doctype, id: data.id }
         });
     },
 

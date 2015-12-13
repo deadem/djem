@@ -23,7 +23,7 @@ Ext.define('djem.view.main.GridController', {
         });
         me.getView().up('panel').on('click.toolbar', function(ref, params) {
             params = params || {};
-            me.openDocument(me.getView(), { data: { _model: params._model, _doctype: params._doctype } });
+            me.openDocument(me.getView(), { data: { _doctype: params._doctype } });
         });
     },
 
@@ -62,16 +62,15 @@ Ext.define('djem.view.main.GridController', {
         store.on("metachange", function(_store, meta, eOpts) {
             me.titleField = (meta.options || {})['title'];
             var doctype = (meta.options || {})['_doctype'];
-            var models = (meta.options || {})['models'];
-            if (!models || models.length == 0) {
+            var subtypes = (meta.options || {})['subtypes'];
+            if (!subtypes || subtypes.length == 0) {
                 djem.app.fireEvent('update.toolbar', 'add', { 'action': 'replace' });
                 djem.app.fireEvent('update.toolbar', 'add', { 'action': 'disable' });
             } else {
                 var menu = { };
-                if (models.length == 1) {
-                    menu = models[0];
+                if (subtypes.length == 1) {
+                    menu = subtypes[0];
                     menu.text = menu.name;
-                    menu._doctype = doctype;
                     menu.menu = false;
                 }
                 menu.action = 'replace';
@@ -101,7 +100,6 @@ Ext.define('djem.view.main.GridController', {
         me.getView().fireEvent('openDocument', _this, {
             id: record.id,
             title: data[me.titleField],
-            _model: data._model,
             _doctype: data._doctype
         });
     }
