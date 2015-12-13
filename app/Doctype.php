@@ -10,6 +10,12 @@ use Illuminate\Support\Collection;
 class Doctype extends \Illuminate\Routing\Controller
 {
     /**
+     * модель, отображением и изменением которой занимается тип
+     * @var class
+     */
+    public $model = null;
+
+    /**
      * Поиск данных для отображения по URL
      * @param string $url      URL.
      * @param string $urlModel модель, которая обрабатывает URL и хранит данные о них.
