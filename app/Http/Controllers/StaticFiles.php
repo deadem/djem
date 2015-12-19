@@ -8,12 +8,14 @@ use Illuminate\Http\Response;
 
 class StaticFiles extends Controller
 {
+    const DIRECTORY = 'panel';
+
     public static function get($file = null)
     {
         if (empty($file)) {
             $file = 'index.html';
         }
-        $public = realpath(__DIR__.'/../../../public');
+        $public = realpath(__DIR__.'/../../../'.self::DIRECTORY);
         $file = realpath($public.'/'.preg_replace('|[^-_0-9a-z/.]|i', '', $file));
         if (substr($file, 0, strlen($public)) == $public && is_file($file)) {
             $response = new Response(
