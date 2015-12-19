@@ -1,1 +1,1 @@
-sencha app build production ../production
+sencha app build production ../panel-compiled
