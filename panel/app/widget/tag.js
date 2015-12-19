@@ -12,7 +12,7 @@ Ext.define('djem.widget.tag', {
 
     setValue: function (value, doSelect) {
         var me = this;
-        if (Ext.isArray(value) && value.length && Ext.isObject(value[0]) && !value.isModel && !me.store.isLoaded() && me.queryMode == 'remote') {
+        if (Ext.isArray(value) && value.length && Ext.isObject(value[0]) && !value.isModel && me.queryMode == 'remote') {
             var values = [];
             var store = me.store;
             for (var i = 0, len = value.length; i < len; i++) {
