@@ -43,7 +43,7 @@ Ext.define('djem.view.login.Login', {
             reference: 'password',
             tabIndex: 2
         }, {
-            xtype: 'displayfield',
+            xtype: 'label',
             hideEmptyLabel: false,
             value: 'Enter your credentials'
         }],
