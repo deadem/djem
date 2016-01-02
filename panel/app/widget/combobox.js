@@ -26,6 +26,14 @@ Ext.define('djem.widget.combobox', {
     },
 
     listeners: {
+        focus: function() {
+            var me = this;
+            me.getStore().load({
+                callback: function(r, options, success) {
+                    me.expand();
+                }
+            });
+        },
         added: function() {
             var me = this;
             var store = me.getStore();
