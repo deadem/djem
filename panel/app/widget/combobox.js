@@ -10,7 +10,25 @@ Ext.define('djem.widget.combobox', {
     displayField: 'text',
     valueField: 'value',
     autoSelect: false,
+    triggerAction: 'query',
+    selectOnFocus: true,
     changingFilters: true,
+
+    afterRender: function() {
+        var me = this;
+        me.getEl().on('click', function (evt) {
+            if (me.getStore().isLoaded()) {
+                me.expand();
+            } else {
+                me.getStore().load({
+                    callback: function(r, options, success) {
+                        me.expand();
+                    }
+                });
+            }
+        });
+        me.callParent(arguments);
+    },
 
     setValue: function (value, doSelect) {
         var me = this;
@@ -26,14 +44,6 @@ Ext.define('djem.widget.combobox', {
     },
 
     listeners: {
-        focus: function() {
-            var me = this;
-            me.getStore().load({
-                callback: function(r, options, success) {
-                    me.expand();
-                }
-            });
-        },
         added: function() {
             var me = this;
             var store = me.getStore();
