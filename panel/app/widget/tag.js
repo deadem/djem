@@ -39,7 +39,7 @@ Ext.define('djem.widget.tag', {
             var me = this;
             var store = me.getStore();
             if (store && me.queryMode == 'remote') {
-                var view = me.up('main-content');
+                var view = me.up('main-content') || me.up('crosslink-editor');
                 store.getProxy().setExtraParams({
                     '_doctype': view.config.data._doctype,
                     'id': view.config.data.id,

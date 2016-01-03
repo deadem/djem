@@ -2,7 +2,7 @@
     border: none;
     margin: 1px;
     box-shadow: 0px 0px 0px 1px gray;
-    overflow: hidden;
+    overflow: auto;
     font-family: FontAwesome;
     a {
         text-decoration: none;
@@ -90,6 +90,7 @@
 }
 
 .x-form-crosslink-files-single {
+    overflow: hidden;
     .thumb-wrap {
         margin: 0;
         height: 100%;

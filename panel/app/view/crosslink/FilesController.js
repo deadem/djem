@@ -231,11 +231,12 @@ Ext.define('djem.view.crosslink.FilesController', {
         var me = this;
         me.processDropZone(false);
         var form = me.getView().up('form');
-        me.getView().on('initValue', function() {
-            me.setDirty(true);
-            me.field.resetOriginalValue();
-        });
         if (form) {
+            me.getView().on('initValue', function() {
+                me.setDirty(true);
+                me.field.resetOriginalValue();
+            });
+
             var field = Ext.create('djem.view.crosslink.FileField', { name: me.getView().name });
             me.field = form.add(field);
             me.field.on('dataReady', function() {
@@ -291,5 +292,14 @@ Ext.define('djem.view.crosslink.FilesController', {
         if (me.getView().width === undefined) {
             me.getView().addCls('width-scale');
         }
+    },
+
+    // редактор 
+    onItemDblClick: function (me, record, item, index, evt, eOpts) {
+        var view = me.up('main-content');
+        console.log(record);
+        var widget = Ext.widget('crosslink.Editor', { title: (record.data && record.data.name) || 'Editor', data: view.config.data });
+        widget.add(me.editor);
+        widget.getViewModel().setData(record.data);
     }
 });

@@ -10,6 +10,7 @@ Ext.define('djem.view.main.Main', {
 
         'djem.widget.html',
         'djem.widget.image',
+        'djem.widget.images',
         'djem.widget.tag',
         'djem.widget.text',
         'djem.widget.checkbox',

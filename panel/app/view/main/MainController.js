@@ -10,8 +10,6 @@ Ext.define('djem.view.main.MainController', {
     init: function() {
         var me = this;
 
-        // Ext.widget('crosslink.Add.List', { title: 'test' });
-
         djem.app.on('update.toolbar', function(ref, data) {
             me.lookupReference('toolbar').fireEvent('update.toolbar', ref, data);
         }).on('click.toolbar', function(ref, params) {

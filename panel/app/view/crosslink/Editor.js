@@ -1,24 +1,24 @@
-Ext.define('djem.view.crosslink.Add.List',{
+Ext.define('djem.view.crosslink.Editor',{
     extend: 'Ext.window.Window',
-    alias: 'widget.crosslink.Add.List',
+    alias: [ 'widget.crosslink.Editor', 'widget.crosslink-editor' ],
 
     requires: [
-        'djem.view.crosslink.Add.ListController',
-        'djem.view.crosslink.Add.ListModel'
+        'djem.view.crosslink.EditorController',
+        'djem.view.crosslink.EditorModel'
     ],
 
-    controller: 'crosslink-addlist',
+    controller: 'crosslink-editor',
     viewModel: {
-        type: 'crosslink-addlist'
+        type: 'crosslink-editor'
     },
 
     closable: true,
     autoShow: true,
     modal: true,
     bodyPadding: 10,
-    title: 'CrossLink',
+    title: 'Editor',
     width: '50%',
-    height: '80%',
+    height: '90%',
     layout: 'fit',
 
     html: 'Hello, World!',

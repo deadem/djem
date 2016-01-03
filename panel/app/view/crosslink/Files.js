@@ -8,13 +8,15 @@ Ext.define('djem.view.crosslink.Files',{
         'djem.view.crosslink.FilesModel',
         'djem.view.crosslink.FileField',
         'djem.store.CrossLink',
-        'djem.model.Files'
+        'djem.model.Files',
+        'djem.view.crosslink.Editor'
     ],
 
     listeners: {
         afterrender: { fn: 'initAfterRender', options: { single: true } },
         destroy: 'onDestroy',
-        beforedestroy: 'onBeforeDestroy'
+        beforedestroy: 'onBeforeDestroy',
+        itemdblclick: 'onItemDblClick'
     },
     
     controller: 'crosslink-files',
