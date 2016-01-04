@@ -8,11 +8,13 @@ class EditorLoadFields
 {
     private $model = null;
     private $doctype = null;
+    private $input = null;
 
-    public function __construct($doctype, $model)
+    public function __construct($doctype, $model, $input)
     {
         $this->doctype = $doctype;
         $this->model = $model;
+        $this->input = $input;
     }
 
     public function model()
@@ -26,9 +28,9 @@ class EditorLoadFields
             $this->model = new $doctype->model;
         }
 
-        $this->model->fill(Input::all());
+        $this->model->fill($this->input);
         if ($callable) {
-            $callable(new EditorSaveFields($this, $this->model));
+            $callable(new EditorSaveFields($this, $this->model, $this->input));
         }
 
         $this->model->save();

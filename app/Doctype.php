@@ -130,11 +130,19 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Загрузить связанные с моделью данные для редактирования
+     * @param Model $model  загруженная модель или ничего, для автоматической подгрузки
+     * @param array $fields массив полей для инициализации или ничего, для автоматического разбора
      * @return LoadEditorFields класс для подгрузки полей в нужном формате
      */
-    public function editor()
+    public function editor($model = null, $fields = null)
     {
-        $model = $this->model;
-        return new EditorLoadFields($this, $model::find(Input::get('id')));
+        if ($model === null) {
+            $model = $this->model;
+            $model = $model::find(Input::get('id'));
+        }
+        if ($fields === null) {
+            $fields = Input::all();
+        }
+        return new EditorLoadFields($this, $model, $fields);
     }
 }
