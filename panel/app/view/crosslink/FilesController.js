@@ -296,11 +296,16 @@ Ext.define('djem.view.crosslink.FilesController', {
     },
 
     // редактор 
-    onItemDblClick: function (me, record, item, index, evt, eOpts) {
-        var view = me.up('main-content');
-        console.log(record);
+    onItemDblClick: function (element, record, item, index, evt, eOpts) {
+        var me = this;
+        var view = element.up('main-content');
         var widget = Ext.widget('crosslink.Editor', { title: (record.data && record.data.name) || 'Editor', data: view.config.data });
-        widget.add(me.editor);
+        widget.add(element.editor);
         widget.getViewModel().setData(record.data);
+        widget.on('update', function () {
+            record.set(widget.getViewModel().getData());
+            record.commit();
+            me.setDirty(true);
+        }, this, { single: true });
     }
 });
