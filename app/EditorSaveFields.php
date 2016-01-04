@@ -3,17 +3,27 @@
 namespace DJEM;
 
 use \Illuminate\Database\Eloquent\Relations;
-use Input;
+use Illuminate\Support\Collection;
 
 class EditorSaveFields
 {
     private $model = null;
     private $doctype = null;
+    private $input = null;
 
-    public function __construct($doctype, $model)
+    public function __construct($doctype, $model, $input)
     {
         $this->doctype = $doctype;
         $this->model = $model;
+        $this->input = $input;
+    }
+
+    private function get($field)
+    {
+        if (isset($this->input[$field])) {
+            return $this->input[$field];
+        }
+        return null;
     }
 
     public function model()
@@ -32,7 +42,7 @@ class EditorSaveFields
     {
         $this->ensureModelIdExists();
         foreach (func_get_args() as $field) {
-            $this->updateRelation($field, Input::get($field));
+            $this->updateRelation($field, $this->get($field));
         }
         return $this;
     }
@@ -41,7 +51,7 @@ class EditorSaveFields
     {
         $ids = [];
 
-        $fieldValue = Input::get($field);
+        $fieldValue = $this->get($field);
         if ($fieldValue !== null) {
             if (!is_array($fieldValue)) {
                 $fieldValue = [ $fieldValue ];
@@ -94,15 +104,13 @@ class EditorSaveFields
 
     private function uploadFile($field, $callable, $onlyOne)
     {
-        $fieldValue = Input::get($field);
+        $fieldValue = $this->get($field);
         if ($fieldValue !== null && is_array($fieldValue)) {
             foreach ($fieldValue as $filename) {
                 if ($onlyOne && (isset($filename['file']) || empty($filename))) {
                     $this->model->{$field}()->detach();
                 }
-                if (isset($filename['file'])) {
-                    $this->updateRelation($field, $callable($filename, $field));
-                }
+                $this->updateRelation($field, $callable($filename, isset($filename['file']), $field));
 
                 if ($onlyOne) {
                     break;
@@ -122,7 +130,13 @@ class EditorSaveFields
                     $collection->detach();
 
                     if (is_array($fieldValue)) {
-                        foreach (array_unique($fieldValue) as $value) {
+                        $values = (new Collection($fieldValue))->map(function ($item) {
+                            if (is_array($item) && isset($item['value'])) {
+                                return $item['value'];
+                            }
+                            return $item;
+                        })->unique();
+                        foreach ($values as $value) {
                             $collection->attach($value);
                         }
                     } elseif (!empty($fieldValue)) {
