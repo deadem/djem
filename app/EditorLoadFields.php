@@ -2,18 +2,38 @@
 
 namespace DJEM;
 
+use Input;
+
 class EditorLoadFields
 {
     private $model = null;
+    private $doctype = null;
 
-    public function __construct($model)
+    public function __construct($doctype, $model)
     {
+        $this->doctype = $doctype;
         $this->model = $model;
     }
 
     public function model()
     {
         return $this->model;
+    }
+
+    public function save($callable = null)
+    {
+        if (!$this->model) {
+            $this->model = new $doctype->model;
+        }
+
+        $this->model->fill(Input::all());
+        if ($callable) {
+            $callable(new EditorSaveFields($this, $this->model));
+        }
+
+        $this->model->save();
+        Input::merge([ 'id' => $this->model->id ]);
+        return $this;
     }
 
     private function params($params)
