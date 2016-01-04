@@ -7,12 +7,6 @@ use Input;
 
 class Content extends \Illuminate\Routing\Controller
 {
-    private $request;
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     private function doctype()
     {
         return Input::get('_doctype');
@@ -22,18 +16,18 @@ class Content extends \Illuminate\Routing\Controller
     {
         $doctype = $this->doctype();
         return [
-            'metaData' => (new $doctype)->getEditor(Input::get('id'))
+            'metaData' => (new $doctype)->load()
         ];
     }
 
     public function set()
     {
         $doctype = $this->doctype();
-        (new $doctype)->saveModel($this->request->all());
+        (new $doctype)->save();
         return $this->get();
     }
 
-    public function load()
+    public function loadRelation()
     {
         $doctype = $this->doctype();
         $doctype = new $doctype;

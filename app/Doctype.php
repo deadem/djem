@@ -2,7 +2,9 @@
 namespace DJEM;
 
 use DJEM\GridHeader;
+use DJEM\LoadEditorFields;
 use Illuminate\Support\Collection;
+use Input;
 
 /**
  * базовый тип документа.
@@ -55,10 +57,12 @@ class Doctype extends \Illuminate\Routing\Controller
         return [];
     }
 
-    public function saveModel($values)
+    public function save()
     {
-        $values; // disable warninigs
-        return false;
+    }
+
+    public function load()
+    {
     }
 
     /**
@@ -87,7 +91,7 @@ class Doctype extends \Illuminate\Routing\Controller
      * Получить список документов для грида
      * @return Illuminate\Support\Collection список документов в гриде
      */
-    protected function items()
+    protected function gridItems()
     {
         return new Collection();
     }
@@ -112,7 +116,7 @@ class Doctype extends \Illuminate\Routing\Controller
      */
     public function grid()
     {
-        $items = $this->items();
+        $items = $this->gridItems();
         $total = $items->count();
         if ($total && method_exists($items, 'total')) {
             $total = $items->total();
@@ -122,5 +126,24 @@ class Doctype extends \Illuminate\Routing\Controller
             'items' => $items->all(),
             'total' => $total
         ];
+    }
+
+    /**
+     * Загрузить связанные с моделью данные для редактирования
+     * @return LoadEditorFields класс для подгрузки полей в нужном формате
+     */
+    public function edit()
+    {
+        $model = $this->model;
+        return new EditorLoadFields($model::find(Input::get('id')));
+    }
+
+    public function update()
+    {
+        $model = $this->model;
+        $model = $model::findOrNew(Input::get('id'))->fill(Input::all());
+        $model->save();
+        Input::replace([ 'id' => $model->id ]);
+        return new EditorSaveFields($model);
     }
 }
