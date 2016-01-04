@@ -32,43 +32,87 @@ class EditorSaveFields
     {
         $this->ensureModelIdExists();
         foreach (func_get_args() as $field) {
-            $this->updateRelation($field);
+            $this->updateRelation($field, Input::get($field));
         }
+        return $this;
+    }
+
+    public function deleteMissed($field, $id = 'id', $callable = null)
+    {
+        $ids = [];
+
+        $fieldValue = Input::get($field);
+        if ($fieldValue !== null) {
+            if (!is_array($fieldValue)) {
+                $fieldValue = [ $fieldValue ];
+            }
+            foreach ($fieldValue as $value) {
+                if (is_array($value) && isset($value[$id])) {
+                    $ids[] = $value[$id];
+                } elseif (is_object($value)) {
+                    $ids[] = $value->id;
+                }
+            }
+            $collection = $this->model->{$field}()->whereNotIn($id, $ids);
+            if ($callable) {
+                $collection = $callable($collection);
+            }
+            $collection->delete();
+        }
+        return $this;
+    }
+
+    public function image($field, $callable = null)
+    {
+        $this->ensureModelIdExists();
+        $this->uploadFile($field, $callable, true);
         return $this;
     }
 
     public function images($field, $callable = null)
     {
         $this->ensureModelIdExists();
-        $this->uploadFile($field, $callable);
+        $this->deleteMissed($field);
+        $this->uploadFile($field, $callable, false);
+        return $this;
+    }
+
+    public function file($field, $callable = null)
+    {
+        $this->ensureModelIdExists();
+        $this->uploadFile($field, $callable, true);
+        return $this;
     }
 
     public function files($field, $callable = null)
     {
         $this->ensureModelIdExists();
-        foreach (func_get_args() as $field) {
-            $this->uploadFile($field, $callable);
-        }
+        $this->deleteMissed($field);
+        $this->uploadFile($field, $callable, false);
+        return $this;
     }
 
-    private function uploadFile($field, $callable)
+    private function uploadFile($field, $callable, $onlyOne)
     {
         $fieldValue = Input::get($field);
         if ($fieldValue !== null && is_array($fieldValue)) {
-            $filename = array_shift($fieldValue);
+            foreach ($fieldValue as $filename) {
+                if ($onlyOne && (isset($filename['file']) || empty($filename))) {
+                    $this->model->{$field}()->detach();
+                }
+                if (isset($filename['file'])) {
+                    $this->updateRelation($field, $callable($filename, $field));
+                }
 
-            if (isset($filename['file']) || empty($filename)) {
-                $this->model->{$field}()->detach();
-            }
-            if (isset($filename['file'])) {
-                $this->model->{$field}()->attach($callable($filename, $field));
+                if ($onlyOne) {
+                    break;
+                }
             }
         }
     }
 
-    private function updateRelation($field)
+    private function updateRelation($field, $fieldValue)
     {
-        $fieldValue = Input::get($field);
         if ($fieldValue !== null) {
             $collection = $this->model->{$field}();
 

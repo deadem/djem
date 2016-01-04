@@ -212,10 +212,11 @@ Ext.define('djem.view.crosslink.FilesController', {
                     cleanup(data[i]);
                 }
             }
-            data && typeof data == 'object' && delete data['id'];
+            data && typeof data == 'object' && delete data[idProperty];
         }
         if (me.field) {
             if (isDirty) {
+                var idProperty = me.getView().getStore().getModel().idProperty;
                 var data = Ext.pluck(me.getView().getStore().data.items, 'data');
                 cleanup(data);
                 me.field.setValue(Ext.encode(data));
