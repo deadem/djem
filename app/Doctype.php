@@ -143,7 +143,7 @@ class Doctype extends \Illuminate\Routing\Controller
         $model = $this->model;
         $model = $model::findOrNew(Input::get('id'))->fill(Input::all());
         $model->save();
-        Input::replace([ 'id' => $model->id ]);
+        Input::merge([ 'id' => $model->id ]);
         return new EditorSaveFields($model);
     }
 }

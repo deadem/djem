@@ -2,6 +2,7 @@
 
 namespace DJEM;
 
+use \Illuminate\Database\Eloquent\Relations;
 use Input;
 
 class EditorSaveFields
@@ -18,7 +19,7 @@ class EditorSaveFields
         return $this->model;
     }
 
-    public function fields()
+    public function relations()
     {
         foreach (func_get_args() as $field) {
             $this->updateRelation($field);
@@ -30,7 +31,7 @@ class EditorSaveFields
     {
         $fieldValue = Input::get($field);
         if ($fieldValue !== null) {
-            $collection = $this->{$field}();
+            $collection = $this->model->{$field}();
 
             switch (get_class($collection)) {
                 case Relations\BelongsToMany::class:
