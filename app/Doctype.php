@@ -30,6 +30,15 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
+     * Переопределение вью для грида
+     * @return array описание вьювера и данных для просмотра
+     */
+    public function gridView()
+    {
+        return [];
+    }
+
+    /**
      * Загрузка из объекта URL данных из типа документа и вызов метода renderView для отображения
      * @param object $address с полями doctype, model, refid.
      * @return object данные для отображения

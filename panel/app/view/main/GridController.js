@@ -78,6 +78,16 @@ Ext.define('djem.view.main.GridController', {
                 djem.app.fireEvent('update.toolbar', 'add', { 'action': 'enable' });
             }
 
+            var parent = me.getView().lookupReferenceHolder();
+            if (meta.view) {
+                // замена вьювера
+                parent.lookupReference('grid').hide();
+                parent.lookupReference('grid-view').show();
+                return;
+            }
+            parent.lookupReference('grid-view').hide();
+            parent.lookupReference('grid').show();
+
             _store.model.replaceFields(meta.fields, true);
             me.getView().reconfigure(_store, meta.columns);
         });

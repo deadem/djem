@@ -45,8 +45,15 @@ Ext.define('djem.view.main.Main', {
                 reference: 'tree'
             }, {
                 region: 'center',
-                xtype: 'main-grid',
-                reference: 'grid'
+                layout: 'fit',
+                items: [{
+                    xtype: 'panel',
+                    hidden: true,
+                    reference: 'grid-view'
+                }, {
+                    xtype: 'main-grid',
+                    reference: 'grid'
+                }]
             }]
         }]
     }]
