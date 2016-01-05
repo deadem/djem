@@ -18,11 +18,11 @@ Ext.define('djem.view.main.Toolbar',{
         glyph: 'xf0c7@FontAwesome',
         reference: 'save'
     }, {
-        text: 'Add...',
+        text: '?',
         scale: 'medium',
-        glyph: 'xf055@FontAwesome',
-        xtype: 'splitbutton',
         reference: 'add',
+/*
+        xtype: 'splitbutton',
         menu: new Ext.menu.Menu({
             modal: true,
             items: [{
@@ -36,6 +36,7 @@ Ext.define('djem.view.main.Toolbar',{
                 glyph: 'xf15c@FontAwesome'
             }]
         })
+*/
     }, {
         text: 'Undo',
         scale: 'medium',

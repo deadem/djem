@@ -33,8 +33,8 @@ Ext.define('djem.view.main.ToolbarController', {
                     'hide': function() { button.hide(); },
                     'show': function() { button.show(); },
                     'replace': function(data) {
-                        button.setGlyph(data.glyph || 'xf055@FontAwesome');
-                        button.setText(data.text || 'Add...');
+                        button.setGlyph(data.glyph);
+                        button.setText(data.text || '?');
                         button.setParams(data);
                         if (data.menu !== undefined) { button.setMenu(data.menu); }
                     }
