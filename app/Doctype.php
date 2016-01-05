@@ -137,8 +137,10 @@ class Doctype extends \Illuminate\Routing\Controller
     public function editor($model = null, $fields = null)
     {
         if ($model === null) {
-            $model = $this->model;
-            $model = $model::find(Input::get('id'));
+            if (Input::get('id')) {
+                $myModel = $this->model;
+                $model = $myModel::find(Input::get('id'));
+            }
         }
         if ($fields === null) {
             $fields = Input::all();
