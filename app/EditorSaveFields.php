@@ -72,33 +72,53 @@ class EditorSaveFields
         return $this;
     }
 
-    public function image($field, $callable = null)
+    public function image($fields, $callable = null)
     {
         $this->ensureModelIdExists();
-        $this->uploadFile($field, $callable, true);
+        if (!is_array($fields)) {
+            $fields = [ $fields ];
+        }
+        foreach ($fields as $field) {
+            $this->uploadFile($field, $callable, true);
+        }
         return $this;
     }
 
-    public function images($field, $callable = null)
+    public function images($fields, $callable = null)
     {
         $this->ensureModelIdExists();
-        $this->deleteMissed($field);
-        $this->uploadFile($field, $callable, false);
+        if (!is_array($fields)) {
+            $fields = [ $fields ];
+        }
+        foreach ($fields as $field) {
+            $this->deleteMissed($field);
+            $this->uploadFile($field, $callable, false);
+        }
         return $this;
     }
 
-    public function file($field, $callable = null)
+    public function file($fields, $callable = null)
     {
         $this->ensureModelIdExists();
-        $this->uploadFile($field, $callable, true);
+        if (!is_array($fields)) {
+            $fields = [ $fields ];
+        }
+        foreach ($fields as $field) {
+            $this->uploadFile($field, $callable, true);
+        }
         return $this;
     }
 
-    public function files($field, $callable = null)
+    public function files($fields, $callable = null)
     {
         $this->ensureModelIdExists();
-        $this->deleteMissed($field);
-        $this->uploadFile($field, $callable, false);
+        if (!is_array($fields)) {
+            $fields = [ $fields ];
+        }
+        foreach ($fields as $field) {
+            $this->deleteMissed($field);
+            $this->uploadFile($field, $callable, false);
+        }
         return $this;
     }
 
@@ -106,8 +126,11 @@ class EditorSaveFields
     {
         $fieldValue = $this->get($field);
         if ($fieldValue !== null && is_array($fieldValue)) {
+            if ($onlyOne && empty($fieldValue)) {
+                $this->model->{$field}()->detach();
+            }
             foreach ($fieldValue as $filename) {
-                if ($onlyOne && (isset($filename['file']) || empty($filename))) {
+                if ($onlyOne && isset($filename['file'])) {
                     $this->model->{$field}()->detach();
                 }
                 $this->updateRelation($field, $callable($filename, isset($filename['file']), $field));
