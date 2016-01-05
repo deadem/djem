@@ -20,23 +20,7 @@ Ext.define('djem.view.main.Toolbar',{
     }, {
         text: '?',
         scale: 'medium',
-        reference: 'add',
-/*
-        xtype: 'splitbutton',
-        menu: new Ext.menu.Menu({
-            modal: true,
-            items: [{
-                text: 'News',
-                scale: 'medium',
-                glyph: 'xf0f6@FontAwesome',
-                height: '2em'
-            }, {
-                text: 'Document',
-                scale: 'medium',
-                glyph: 'xf15c@FontAwesome'
-            }]
-        })
-*/
+        reference: 'add'
     }, {
         text: 'Undo',
         scale: 'medium',
