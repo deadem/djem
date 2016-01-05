@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 
 class StaticFiles extends Controller
 {
-    const DIRECTORY = 'panel';
+    const DIRECTORY = 'panel-compiled';
 
     public static function get($file = null)
     {
