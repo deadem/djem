@@ -144,37 +144,38 @@ class EditorSaveFields
 
     private function updateRelation($field, $fieldValue)
     {
-        if ($fieldValue !== null) {
-            $collection = $this->model->{$field}();
+        if ($fieldValue === null) {
+            return $this;
+        }
+        $collection = $this->model->{$field}();
 
-            switch (get_class($collection)) {
-                case Relations\BelongsToMany::class:
-                case Relations\MorphToMany::class:
-                    $collection->detach();
+        switch (get_class($collection)) {
+            case Relations\BelongsToMany::class:
+            case Relations\MorphToMany::class:
+                $collection->detach();
 
-                    if (is_array($fieldValue)) {
-                        $values = (new Collection($fieldValue))->map(function ($item) {
-                            if (is_array($item) && isset($item['value'])) {
-                                return $item['value'];
-                            }
-                            return $item;
-                        })->unique();
-                        foreach ($values as $value) {
-                            $collection->attach($value);
+                if (is_array($fieldValue)) {
+                    $values = (new Collection($fieldValue))->map(function ($item) {
+                        if (is_array($item) && isset($item['value'])) {
+                            return $item['value'];
                         }
-                    } elseif (!empty($fieldValue)) {
-                        $collection->attach($fieldValue);
+                        return $item;
+                    })->unique();
+                    foreach ($values as $value) {
+                        $collection->attach($value);
                     }
-                    break;
+                } elseif (!empty($fieldValue)) {
+                    $collection->attach($fieldValue);
+                }
+                break;
 
-                case Relations\BelongsTo::class:
-                    $collection->associate($fieldValue);
-                    break;
+            case Relations\BelongsTo::class:
+                $collection->associate($fieldValue);
+                break;
 
-                default:
-                    dd('Unknown relation: '.get_class($collection));
-                    break;
-            }
+            default:
+                dd('Unknown relation: '.get_class($collection));
+                break;
         }
         return $this;
     }
