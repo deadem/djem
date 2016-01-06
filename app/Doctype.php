@@ -87,7 +87,7 @@ class Doctype extends \Illuminate\Routing\Controller
      * Список полей грида для указанного mount-id
      * @return array массив с типами и именами полей.
      */
-    protected function fields()
+    protected function gridFields()
     {
         return [
             [ 'name' => 'id', 'type' => 'string' ],
@@ -111,7 +111,7 @@ class Doctype extends \Illuminate\Routing\Controller
      */
     private function header()
     {
-        $fields = (new GridHeader)->getFields($this->fields());
+        $fields = (new GridHeader)->getFields($this->gridFields());
         $fields['options'] += [
             'subtypes' => $this->getSubtypes(),
             '_doctype' => get_class($this)
