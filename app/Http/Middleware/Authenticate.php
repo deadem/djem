@@ -3,41 +3,23 @@
 namespace DJEM\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
-    /**
-     * The Guard implementation.
-     *
-     * @var Guard
-     */
-    protected $auth;
-
-    /**
-     * Create a new filter instance.
-     *
-     * @param  Guard  $auth
-     * @return void
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
-
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        // $this->auth->logout();
-        if ($this->auth->guest()) {
+        if (Auth::guard($guard)->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];
-            if (!$this->auth->attempt($credentials)) {
+            if (!Auth::guard($guard)->attempt($credentials, true)) {
                 return response([
                     'state' => 'unauthorized'
                 ], 401)->header('x-csrf-token', $request->session()->token());

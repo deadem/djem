@@ -11,7 +11,7 @@ class DJEMServiceProvider extends ServiceProvider
     {
         $router->middleware('djem.auth', '\DJEM\Http\Middleware\Authenticate');
 
-        Route::group(['middleware' => 'djem.auth', 'namespace' => '\DJEM\Http\Controllers'], function () {
+        Route::group(['middleware' => ['web', 'djem.auth'], 'namespace' => '\DJEM\Http\Controllers'], function () {
             Route::any('djem/api', 'Api@getState');
             Route::any('djem/api/tree', config('djem.main').'@tree');
             Route::any('djem/api/grid', config('djem.main').'@grid');
