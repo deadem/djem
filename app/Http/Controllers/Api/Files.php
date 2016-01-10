@@ -28,7 +28,6 @@ class Files extends \Illuminate\Routing\Controller
                 $file->move(sys_get_temp_dir(), $tempFileName);
                 $result[] = [
                     'name' => $file->getClientOriginalName(),
-                    // 'url' => 'http://lorempixel.com/64/64/?'. rand(),
                     'file' => $tempFileName
                 ];
             } else {
