@@ -36,7 +36,7 @@ Ext.define('djem.view.main.Main', {
             reference: 'main',
             listeners: {
                 'click.toolbar': function(ref, params) {
-                    var ref = this.down('main-grid{display!="none"}'));
+                    var ref = this.down('main-grid{display!="none"}');
                     if (ref) {
                         ref.fireEvent('click.toolbar', ref, params);
                     }
