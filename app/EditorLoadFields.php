@@ -79,6 +79,12 @@ class EditorLoadFields
         }
     }
 
+    public function image()
+    {
+        // алиас для $this->one
+        return call_user_func_array([ $this, 'one' ], func_get_args());
+    }
+
     public function one()
     {
         foreach ($this->params(func_get_args()) as $key => $relation) {

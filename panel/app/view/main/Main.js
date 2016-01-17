@@ -34,6 +34,14 @@ Ext.define('djem.view.main.Main', {
             title: 'Main',
             layout: 'border',
             reference: 'main',
+            listeners: {
+                'click.toolbar': function(ref, params) {
+                    var ref = this.down('main-grid{display!="none"}'));
+                    if (ref) {
+                        ref.fireEvent('click.toolbar', ref, params);
+                    }
+                }
+            },
             items: [{
                 region: 'west',
                 width: 250,

@@ -21,7 +21,7 @@ Ext.define('djem.view.main.GridController', {
                 store.loadPage(1);
             }
         });
-        me.getView().up('panel').on('click.toolbar', function(ref, params) {
+        me.getView().on('click.toolbar', function(ref, params) {
             params = params || {};
             me.openDocument(me.getView(), { data: { _doctype: params._doctype } });
         });
