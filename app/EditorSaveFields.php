@@ -127,11 +127,11 @@ class EditorSaveFields
         $fieldValue = $this->get($field);
         if ($fieldValue !== null && is_array($fieldValue)) {
             if ($onlyOne && empty($fieldValue)) {
-                $this->model->{$field}()->detach();
+                $this->detachRelation($this->model->{$field}());
             }
             foreach ($fieldValue as $filename) {
                 if ($onlyOne && isset($filename['file'])) {
-                    $this->model->{$field}()->detach();
+                    $this->detachRelation($this->model->{$field}());
                 }
                 $this->updateRelation($field, $callable($filename, isset($filename['file']), $field));
 
@@ -142,18 +142,35 @@ class EditorSaveFields
         }
     }
 
+    private function detachRelation($relation)
+    {
+        switch (get_class($relation)) {
+            case Relations\BelongsToMany::class:
+            case Relations\MorphToMany::class:
+                $relation->detach();
+                break;
+
+            case Relations\BelongsTo::class:
+                $relation->dissociate();
+                break;
+
+            default:
+                dd('Unknown relation: '.get_class($relation));
+                break;
+        }
+    }
+
     private function updateRelation($field, $fieldValue)
     {
         if ($fieldValue === null) {
             return $this;
         }
         $collection = $this->model->{$field}();
+        $this->detachRelation($collection);
 
         switch (get_class($collection)) {
             case Relations\BelongsToMany::class:
             case Relations\MorphToMany::class:
-                $collection->detach();
-
                 if (is_array($fieldValue)) {
                     $values = (new Collection($fieldValue))->map(function ($item) {
                         if (is_array($item) && isset($item['value'])) {
