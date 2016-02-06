@@ -30,10 +30,6 @@ class Content extends \Illuminate\Routing\Controller
     public function loadRelation()
     {
         $doctype = $this->doctype();
-        $doctype = new $doctype;
-        if (method_exists($doctype, $method = 'load'.ucfirst(Input::get('field')))) {
-            return $doctype->$method();
-        }
-        abort(400, 'Unknown field: '.Input::get('field'));
+        return (new $doctype)->loadRelation(Input::get('field'));
     }
 }

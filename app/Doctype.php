@@ -7,20 +7,22 @@ use Illuminate\Support\Collection;
 use Input;
 
 /**
- * базовый тип документа.
+ * Базовый тип документа.
  */
 class Doctype extends \Illuminate\Routing\Controller
 {
     /**
-     * модель, отображением и изменением которой занимается тип
+     * Модель, отображением и изменением которой занимается тип
+     *
      * @var class
      */
     public $model = null;
 
     /**
      * Поиск данных для отображения по URL
-     * @param string $url      URL.
-     * @param string $urlModel модель, которая обрабатывает URL и хранит данные о них.
+     *
+     * @param  string $url      URL.
+     * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
      * @return object класс с полями doctype, model, refid для отображения соответствующим
      *         типом модели, найденной по идентификатору.
      */
@@ -31,6 +33,7 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Переопределение вью для грида
+     *
      * @return array описание вьювера и данных для просмотра
      */
     public function gridView()
@@ -40,8 +43,9 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Загрузка из объекта URL данных из типа документа и вызов метода renderView для отображения
-     * @param object $address с полями doctype, model, refid.
-     * @return object данные для отображения
+     *
+     * @param  object $address С полями doctype, model, refid.
+     * @return object Данные для отображения
      */
     public function viewAddress($address)
     {
@@ -53,7 +57,8 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Перегружаемая функция, рендерит указанную модель
-     * @param string $id идентификатор.
+     *
+     * @param  string $id Идентификатор.
      * @return object данные для отображения.
      */
     public function render($id)
@@ -74,8 +79,15 @@ class Doctype extends \Illuminate\Routing\Controller
     {
     }
 
+    public function loadRelation($relation)
+    {
+        $relation;
+        abort(400, 'Override Doctype::loadRelation()');
+    }
+
     /**
      * Получить список моделей, доступных для создания
+     *
      * @return array список классов типов, которые можно создавать внутри этого типа.
      */
     protected function getSubtypes()
@@ -85,6 +97,7 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Список полей грида для указанного mount-id
+     *
      * @return array массив с типами и именами полей.
      */
     protected function gridFields()
@@ -98,6 +111,7 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Получить список документов для грида
+     *
      * @return Illuminate\Support\Collection список документов в гриде
      */
     protected function gridItems()
@@ -107,6 +121,7 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Получить заголовок грида со служебными данными для указанного mount-id
+     *
      * @return array объект со списком полей, их типами и описанием.
      */
     private function header()
@@ -121,6 +136,7 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Подготовить данные для грида в указанном mount-id.
+     *
      * @return array объект, содержащий заголовок грила и собственно данные
      */
     public function grid()
@@ -139,8 +155,9 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Загрузить связанные с моделью данные для редактирования
-     * @param Model $model  загруженная модель или ничего, для автоматической подгрузки
-     * @param array $fields массив полей для инициализации или ничего, для автоматического разбора
+     *
+     * @param  Model $model  Загруженная модель или ничего, для автоматической подгрузки
+     * @param  array $fields Массив полей для инициализации или ничего, для автоматического разбора
      * @return LoadEditorFields класс для подгрузки полей в нужном формате
      */
     public function editor($model = null, $fields = null)
