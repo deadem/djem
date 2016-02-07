@@ -133,7 +133,10 @@ class EditorSaveFields
                 if ($onlyOne && isset($filename['file'])) {
                     $this->detachRelation($this->model->{$field}());
                 }
-                $this->updateRelation($field, $callable($filename, isset($filename['file']), $field));
+                if (isset($filename['file'])) {
+                    // если переменная указана - это новый файл, который нужно подключить
+                    $this->updateRelation($field, $callable($filename, $this->model->{$field}()->getRelated()));
+                }
 
                 if ($onlyOne) {
                     break;
