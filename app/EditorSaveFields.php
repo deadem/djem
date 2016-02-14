@@ -10,6 +10,7 @@ class EditorSaveFields
     private $model = null;
     private $doctype = null;
     private $input = null;
+    private $url = null;
 
     public function __construct($doctype, $model, $input)
     {
@@ -31,6 +32,31 @@ class EditorSaveFields
         return $this->model;
     }
 
+    public function url($fields)
+    {
+        $this->ensureModelIdExists();
+        if (!is_array($fields)) {
+            $fields = [
+                'url' => $fields
+            ];
+        }
+        $fields = array_merge($fields, [
+            'refid' => $this->model->id,
+            'doctype' => get_class($this->doctype),
+            'model' => get_class($this->model)
+        ]);
+        $url = $this->model->url()->first();
+        if (!$url) {
+            $model = $this->model->url()->getRelated();
+            $url = new $model;
+        }
+        foreach ($fields as $key => $value) {
+            $url->{$key} = $value;
+        }
+        $url->save();
+        return $this;
+    }
+
     private function ensureModelIdExists()
     {
         if (!$this->model->id) {
@@ -40,7 +66,6 @@ class EditorSaveFields
 
     public function relations()
     {
-        $this->ensureModelIdExists();
         foreach (func_get_args() as $field) {
             $this->updateRelation($field, $this->get($field));
         }
@@ -174,6 +199,7 @@ class EditorSaveFields
         switch (get_class($collection)) {
             case Relations\BelongsToMany::class:
             case Relations\MorphToMany::class:
+                $this->ensureModelIdExists();
                 if (is_array($fieldValue)) {
                     $values = (new Collection($fieldValue))->map(function ($item) {
                         if (is_array($item) && isset($item['value'])) {

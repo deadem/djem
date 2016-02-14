@@ -25,12 +25,12 @@ class EditorLoadFields
     public function save($callable = null)
     {
         if (!$this->model) {
-            $this->model = new $doctype->model;
+            $this->model = new $this->doctype->model;
         }
 
         $this->model->fill($this->input);
         if ($callable) {
-            $callable(new EditorSaveFields($this, $this->model, $this->input));
+            $callable(new EditorSaveFields($this->doctype, $this->model, $this->input));
         }
 
         $this->model->save();

@@ -13,8 +13,7 @@
 //     class Url extends ...
 //     {
 //         protected $table = 'url';
-//         protected $primaryKey = 'url';
-//         protected $hidden = [ 'url', 'doctype', 'model', 'refid' ];
+//         protected $fillable = [ 'url', 'doctype', refid' ];
 //         ...
 //     }
 //
@@ -25,7 +24,8 @@ namespace App\Doctypes;
 class Doctype extends \DJEM\Doctype
 {
     /**
-     * модель, отображением которой занимается тип
+     * Модель, отображением которой занимается тип
+     *
      * @var class
      */
     public $model = null;
