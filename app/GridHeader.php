@@ -18,7 +18,7 @@ class GridHeader
 
     private function typeField($row)
     {
-        return [ 'field' => [ 'type' => $row['type'] ], 'column' => [] ];
+        return [ 'field' => [ 'type' => $row['type'] ] ];
     }
 
     private function sortableField($row)
@@ -28,17 +28,17 @@ class GridHeader
 
     private function textField($row)
     {
-        return [ 'field' => [], 'column' => [ 'text' => $row['text'] ] ];
+        return [ 'column' => [ 'text' => $row['text'] ] ];
     }
 
     private function flexField($row)
     {
-        return [ 'field' => [], 'column' => [ 'flex' => $row['flex'] ] ];
+        return [ 'column' => [ 'flex' => $row['flex'] ] ];
     }
 
     private function widthField($row)
     {
-        return [ 'field' => [], 'column' => [ 'width' => $row['width'] ] ];
+        return [ 'column' => [ 'width' => $row['width'] ] ];
     }
 
     public function getFields($fieldsData)
@@ -53,8 +53,8 @@ class GridHeader
             foreach ($row as $key => $value) {
                 if (method_exists(get_called_class(), $method = $key.'Field')) {
                     $data = $this->$method($row);
-                    $field = array_merge($field, $data['field']);
-                    $column += array_merge($column, $data['column']);
+                    $field = array_merge($field, isset($data['field']) ? $data['field'] : []);
+                    $column += array_merge($column, isset($data['column']) ? $data['column'] : []);
                 }
             }
 
