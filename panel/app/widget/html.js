@@ -1,3 +1,4 @@
+/* global Ext */
 Ext.define('djem.widget.html', {
     extend: 'Ext.form.field.HtmlEditor',
     alias: [ 'djem.html', 'widget.html' ],
@@ -8,6 +9,7 @@ Ext.define('djem.widget.html', {
         enableColors: false
     },
     plugins: [
+    /*
         (function() {
             return new (Ext.extend(Ext.util.Observable, {
                 init: function(cmp) {
@@ -28,5 +30,6 @@ Ext.define('djem.widget.html', {
                 }
             }))();
         })()
+    */
     ]
 });
