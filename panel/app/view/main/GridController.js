@@ -96,14 +96,35 @@ Ext.define('djem.view.main.GridController', {
     cellcontextmenu: function (_this, td, cellIndex, record, tr, rowIndex, e) {
         var me = this;
         var menu = ((me.getView().getStore().userOptions || {}).contextMenu || []).slice(0);
+        function handler(code) {
+            return function () {
+                if (me[code]) {
+                    me[code](_this, record);
+                } else {
+                    Ext.MessageBox.show({ title: 'Invalid command', msg: code });
+                }
+            };
+        }
         menu.splice(0, 0, {
             text: 'Edit',
-            iconCls: 'edit',
-            handler: function () {
-                me.openDocument(_this, record);
+            glyph: 'xf044@FontAwesome',
+            handler: 'openDocument'
+        });
+        Ext.each(menu, function (v) {
+            var command = v.handler;
+            if (command && typeof command != 'function') {
+                v.handler = handler(command);
             }
         });
         var contextMenu = new Ext.menu.Menu({
+            listeners: {
+                hide: function (_this) {
+                    // хак для того, чтобы вызвались штатные хендлеры
+                    Ext.defer(function () {
+                        _this.destroy();
+                    }, 1);
+                }
+            },
             items: menu
         });
         contextMenu.showAt(e.getXY());
@@ -120,13 +141,20 @@ Ext.define('djem.view.main.GridController', {
         }
     },
 
-    openDocument: function (_this, record) {
+    cloneDocument: function (_this, record) {
+        var me = this;
+        me.openDocument(_this, record, { clone: true });
+    },
+
+    openDocument: function (_this, record, options) {
         var me = this;
         var data = record.data || {};
+        options = options || {};
         me.getView().fireEvent('openDocument', _this, {
-            id: record.id,
+            id: options.clone ? undefined : record.id,
             title: data[me.titleField],
-            _doctype: data._doctype
+            _doctype: data._doctype,
+            clone: options.clone ? record.id : undefined
         });
     }
 });

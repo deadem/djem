@@ -174,9 +174,17 @@ class Doctype extends \Illuminate\Routing\Controller
     public function editor($model = null, $fields = null)
     {
         if ($model === null) {
-            if (Input::get('id')) {
+            $id = Input::get('id');
+            if (!$id) {
+                $id = Input::get('clone');
+            }
+            if ($id) {
                 $myModel = $this->model;
-                $model = $myModel::find(Input::get('id'));
+                $model = $myModel::find($id);
+
+                if (!Input::get('id') && Input::get('clone')) {
+                    $model = $model->replicate();
+                }
             }
         }
         if ($fields === null) {

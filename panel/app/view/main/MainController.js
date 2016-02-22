@@ -1,3 +1,4 @@
+/* global Ext, SharedData, djem */
 Ext.define('djem.view.main.MainController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.main',
@@ -7,35 +8,41 @@ Ext.define('djem.view.main.MainController', {
         'djem.view.main.Content'
     ],
 
-    init: function() {
+    init: function () {
         var me = this;
 
-        djem.app.on('update.toolbar', function(ref, data) {
+        djem.app.on('update.toolbar', function (ref, data) {
             me.lookupReference('toolbar').fireEvent('update.toolbar', ref, data);
-        }).on('click.toolbar', function(ref, params) {
+        }).on('click.toolbar', function (ref, params) {
             me.lookupReference('tabs').getActiveTab().fireEvent('click.toolbar', ref, params);
         });
 
-        me.lookupReference('tabs').on('tabchange', function(_this, newTab, oldTab, options) {
+        me.lookupReference('tabs').on('tabchange', function (_this, newTab) {
             me.lookupReference('toolbar').fireEvent('change.toolbar', newTab, (newTab && newTab.getReference()) || 'main');
         }).fireEvent('tabchange');
 
-        me.lookupReference('tree').on('select', function(_this, record, options) {
+        me.lookupReference('tree').on('select', function (_this, record) {
             me.lookupReference('grid').fireEvent('load', record.data.id);
-        }).on('load', function() {
+        }).on('load', function () {
             this.getRootNode().expand();
-            this.getSelectionModel().getCount() || this.getSelectionModel().select(this.getRootNode().getChildAt(0));
+            if (this.getSelectionModel().getCount() === 0) {
+                this.getSelectionModel().select(this.getRootNode().getChildAt(0));
+            }
         });
 
-        me.lookupReference('grid').on('openDocument', function(_this, data) {
+        me.lookupReference('grid').on('openDocument', function (_this, data) {
             var tabs = me.lookupReference('tabs');
             var id = data.id || ++SharedData.nextDocumentNumber;
             var tabId = 'main-tab-' + String(data._doctype).replace(/[^0-9a-z]+/ig, '_') + '-' + (data.id || 'x-' + id);
             var tab = tabs.query('#' + tabId)[0];
             if (!tab) {
+                var title = data.title || 'New document (' + id + ')';
+                if (data.clone) {
+                    title = '(Clone!) ' + title;
+                }
                 tab = tabs.add(Ext.create('widget.main-content', {
                     data: data,
-                    title: data.title || 'New document (' + id + ')',
+                    title: title,
                     id: tabId,
                     reference: 'content',
                     closable: true
@@ -46,7 +53,7 @@ Ext.define('djem.view.main.MainController', {
 
         // инициализируем авторизационный токен
         djem.app.fireEvent('initSession', {
-            success: function(response) {
+            success: function () {
                 me.lookupReference('tree').getStore().load();
             }
         });
