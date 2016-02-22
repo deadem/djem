@@ -1,0 +1,20 @@
+{
+  "indent": false,
+  "bitwise": true,
+  "curly": true,
+  "esversion": 3,
+  "freeze": true,
+  "maxcomplexity": 10,
+  "maxdepth": 4,
+  "maxparams": 5,
+  "nocomma": true,
+  "nonbsp": true,
+  "nonew": true,
+  "singleGroups": false,
+  "undef": true,
+  "strict": "implied",
+  "unused": true,
+  "validthis": true,
+  "browser": true,
+  "devel": true
+}

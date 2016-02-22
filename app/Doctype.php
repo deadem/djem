@@ -120,6 +120,16 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
+     * Получить контекстное меню для текущего раздела
+     *
+     * @return array массив с указанием возможных действий
+     */
+    protected function getContextMenu()
+    {
+        return [];
+    }
+
+    /**
      * Получить заголовок грида со служебными данными для указанного mount-id
      *
      * @return array объект со списком полей, их типами и описанием.
@@ -129,7 +139,8 @@ class Doctype extends \Illuminate\Routing\Controller
         $fields = (new GridHeader)->getFields($this->gridFields());
         $fields['options'] += [
             'subtypes' => $this->getSubtypes(),
-            '_doctype' => get_class($this)
+            '_doctype' => get_class($this),
+            'contextMenu' => $this->getContextMenu()
         ];
         return $fields;
     }

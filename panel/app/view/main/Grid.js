@@ -1,4 +1,5 @@
-Ext.define('djem.view.main.Grid',{
+/* global Ext */
+Ext.define('djem.view.main.Grid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.main-grid',
 
@@ -14,6 +15,7 @@ Ext.define('djem.view.main.Grid',{
 
     listeners: {
         rowdblclick: 'rowdblclick',
-        itemkeydown: 'itemkeydown'
+        itemkeydown: 'itemkeydown',
+        cellcontextmenu: 'cellcontextmenu'
     }
 });
