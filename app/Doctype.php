@@ -23,7 +23,7 @@ class Doctype extends \Illuminate\Routing\Controller
      *
      * @param  string $url      URL.
      * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
-     * @return object класс с полями doctype, model, refid для отображения соответствующим
+     * @return object класс с полями doctype, refid для отображения соответствующим
      *         типом модели, найденной по идентификатору.
      */
     public function view($url, $urlModel)
@@ -44,7 +44,7 @@ class Doctype extends \Illuminate\Routing\Controller
     /**
      * Загрузка из объекта URL данных из типа документа и вызов метода renderView для отображения
      *
-     * @param  object $address С полями doctype, model, refid.
+     * @param  object $address С полями doctype, refid
      * @return object Данные для отображения
      */
     public function viewAddress($address)

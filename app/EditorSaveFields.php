@@ -32,31 +32,6 @@ class EditorSaveFields
         return $this->model;
     }
 
-    public function url($fields)
-    {
-        $this->ensureModelIdExists();
-        if (!is_array($fields)) {
-            $fields = [
-                'url' => $fields
-            ];
-        }
-        $fields = array_merge($fields, [
-            'refid' => $this->model->id,
-            'doctype' => get_class($this->doctype),
-            'model' => get_class($this->model)
-        ]);
-        $url = $this->model->url()->first();
-        if (!$url) {
-            $model = $this->model->url()->getRelated();
-            $url = new $model;
-        }
-        foreach ($fields as $key => $value) {
-            $url->{$key} = $value;
-        }
-        $url->save();
-        return $this;
-    }
-
     private function ensureModelIdExists()
     {
         if (!$this->model->id) {
