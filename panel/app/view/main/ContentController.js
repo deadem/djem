@@ -48,7 +48,6 @@ Ext.define('djem.view.main.ContentController', {
         me.store.loadData([], false); // drop data
         me.store.setModel(Ext.create('djem.model.Content', { fields: fields }));
         me.store.add([ values ]);
-        console.log(values);
         me.store.sync({
             params: params,
             callback: function () {
