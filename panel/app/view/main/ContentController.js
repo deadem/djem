@@ -71,6 +71,9 @@ Ext.define('djem.view.main.ContentController', {
             };
             (actions[ref] || function () {})();
         });
+        me.getView().on('show.toolbar', function (result) {
+            result.value = me.store.toolbar || [];
+        });
         me.getView().getForm().on('dataReady', function () { me.onSyncData(); });
     },
 
@@ -127,6 +130,9 @@ Ext.define('djem.view.main.ContentController', {
     onViewChange: function (_this, meta) {
         var me = this;
         me.getView().add(meta.view);
+
+        me.store.toolbar = meta.toolbar;
+        djem.app.fireEvent('change.toolbar');
     },
 
     onDataChange: function (_this, meta) {

@@ -11,14 +11,21 @@ Ext.define('djem.view.main.MainController', {
     init: function () {
         var me = this;
 
+        function tabChange(newTab) {
+            me.lookupReference('toolbar').fireEvent('change.toolbar', newTab, (newTab && newTab.getReference()) || 'main');
+        }
+
         djem.app.on('update.toolbar', function (ref, data) {
             me.lookupReference('toolbar').fireEvent('update.toolbar', ref, data);
         }).on('click.toolbar', function (ref, params) {
             me.lookupReference('tabs').getActiveTab().fireEvent('click.toolbar', ref, params);
+        }).on('show.toolbar', function (result) {
+            me.lookupReference('tabs').getActiveTab().fireEvent('show.toolbar', result);
+        }).on('change.toolbar', function () {
+            tabChange(me.lookupReference('tabs').getActiveTab());
         });
-
         me.lookupReference('tabs').on('tabchange', function (_this, newTab) {
-            me.lookupReference('toolbar').fireEvent('change.toolbar', newTab, (newTab && newTab.getReference()) || 'main');
+            tabChange(newTab);
         }).fireEvent('tabchange');
 
         me.lookupReference('tree').on('select', function (_this, record) {

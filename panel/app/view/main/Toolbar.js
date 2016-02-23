@@ -1,18 +1,19 @@
-Ext.define('djem.view.main.Toolbar',{
+/* global Ext */
+Ext.define('djem.view.main.Toolbar', {
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.main-toolbar',
- 
+
     requires: [
         'djem.view.main.ToolbarController',
         'djem.view.main.ToolbarModel'
     ],
-    
+
     controller: 'main-toolbar',
     viewModel: {
         type: 'main-toolbar'
     },
 
-    items: [{
+    items: [ {
         text: 'Save',
         scale: 'medium',
         glyph: 'xf0c7@FontAwesome',
@@ -37,12 +38,7 @@ Ext.define('djem.view.main.Toolbar',{
         scale: 'medium',
         glyph: 'xf00d@FontAwesome',
         reference: 'close'
-    }
-/*    , '->', {
-        xtype    : 'textfield',
-        name     : 'search',
-        emptyText: 'enter search term'
-    }
-*/
-    ]
+    }, {
+        reference: 'user'
+    } ]
 });
