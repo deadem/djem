@@ -33,7 +33,9 @@ Ext.define('djem.view.main.ToolbarController', {
             var buttons = {};
             djem.app.fireEvent('show.toolbar', buttons);
             Ext.each(buttons.value || [], function (button) {
-                view.add(button);
+                view.add(button).on('click', function () {
+                    djem.app.fireEvent('click.toolbar', button.ref);
+                });
             });
         }).on('update.toolbar', function (ref, data) {
             var button = me.getReferences()[ref];

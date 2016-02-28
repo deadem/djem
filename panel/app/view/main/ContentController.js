@@ -5,6 +5,7 @@ Ext.define('djem.view.main.ContentController', {
 
     loadingMask: null,
 
+
     updateButtons: function () {
         var me = this;
         djem.app.fireEvent('update.toolbar', 'save', { action: me.getView().isDirty() ? 'enable' : 'disable' });
@@ -44,7 +45,7 @@ Ext.define('djem.view.main.ContentController', {
             me.loadingMask.show();
         }
 
-        var params = Ext.clone(me.store.lastOptions.params);
+        var params = me.getStoreOptions();
         me.store.loadData([], false); // drop data
         me.store.setModel(Ext.create('djem.model.Content', { fields: fields }));
         me.store.add([ values ]);
@@ -62,19 +63,41 @@ Ext.define('djem.view.main.ContentController', {
         this.getView().destroy();
     },
 
+    getStoreOptions: function () {
+        var me = this;
+        var params = {};
+        Ext.Object.each(me.store.lastOptions.params, function (key, value) {
+            switch (key) {
+                case '_doctype':
+                case 'id':
+                case 'clone':
+                    params[key] = Ext.clone(value);
+                    break;
+                default:
+                    break;
+            }
+        });
+        return params;
+    },
+
     init: function () {
         var me = this;
-        me.getView().on('click.toolbar', function (ref) {
+        var view = me.getView();
+        view.on('click.toolbar', function (ref) {
             var actions = {
-                'save': function () { me.getView().fireEvent('validate'); },
+                'save': function () { view.fireEvent('validate'); },
                 'close': function () { me.onClose(); }
             };
             (actions[ref] || function () {})();
         });
-        me.getView().on('show.toolbar', function (result) {
+        view.on('show.toolbar', function (result) {
             result.value = me.store.toolbar || [];
         });
-        me.getView().getForm().on('dataReady', function () { me.onSyncData(); });
+        view.getForm().on('dataReady', function () { me.onSyncData(); });
+
+        view.on('reload', function (params) {
+            me.reload(params);
+        });
     },
 
     initValues: function () {
@@ -88,7 +111,6 @@ Ext.define('djem.view.main.ContentController', {
 
     initViewModel: function () {
         var me = this;
-        var data = me.getView().config.data;
 
         me.store = Ext.create('djem.store.main.Content')
             .on('load', function () { me.onLoadContent.apply(me, arguments); })
@@ -102,8 +124,15 @@ Ext.define('djem.view.main.ContentController', {
             store: me.store
         });
 
+        me.reload();
+    },
+
+    reload: function (ext) {
+        var me = this;
+        var data = me.getView().config.data;
+        var params = { _doctype: data._doctype, id: data.id, clone: data.clone };
         me.store.load({
-            params: { _doctype: data._doctype, id: data.id, clone: data.clone }
+            params:  Ext.Object.merge(params, ext || {})
         });
     },
 
@@ -130,9 +159,6 @@ Ext.define('djem.view.main.ContentController', {
     onViewChange: function (_this, meta) {
         var me = this;
         me.getView().add(meta.view);
-
-        me.store.toolbar = meta.toolbar;
-        djem.app.fireEvent('change.toolbar');
     },
 
     onDataChange: function (_this, meta) {
@@ -141,6 +167,10 @@ Ext.define('djem.view.main.ContentController', {
             me.getView().config.data.id = meta.data.id;
             me.store.lastOptions.params.id = meta.data.id;
         }
+
+        me.store.toolbar = meta.toolbar;
+        djem.app.fireEvent('change.toolbar');
+
         me.getViewModel().setData(meta.data);
         var bind = me.getViewModel().bind('{name}', function () {
             // ждём окончания биндов, чтобы проинициализировать форму
