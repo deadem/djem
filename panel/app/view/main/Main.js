@@ -1,3 +1,4 @@
+/* global Ext*/
 Ext.define('djem.view.main.Main', {
     extend: 'Ext.container.Container',
     alias: 'widget.app-main',
@@ -22,7 +23,7 @@ Ext.define('djem.view.main.Main', {
     controller: 'main',
 
     layout:'border',
-    items: [{
+    items: [ {
         region: 'north',
         xtype: 'main-toolbar',
         reference: 'toolbar'
@@ -30,19 +31,19 @@ Ext.define('djem.view.main.Main', {
         region: 'center',
         xtype: 'tabpanel',
         reference: 'tabs',
-        items:[{
+        items:[ {
             title: 'Main',
             layout: 'border',
             reference: 'main',
             listeners: {
-                'click.toolbar': function(ref, params) {
-                    var ref = this.down('main-grid{display!="none"}');
-                    if (ref) {
-                        ref.fireEvent('click.toolbar', ref, params);
+                'click.toolbar': function (ref, params) {
+                    var toolbar = this.down('main-grid{display!="none"}');
+                    if (toolbar) {
+                        toolbar.fireEvent('click.toolbar', ref, params);
                     }
                 }
             },
-            items: [{
+            items: [ {
                 region: 'west',
                 width: 250,
                 split: true,
@@ -54,15 +55,15 @@ Ext.define('djem.view.main.Main', {
             }, {
                 region: 'center',
                 layout: 'fit',
-                items: [{
+                items: [ {
                     xtype: 'panel',
                     hidden: true,
                     reference: 'grid-view'
                 }, {
                     xtype: 'main-grid',
                     reference: 'grid'
-                }]
-            }]
-        }]
-    }]
+                } ]
+            } ]
+        } ]
+    } ]
 });
