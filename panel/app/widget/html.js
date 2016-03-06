@@ -14,7 +14,6 @@ Ext.define('djem.widget.html', {
                 return;
             }
             var editorIframe = Ext.get(me.getInputId() + '_ifr');
-            console.log(editorIframe);
             var editor = tinymce.get(me.getInputId());
             if (!editorIframe || editor.isHidden()) {
                 return;
