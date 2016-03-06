@@ -23,6 +23,17 @@ Ext.define('djem.view.main.MainController', {
             me.lookupReference('tabs').getActiveTab().fireEvent('show.toolbar', result);
         }).on('change.toolbar', function () {
             tabChange(me.lookupReference('tabs').getActiveTab());
+        }).on('deleteDocument', function (_this, data) {
+            Ext.MessageBox.confirm('Delete document', 'Delete ' +  data.title + ' ?', function (button) {
+                if (button == 'yes') {
+                    Ext.create('djem.store.main.Content').action('delete').load({
+                        callback: function () {
+                            // TODO: notify
+                        },
+                        params: { _doctype: data._doctype, id: data.id }
+                    });
+                }
+            });
         });
         me.lookupReference('tabs').on('tabchange', function (_this, newTab) {
             tabChange(newTab);

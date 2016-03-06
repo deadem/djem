@@ -27,6 +27,13 @@ class Content extends \Illuminate\Routing\Controller
         return $this->get();
     }
 
+    public function delete()
+    {
+        $doctype = $this->doctype();
+        (new $doctype)->delete();
+        return [];
+    }
+
     public function loadRelation()
     {
         $doctype = $this->doctype();

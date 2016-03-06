@@ -15,6 +15,7 @@ class DJEMServiceProvider extends ServiceProvider
             Route::any('djem/api', 'Api@getState');
             Route::any('djem/api/tree', config('djem.main').'@tree');
             Route::any('djem/api/grid', config('djem.main').'@grid');
+            Route::any('djem/api/content/delete', 'Api\Content@delete');
             Route::get('djem/api/content/load', 'Api\Content@loadRelation');
             Route::get('djem/api/content', 'Api\Content@get');
             Route::post('djem/api/content', 'Api\Content@set');

@@ -85,6 +85,10 @@ class Doctype extends \Illuminate\Routing\Controller
         abort(400, 'Override Doctype::loadRelation()');
     }
 
+    public function delete()
+    {
+    }
+
     /**
      * Получить список моделей, доступных для создания
      *

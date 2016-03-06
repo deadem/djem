@@ -95,7 +95,7 @@ Ext.define('djem.view.main.GridController', {
 
     cellcontextmenu: function (_this, td, cellIndex, record, tr, rowIndex, e) {
         var me = this;
-        var menu = ((me.getView().getStore().userOptions || {}).contextMenu || []).slice(0);
+        var menu = [];
         function handler(code) {
             return function () {
                 if (me[code]) {
@@ -105,10 +105,13 @@ Ext.define('djem.view.main.GridController', {
                 }
             };
         }
-        menu.splice(0, 0, {
+        menu.push({
             text: 'Edit',
             glyph: 'xf044@FontAwesome',
             handler: 'openDocument'
+        });
+        Ext.each((me.getView().getStore().userOptions || {}).contextMenu || [], function (v) {
+            menu.push(Ext.apply({}, v));
         });
         Ext.each(menu, function (v) {
             var command = v.handler;
@@ -155,6 +158,16 @@ Ext.define('djem.view.main.GridController', {
             title: data[me.titleField],
             _doctype: data._doctype,
             clone: options.clone ? record.id : undefined
+        });
+    },
+
+    deleteDocument: function (_this, record) {
+        var me = this;
+        var data = record.data || {};
+        djem.app.fireEvent('deleteDocument', _this, {
+            id: record.id,
+            title: data[me.titleField],
+            _doctype: data._doctype
         });
     }
 });

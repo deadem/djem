@@ -10,6 +10,11 @@ Ext.define('djem.store.main.Content', {
     model: 'djem.model.Content',
     autoLoad: false,
 
+    action: function (action) {
+        this.getProxy().setUrl('api/content' + '/' + action);
+        return this;
+    },
+
     proxy: {
         type: 'djem',
         url : 'api/content'
