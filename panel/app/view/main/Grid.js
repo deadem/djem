@@ -13,6 +13,12 @@ Ext.define('djem.view.main.Grid', {
         type: 'main-grid'
     },
 
+    viewConfig: {
+        getRowClass: function (record) {
+            return record.get('djem-grid-color') || '';
+        }
+    },
+
     listeners: {
         rowdblclick: 'rowdblclick',
         itemkeydown: 'itemkeydown',
