@@ -3,9 +3,15 @@ Ext.define('djem.widget.html', {
     extend: 'Ext.form.field.TextArea',
     alias: [ 'djem.html', 'widget.html' ],
 
-    editorConfig: undefined,
-
+    requires: [
+        'djem.store.FileUpload'
+    ],
     liquidLayout: false,
+
+    editorConfig: undefined,
+    files: null,
+
+    afterBodyEl: '<input type="file" style="visibility:hidden;" onchange="Ext.get(this).up().up().fireEvent(\'filechange\', this);">',
 
     listeners: {
         resize: function (_this, mW, height) {
@@ -45,22 +51,67 @@ Ext.define('djem.widget.html', {
         }
     },
 
+    beforeDestroy: function () {
+        var me = this;
+        var editor = tinymce.get(me.getInputId());
+        if (editor) {
+            editor.destroy(false);
+            var editorIframe = Ext.get(me.getInputId() + '_ifr');
+            if (editorIframe) {
+                editorIframe.destroy();
+            }
+        }
+
+        if (me.files) {
+            me.files.destroy();
+        }
+    },
+
     afterRender: function () {
         var me = this;
         me.callParent(arguments);
+        me.files = new Ext.create('djem.store.FileUpload');
         var id = me.inputEl.id;
+
+        me.getEl().on('filechange', function (target) {
+            Ext.each(target.files, function (file) {
+                file = me.files.lock(file);
+                me.files.upload([ file ], function (data) {
+                    console.log(data);
+                    var ref = Ext.get(target.getAttribute('refField')).dom;
+                    if (ref && data && data.length) {
+                        ref.value = file.url + '#' + data[0].file;
+                    }
+                });
+            });
+
+            event.preventDefault();
+            event.stopPropagation();
+        });
 
         var editor = tinymce.createEditor(id, Ext.apply({
             selector: '#' + id,
-            resize: false,
             statusbar: false,
+            relative_urls: false,
+            remove_script_host: true,
+
+            file_browser_callback: function (fieldName, url, type) {
+                if (type == 'image') {
+                    var el = me.getEl().down('input[type=file]').dom;
+                    el.setAttribute('refField', fieldName);
+                    el.click();
+                }
+            },
+            plugins: [ 'image' ],
+
             //elements : id,
             //mode : 'exact',
             //plugins: 'autoresize',
             //autoresize_min_height: 1,
             //autoresize_bottom_margin: 0,
             //autoresize_overflow_padding: 0,
-            menubar: false
+            menubar: false,
+            resize: false
         }, me.editorConfig));
 
         me.editor = editor;
