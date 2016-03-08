@@ -77,7 +77,6 @@ Ext.define('djem.widget.html', {
             Ext.each(target.files, function (file) {
                 file = me.files.lock(file);
                 me.files.upload([ file ], function (data) {
-                    console.log(data);
                     var ref = Ext.get(target.getAttribute('refField')).dom;
                     if (ref && data && data.length) {
                         ref.value = file.url + '#' + data[0].file;
