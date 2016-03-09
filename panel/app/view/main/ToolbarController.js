@@ -20,8 +20,8 @@ Ext.define('djem.view.main.ToolbarController', {
         var view = me.getView();
         view.on('change.toolbar', function (_this, name) {
             var toolbars = {
-                'main': [ 'add' ],
-                'content': [ 'save', 'close' ]
+                'panel': [ 'add' ],
+                'main-content': [ 'save', 'close' ]
             };
             var user = me.lookupReference('user');
             while (user.nextSibling()) {

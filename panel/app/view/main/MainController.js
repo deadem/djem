@@ -12,7 +12,7 @@ Ext.define('djem.view.main.MainController', {
         var me = this;
 
         function tabChange(newTab) {
-            me.lookupReference('toolbar').fireEvent('change.toolbar', newTab, (newTab && newTab.getReference()) || 'main');
+            me.lookupReference('toolbar').fireEvent('change.toolbar', newTab, (newTab && newTab.getXType()) || 'panel');
         }
 
         djem.app.on('update.toolbar', function (ref, data) {
@@ -62,7 +62,6 @@ Ext.define('djem.view.main.MainController', {
                     data: data,
                     title: title,
                     id: tabId,
-                    reference: 'content',
                     closable: true
                 }));
             }

@@ -1,4 +1,4 @@
-Ext.define('djem.view.main.Content',{
+Ext.define('djem.view.main.Content', {
     extend: 'Ext.form.Panel',
     alias: 'widget.main-content',
 
@@ -24,7 +24,6 @@ Ext.define('djem.view.main.Content',{
     },
 
     bind: {},
-    reference: 'content',
     bodyPadding: 10,
     autoScroll: true
 });

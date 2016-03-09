@@ -11,7 +11,7 @@ Ext.define('djem.widget.html', {
     editorConfig: undefined,
     files: null,
 
-    afterBodyEl: '<input type="file" style="visibility:hidden;" onchange="Ext.get(this).up().up().fireEvent(\'filechange\', this);">',
+    afterBodyEl: '<input type="file" style="display:none;" onchange="Ext.get(this).up().up().fireEvent(\'filechange\', this);">',
 
     listeners: {
         resize: function (_this, mW, height) {
@@ -83,9 +83,6 @@ Ext.define('djem.widget.html', {
                     }
                 });
             });
-
-            event.preventDefault();
-            event.stopPropagation();
         });
 
         var editor = tinymce.createEditor(id, Ext.apply({
