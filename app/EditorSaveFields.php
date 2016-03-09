@@ -103,19 +103,6 @@ class EditorSaveFields
         return $this;
     }
 
-    public function images($fields, $callable = null)
-    {
-        $this->ensureModelIdExists();
-        if (!is_array($fields)) {
-            $fields = [ $fields ];
-        }
-        foreach ($fields as $field) {
-            $this->deleteMissed($field);
-            $this->uploadFile($field, $callable, false);
-        }
-        return $this;
-    }
-
     public function file($fields, $callable = null)
     {
         $this->ensureModelIdExists();
@@ -128,22 +115,10 @@ class EditorSaveFields
         return $this;
     }
 
-    public function files($fields, $callable = null)
-    {
-        $this->ensureModelIdExists();
-        if (!is_array($fields)) {
-            $fields = [ $fields ];
-        }
-        foreach ($fields as $field) {
-            $this->deleteMissed($field);
-            $this->uploadFile($field, $callable, false);
-        }
-        return $this;
-    }
-
     private function uploadFile($field, $callable, $onlyOne)
     {
         $fieldValue = $this->get($field);
+
         if ($fieldValue !== null && is_array($fieldValue)) {
             if ($onlyOne && empty($fieldValue)) {
                 $this->detachRelation($this->model->{$field}());
@@ -155,6 +130,55 @@ class EditorSaveFields
                 if (isset($filename['file'])) {
                     // если переменная указана - это новый файл, который нужно подключить
                     $this->updateRelation($field, $callable($filename, $this->model->{$field}()->getRelated()));
+                }
+
+                if ($onlyOne) {
+                    break;
+                }
+            }
+        }
+    }
+
+    public function images($fields, $callable = null)
+    {
+        $this->ensureModelIdExists();
+        if (!is_array($fields)) {
+            $fields = [ $fields ];
+        }
+        foreach ($fields as $field) {
+            $this->deleteMissed($field);
+            $this->uploadFiles($field, $callable, false);
+        }
+        return $this;
+    }
+
+    public function files($fields, $callable = null)
+    {
+        $this->ensureModelIdExists();
+        if (!is_array($fields)) {
+            $fields = [ $fields ];
+        }
+        foreach ($fields as $field) {
+            $this->deleteMissed($field);
+            $this->uploadFiles($field, $callable, false);
+        }
+        return $this;
+    }
+
+    private function uploadFiles($field, $callable, $onlyOne)
+    {
+        $fieldValue = $this->get($field);
+
+        if ($fieldValue !== null && is_array($fieldValue)) {
+            if ($onlyOne && empty($fieldValue)) {
+                $this->detachRelation($this->model->{$field}());
+            }
+            foreach ($fieldValue as $filename) {
+                if ($onlyOne && isset($filename['file'])) {
+                    $this->detachRelation($this->model->{$field}());
+                }
+                if (is_callable($callable)) {
+                    $callable($filename);
                 }
 
                 if ($onlyOne) {
