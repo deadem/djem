@@ -44,7 +44,7 @@ Ext.define('djem.widget.html', {
                 newHeight -= editorStatusbar.getHeight();
             }
 
-            var borderOffset = 2;
+            var borderOffset = 3;
 
             me.lastFrameHeight = newHeight - borderOffset;
             editorIframe.setHeight(newHeight - borderOffset);
