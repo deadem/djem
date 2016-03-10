@@ -9,6 +9,8 @@ Ext.define('djem.view.main.Main', {
         'djem.view.main.Content',
         'djem.view.main.Toolbar',
 
+        'widget.image',
+
         'djem.widget.html',
         'djem.widget.image',
         'djem.widget.images',
