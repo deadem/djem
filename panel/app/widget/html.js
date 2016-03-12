@@ -98,7 +98,7 @@ Ext.define('djem.widget.html', {
                     el.click();
                 }
             },
-            plugins: [ 'image' ],
+            plugins: [ 'image', 'link' ],
 
             //elements : id,
             //mode : 'exact',
