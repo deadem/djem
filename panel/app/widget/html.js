@@ -4,7 +4,8 @@ Ext.define('djem.widget.html', {
     alias: [ 'djem.html', 'widget.html' ],
 
     requires: [
-        'djem.store.FileUpload'
+        'djem.store.FileUpload',
+        'djem.widget.htmlPlugins.removeTags'
     ],
     liquidLayout: false,
 
@@ -85,6 +86,13 @@ Ext.define('djem.widget.html', {
             });
         });
 
+        var toolbar = null;
+        if (me.editorConfig && me.editorConfig.mergeToolbar) {
+            // Копипаста из темы по умолчанию, иначе никак его не получить
+            toolbar = 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                       'bullist numlist outdent indent | link image | ' + me.editorConfig.mergeToolbar.join(' ');
+        }
+
         var editor = tinymce.createEditor(id, Ext.apply({
             selector: '#' + id,
             statusbar: false,
@@ -98,7 +106,8 @@ Ext.define('djem.widget.html', {
                     el.click();
                 }
             },
-            plugins: [ 'image', 'link' ],
+            plugins: [ 'image', 'link', 'removeTags' ],
+            toolbar: toolbar,
 
             //elements : id,
             //mode : 'exact',
