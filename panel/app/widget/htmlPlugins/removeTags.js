@@ -17,6 +17,7 @@ Ext.define('djem.widget.htmlPlugins.removeTags', {});
                         div.parentNode.removeChild(div);
                     }
                     editor.selection.setContent(sel);
+                    editor.save();
                 }
             });
         },
