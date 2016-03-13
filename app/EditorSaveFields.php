@@ -27,6 +27,12 @@ class EditorSaveFields
         return null;
     }
 
+    private function set($field, $value)
+    {
+        $this->input[$field] = $value;
+        return $this;
+    }
+
     public function model()
     {
         return $this->model;
@@ -101,6 +107,35 @@ class EditorSaveFields
             $this->uploadFile($field, $callable, true);
         }
         return $this;
+    }
+
+    public function imageCopy($fields, $callable = null)
+    {
+        $referenceValue = null;
+
+        $this->ensureModelIdExists();
+        if (!is_array($fields)) {
+            $fields = [ $fields ];
+        }
+        foreach ($fields as $field) {
+            $fieldValue = $this->get($field);
+            $hasImage = false;
+            if ($fieldValue !== null && is_array($fieldValue)) {
+                foreach ($fieldValue as $filename) {
+                    if (isset($filename['file']) && !empty($filename['file'])) {
+                        if (!$referenceValue) {
+                            $referenceValue = $fieldValue;
+                        }
+                        $hasImage = true;
+                    }
+                }
+            }
+            if (!$hasImage && !$this->model()->{$field}()->first()) {
+                // если картинки ещё нет - добавим копию
+                $this->set($field, $referenceValue);
+            }
+        }
+        return $this->image($fields, $callable);
     }
 
     public function file($fields, $callable = null)
