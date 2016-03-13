@@ -5,7 +5,6 @@ Ext.define('djem.view.main.ContentController', {
 
     loadingMask: null,
 
-
     updateButtons: function () {
         var me = this;
         djem.app.fireEvent('update.toolbar', 'save', { action: me.getView().isDirty() ? 'enable' : 'disable' });
@@ -89,9 +88,16 @@ Ext.define('djem.view.main.ContentController', {
                 'close': function () { me.onClose(); }
             };
             (actions[ref] || function () {})();
-        });
-        view.on('show.toolbar', function (result) {
+        }).on('show.toolbar', function (result) {
             result.value = me.store.toolbar || [];
+        }).on('update.title', function (data) {
+            var _this = this;
+            data = data || {};
+            if (typeof data != 'object') {
+                data = {};
+            }
+            data.id = _this.id;
+            djem.app.fireEvent('update.tab', _this, data);
         });
         view.getForm().on('dataReady', function () { me.onSyncData(); });
 

@@ -34,6 +34,15 @@ Ext.define('djem.view.main.MainController', {
                     });
                 }
             });
+        }).on('update.tab', function (_this, data) {
+            var tabs = me.lookupReference('tabs');
+            var tabId = data.id;
+            var tab = tabs.query('#' + tabId)[0];
+            if (tab) {
+                if (data.title) {
+                    tab.setTitle(data.title);
+                }
+            }
         });
         me.lookupReference('tabs').on('tabchange', function (_this, newTab) {
             tabChange(newTab);
