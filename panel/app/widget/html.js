@@ -86,12 +86,13 @@ Ext.define('djem.widget.html', {
             });
         });
 
-        var toolbar = null;
+        // Копипаста из темы по умолчанию, иначе никак его не получить
+        var toolbar = 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                       'bullist numlist outdent indent | link image ';
         if (me.editorConfig && me.editorConfig.mergeToolbar) {
-            // Копипаста из темы по умолчанию, иначе никак его не получить
-            toolbar = 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
-                       'bullist numlist outdent indent | link image | ' + me.editorConfig.mergeToolbar.join(' ');
+            toolbar += ' | ' + me.editorConfig.mergeToolbar.join(' ');
         }
+        toolbar += ' | code ';
 
         var editor = tinymce.createEditor(id, Ext.apply({
             selector: '#' + id,
@@ -106,7 +107,7 @@ Ext.define('djem.widget.html', {
                     el.click();
                 }
             },
-            plugins: [ 'image', 'link', 'removeTags' ],
+            plugins: [ 'image', 'link', 'removeTags', 'code' ],
             toolbar: toolbar,
 
             //elements : id,
