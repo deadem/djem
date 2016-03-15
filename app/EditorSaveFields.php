@@ -88,8 +88,10 @@ class EditorSaveFields
             $this->model->{$field} = preg_replace_callback('/(<img.*?src=\s*([\'"]))(.*?)(\\2)/is', function ($matches) use ($field, $relation, $callable) {
                 if (preg_match('/^blob:http.*?#(.+)$/i', $matches[3], $urls)) {
                     $value = $callable([ 'file' => $urls[1] ], $this->model->{$relation}()->getRelated());
-                    $this->updateRelation($relation, $value);
-                    return $matches[1].htmlentities($value->url).$matches[4];
+                    if ($value) {
+                        $this->updateRelation($relation, $value);
+                        return $matches[1].htmlentities($value->url).$matches[4];
+                    }
                 }
                 return $matches[0];
             }, $this->model->{$field});
