@@ -14,7 +14,7 @@ Ext.data.Connection.override({
                 }
             }
 
-            if (request.xhr && request.xhr.status != 200) {
+            if (request.xhr && request.xhr.status == 401) {
                 if (options.whisper !== true) {
                     if (!options.proxy || options.proxy.retry !== false) {
                         djem.app.on('authorized', function() {

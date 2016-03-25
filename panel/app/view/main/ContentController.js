@@ -1,4 +1,4 @@
-/* global Ext, djem */
+/* global Ext, djem, JSON */
 Ext.define('djem.view.main.ContentController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.main-content',
@@ -54,6 +54,20 @@ Ext.define('djem.view.main.ContentController', {
                 if (me.loadingMask) {
                     me.loadingMask.hide();
                 }
+            },
+            failure: function (response) {
+                Ext.each(response.exceptions, function (exception) {
+                    var messages = {};
+                    try {
+                        messages = JSON.parse(exception.error.response.responseText);
+                        Ext.each(me.getView().getForm().getFields().items, function (item) {
+                            if (messages[item.name]) {
+                                item.markInvalid(messages[item.name].join(' '));
+                            }
+                        });
+                    } catch (ex) {
+                    }
+                });
             }
         });
     },
