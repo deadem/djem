@@ -79,14 +79,22 @@ Ext.define('djem.view.main.GridController', {
             }
 
             var parent = me.getView().lookupReferenceHolder();
+            var view = parent.lookupReference('grid-view');
+
             if (meta.view) {
                 // замена вьювера
                 parent.lookupReference('grid').hide();
-                parent.lookupReference('grid-view').show();
+                view.show();
+                view.add(Ext.create('widget.main-content', {
+                    data: meta
+                }));
                 return;
             }
-            parent.lookupReference('grid-view').hide();
+            view.hide();
             parent.lookupReference('grid').show();
+            if (view.down()) {
+                view.down().destroy();
+            }
 
             _store.model.replaceFields(meta.fields, true);
             me.getView().reconfigure(_store, meta.columns);

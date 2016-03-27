@@ -15,6 +15,10 @@ class Content extends \Illuminate\Routing\Controller
     public function get()
     {
         $doctype = $this->doctype();
+        if (Input::get('raw')) {
+            return (new $doctype)->load();
+        }
+
         return [
             'metaData' => (new $doctype)->load()
         ];
