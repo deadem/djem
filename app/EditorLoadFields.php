@@ -3,6 +3,7 @@
 namespace DJEM;
 
 use Input;
+use DB;
 
 class EditorLoadFields
 {
@@ -29,11 +30,13 @@ class EditorLoadFields
         }
 
         $this->model->fill($this->input);
-        if ($callable) {
-            $callable(new EditorSaveFields($this->doctype, $this->model, $this->input));
-        }
+        DB::transaction(function () use ($callable) {
+            if ($callable) {
+                $callable(new EditorSaveFields($this->doctype, $this->model, $this->input));
+            }
 
-        $this->model->save();
+            $this->model->save();
+        });
         Input::merge([ 'id' => $this->model->id ]);
         return $this;
     }
