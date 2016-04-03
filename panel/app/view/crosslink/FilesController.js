@@ -1,44 +1,44 @@
+/* global Ext */
 Ext.define('djem.view.crosslink.FilesController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.crosslink-files',
 
-    lockedUrls: [],
+    uploader: Ext.create('djem.store.FileUpload'),
+
     field: undefined,
     dragState: {
         _innerState: {},
-        setExisting: function(existing) { this._innerState.existing = !!existing; },
-        isExisting: function() { return !!this._innerState.existing; },
-        addRecord: function(newRecord) {
+        setExisting: function (existing) { this._innerState.existing = !!existing; },
+        isExisting: function () { return !!this._innerState.existing; },
+        addRecord: function (newRecord) {
             var exists = false;
-            Ext.each(this._innerState.records, function(record) {
+            Ext.each(this._innerState.records, function (record) {
                 if (newRecord.id == record.id) {
                     exists = true;
                     return false;
                 }
             });
-            if (exists == false) {
+            if (!exists) {
                 this._innerState.records.push(newRecord);
             }
         },
-        getRecords: function() { return this._innerState.records; },
-        isDrag: function() { return !!this._innerState.count; },
-        inc: function() { return ++this._innerState.count; },
-        dec: function() { return this._innerState.count = Math.max(0, this._innerState.count - 1); },
-        reset: function() {
+        getRecords: function () { return this._innerState.records; },
+        isDrag: function () { return !!this._innerState.count; },
+        inc: function () { return ++this._innerState.count; },
+        dec: function () { return (this._innerState.count = Math.max(0, this._innerState.count - 1)); },
+        reset: function () {
             this.setExisting(false);
             this._innerState.records = [];
             this._innerState.count = 0;
         }
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         var me = this;
-        Ext.each(me.lockedUrls, function(obj) {
-            window.URL.revokeObjectURL(obj);
-        });
+        me.uploader.destroy();
     },
 
-    startDrag: function(e) {
+    startDrag: function (e) {
         var me = this;
         me.dragState.setExisting(true);
         var dom = Ext.get(e.target).up('.thumb-wrap');
@@ -52,57 +52,13 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    upload: function(records, callback) {
-        var me = this;
-        if (records.length == 0) {
-            callback([]);
-            return;
-        }
-        var url = 'api/files/upload';
-        var xhr = new XMLHttpRequest();
-        var form = new FormData();
-
-        xhr.open('POST', url, true);
-        xhr.onreadystatechange = function() {
-            var data = false;
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    try {
-                        djem.app.fireEvent('token', xhr.getResponseHeader('x-csrf-token'));
-                        data = JSON.parse(xhr.responseText);
-                        callback(data);
-                        return;
-                    } catch(ex) {
-                    }
-                }
-                if (xhr.status == 500) {
-                    Ext.MessageBox.show({ title: 'Error', msg: xhr.response });
-                } else if (xhr.status != 200) {
-                    // если произошла ошибка - проверим авторизацию
-                    djem.app.fireEvent('initSession', {
-                        success: function() {
-                            me.upload(records, callback);
-                        }
-                    });
-                    return;
-                }
-                callback(false);
-            }
-        };
-        form.append('_token', SharedData.token);
-        Ext.each(records, function(record) {
-            form.append('data[]', record.get('file'));
-        });
-        xhr.send(form);
-    },
-
-    uploadFiles: function() {
+    uploadFiles: function () {
         var maxRequestSize = 0; // 0 - каждый файл заливаем отдельно
         var me = this;
 
         var filePacks = [];
         var pack = { size: 0, records: [] };
-        Ext.each(me.getView().getStore().getNewRecords(), function(record) {
+        Ext.each(me.getView().getStore().getNewRecords(), function (record) {
             var file = record.get('file');
             if (file && record.get('new') !== undefined) {
                 record.set('new', 'new upload');
@@ -119,12 +75,14 @@ Ext.define('djem.view.crosslink.FilesController', {
         function uploadNext(i) {
             if (!filePacks[i]) {
                 me.setDirty(true);
-                me.field && me.field.fireEvent('dataReady');
+                if (me.field) {
+                    me.field.fireEvent('dataReady');
+                }
                 return;
             }
-            me.upload(filePacks[i].records, function(successData) {
+            me.uploader.upload(filePacks[i].records, function (successData) {
                 if (successData) {
-                    Ext.each(filePacks[i].records, function(record, index) {
+                    Ext.each(filePacks[i].records, function (record, index) {
                         var data = successData[index];
                         record.set({
                             'new': undefined,
@@ -139,16 +97,15 @@ Ext.define('djem.view.crosslink.FilesController', {
         uploadNext(0);
     },
 
-    dropFiles: function(e) {
+    dropFiles: function (e) {
         var me = this;
         if (!me.dragState.isExisting()) {
             var items = [];
-            Ext.each(e.dataTransfer.files, function(file) {
-                var url = window.URL.createObjectURL(file);
-                me.lockedUrls.push(url);
+            Ext.each(e.dataTransfer.files, function (file) {
+                file = me.uploader.lock(file);
                 var record = {
-                    url: url,
-                    file: file,
+                    url: file.url,
+                    file: file.file,
                     name: file.name,
                     height: 64,
                     'new': 'new'
@@ -165,7 +122,7 @@ Ext.define('djem.view.crosslink.FilesController', {
         me.setDirty(true);
     },
 
-    showDropZone: function(e) {
+    showDropZone: function (e) {
         var me = this;
         if (e.type == 'dragenter') { me.dragState.inc(); }
         if (e.type == 'dragleave') { me.dragState.dec(); }
@@ -183,14 +140,13 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    init: function() {
+    init: function () {
         var me = this;
-        me.startDragHandler = { handleEvent: function(evt) { return me.startDrag(evt); } };
-        me.showDropZoneHandler = { handleEvent: function(evt) { return me.showDropZone(evt); } };
-        me.dropFilesHandler = { handleEvent: function(evt) { return me.dropFiles(evt); } };
+        me.startDragHandler = { handleEvent: function (evt) { return me.startDrag(evt); } };
+        me.showDropZoneHandler = { handleEvent: function (evt) { return me.showDropZone(evt); } };
+        me.dropFilesHandler = { handleEvent: function (evt) { return me.dropFiles(evt); } };
         me.dragState = Ext.Object.merge({}, me.dragState);
         me.dragState.reset();
-        me.lockedUrls = [];
         if (me.getView().single) {
             me.getView().addCls('x-form-crosslink-files-single');
         }
@@ -199,12 +155,12 @@ Ext.define('djem.view.crosslink.FilesController', {
             ' onchange="Ext.get(this.parentNode).fireEvent(\'filechange\', this);">';
     },
 
-    onBeforeDestroy: function() {
+    onBeforeDestroy: function () {
         var me = this;
         me.processDropZone(true);
     },
 
-    setDirty: function(isDirty) {
+    setDirty: function (isDirty) {
         var me = this;
         function cleanup(data) {
             if (Array.isArray(data)) {
@@ -212,7 +168,9 @@ Ext.define('djem.view.crosslink.FilesController', {
                     cleanup(data[i]);
                 }
             }
-            data && typeof data == 'object' && delete data[idProperty];
+            if (data && typeof data == 'object') {
+                delete data[idProperty];
+            }
         }
         if (me.field) {
             if (isDirty) {
@@ -228,36 +186,36 @@ Ext.define('djem.view.crosslink.FilesController', {
         //me.field.setValue(Ext.pluck(me.getView().getStore().data.items, 'data'));
     },
 
-    initAfterRender: function(cmp) {
+    initAfterRender: function () {
         var me = this;
         me.processDropZone(false);
         var form = me.getView().up('form');
         if (form) {
-            me.getView().on('initValue', function() {
+            me.getView().on('initValue', function () {
                 me.setDirty(true);
                 me.field.resetOriginalValue();
             });
 
             var field = Ext.create('djem.view.crosslink.FileField', { name: me.getView().name });
             me.field = form.add(field);
-            me.field.on('dataReady', function() {
+            me.field.on('dataReady', function () {
                 form.getForm().fireEvent('dataReady');
             });
-            form.getForm().on('syncFields', function() {
+            form.getForm().on('syncFields', function () {
                 if (!me.field.validate()) {
                     // если не загружали файл на сервер - загрузим
                     me.uploadFiles();
                 }
             });
         }
-        me.getView().getEl().on('filechange', function(target) {
+        me.getView().getEl().on('filechange', function (target) {
             if (target) {
                 me.dropFiles({ dataTransfer: target });
             }
             event.preventDefault();
             event.stopPropagation();
         });
-        me.getView().getEl().on('click', function(e) {
+        me.getView().getEl().on('click', function (e) {
             if (Ext.get(e.target).hasCls('trash')) {
                 var dom = Ext.get(e.target).up('.thumb-wrap');
                 var record = dom && me.getView().getRecord(dom);
@@ -270,19 +228,23 @@ Ext.define('djem.view.crosslink.FilesController', {
         });
     },
 
-    processDropZone: function(remove) {
+    processDropZone: function (remove) {
         var me = this;
-        Ext.each(['dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'], function(type) {
+        Ext.each([ 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop' ], function (type) {
             Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler);
         });
         var view = me.getView().getEl();
-        Ext.each([ 'dragstart', 'drag' ], function(type) {
-            view && view.dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
+        Ext.each([ 'dragstart', 'drag' ], function (type) {
+            if (view) {
+                view.dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
+            }
         });
-        view && view.dom[remove === true ? 'removeEventListener' : 'addEventListener']('drop', me.dropFilesHandler);
+        if (view) {
+            view.dom[remove === true ? 'removeEventListener' : 'addEventListener']('drop', me.dropFilesHandler);
+        }
     },
 
-    initViewModel: function() {
+    initViewModel: function () {
         var me = this;
         me.getView().setStore(Ext.create('djem.store.CrossLink', { model: 'djem.model.Files' }));
         me.dragState.reset();
@@ -295,8 +257,8 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    // редактор 
-    onItemDblClick: function (element, record, item, index, evt, eOpts) {
+    // редактор
+    onItemDblClick: function (element, record) {
         var me = this;
         var view = element.up('main-content');
         var widget = Ext.widget('crosslink.Editor', { title: (record.data && record.data.name) || 'Editor', data: view.config.data });

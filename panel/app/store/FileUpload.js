@@ -16,6 +16,10 @@ Ext.define('djem.store.FileUpload', {
     upload: function (records, callback) {
         var me = this;
         callback = callback || function () {};
+        if (!records.length) {
+            callback([]);
+            return;
+        }
 
         var url = 'api/files/upload';
         var xhr = new XMLHttpRequest();
@@ -36,6 +40,11 @@ Ext.define('djem.store.FileUpload', {
                 }
                 if (xhr.status == 500) {
                     Ext.MessageBox.show({ title: 'Error', msg: xhr.response });
+                } else if (xhr.status == 413) {
+                    Ext.each(records, function (record) {
+                        record.set('new', 'new error');
+                    });
+                    Ext.MessageBox.show({ title: 'File too big', msg: xhr.response });
                 } else if (xhr.status != 200) {
                     // если произошла ошибка - проверим авторизацию
                     djem.app.fireEvent('initSession', {
@@ -50,7 +59,7 @@ Ext.define('djem.store.FileUpload', {
         };
         form.append('_token', SharedData.token);
         Ext.each(records, function (record) {
-            form.append('data[]', record.file);
+            form.append('data[]', record.get('file'));
         });
         xhr.send(form);
     },
