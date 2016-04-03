@@ -59,6 +59,7 @@ Ext.define('djem.view.main.Main', {
                 layout: 'fit',
                 items: [ {
                     xtype: 'panel',
+                    layout: 'fit',
                     hidden: true,
                     reference: 'grid-view'
                 }, {
