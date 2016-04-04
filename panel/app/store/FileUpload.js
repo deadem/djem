@@ -6,11 +6,16 @@ Ext.define('djem.store.FileUpload', {
         var me = this;
         var url = window.URL.createObjectURL(file);
         me.lockedUrls.push(url);
-        return {
+
+        var record = {
             url: url,
             file: file,
             name: file.name
         };
+        record.get = function (name) {
+            return record[name];
+        };
+        return record;
     },
 
     upload: function (records, callback) {
