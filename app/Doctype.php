@@ -16,7 +16,14 @@ class Doctype extends \Illuminate\Routing\Controller
      *
      * @var class
      */
-    public $model = null;
+    public $model;
+
+    /**
+     * Контроллер, которому должно быть передано управление при обработке http-запроса к этому типу.
+     *
+     * @var class
+     */
+    public $controller;
 
     /**
      * Поиск данных для отображения по URL
@@ -26,9 +33,31 @@ class Doctype extends \Illuminate\Routing\Controller
      * @return object класс с полями doctype, refid для отображения соответствующим
      *         типом модели, найденной по идентификатору.
      */
-    public function view($url, $urlModel)
+    public static function findUrl($url, $urlModel)
     {
-        return $this->viewAddress($urlModel::where('url', '=', $url)->first());
+        $address = $urlModel::where('url', '=', $url)->first();
+        if (!$address) {
+            abort(404);
+        }
+        return $address;
+    }
+
+    /**
+     * Поиск и создание прокси-объекта для вызова методов типа документа.
+     *
+     * @param  string $url      URL.
+     * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     * @return DoctypeResolver прокси-объект для вызова типа документа.
+     */
+    public static function find($url, $urlModel)
+    {
+        $address = self::findUrl($url, $urlModel);
+
+        return new DoctypeResolver(new $address->doctype, [
+            $urlModel => function () use ($address) {
+                return $address;
+            }
+        ]);
     }
 
     /**
@@ -39,31 +68,6 @@ class Doctype extends \Illuminate\Routing\Controller
     public function gridView()
     {
         return [];
-    }
-
-    /**
-     * Загрузка из объекта URL данных из типа документа и вызов метода renderView для отображения
-     *
-     * @param  object $address С полями doctype, refid
-     * @return object Данные для отображения
-     */
-    public function viewAddress($address)
-    {
-        if (!$address) {
-            abort(404);
-        }
-        return (new $address->doctype)->render($address->refid);
-    }
-
-    /**
-     * Перегружаемая функция, рендерит указанную модель
-     *
-     * @param  string $id Идентификатор.
-     * @return object данные для отображения.
-     */
-    public function render($id)
-    {
-        return [ 'model' => $this->model, 'id' => $id ];
     }
 
     public function getModelView()
