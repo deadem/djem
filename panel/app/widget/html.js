@@ -107,7 +107,7 @@ Ext.define('djem.widget.html', {
                     el.click();
                 }
             },
-            plugins: [ 'image', 'link', 'removeTags' ],
+            plugins: [ 'image', 'link', 'removeTags', 'code' ],
             toolbar: toolbar,
             object_resizing: false,
             image_dimensions: false,
