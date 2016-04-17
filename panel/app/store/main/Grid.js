@@ -8,7 +8,7 @@ Ext.define('djem.store.main.Grid', {
     model: 'Ext.data.Model',
     autoLoad: false,
 
-    pageSize: 100,
+    pageSize: 300,
     remoteSort: true,
 
     proxy: {
