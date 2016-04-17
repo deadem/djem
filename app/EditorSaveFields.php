@@ -245,7 +245,7 @@ class EditorSaveFields
 
     private function updateRelation($field, $fieldValue)
     {
-        if ($fieldValue === null) {
+        if (empty($fieldValue)) {
             return $this;
         }
         $collection = $this->model->{$field}();
