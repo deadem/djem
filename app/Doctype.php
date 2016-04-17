@@ -33,7 +33,7 @@ class Doctype extends \Illuminate\Routing\Controller
      * @return object класс с полями doctype, refid для отображения соответствующим
      *         типом модели, найденной по идентификатору.
      */
-    public static function findUrl($url, $urlModel)
+    public function findUrl($url, $urlModel)
     {
         $address = $urlModel::where('url', '=', $url)->first();
         if (!$address) {
@@ -49,9 +49,9 @@ class Doctype extends \Illuminate\Routing\Controller
      * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
      * @return DoctypeResolver прокси-объект для вызова типа документа.
      */
-    public static function find($url, $urlModel)
+    public function find($url, $urlModel)
     {
-        $address = self::findUrl($url, $urlModel);
+        $address = $this->findUrl($url, $urlModel);
 
         return new DoctypeResolver(new $address->doctype, [
             $urlModel => function () use ($address) {
