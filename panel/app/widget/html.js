@@ -16,40 +16,51 @@ Ext.define('djem.widget.html', {
 
     listeners: {
         resize: function (_this, mW, height) {
-            var me = this;
-            if (!me.editor) {
-                return;
-            }
-            var editorIframe = Ext.get(me.getInputId() + '_ifr');
-            var editor = tinymce.get(me.getInputId());
-            if (!editorIframe || editor.isHidden()) {
-                return;
-            }
-
-            var parent = editorIframe.up('.mce-edit-area');
-            parent = parent.up('.mce-container-body');
-
-            var newHeight = height;
-            var editorToolbar = parent.down('.mce-toolbar-grp');
-            if (editorToolbar) {
-                newHeight -= editorToolbar.getHeight();
-            }
-
-            var editorMenubar = parent.down('.mce-menubar');
-            if (editorMenubar) {
-                newHeight -= editorMenubar.getHeight();
-            }
-
-            var editorStatusbar = parent.down('.mce-statusbar');
-            if (editorStatusbar) {
-                newHeight -= editorStatusbar.getHeight();
-            }
-
-            var borderOffset = 3;
-
-            me.lastFrameHeight = newHeight - borderOffset;
-            editorIframe.setHeight(newHeight - borderOffset);
+            this.sizeChanged(_this, mW, height);
         }
+    },
+
+    sizeChanged: function (_this, mW, height) {
+        var me = this;
+        if (!me.editor) {
+            Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
+            return;
+        }
+        var editorIframe = Ext.get(me.getInputId() + '_ifr');
+        var editor = tinymce.get(me.getInputId());
+        if (!editorIframe || editor.isHidden()) {
+            Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
+            return;
+        }
+
+        var parent = editorIframe.up('.mce-edit-area');
+        parent = parent.up('.mce-container-body');
+
+        var newHeight = height;
+        var editorToolbar = parent.down('.mce-toolbar-grp');
+        if (editorToolbar) {
+            newHeight -= editorToolbar.getHeight();
+        }
+
+        if (newHeight < 0) {
+            Ext.Function.defer(function () { me.up('panel').doLayout(); }, 250);
+            return;
+        }
+
+        var editorMenubar = parent.down('.mce-menubar');
+        if (editorMenubar) {
+            newHeight -= editorMenubar.getHeight();
+        }
+
+        var editorStatusbar = parent.down('.mce-statusbar');
+        if (editorStatusbar) {
+            newHeight -= editorStatusbar.getHeight();
+        }
+
+        var borderOffset = 3;
+
+        me.lastFrameHeight = newHeight - borderOffset;
+        editorIframe.setHeight(newHeight - borderOffset);
     },
 
     beforeDestroy: function () {
