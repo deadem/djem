@@ -3,6 +3,11 @@ Ext.define('djem.view.crosslink.FilesController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.crosslink-files',
 
+    config: {
+        imageControlValue: 'background-position',
+        imageControlUnits: 'px'
+    },
+
     uploader: Ext.create('djem.store.FileUpload'),
 
     field: undefined,
@@ -30,6 +35,18 @@ Ext.define('djem.view.crosslink.FilesController', {
             this.setExisting(false);
             this._innerState.records = [];
             this._innerState.count = 0;
+        }
+    },
+
+    getImageControlValue: function (el) {
+        return (el.getStyleValue(this.imageControlValue) || '0 0').match(/\d+|-\d+/g);
+    },
+
+    setImageControlValue: function (el, pos) {
+        if (Ext.isObject(el)) {
+            el.setStyle(this.imageControlValue, pos);
+        } else {
+            this.imageControlValue = el;
         }
     },
 
@@ -269,5 +286,25 @@ Ext.define('djem.view.crosslink.FilesController', {
             record.commit();
             me.setDirty(true);
         }, this, { single: true });
+    },
+
+    isLeftMouseBtnPressed: function (evt) {
+        if ('buttons' in evt) {
+            return evt.buttons == 1;
+        }
+        var button = evt.which || evt.button;
+        return button == 1;
+    },
+
+    onMouseMove: function (evt, element) {
+        var me = this;
+        if (me.getView().getStore().getCount() && me.isLeftMouseBtnPressed(evt.event)) {
+            var el = Ext.get(element),
+                offset = [ evt.event.movementX, evt.event.movementY ];
+
+            me.setImageControlValue(el, me.getImageControlValue(el).map(function (val, index) {
+                return Math.min(0, parseInt(val, 10)) + offset[index] + me.getImageControlUnits();
+            }).join(' '));
+        }
     }
 });

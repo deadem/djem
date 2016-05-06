@@ -23,13 +23,15 @@ Ext.define('djem.widget.html', {
     sizeChanged: function (_this, mW, height) {
         var me = this;
         if (!me.editor) {
-            Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
+            // если оставить, то новая правка (onLoadContent tinymce) не отрабатывает
+            // Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
             return;
         }
         var editorIframe = Ext.get(me.getInputId() + '_ifr');
         var editor = tinymce.get(me.getInputId());
         if (!editorIframe || editor.isHidden()) {
-            Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
+            // если оставить, то новая правка (onLoadContent tinymce) не отрабатывает
+            // Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
             return;
         }
 
@@ -43,7 +45,9 @@ Ext.define('djem.widget.html', {
         }
 
         if (newHeight < 0) {
-            Ext.Function.defer(function () { me.up('panel').doLayout(); }, 250);
+            // Это почему то больше не вызывается,
+            // т.е. высота теперь всегда приходит корректная
+            // Ext.Function.defer(function () { me.up('panel').doLayout(); }, 250);
             return;
         }
 
@@ -138,6 +142,12 @@ Ext.define('djem.widget.html', {
         // set initial value when the editor has been rendered
         editor.on('init', function () {
             editor.setContent(me.value || '');
+        });
+
+        editor.on('loadContent', function () {
+            Ext.Function.defer(function () {
+                me.up('panel').doLayout();
+            }, 250);
         });
 
         // render
