@@ -15,21 +15,24 @@ Ext.define('djem.widget.html', {
     afterBodyEl: '<input type="file" style="display:none;" onchange="Ext.get(this).up().up().fireEvent(\'filechange\', this);">',
 
     listeners: {
-        resize: function (_this, mW, height) {
-            this.sizeChanged(_this, mW, height);
+        resize: function (_this, width, height) {
+            this.sizeChanged(_this, width, height);
         }
     },
 
-    sizeChanged: function (_this, mW, height) {
+    afterComponentLayout: function(width, height) {
+        this.callParent(arguments);
+        this.sizeChanged(this, width, height);
+    },
+
+    sizeChanged: function (_this, width, height) {
         var me = this;
         if (!me.editor) {
-//            Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
             return;
         }
         var editorIframe = Ext.get(me.getInputId() + '_ifr');
         var editor = tinymce.get(me.getInputId());
         if (!editorIframe || editor.isHidden()) {
-//            Ext.Function.defer(me.sizeChanged, 250, me, [ _this, mW, height ]);
             return;
         }
 
@@ -43,7 +46,6 @@ Ext.define('djem.widget.html', {
         }
 
         if (newHeight < 0) {
-  //          Ext.Function.defer(function () { me.up('panel').doLayout(); }, 250);
             return;
         }
 
@@ -142,7 +144,7 @@ Ext.define('djem.widget.html', {
 
         editor.on('loadContent', function () {
             Ext.Function.defer(function () {
-                me.up('panel').doLayout();
+                me.updateLayout();
             }, 250);
         });
 
