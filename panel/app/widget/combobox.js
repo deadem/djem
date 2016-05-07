@@ -43,7 +43,7 @@ Ext.define('djem.widget.combobox', {
         }
     },
 
-    reset: function() {
+    initStore: function() {
         var me = this;
         var store = me.getStore();
         if (store && me.queryMode == 'remote') {
@@ -58,10 +58,10 @@ Ext.define('djem.widget.combobox', {
 
     listeners: {
         added: function() {
-            return this.reset();
+            return this.initStore();
         },
-        reset: function() {
-            return this.reset();
+        initStore: function() {
+            return this.initStore();
         }
     }
 });
