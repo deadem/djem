@@ -16,7 +16,7 @@ Ext.define('djem.widget.combobox', {
 
     afterRender: function() {
         var me = this;
-        me.getEl().on('click', function (evt) {
+        me.getEl().on('click', function(evt) {
             if (me.getStore().isLoaded()) {
                 me.expand();
             } else {
@@ -43,18 +43,25 @@ Ext.define('djem.widget.combobox', {
         }
     },
 
+    reset: function() {
+        var me = this;
+        var store = me.getStore();
+        if (store && me.queryMode == 'remote') {
+            var view = me.up('main-content') || me.up('crosslink-editor');
+            store.getProxy().setExtraParams({
+                '_doctype': view.config.data._doctype,
+                'id': view.config.data.id,
+                'field': me.name
+            });
+        }
+    },
+
     listeners: {
         added: function() {
-            var me = this;
-            var store = me.getStore();
-            if (store && me.queryMode == 'remote') {
-                var view = me.up('main-content') || me.up('crosslink-editor');
-                store.getProxy().setExtraParams({
-                    '_doctype': view.config.data._doctype,
-                    'id': view.config.data.id,
-                    'field': me.name
-                });
-            }
+            return this.reset();
+        },
+        reset: function() {
+            return this.reset();
         }
     }
 });
