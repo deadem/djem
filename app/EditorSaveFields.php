@@ -166,7 +166,10 @@ class EditorSaveFields
                 }
                 if (isset($filename['file'])) {
                     // если переменная указана - это новый файл, который нужно подключить
-                    $this->updateRelation($field, $callable($filename, $this->model->{$field}()->getRelated()));
+                    $value = $callable($filename, $this->model->{$field}()->getRelated());
+                    if (!empty($value)) {
+                        $this->updateRelation($field, $value);
+                    }
                 }
 
                 if ($onlyOne) {
@@ -245,9 +248,6 @@ class EditorSaveFields
 
     private function updateRelation($field, $fieldValue)
     {
-        if (empty($fieldValue)) {
-            return $this;
-        }
         $collection = $this->model->{$field}();
         $this->detachRelation($collection);
 
