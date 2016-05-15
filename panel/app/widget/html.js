@@ -108,22 +108,22 @@ Ext.define('djem.widget.html', {
         toolbar += ' | code ';
 
         var editor = tinymce.createEditor(id, Ext.apply({
-            selector: '#' + id,
-            statusbar: false,
-            relative_urls: false,
-            remove_script_host: true,
+            'selector': '#' + id,
+            'statusbar': false,
+            'relative_urls': false,
+            'remove_script_host': true,
 
-            file_browser_callback: function(fieldName, url, type) {
+            'file_browser_callback': function(fieldName, url, type) {
                 if (type == 'image') {
                     var el = me.getEl().down('input[type=file]').dom;
                     el.setAttribute('refField', fieldName);
                     el.click();
                 }
             },
-            plugins: [ 'image', 'link', 'removeTags', 'code' ],
-            toolbar: toolbar,
-            object_resizing: false,
-            image_dimensions: false,
+            'plugins': [ 'image', 'link', 'removeTags', 'code' ],
+            'toolbar': toolbar,
+            'object_resizing': false,
+            'image_dimensions': false,
 
             // elements : id,
             // mode : 'exact',
@@ -131,8 +131,8 @@ Ext.define('djem.widget.html', {
             // autoresize_min_height: 1,
             // autoresize_bottom_margin: 0,
             // autoresize_overflow_padding: 0,
-            menubar: false,
-            resize: false
+            'menubar': false,
+            'resize': false
         }, me.editorConfig));
 
         me.editor = editor;
@@ -159,6 +159,16 @@ Ext.define('djem.widget.html', {
 
         editor.on('blur', function() {
             me.fireEvent('blur', me);
+        });
+
+        editor.on('mousedown click', function() {
+            // forward iframe messages to view
+            var node = me.getEl().dom;
+            [ 'mouseover', 'mousedown', 'mouseup', 'click' ].forEach(function(eventName) {
+                var clickEvent = document.createEvent('MouseEvents');
+                clickEvent.initEvent(eventName, true, true);
+                node.dispatchEvent(clickEvent);
+            });
         });
 
         editor.on('change', function() {
