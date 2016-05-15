@@ -8,11 +8,11 @@ Ext.define('djem.view.crosslink.FilesController', {
     field: undefined,
     dragState: {
         _innerState: {},
-        setExisting: function (existing) { this._innerState.existing = !!existing; },
-        isExisting: function () { return !!this._innerState.existing; },
-        addRecord: function (newRecord) {
+        setExisting: function(existing) { this._innerState.existing = !!existing; },
+        isExisting: function() { return !!this._innerState.existing; },
+        addRecord: function(newRecord) {
             var exists = false;
-            Ext.each(this._innerState.records, function (record) {
+            Ext.each(this._innerState.records, function(record) {
                 if (newRecord.id == record.id) {
                     exists = true;
                     return false;
@@ -22,23 +22,23 @@ Ext.define('djem.view.crosslink.FilesController', {
                 this._innerState.records.push(newRecord);
             }
         },
-        getRecords: function () { return this._innerState.records; },
-        isDrag: function () { return !!this._innerState.count; },
-        inc: function () { return ++this._innerState.count; },
-        dec: function () { return (this._innerState.count = Math.max(0, this._innerState.count - 1)); },
-        reset: function () {
+        getRecords: function() { return this._innerState.records; },
+        isDrag: function() { return !!this._innerState.count; },
+        inc: function() { return ++this._innerState.count; },
+        dec: function() { return (this._innerState.count = Math.max(0, this._innerState.count - 1)); },
+        reset: function() {
             this.setExisting(false);
             this._innerState.records = [];
             this._innerState.count = 0;
         }
     },
 
-    onDestroy: function () {
+    onDestroy: function() {
         var me = this;
         me.uploader.destroy();
     },
 
-    startDrag: function (e) {
+    startDrag: function(e) {
         var me = this;
         me.dragState.setExisting(true);
         var dom = Ext.get(e.target).up('.thumb-wrap');
@@ -52,13 +52,13 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    uploadFiles: function () {
+    uploadFiles: function() {
         var maxRequestSize = 0; // 0 - каждый файл заливаем отдельно
         var me = this;
 
         var filePacks = [];
         var pack = { size: 0, records: [] };
-        Ext.each(me.getView().getStore().getNewRecords(), function (record) {
+        Ext.each(me.getView().getStore().getNewRecords(), function(record) {
             var file = record.get('file');
             if (file && record.get('new') !== undefined) {
                 record.set('new', 'new upload');
@@ -80,9 +80,9 @@ Ext.define('djem.view.crosslink.FilesController', {
                 }
                 return;
             }
-            me.uploader.upload(filePacks[i].records, function (successData) {
+            me.uploader.upload(filePacks[i].records, function(successData) {
                 if (successData) {
-                    Ext.each(filePacks[i].records, function (record, index) {
+                    Ext.each(filePacks[i].records, function(record, index) {
                         var data = successData[index];
                         record.set({
                             'new': undefined,
@@ -97,11 +97,11 @@ Ext.define('djem.view.crosslink.FilesController', {
         uploadNext(0);
     },
 
-    dropFiles: function (e) {
+    dropFiles: function(e) {
         var me = this;
         if (!me.dragState.isExisting()) {
             var items = [];
-            Ext.each(e.dataTransfer.files, function (file) {
+            Ext.each(e.dataTransfer.files, function(file) {
                 file = me.uploader.lock(file);
                 var record = {
                     url: file.url,
@@ -122,7 +122,7 @@ Ext.define('djem.view.crosslink.FilesController', {
         me.setDirty(true);
     },
 
-    showDropZone: function (e) {
+    showDropZone: function(e) {
         var me = this;
         if (e.type == 'dragenter') { me.dragState.inc(); }
         if (e.type == 'dragleave') { me.dragState.dec(); }
@@ -140,11 +140,11 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    init: function () {
+    init: function() {
         var me = this;
-        me.startDragHandler = { handleEvent: function (evt) { return me.startDrag(evt); } };
-        me.showDropZoneHandler = { handleEvent: function (evt) { return me.showDropZone(evt); } };
-        me.dropFilesHandler = { handleEvent: function (evt) { return me.dropFiles(evt); } };
+        me.startDragHandler = { handleEvent: function(evt) { return me.startDrag(evt); } };
+        me.showDropZoneHandler = { handleEvent: function(evt) { return me.showDropZone(evt); } };
+        me.dropFilesHandler = { handleEvent: function(evt) { return me.dropFiles(evt); } };
         me.dragState = Ext.Object.merge({}, me.dragState);
         me.dragState.reset();
         if (me.getView().single) {
@@ -152,20 +152,20 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
         me.getView().emptyText = '<input style="margin:5%;" type="file" ' +
             (me.getView().single ? '' : ' multiple="" ') +
-            ' onchange="Ext.get(this.parentNode).fireEvent(\'filechange\', this);">';
+            ' onchange="Ext.get(this.parentNode).fireEvent(\'filechange\', event, this);">';
     },
 
-    onBeforeDestroy: function () {
+    onBeforeDestroy: function() {
         var me = this;
         me.processDropZone(true);
     },
 
-    setDirty: function (isDirty) {
+    setDirty: function(isDirty) {
         var me = this;
-        function cleanup(data) {
+        function cleanup(data, idProperty) {
             if (Array.isArray(data)) {
                 for (var i = 0; i < data.length; ++i) {
-                    cleanup(data[i]);
+                    cleanup(data[i], idProperty);
                 }
             }
             if (data && typeof data == 'object') {
@@ -176,46 +176,46 @@ Ext.define('djem.view.crosslink.FilesController', {
             if (isDirty) {
                 var idProperty = me.getView().getStore().getModel().idProperty;
                 var data = Ext.pluck(me.getView().getStore().data.items, 'data');
-                cleanup(data);
+                cleanup(data, idProperty);
                 me.field.setValue(Ext.encode(data));
-                //me.field.setValue(me.field.getValue() - 1);
+                // me.field.setValue(me.field.getValue() - 1);
             } else {
                 me.field.resetOriginalValue();
             }
         }
-        //me.field.setValue(Ext.pluck(me.getView().getStore().data.items, 'data'));
+        // me.field.setValue(Ext.pluck(me.getView().getStore().data.items, 'data'));
     },
 
-    initAfterRender: function () {
+    initAfterRender: function() {
         var me = this;
         me.processDropZone(false);
         var form = me.getView().up('form');
         if (form) {
-            me.getView().on('initValue', function () {
+            me.getView().on('initValue', function() {
                 me.setDirty(true);
                 me.field.resetOriginalValue();
             });
 
             var field = Ext.create('djem.view.crosslink.FileField', { name: me.getView().name });
             me.field = form.add(field);
-            me.field.on('dataReady', function () {
+            me.field.on('dataReady', function() {
                 form.getForm().fireEvent('dataReady');
             });
-            form.getForm().on('syncFields', function () {
+            form.getForm().on('syncFields', function() {
                 if (!me.field.validate()) {
                     // если не загружали файл на сервер - загрузим
                     me.uploadFiles();
                 }
             });
         }
-        me.getView().getEl().on('filechange', function (target) {
+        me.getView().getEl().on('filechange', function(e, target) {
             if (target) {
                 me.dropFiles({ dataTransfer: target });
             }
-            event.preventDefault();
-            event.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
         });
-        me.getView().getEl().on('click', function (e) {
+        me.getView().getEl().on('click', function(e) {
             if (Ext.get(e.target).hasCls('trash')) {
                 var dom = Ext.get(e.target).up('.thumb-wrap');
                 var record = dom && me.getView().getRecord(dom);
@@ -228,13 +228,13 @@ Ext.define('djem.view.crosslink.FilesController', {
         });
     },
 
-    processDropZone: function (remove) {
+    processDropZone: function(remove) {
         var me = this;
-        Ext.each([ 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop' ], function (type) {
+        Ext.each([ 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop' ], function(type) {
             Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler);
         });
         var view = me.getView().getEl();
-        Ext.each([ 'dragstart', 'drag' ], function (type) {
+        Ext.each([ 'dragstart', 'drag' ], function(type) {
             if (view) {
                 view.dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.startDragHandler);
             }
@@ -244,7 +244,7 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    initViewModel: function () {
+    initViewModel: function() {
         var me = this;
         me.getView().setStore(Ext.create('djem.store.CrossLink', { model: 'djem.model.Files' }));
         me.dragState.reset();
@@ -258,13 +258,13 @@ Ext.define('djem.view.crosslink.FilesController', {
     },
 
     // редактор
-    onItemDblClick: function (element, record) {
+    onItemDblClick: function(element, record) {
         var me = this;
         var view = element.up('main-content');
         var widget = Ext.widget('crosslink.Editor', { title: (record.data && record.data.name) || 'Editor', data: view.config.data });
         widget.add(element.editor);
         widget.getViewModel().setData(record.data);
-        widget.on('update', function () {
+        widget.on('update', function() {
             record.set(widget.getViewModel().getData());
             record.commit();
             me.setDirty(true);

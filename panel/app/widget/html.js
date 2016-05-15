@@ -12,10 +12,10 @@ Ext.define('djem.widget.html', {
     editorConfig: undefined,
     files: null,
 
-    afterBodyEl: '<input type="file" style="display:none;" onchange="Ext.get(this).up().up().fireEvent(\'filechange\', this);">',
+    afterBodyEl: '<input type="file" style="display:none;" onchange="Ext.get(this).up().up().fireEvent(\'filechange\', event, this);">',
 
     listeners: {
-        resize: function (_this, width, height) {
+        resize: function(_this, width, height) {
             this.sizeChanged(_this, width, height);
         }
     },
@@ -25,7 +25,7 @@ Ext.define('djem.widget.html', {
         this.sizeChanged(this, width, height);
     },
 
-    sizeChanged: function (_this, width, height) {
+    sizeChanged: function(_this, width, height) {
         var me = this;
         if (!me.editor) {
             return;
@@ -65,7 +65,7 @@ Ext.define('djem.widget.html', {
         editorIframe.setHeight(newHeight - borderOffset);
     },
 
-    beforeDestroy: function () {
+    beforeDestroy: function() {
         var me = this;
         var editor = tinymce.get(me.getInputId());
         if (editor) {
@@ -81,16 +81,16 @@ Ext.define('djem.widget.html', {
         }
     },
 
-    afterRender: function () {
+    afterRender: function() {
         var me = this;
         me.callParent(arguments);
         me.files = new Ext.create('djem.store.FileUpload');
         var id = me.inputEl.id;
 
-        me.getEl().on('filechange', function (target) {
-            Ext.each(target.files, function (file) {
+        me.getEl().on('filechange', function(target) {
+            Ext.each(target.files, function(file) {
                 file = me.files.lock(file);
-                me.files.upload([ file ], function (data) {
+                me.files.upload([ file ], function(data) {
                     var ref = Ext.get(target.getAttribute('refField')).dom;
                     if (ref && data && data.length) {
                         ref.value = file.url + '#' + data[0].file;
@@ -113,7 +113,7 @@ Ext.define('djem.widget.html', {
             relative_urls: false,
             remove_script_host: true,
 
-            file_browser_callback: function (fieldName, url, type) {
+            file_browser_callback: function(fieldName, url, type) {
                 if (type == 'image') {
                     var el = me.getEl().down('input[type=file]').dom;
                     el.setAttribute('refField', fieldName);
@@ -125,12 +125,12 @@ Ext.define('djem.widget.html', {
             object_resizing: false,
             image_dimensions: false,
 
-            //elements : id,
-            //mode : 'exact',
-            //plugins: 'autoresize',
-            //autoresize_min_height: 1,
-            //autoresize_bottom_margin: 0,
-            //autoresize_overflow_padding: 0,
+            // elements : id,
+            // mode : 'exact',
+            // plugins: 'autoresize',
+            // autoresize_min_height: 1,
+            // autoresize_bottom_margin: 0,
+            // autoresize_overflow_padding: 0,
             menubar: false,
             resize: false
         }, me.editorConfig));
@@ -138,12 +138,12 @@ Ext.define('djem.widget.html', {
         me.editor = editor;
 
         // set initial value when the editor has been rendered
-        editor.on('init', function () {
+        editor.on('init', function() {
             editor.setContent(me.value || '');
         });
 
-        editor.on('loadContent', function () {
-            Ext.Function.defer(function () {
+        editor.on('loadContent', function() {
+            Ext.Function.defer(function() {
                 me.updateLayout();
             }, 250);
         });
@@ -153,15 +153,15 @@ Ext.define('djem.widget.html', {
 
         // --- Relay events to Ext
 
-        editor.on('focus', function () {
+        editor.on('focus', function() {
             me.fireEvent('focus', me);
         });
 
-        editor.on('blur', function () {
+        editor.on('blur', function() {
             me.fireEvent('blur', me);
         });
 
-        editor.on('change', function () {
+        editor.on('change', function() {
             var content = editor.getContent(),
                 previousContent = me.previousContent;
             if (content !== previousContent) {
@@ -170,7 +170,7 @@ Ext.define('djem.widget.html', {
             }
         });
     },
-    getRawValue: function () {
+    getRawValue: function() {
         var me = this;
         var editor = me.editor;
         if (editor && editor.initialized) {
@@ -178,7 +178,7 @@ Ext.define('djem.widget.html', {
         }
         return me.rawValue;
     },
-    setRawValue: function (value) {
+    setRawValue: function(value) {
         var me = this;
         me.callParent(arguments);
 

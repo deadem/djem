@@ -1,4 +1,4 @@
-Ext.define('djem.view.crosslink.Editor',{
+Ext.define('djem.view.crosslink.Editor', {
     extend: 'Ext.window.Window',
     alias: [ 'widget.crosslink.Editor', 'widget.crosslink-editor' ],
 
@@ -30,11 +30,11 @@ Ext.define('djem.view.crosslink.Editor',{
     }],
 */
     buttons: [
-    '->' , {
-        text: 'OK',
-        handler: 'ok'
-    }, {
+        '->', {
+            text: 'OK',
+            handler: 'ok'
+        }, {
         text: 'Cancel',
         handler: 'cancel'
-    }]
+    } ]
 });

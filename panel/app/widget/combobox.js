@@ -30,7 +30,7 @@ Ext.define('djem.widget.combobox', {
         me.callParent(arguments);
     },
 
-    setValue: function (value, doSelect) {
+    setValue: function(value, doSelect) {
         var me = this;
         if (Ext.isObject(value) && !value.isModel && me.queryMode == 'remote') {
             me.store.clearFilter(true);

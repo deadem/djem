@@ -3,13 +3,13 @@ Ext.define('djem.view.crosslink.EditorController', {
     alias: 'controller.crosslink-editor',
 
 
-    ok: function () {
+    ok: function() {
         var me = this;
         me.getView().fireEvent('update');
         me.getView().destroy();
     },
 
-    cancel: function () {
+    cancel: function() {
         this.getView().destroy();
     }
 });

@@ -1,4 +1,4 @@
-Ext.define('djem.view.crosslink.Files',{
+Ext.define('djem.view.crosslink.Files', {
     extend: 'Ext.view.View',
     alias: 'widget.crosslink.Files',
 
@@ -18,7 +18,7 @@ Ext.define('djem.view.crosslink.Files',{
         beforedestroy: 'onBeforeDestroy',
         itemdblclick: 'onItemDblClick'
     },
-    
+
     controller: 'crosslink-files',
     viewModel: {
         type: 'crosslink-files'
@@ -58,12 +58,12 @@ Ext.define('djem.view.crosslink.Files',{
     itemSelector: 'div.thumb-wrap',
     tpl: [
         '<tpl for=".">',
-            '<div class="thumb-wrap {new}"><a href="#" class="trash">&#xf00d;</a>',
-                '<div class="thumb">',
-                    '<img src="{url}" />',
-                '</div>',
-                '<span>{name}</span>',
-            '</div>',
+        '<div class="thumb-wrap {new}"><a href="#" class="trash">&#xf00d;</a>',
+        '<div class="thumb">',
+        '<img src="{url}" />',
+        '</div>',
+        '<span>{name}</span>',
+        '</div>',
         '</tpl>'
     ]
 });

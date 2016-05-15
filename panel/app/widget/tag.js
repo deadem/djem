@@ -10,7 +10,7 @@ Ext.define('djem.widget.tag', {
     queryMode: 'remote',
     queryParam: 'filter',
 
-    setValue: function (value, doSelect) {
+    setValue: function(value, doSelect) {
         var me = this;
         if (Ext.isArray(value)) {
             value = Ext.Array.unique(value);
