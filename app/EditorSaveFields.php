@@ -271,7 +271,9 @@ class EditorSaveFields
                 break;
 
             case Relations\BelongsTo::class:
-                $collection->associate($fieldValue);
+                if (!empty($fieldValue)) {
+                    $collection->associate($fieldValue);
+                }
                 break;
 
             default:
