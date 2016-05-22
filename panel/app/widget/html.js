@@ -87,7 +87,7 @@ Ext.define('djem.widget.html', {
         me.files = new Ext.create('djem.store.FileUpload');
         var id = me.inputEl.id;
 
-        me.getEl().on('filechange', function(target) {
+        me.getEl().on('filechange', function(evt, target) {
             Ext.each(target.files, function(file) {
                 file = me.files.lock(file);
                 me.files.upload([ file ], function(data) {
