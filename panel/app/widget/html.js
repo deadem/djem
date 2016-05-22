@@ -4,14 +4,13 @@ Ext.define('djem.widget.html', {
     alias: [ 'djem.html', 'widget.html' ],
 
     requires: [
-        'djem.store.FileUpload'
+        'djem.store.FileUpload',
+        'djem.widget.htmlPlugins.simpleimage'
     ],
     liquidLayout: false,
 
     editorConfig: undefined,
     files: null,
-
-    afterBodyEl: '<input type="file" style="display:none;" onchange="Ext.get(this).up().up().fireEvent(\'filechange\', event, this);">',
 
     listeners: {
         resize: function(_this, width, height) {
@@ -53,8 +52,9 @@ Ext.define('djem.widget.html', {
         var editor = me.editor = CKEDITOR.replace(id, {
             customConfig: '',
             allowedContent: true,
-            removeDialogTabs: 'image:advanced;image:link;link:advanced;link:target',
-            removePlugins: 'elementspath,resize',
+            removeDialogTabs: 'link:advanced;link:target',
+            extraPlugins: 'simpleimage',
+            removePlugins: 'image,elementspath,resize',
             toolbarGroups: [
                 { name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
                 { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
@@ -75,19 +75,25 @@ Ext.define('djem.widget.html', {
         });
 
         me.getEl().on('filechange', function(evt, target) {
+            Ext.get(document.body).addCls('waitCursor');
+            Ext.get(target).setStyle('cursor', 'wait');
             Ext.each(target.files, function(file) {
                 file = me.files.lock(file);
                 me.files.upload([ file ], function(data) {
-                    var ref = Ext.get(target.getAttribute('refField')).dom;
-                    if (ref && data && data.length) {
-                        ref.value = file.url + '#' + data[0].file;
-                    }
+                    Ext.get(document.body).removeCls('waitCursor');
+                    Ext.get(target).setStyle('cursor', 'auto');
+                    target.setAttribute('uploadedfile', file.url + '#' + data[0].file);
                 });
             });
         });
 
         editor.on('instanceReady', function() {
             me.updateLayout();
+            me.editorReady = true;
+            me.setRawValue(me.previousContent || '', true);
+            Ext.defer(function() {
+                editor.resetUndo();
+            }, 1);
         });
 
         editor.on('change', function() {
@@ -117,15 +123,15 @@ Ext.define('djem.widget.html', {
         }
         return me.rawValue;
     },
-    setRawValue: function(value) {
+    setRawValue: function(value, forced) {
         var me = this;
         me.callParent(arguments);
 
         var editor = me.editor;
-        if (editor && value != editor.getData()) {
+        if (editor && me.editorReady && (forced || value != me.previousContent)) {
             editor.setData(value);
-            me.previousContent = value;
         }
+        me.previousContent = value;
 
         return me;
     }
