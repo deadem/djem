@@ -1,11 +1,10 @@
-/* global Ext, tinymce */
+/* global Ext, CKEDITOR */
 Ext.define('djem.widget.html', {
     extend: 'Ext.form.field.TextArea',
     alias: [ 'djem.html', 'widget.html' ],
 
     requires: [
-        'djem.store.FileUpload',
-        'djem.widget.htmlPlugins.removeTags'
+        'djem.store.FileUpload'
     ],
     liquidLayout: false,
 
@@ -27,53 +26,17 @@ Ext.define('djem.widget.html', {
 
     sizeChanged: function(_this, width, height) {
         var me = this;
-        if (!me.editor) {
+        if (!me.editor || me.editor.status != 'ready') {
             return;
         }
-        var editorIframe = Ext.get(me.getInputId() + '_ifr');
-        var editor = tinymce.get(me.getInputId());
-        if (!editorIframe || editor.isHidden()) {
-            return;
-        }
-
-        var parent = editorIframe.up('.mce-edit-area');
-        parent = parent.up('.mce-container-body');
-
-        var newHeight = height;
-        var editorToolbar = parent.down('.mce-toolbar-grp');
-        if (editorToolbar) {
-            newHeight -= editorToolbar.getHeight();
-        }
-
-        if (newHeight < 0) {
-            return;
-        }
-
-        var editorMenubar = parent.down('.mce-menubar');
-        if (editorMenubar) {
-            newHeight -= editorMenubar.getHeight();
-        }
-
-        var editorStatusbar = parent.down('.mce-statusbar');
-        if (editorStatusbar) {
-            newHeight -= editorStatusbar.getHeight();
-        }
-
-        var borderOffset = 3;
-
-        me.lastFrameHeight = newHeight - borderOffset;
-        editorIframe.setHeight(newHeight - borderOffset);
+        me.editor.resize('100%', height);
     },
 
     beforeDestroy: function() {
         var me = this;
-        var editor = tinymce.get(me.getInputId());
+        var editor = me.editor;
         if (editor) {
-            editor.destroy(false);
-            var editorIframe = Ext.get(me.getInputId() + '_ifr');
-            if (editorIframe) {
-                editorIframe.destroy();
-            }
+            editor.destroy(true);
         }
 
         if (me.files) {
@@ -85,7 +48,31 @@ Ext.define('djem.widget.html', {
         var me = this;
         me.callParent(arguments);
         me.files = new Ext.create('djem.store.FileUpload');
+
         var id = me.inputEl.id;
+        var editor = me.editor = CKEDITOR.replace(id, {
+            customConfig: '',
+            allowedContent: true,
+            removeDialogTabs: 'image:advanced;image:link;link:advanced;link:target',
+            removePlugins: 'elementspath,resize',
+            toolbarGroups: [
+                { name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+                { name: 'links', groups: [ 'links' ] },
+                { name: 'insert', groups: [ 'insert' ] },
+                { name: 'forms', groups: [ 'forms' ] },
+                { name: 'tools', groups: [ 'tools' ] },
+                { name: 'others', groups: [ 'others' ] },
+                { name: 'styles', groups: [ 'styles' ] },
+                { name: 'colors', groups: [ 'colors' ] },
+                { name: 'about', groups: [ 'about' ] },
+                { name: 'document', groups: [ 'mode', 'document', 'doctools' ] }
+            ],
+            removeButtons: 'Underline,Subscript,Superscript,Scayt,PasteFromWord,Maximize,About,Styles,Format,Blockquote',
+            format_tags: 'p;pre'
+        });
 
         me.getEl().on('filechange', function(evt, target) {
             Ext.each(target.files, function(file) {
@@ -99,70 +86,21 @@ Ext.define('djem.widget.html', {
             });
         });
 
-        // Копипаста из темы по умолчанию, иначе никак его не получить
-        var toolbar = 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
-                       'bullist numlist outdent indent | link image ';
-        if (me.editorConfig && me.editorConfig.mergeToolbar) {
-            toolbar += ' | ' + me.editorConfig.mergeToolbar.join(' ');
-        }
-        toolbar += ' | code ';
-
-        var editor = tinymce.createEditor(id, Ext.apply({
-            'selector': '#' + id,
-            'statusbar': false,
-            'relative_urls': false,
-            'remove_script_host': true,
-
-            'file_browser_callback': function(fieldName, url, type) {
-                if (type == 'image') {
-                    var el = me.getEl().down('input[type=file]').dom;
-                    el.setAttribute('refField', fieldName);
-                    el.click();
-                }
-            },
-            'plugins': [ 'image', 'link', 'removeTags', 'code' ],
-            'toolbar': toolbar,
-            'object_resizing': false,
-            'image_dimensions': false,
-
-            // elements : id,
-            // mode : 'exact',
-            // plugins: 'autoresize',
-            // autoresize_min_height: 1,
-            // autoresize_bottom_margin: 0,
-            // autoresize_overflow_padding: 0,
-            'menubar': false,
-            'resize': false
-        }, me.editorConfig));
-
-        me.editor = editor;
-
-        // set initial value when the editor has been rendered
-        editor.on('init', function() {
-            editor.setContent(me.value || '');
+        editor.on('instanceReady', function() {
+            me.updateLayout();
         });
 
-        editor.on('loadContent', function() {
-            Ext.Function.defer(function() {
-                me.updateLayout();
-            }, 250);
+        editor.on('change', function() {
+            var content = editor.getData(),
+                previousContent = me.previousContent;
+            if (content !== previousContent) {
+                me.previousContent = content;
+                me.fireEvent('change', me, content, previousContent);
+            }
         });
-
-        // render
-        editor.render();
-
-        // --- Relay events to Ext
 
         editor.on('focus', function() {
-            me.fireEvent('focus', me);
-        });
-
-        editor.on('blur', function() {
-            me.fireEvent('blur', me);
-        });
-
-        editor.on('mousedown click', function() {
-            // forward iframe messages to view
+            // simulate editor focus
             var node = me.getEl().dom;
             [ 'mouseover', 'mousedown', 'mouseup', 'click' ].forEach(function(eventName) {
                 var clickEvent = document.createEvent('MouseEvents');
@@ -170,21 +108,12 @@ Ext.define('djem.widget.html', {
                 node.dispatchEvent(clickEvent);
             });
         });
-
-        editor.on('change', function() {
-            var content = editor.getContent(),
-                previousContent = me.previousContent;
-            if (content !== previousContent) {
-                me.previousContent = content;
-                me.fireEvent('change', me, content, previousContent);
-            }
-        });
     },
     getRawValue: function() {
         var me = this;
         var editor = me.editor;
-        if (editor && editor.initialized) {
-            me.rawValue = editor.getContent();
+        if (editor) {
+            me.rawValue = editor.getData();
         }
         return me.rawValue;
     },
@@ -193,8 +122,8 @@ Ext.define('djem.widget.html', {
         me.callParent(arguments);
 
         var editor = me.editor;
-        if (editor && editor.initialized && value != editor.getContent()) {
-            editor.setContent(value);
+        if (editor && value != editor.getData()) {
+            editor.setData(value);
             me.previousContent = value;
         }
 
