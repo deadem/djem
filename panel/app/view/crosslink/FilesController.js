@@ -2,7 +2,13 @@
 Ext.define('djem.view.crosslink.FilesController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.crosslink-files',
-
+    
+    config: {
+        image: null,
+        imageControlValue: 'background-position',
+        imageControlUnits: 'px'
+    },
+    
     uploader: Ext.create('djem.store.FileUpload'),
 
     field: undefined,
@@ -33,6 +39,34 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
+    // single image only
+    applyImage: function(href) {
+      var me = this, 
+          image = new Image();
+          
+      image.onload = function() {
+          me.getView().on({
+              mousemove: { fn: 'onMouseMove', element: 'el' },
+              scope: me
+          });
+      };
+      image.src = href;
+      
+      return image;
+    },
+    
+    getImageControlValue: function (el) {
+        return (el.getStyleValue(this.imageControlValue) || '0 0').match(/\d+|-\d+/g);
+    },
+ 
+    setImageControlValue: function (el, pos) {
+        if (Ext.isObject(el)) {
+            el.setStyle(this.imageControlValue, pos);
+        } else {
+            this.imageControlValue = el;
+        }
+    },
+ 
     onDestroy: function() {
         var me = this;
         me.uploader.destroy();
@@ -115,6 +149,7 @@ Ext.define('djem.view.crosslink.FilesController', {
             if (me.getView().single) {
                 me.getView().getStore().removeAll();
                 items = items.slice(0, 1);
+                me.setImage(items[0].url);
             }
             me.getView().getStore().add(items);
         }
@@ -212,6 +247,7 @@ Ext.define('djem.view.crosslink.FilesController', {
             if (target) {
                 me.dropFiles({ dataTransfer: target });
             }
+            // e.stopEvent();
             e.preventDefault();
             e.stopPropagation();
         });
@@ -269,5 +305,28 @@ Ext.define('djem.view.crosslink.FilesController', {
             record.commit();
             me.setDirty(true);
         }, this, { single: true });
-    }
+    },
+ 
+    // картинка
+    isLeftMouseBtnPressed: function (evt) {
+        if ('buttons' in evt) {
+            return evt.buttons == 1;
+        }
+        var button = evt.which || evt.button;
+        return button == 1;
+     },
+ 
+     onMouseMove: function (evt, element) {
+         var me = this;
+         if (me.isLeftMouseBtnPressed(evt.event)) {
+             var el = Ext.get(element),
+                 img = me.getImage(), 
+                 offset = [ evt.event.movementX, evt.event.movementY ];
+
+             me.setImageControlValue(el, me.getImageControlValue(el).map(function (val, index) {
+                 return Math.min(0, Math.max(index ? -img.height + el.getHeight() 
+                                                   : -img.width   + el.getWidth(), parseInt(val, 10))) + offset[index] + me.getImageControlUnits();
+             }).join(' '));
+         }
+     }
 });
