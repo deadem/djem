@@ -5,6 +5,7 @@ Ext.define('djem.store.CrossLink', {
         'djem.store.proxy'
     ],
 
+    model: 'djem.model.Files',
     autoLoad: false,
 
     proxy: {
