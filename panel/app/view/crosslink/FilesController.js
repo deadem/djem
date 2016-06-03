@@ -61,7 +61,6 @@ Ext.define('djem.view.crosslink.FilesController', {
 
     setImageControlValue: function(el, pos) {
         if (Ext.isObject(el)) {
-            console.log("pos:" + pos);
             el.setStyle(this.imageControlValue, pos);
         } else {
             this.imageControlValue = el;
@@ -224,16 +223,20 @@ Ext.define('djem.view.crosslink.FilesController', {
     },
 
     initAfterRender: function() {
-        var me = this;
+        var me = this,
+            view = me.getView(),
+            el = view.getEl();
+        
         me.processDropZone(false);
-        var form = me.getView().up('form');
+        
+        var form = view.up('form');
         if (form) {
-            me.getView().on('initValue', function() {
+            view.on('initValue', function() {
                 me.setDirty(true);
                 me.field.resetOriginalValue();
             });
 
-            var field = Ext.create('djem.view.crosslink.FileField', { name: me.getView().name });
+            var field = Ext.create('djem.view.crosslink.FileField', { name: view.name });
             me.field = form.add(field);
             me.field.on('dataReady', function() {
                 form.getForm().fireEvent('dataReady');
@@ -245,23 +248,24 @@ Ext.define('djem.view.crosslink.FilesController', {
                 }
             });
         }
-        me.getView().getEl().on('filechange', function(e, target) {
+        el.on('filechange', function(e, target) {
             if (target) {
                 me.dropFiles({ dataTransfer: target });
             }
-            // e.stopEvent();
             e.preventDefault();
             e.stopPropagation();
         });
-        me.getView().getEl().on('click', function(e) {
+        el.on('click', function(e) {
             if (Ext.get(e.target).hasCls('trash')) {
-                var dom = Ext.get(e.target).up('.thumb-wrap');
-                var record = dom && me.getView().getRecord(dom);
+                var dom = Ext.get(e.target).up('.thumb-wrap'),
+                    record = dom && view.getRecord(dom);
+
                 window.URL.revokeObjectURL(record.data.url);
-                me.getView().getStore().remove(record);
+                view.getStore().remove(record);
+                view.single && el.un('mousemove', 'onMouseMove', me);
+
                 me.setDirty(true);
-                e.preventDefault();
-                e.stopPropagation();
+                e.stopEvent();
             }
         });
     },
@@ -335,7 +339,7 @@ Ext.define('djem.view.crosslink.FilesController', {
                 return val + me.getImageControlUnits();
             }).join(' '));
 
-            //rec.set('offset', offset);
+            rec.set('offset', offset, { silent: true });
         }
     }
 });
