@@ -5,7 +5,8 @@ Ext.define('djem.view.crosslink.FilesController', {
 
     config: {
         image: null,
-        imageZoom: 1
+        imageZoom: 1,
+        imageMoveOffset: { x: 0, y: 0 }
     },
 
     uploader: Ext.create('djem.store.FileUpload'),
@@ -219,10 +220,9 @@ Ext.define('djem.view.crosslink.FilesController', {
             me.field.on('change', function(_this, value) {
                 if (view.single) {
                     value = Ext.decode(value);
-                    var image = me.getImage(),
-                        url = value && value[0] && value[0].url;
+                    var url = value && value[0] && value[0].url;
 
-                    if (!image || image.src != url) {
+                    if (me.isNewImage(url)) {
                         me.setImage(url);
                     }
                 }
@@ -254,7 +254,32 @@ Ext.define('djem.view.crosslink.FilesController', {
                 e.stopEvent();
             }
         });
+        if (view.single) {
+            el.on('mousedown', function(evt) {
+                if (view.getStore().getCount() == 1) {
+                    var body = Ext.get(document.body),
+                        iframe = Ext.select('iframe'),
+                        rec = view.getStore().getAt(0),
+                        offset = rec.get('offset') || { x: 0, y: 0 };
+                    body.addCls('x-unselectable');
+                    iframe.setStyle('pointer-events', 'none');
 
+                    me.setImageMoveOffset({ x: evt.event.screenX + offset.x, y: evt.event.screenY + offset.y });
+
+                    var mousemove = function(evt) {
+                        return me.onMouseMove(evt);
+                    };
+                    var detach = function() {
+                        body.removeCls('x-unselectable');
+                        iframe.setStyle('pointer-events', null);
+                        window.removeEventListener('mouseup', detach, true);
+                        window.removeEventListener('mousemove', mousemove, true);
+                    };
+                    window.addEventListener('mousemove', mousemove, true);
+                    window.addEventListener('mouseup', detach, true);
+                }
+            });
+        }
     },
 
     processDropZone: function(remove) {
@@ -301,30 +326,40 @@ Ext.define('djem.view.crosslink.FilesController', {
     },
 
     // картинка
+    isNewImage: function(href) {
+        var prevImage = this.getImage();
+        if (!prevImage || prevImage['data-href'] !== href) {
+            return true;
+        }
+        return false;
+    },
+
     applyImage: function(href) {
         var me = this,
             view = me.getView(),
             image = new Image();
 
-        view.un('mousemove', 'onMouseMove', me);
+        if (!href) {
+            return;
+        }
+
+        var prevImage = me.getImage();
+        if (prevImage) {
+            prevImage.onload = null;
+        }
+
+        image['data-href'] = href;
+
         me.setImageZoom(1);
+        view.setStyle('cursor', 'wait');
 
         image.onload = function() {
-            var deltaX = image.width - view.getWidth();
-            var deltaY = image.height - view.getHeight();
-            if (deltaX > 0 && deltaY > 0) {
-                if (deltaX > deltaY) {
-                    me.setImageZoom(view.getHeight() / image.height);
-                } else {
-                    me.setImageZoom(view.getWidth() / image.width);
-                }
+            view.setStyle('cursor', 'default');
+            if (image.width - view.getWidth() > 0 && image.height - view.getHeight() > 0) {
+                me.setImageZoom(Math.max(view.getHeight() / image.height, view.getWidth() / image.width));
             }
 
             me.moveSingleImage({ x: 0, y: 0 });
-            view.on({
-                mousemove: { fn: 'onMouseMove', element: 'el' },
-                scope: me
-            });
         };
 
         if (href) {
@@ -332,14 +367,6 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
 
         return image;
-    },
-
-    isLeftMouseBtnPressed: function(evt) {
-        if ('buttons' in evt) {
-            return evt.buttons == 1;
-        }
-        var button = evt.which || evt.button;
-        return button == 1;
     },
 
     moveSingleImage: function(offset) {
@@ -363,23 +390,17 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    onMouseMove: function(evt, element) {
+    onMouseMove: function(evt) {
         var me = this;
-        if (me.isLeftMouseBtnPressed(evt.event)) {
-            var image = me.getImage(),
-                store = me.getView().getStore(),
-                zoom = me.getImageZoom();
+        var image = me.getImage(),
+            zoom = me.getImageZoom(),
+            el = me.getView().getEl(),
+            startOffset = me.getImageMoveOffset({ x: evt.screenX, y: evt.screenY }),
+            offset = {};
 
-            if (store.getCount() == 1) {
-                var rec = store.getAt(0),
-                    el = Ext.get(element),
-                    offset = rec.get('offset') || { x: 0, y: 0 };
+        offset.x = -Math.min(0, Math.max(el.getWidth() - image.width * zoom, evt.screenX - startOffset.x));
+        offset.y = -Math.min(0, Math.max(el.getHeight() - image.height * zoom, evt.screenY - startOffset.y));
 
-                offset.x = -Math.min(0, Math.max(el.getWidth() - image.width * zoom, evt.event.movementX - offset.x));
-                offset.y = -Math.min(0, Math.max(el.getHeight() - image.height * zoom, evt.event.movementY - offset.y));
-
-                me.moveSingleImage(offset);
-            }
-        }
+        me.moveSingleImage(offset);
     }
 });
