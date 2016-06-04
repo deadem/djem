@@ -4,9 +4,7 @@ Ext.define('djem.view.crosslink.FilesController', {
     alias: 'controller.crosslink-files',
 
     config: {
-        image: null,
-        imageControlValue: 'background-position',
-        imageControlUnits: 'px'
+        image: null
     },
 
     uploader: Ext.create('djem.store.FileUpload'),
@@ -36,34 +34,6 @@ Ext.define('djem.view.crosslink.FilesController', {
             this.setExisting(false);
             this._innerState.records = [];
             this._innerState.count = 0;
-        }
-    },
-
-    // single image only
-    applyImage: function(href) {
-        var me = this,
-            image = new Image();
-
-        image.onload = function() {
-            me.getView().on({
-                mousemove: { fn: 'onMouseMove', element: 'el' },
-                scope: me
-            });
-        };
-        image.src = href;
-
-        return image;
-    },
-
-    getImageControlValue: function(el) {
-        return (el.getStyleValue(this.imageControlValue) || '0 0').match(/\d+|-\d+/g);
-    },
-
-    setImageControlValue: function(el, pos) {
-        if (Ext.isObject(el)) {
-            el.setStyle(this.imageControlValue, pos);
-        } else {
-            this.imageControlValue = el;
         }
     },
 
@@ -226,9 +196,9 @@ Ext.define('djem.view.crosslink.FilesController', {
         var me = this,
             view = me.getView(),
             el = view.getEl();
-        
+
         me.processDropZone(false);
-        
+
         var form = view.up('form');
         if (form) {
             view.on('initValue', function() {
@@ -262,12 +232,13 @@ Ext.define('djem.view.crosslink.FilesController', {
 
                 window.URL.revokeObjectURL(record.data.url);
                 view.getStore().remove(record);
-                view.single && el.un('mousemove', 'onMouseMove', me);
+                view.un('mousemove', 'onMouseMove', me);
 
                 me.setDirty(true);
                 e.stopEvent();
             }
         });
+
     },
 
     processDropZone: function(remove) {
@@ -314,6 +285,32 @@ Ext.define('djem.view.crosslink.FilesController', {
     },
 
     // картинка
+    applyImage: function(href) {
+        var me = this,
+            image = new Image();
+
+        me.getView().un('mousemove', 'onMouseMove', me);
+
+        image.onload = function() {
+            me.getView().on({
+                mousemove: { fn: 'onMouseMove', element: 'el' },
+                scope: me
+            });
+        };
+        image.src = href;
+
+        return image;
+    },
+
+    getImageControlValue: function(el) {
+        var offset = (el.getStyleValue('background-position') || '0 0').match(/\d+|-\d+/g);
+        return { x: parseInt(offset[0], 10), y: parseInt(offset[1], 10) };
+    },
+
+    setImageControlValue: function(el, offset) {
+        el.setStyle('background-position', offset.x + 'px ' + offset.y + 'px');
+    },
+
     isLeftMouseBtnPressed: function(evt) {
         if ('buttons' in evt) {
             return evt.buttons == 1;
@@ -330,16 +327,14 @@ Ext.define('djem.view.crosslink.FilesController', {
                 offset = me.getImageControlValue(el),
                 rec = me.getView().getStore().getAt(0);
 
-            offset = [
-                Math.min(0, Math.max(-img.width + el.getWidth(), parseInt(offset[0], 10))) + evt.event.movementX,
-                Math.min(0, Math.max(-img.height + el.getHeight(), parseInt(offset[1], 10))) + evt.event.movementY
-            ];
+            if (rec) {
+                offset.x = Math.min(0, Math.max(-img.width + el.getWidth(), offset.x + evt.event.movementX));
+                offset.y = Math.min(0, Math.max(-img.height + el.getHeight(), offset.y + evt.event.movementY));
 
-            me.setImageControlValue(el, offset.map(function(val) {
-                return val + me.getImageControlUnits();
-            }).join(' '));
+                me.setImageControlValue(el, offset);
 
-            rec.set('offset', offset, { silent: true });
+                rec.set('offset', offset, { silent: true });
+            }
         }
     }
 });
