@@ -356,7 +356,7 @@ Ext.define('djem.view.crosslink.FilesController', {
                 offset: offset,
                 width: width,
                 height: height,
-                calcOffset: offset.x + 'px ' + offset.y + 'px',
+                calcOffset: -offset.x + 'px ' + -offset.y + 'px',
                 calcZoom: width + 'px ' + height + 'px'
             });
             me.setDirty(true);
@@ -375,8 +375,8 @@ Ext.define('djem.view.crosslink.FilesController', {
                     el = Ext.get(element),
                     offset = rec.get('offset') || { x: 0, y: 0 };
 
-                offset.x = Math.min(0, Math.max(-image.width * zoom + el.getWidth(), offset.x + evt.event.movementX));
-                offset.y = Math.min(0, Math.max(-image.height * zoom + el.getHeight(), offset.y + evt.event.movementY));
+                offset.x = -Math.min(0, Math.max(el.getWidth() - image.width * zoom, evt.event.movementX - offset.x));
+                offset.y = -Math.min(0, Math.max(el.getHeight() - image.height * zoom, evt.event.movementY - offset.y));
 
                 me.moveSingleImage(offset);
             }
