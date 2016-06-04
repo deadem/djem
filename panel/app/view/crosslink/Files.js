@@ -1,3 +1,4 @@
+/* global Ext */
 Ext.define('djem.view.crosslink.Files', {
     extend: 'Ext.view.View',
     alias: 'widget.crosslink.Files',
@@ -25,7 +26,7 @@ Ext.define('djem.view.crosslink.Files', {
     },
     deferEmptyText: false,
 
-    bindStore: function(data, initial, propertyName) {
+    bindStore: function(data) {
         var me = this;
         if (data === null) {
             data = [];
@@ -33,7 +34,7 @@ Ext.define('djem.view.crosslink.Files', {
         if (data && (typeof data == 'object' || typeof data == 'string') && !(data instanceof Ext.Base)) {
             if (me.single) {
                 if (typeof data == 'string') {
-                    data = [ { 'url': data } ];
+                    data = [ { url: data } ];
                 } else if (!Array.isArray(data)) {
                     data = [ data ];
                 }
@@ -59,9 +60,9 @@ Ext.define('djem.view.crosslink.Files', {
     tpl: [
         '<tpl for=".">',
         '<div class="thumb-wrap {new}">',
-            '<a href="#" class="trash">&#xf00d;</a>',
-            '<div class="thumb" style="background-image: url({url})"/>',
-            '<span>{name}</span>',
+        '<a href="#" class="trash">&#xf00d;</a>',
+        '<div class="thumb" style="background-repeat: no-repeat;background-image: url({url});background-position:{calcOffset};background-size:{calcZoom}"/>',
+        '<span>{name}</span>',
         '</div>',
         '</tpl>'
     ]

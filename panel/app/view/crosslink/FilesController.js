@@ -4,7 +4,8 @@ Ext.define('djem.view.crosslink.FilesController', {
     alias: 'controller.crosslink-files',
 
     config: {
-        image: null
+        image: null,
+        imageZoom: 1
     },
 
     uploader: Ext.create('djem.store.FileUpload'),
@@ -120,7 +121,6 @@ Ext.define('djem.view.crosslink.FilesController', {
             if (me.getView().single) {
                 me.getView().getStore().removeAll();
                 items = items.slice(0, 1);
-                me.setImage(items[0].url);
             }
             me.getView().getStore().add(items);
         }
@@ -168,21 +168,26 @@ Ext.define('djem.view.crosslink.FilesController', {
 
     setDirty: function(isDirty) {
         var me = this;
-        function cleanup(data, idProperty) {
+        function cleanup(data, idProperty, fields) {
             if (Array.isArray(data)) {
                 for (var i = 0; i < data.length; ++i) {
-                    cleanup(data[i], idProperty);
+                    cleanup(data[i], idProperty, fields);
                 }
-            }
-            if (data && typeof data == 'object') {
+            } else if (data && typeof data == 'object') {
                 delete data[idProperty];
+                for (var key in data) {
+                    if (!Ext.Array.contains(fields, key)) {
+                        delete data[key];
+                    }
+                }
             }
         }
         if (me.field) {
             if (isDirty) {
-                var idProperty = me.getView().getStore().getModel().idProperty;
+                var model = me.getView().getStore().getModel();
+                var idProperty = model.idProperty;
                 var data = Ext.pluck(me.getView().getStore().data.items, 'data');
-                cleanup(data, idProperty);
+                cleanup(data, idProperty, Ext.pluck(model.getFields(), 'name'));
                 me.field.setValue(Ext.encode(data));
                 // me.field.setValue(me.field.getValue() - 1);
             } else {
@@ -210,6 +215,17 @@ Ext.define('djem.view.crosslink.FilesController', {
             me.field = form.add(field);
             me.field.on('dataReady', function() {
                 form.getForm().fireEvent('dataReady');
+            });
+            me.field.on('change', function(_this, value) {
+                if (view.single) {
+                    value = Ext.decode(value);
+                    var image = me.getImage(),
+                        url = value && value[0] && value[0].url;
+
+                    if (!image || image.src != url) {
+                        me.setImage(url);
+                    }
+                }
             });
             form.getForm().on('syncFields', function() {
                 if (!me.field.validate()) {
@@ -287,28 +303,35 @@ Ext.define('djem.view.crosslink.FilesController', {
     // картинка
     applyImage: function(href) {
         var me = this,
+            view = me.getView(),
             image = new Image();
 
-        me.getView().un('mousemove', 'onMouseMove', me);
+        view.un('mousemove', 'onMouseMove', me);
+        me.setImageZoom(1);
 
         image.onload = function() {
-            me.getView().on({
+            var deltaX = image.width - view.getWidth();
+            var deltaY = image.height - view.getHeight();
+            if (deltaX > 0 && deltaY > 0) {
+                if (deltaX > deltaY) {
+                    me.setImageZoom(view.getHeight() / image.height);
+                } else {
+                    me.setImageZoom(view.getWidth() / image.width);
+                }
+            }
+
+            me.moveSingleImage({ x: 0, y: 0 });
+            view.on({
                 mousemove: { fn: 'onMouseMove', element: 'el' },
                 scope: me
             });
         };
-        image.src = href;
+
+        if (href) {
+            image.src = href;
+        }
 
         return image;
-    },
-
-    getImageControlValue: function(el) {
-        var offset = (el.getStyleValue('background-position') || '0 0').match(/\d+|-\d+/g);
-        return { x: parseInt(offset[0], 10), y: parseInt(offset[1], 10) };
-    },
-
-    setImageControlValue: function(el, offset) {
-        el.setStyle('background-position', offset.x + 'px ' + offset.y + 'px');
     },
 
     isLeftMouseBtnPressed: function(evt) {
@@ -319,21 +342,43 @@ Ext.define('djem.view.crosslink.FilesController', {
         return button == 1;
     },
 
+    moveSingleImage: function(offset) {
+        var me = this,
+            image = me.getImage(),
+            store = me.getView().getStore(),
+            zoom = me.getImageZoom(),
+            width = image.width * zoom,
+            height = image.height * zoom;
+
+        if (store.getCount() == 1) {
+            var rec = store.getAt(0);
+            rec.set({
+                offset: offset,
+                width: width,
+                height: height,
+                calcOffset: offset.x + 'px ' + offset.y + 'px',
+                calcZoom: width + 'px ' + height + 'px'
+            });
+            me.setDirty(true);
+        }
+    },
+
     onMouseMove: function(evt, element) {
         var me = this;
         if (me.isLeftMouseBtnPressed(evt.event)) {
-            var img = me.getImage(),
-                el = Ext.get(element),
-                offset = me.getImageControlValue(el),
-                rec = me.getView().getStore().getAt(0);
+            var image = me.getImage(),
+                store = me.getView().getStore(),
+                zoom = me.getImageZoom();
 
-            if (rec) {
-                offset.x = Math.min(0, Math.max(-img.width + el.getWidth(), offset.x + evt.event.movementX));
-                offset.y = Math.min(0, Math.max(-img.height + el.getHeight(), offset.y + evt.event.movementY));
+            if (store.getCount() == 1) {
+                var rec = store.getAt(0),
+                    el = Ext.get(element),
+                    offset = rec.get('offset') || { x: 0, y: 0 };
 
-                me.setImageControlValue(el, offset);
+                offset.x = Math.min(0, Math.max(-image.width * zoom + el.getWidth(), offset.x + evt.event.movementX));
+                offset.y = Math.min(0, Math.max(-image.height * zoom + el.getHeight(), offset.y + evt.event.movementY));
 
-                rec.set('offset', offset, { silent: true });
+                me.moveSingleImage(offset);
             }
         }
     }

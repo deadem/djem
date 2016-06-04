@@ -1,3 +1,4 @@
+/* global Ext */
 Ext.define('djem.view.crosslink.FileField', {
     alias: 'widget.crosslink.FileField',
     extend: 'Ext.form.field.Hidden',
