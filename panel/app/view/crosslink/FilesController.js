@@ -356,7 +356,14 @@ Ext.define('djem.view.crosslink.FilesController', {
         image.onload = function() {
             view.setStyle('cursor', 'default');
             if (image.width - view.getWidth() > 0 && image.height - view.getHeight() > 0) {
-                me.setImageZoom(Math.max(view.getHeight() / image.height, view.getWidth() / image.width));
+                var zoomV = view.getHeight() / image.height;
+                var zoomH = view.getWidth() / image.width;
+                if (zoomV > zoomH) {
+                    view.setStyle('cursor', 'ew-resize');
+                } else if (zoomH > zoomV) {
+                    view.setStyle('cursor', 'ns-resize');
+                }
+                me.setImageZoom(Math.max(zoomV, zoomH));
             }
 
             me.moveSingleImage({ x: 0, y: 0 });
