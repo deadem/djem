@@ -187,7 +187,7 @@ Ext.define('djem.view.crosslink.FilesController', {
             if (isDirty) {
                 var model = me.getView().getStore().getModel();
                 var idProperty = model.idProperty;
-                var data = Ext.pluck(me.getView().getStore().data.items, 'data');
+                var data = Ext.decode(Ext.encode(Ext.pluck(me.getView().getStore().data.items, 'data')));
                 cleanup(data, idProperty, Ext.pluck(model.getFields(), 'name'));
                 me.field.setValue(Ext.encode(data));
                 // me.field.setValue(me.field.getValue() - 1);
