@@ -260,11 +260,12 @@ Ext.define('djem.view.crosslink.FilesController', {
                     var body = Ext.get(document.body),
                         iframe = Ext.select('iframe'),
                         rec = view.getStore().getAt(0),
-                        offset = rec.get('offset') || { x: 0, y: 0 };
+                        offset = rec.get('offset') || { x: 0, y: 0 },
+                        zoom = me.getImageZoom();
                     body.addCls('x-unselectable');
                     iframe.setStyle('pointer-events', 'none');
 
-                    me.setImageMoveOffset({ x: evt.event.screenX + offset.x, y: evt.event.screenY + offset.y });
+                    me.setImageMoveOffset({ x: evt.event.screenX + offset.x * zoom, y: evt.event.screenY + offset.y * zoom });
 
                     var mousemove = function(evt) {
                         return me.onMouseMove(evt);
@@ -387,7 +388,10 @@ Ext.define('djem.view.crosslink.FilesController', {
         if (store.getCount() == 1) {
             var rec = store.getAt(0);
             rec.set({
-                offset: offset,
+                offset: {
+                    x: offset.x / zoom,
+                    y: offset.y / zoom
+                },
                 width: width,
                 height: height,
                 calcOffset: -offset.x + 'px ' + -offset.y + 'px',
