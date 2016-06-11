@@ -46,10 +46,13 @@ Ext.define('djem.store.FileUpload', {
                 if (xhr.status == 500) {
                     Ext.MessageBox.show({ title: 'Error', msg: xhr.response });
                 } else if (xhr.status == 413) {
+                    var text = '';
                     Ext.each(records, function (record) {
                         record.set('new', 'new error');
+                        text += '<img style="max-width:256px;max-height:256px;" src="' + record.get('url') + '">';
                     });
-                    Ext.MessageBox.show({ title: 'File too big', msg: xhr.response });
+
+                    Ext.MessageBox.show({ title: 'Error: File too big', msg: text });
                 } else if (xhr.status != 200) {
                     // если произошла ошибка - проверим авторизацию
                     djem.app.fireEvent('initSession', {

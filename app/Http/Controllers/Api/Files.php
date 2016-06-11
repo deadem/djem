@@ -38,6 +38,6 @@ class Files extends \Illuminate\Routing\Controller
         if ($isValid) {
             return $result;
         }
-        abort(500, 'Upload error');
+        abort(413, 'Upload error');
     }
 }
