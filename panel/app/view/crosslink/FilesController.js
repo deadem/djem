@@ -241,17 +241,15 @@ Ext.define('djem.view.crosslink.FilesController', {
             e.preventDefault();
             e.stopPropagation();
         });
-        el.on('click', function(e) {
+        el.on('mouseup', function(e) {
             if (Ext.get(e.target).hasCls('trash')) {
                 var dom = Ext.get(e.target).up('.thumb-wrap'),
                     record = dom && view.getRecord(dom);
 
                 window.URL.revokeObjectURL(record.data.url);
                 view.getStore().remove(record);
-                view.un('mousemove', 'onMouseMove', me);
 
                 me.setDirty(true);
-                e.stopEvent();
             }
         });
         if (view.single) {
@@ -262,6 +260,7 @@ Ext.define('djem.view.crosslink.FilesController', {
                         rec = view.getStore().getAt(0),
                         offset = rec.get('offset') || { x: 0, y: 0 },
                         zoom = me.getImageZoom();
+
                     body.addCls('x-unselectable');
                     iframe.setStyle('pointer-events', 'none');
 
