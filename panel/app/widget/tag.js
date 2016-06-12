@@ -1,7 +1,7 @@
 /* global Ext */
 Ext.define('djem.widget.tag', {
     extend: 'Ext.form.field.Tag',
-    alias: [ 'djem.tag', 'widget.tag' ],
+    alias: [ 'widget.djem.tag', 'widget.tag' ],
 
     pageSize: 100,
     minChars: 1,

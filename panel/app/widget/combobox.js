@@ -1,6 +1,7 @@
+/* global Ext */
 Ext.define('djem.widget.combobox', {
     extend: 'Ext.form.field.ComboBox',
-    alias: [ 'djem.combobox', 'djem.combo', 'djem.select', 'widget.combobox', 'widget.combo', 'widget.select' ],
+    alias: [ 'widget.djem.combobox', 'widget.djem.combo', 'widget.djem.select', 'widget.combobox', 'widget.combo', 'widget.select' ],
 
     pageSize: 100,
     queryParam: 'filter',
@@ -14,14 +15,18 @@ Ext.define('djem.widget.combobox', {
     selectOnFocus: true,
     changingFilters: true,
 
+    requires: [
+        'djem.store.Tag'
+    ],
+
     afterRender: function() {
         var me = this;
-        me.getEl().on('click', function(evt) {
+        me.getEl().on('click', function() {
             if (me.getStore().isLoaded()) {
                 me.expand();
             } else {
                 me.getStore().load({
-                    callback: function(r, options, success) {
+                    callback: function() {
                         me.expand();
                     }
                 });
@@ -30,28 +35,16 @@ Ext.define('djem.widget.combobox', {
         me.callParent(arguments);
     },
 
-    setValue: function(value, doSelect) {
-        var me = this;
-        if (Ext.isObject(value) && !value.isModel && me.queryMode == 'remote') {
-            me.store.clearFilter(true);
-            if (me.store.find(me.valueField, value[me.valueField]) == -1) {
-                me.store.insert(0, value);
-            }
-            me.callParent([ value[me.valueField], doSelect ]);
-        } else {
-            me.callParent(arguments);
-        }
-    },
-
     initStore: function() {
         var me = this;
+        me.setStore(Ext.create('djem.store.ComboBox'));
         var store = me.getStore();
         if (store && me.queryMode == 'remote') {
             var view = me.up('main-content') || me.up('crosslink-editor');
             store.getProxy().setExtraParams({
-                '_doctype': view.config.data._doctype,
-                'id': view.config.data.id,
-                'field': me.name
+                _doctype: view.config.data._doctype,
+                id: view.config.data.id,
+                field: me.name
             });
         }
     },

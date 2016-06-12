@@ -1,7 +1,7 @@
 /* global Ext, CKEDITOR */
 Ext.define('djem.widget.html', {
     extend: 'Ext.form.field.TextArea',
-    alias: [ 'djem.html', 'widget.html' ],
+    alias: [ 'widget.djem.html', 'widget.html' ],
 
     requires: [
         'djem.store.FileUpload',
