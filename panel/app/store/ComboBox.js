@@ -7,7 +7,7 @@ Ext.define('djem.store.ComboBox', {
     ],
 
     model: 'djem.model.ComboBox',
-    autoLoad: true,
+    autoLoad: false,
 
     proxy: {
         type: 'djem',

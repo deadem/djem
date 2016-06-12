@@ -16,7 +16,7 @@ Ext.define('djem.widget.combobox', {
     changingFilters: true,
 
     requires: [
-        'djem.store.Tag'
+        'djem.store.ComboBox'
     ],
 
     afterRender: function() {
@@ -33,6 +33,18 @@ Ext.define('djem.widget.combobox', {
             }
         });
         me.callParent(arguments);
+    },
+
+    setValue: function(value, doSelect) {
+        var me = this;
+        if (Ext.isObject(value) && !value.isModel && me.queryMode == 'remote') {
+            me.store.clearFilter(true);
+            me.store.loadData([ value ], false);
+            me.store.loadCount = 0;
+            me.callParent([ value[me.valueField], doSelect ]);
+        } else {
+            me.callParent(arguments);
+        }
     },
 
     initStore: function() {

@@ -15,6 +15,27 @@ Ext.define('djem.widget.tag', {
         'djem.store.Tag'
     ],
 
+    setValue: function(value, doSelect) {
+        var me = this;
+        if (Ext.isArray(value)) {
+            value = Ext.Array.unique(value);
+        }
+        if (Ext.isArray(value) && value.length && Ext.isObject(value[0]) && !value.isModel && me.queryMode == 'remote') {
+            var store = me.store;
+            store.clearFilter(true);
+            store.loadData(value, false);
+            store.loadCount = 0;
+
+            var values = [];
+            for (var i = 0, len = value.length; i < len; ++i) {
+                values.push(value[i][me.valueField]);
+            }
+            me.callParent([ values, doSelect ]);
+        } else {
+            me.callParent(arguments);
+        }
+    },
+
     listeners: {
         change: function() {
             this.completeEdit();

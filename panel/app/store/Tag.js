@@ -7,7 +7,7 @@ Ext.define('djem.store.Tag', {
     ],
 
     model: 'djem.model.Tag',
-    autoLoad: true,
+    autoLoad: false,
 
     proxy: {
         type: 'djem',
