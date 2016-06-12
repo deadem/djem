@@ -36,6 +36,7 @@ Ext.define('djem.widget.html', {
         var editor = me.editor;
         if (editor) {
             editor.destroy(true);
+            me.editor = undefined;
         }
 
         if (me.files) {
