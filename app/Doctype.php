@@ -4,6 +4,7 @@ namespace DJEM;
 use DJEM\GridHeader;
 use DJEM\LoadEditorFields;
 use Illuminate\Support\Collection;
+use Illuminate\Container\Container;
 use Input;
 
 /**
@@ -53,11 +54,15 @@ class Doctype extends \Illuminate\Routing\Controller
     {
         $address = $this->findUrl($url, $urlModel);
 
-        return new DoctypeResolver(new $address->doctype, [
-            $urlModel => function () use ($address) {
-                return $address;
-            }
-        ]);
+        $container = new Container;
+        $container->bind(Container::class, function () use ($container) {
+            return $container;
+        });
+        $container->bind($urlModel, function () use ($address) {
+            return $address;
+        });
+
+        return new DoctypeResolver($container->build($address->doctype), $container);
     }
 
     /**

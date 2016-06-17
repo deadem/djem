@@ -6,8 +6,8 @@ class DoctypeResolver extends Resolver
 {
     public function controller()
     {
-        $resolver = new Resolver(new $this->object->controller);
-        $resolver->container = $this->container;
+        $controller = $this->__call('controller', []);
+        $resolver = new Resolver($this->container->build($controller), $this->container);
         return $resolver;
     }
 }
