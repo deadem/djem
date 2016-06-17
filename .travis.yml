@@ -6,6 +6,16 @@ php:
 services:
   - postgresql
 
+env:
+  global:
+    - APP_ENV=local
+    - APP_DEBUG=true
+    - APP_KEY=base64:MOkFzFv5bw9l8VPq4AXr6n4+WsnrWpRJdmpMM5vN7/Y=
+    - APP_URL=http://localhost
+    - DB_CONNECTION=pgsql
+    - DB_DATABASE=travis_ci_test
+    - DB_USERNAME=postgres
+
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - composer self-update
