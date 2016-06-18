@@ -80,14 +80,6 @@ class Doctype extends \Illuminate\Routing\Controller
         return [];
     }
 
-    public function save()
-    {
-    }
-
-    public function load()
-    {
-    }
-
     public function loadRelation($relation)
     {
         $relation;
@@ -180,29 +172,25 @@ class Doctype extends \Illuminate\Routing\Controller
     /**
      * Загрузить связанные с моделью данные для редактирования
      *
-     * @param  Model $model  Загруженная модель или ничего, для автоматической подгрузки
-     * @param  array $fields Массив полей для инициализации или ничего, для автоматического разбора
-     * @return LoadEditorFields класс для подгрузки полей в нужном формате
+     * @return Editor класс для подгрузки полей в нужном формате
      */
-    public function editor($model = null, $fields = null)
+    public function editor()
     {
-        if ($model === null) {
-            $id = Input::get('id');
-            if (!$id) {
-                $id = Input::get('clone');
-            }
-            if ($id) {
-                $myModel = $this->model;
-                $model = $myModel::find($id);
+        return new Editor\Editor($this->model);
+    }
 
-                if (!Input::get('id') && Input::get('clone')) {
-                    $model = $model->replicate();
-                }
-            }
-        }
-        if ($fields === null) {
-            $fields = Input::all();
-        }
-        return new EditorLoadFields($this, $model, $fields);
+    public function save()
+    {
+        $editor = $this->editor();
+        return $editor->putData();
+    }
+
+    public function load()
+    {
+        $editor = $this->editor();
+        return [
+            'data' => $editor->getData(),
+            'view' => $editor->getView()
+        ];
     }
 }
