@@ -11,6 +11,28 @@ class Tag extends Control
         $this->xtype('djem.tag');
     }
 
+    public function filterPickList($value)
+    {
+        $this->setProperty('filterPickList', $value);
+
+        return $this;
+    }
+
+    public function queryMode($value)
+    {
+        $this->setProperty('queryMode', $value);
+        
+        return $this;
+    }
+
+    public function store($value)
+    {
+        parent::store($value);
+        $this->queryMode('local');
+
+        return $this;
+    }
+
     public function loadRelation($model)
     {
         return $this->getRelation($model)->select('id', 'name')->get()->map(function ($value) {
@@ -25,16 +47,22 @@ class Tag extends Control
     {
         $getValue; // unused
 
-        $data = [];
+        $data = null;
         if (!empty($values)) {
-            foreach ($values as $value) {
-                if (is_array($value)) {
-                    $data[] = $value['value'];
-                } else {
-                    $data[] = $value;
+            if ($this->getProperty('queryMode') == 'local') {
+                $data = implode(',', $values);
+            } else {
+                $data = [];
+                foreach ($values as $value) {
+                    if (is_array($value)) {
+                        $data[] = $value['value'];
+                    } else {
+                        $data[] = $value;
+                    }
                 }
             }
         }
+
         return $this->setUserValue($data);
     }
 }

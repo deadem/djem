@@ -42,7 +42,9 @@ Ext.define('djem.widget.tag', {
         },
         added: function() {
             var me = this;
-            me.setStore(Ext.create('djem.store.Tag'));
+            if (me.queryMode == 'remote') {
+                me.setStore(Ext.create('djem.store.Tag'));
+            }
 
             var store = me.getStore();
             if (store && me.queryMode == 'remote') {
