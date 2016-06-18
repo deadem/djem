@@ -105,25 +105,26 @@ Ext.define('djem.view.crosslink.FilesController', {
 
     dropFiles: function(e) {
         var me = this;
+        var view = me.getView();
         if (!me.dragState.isExisting()) {
-            var items = [];
+            var store = view.getStore();
+
+            if (view.single) {
+                store.removeAll();
+            }
             Ext.each(e.dataTransfer.files, function(file) {
                 file = me.uploader.lock(file);
-                var record = {
-                    url: file.url,
-                    file: file.file,
-                    name: file.name,
-                    height: 64,
+
+                store.add({
+                    'url': file.url,
+                    'file': file.file,
+                    'name': file.name,
+                    'height': 64,
                     'new': 'new',
-                    offset: []
-                };
-                items.push(record);
+                    'offset': []
+                });
+                return !view.single;
             });
-            if (me.getView().single) {
-                me.getView().getStore().removeAll();
-                items = items.slice(0, 1);
-            }
-            me.getView().getStore().add(items);
         }
         me.dragState.reset();
         me.setDirty(true);
@@ -169,6 +170,7 @@ Ext.define('djem.view.crosslink.FilesController', {
 
     setDirty: function(isDirty) {
         var me = this;
+        var view = me.getView();
         function cleanup(data, idProperty, fields) {
             if (Array.isArray(data)) {
                 for (var i = 0; i < data.length; ++i) {
@@ -177,7 +179,7 @@ Ext.define('djem.view.crosslink.FilesController', {
             } else if (data && typeof data == 'object') {
                 delete data[idProperty];
                 for (var key in data) {
-                    if (!Ext.Array.contains(fields, key)) {
+                    if (view.single && !Ext.Array.contains(fields, key)) {
                         delete data[key];
                     }
                 }
