@@ -87,7 +87,7 @@ class Images extends Control
             $model->fill($value);
 
             if ($this->editor) {
-                $model = (new H\SaveOverride($model))->saveHandler(function () use ($model, $value) {
+                $model = (new Editor\SaveOverride($model))->saveHandler(function () use ($model, $value) {
                     $this->editor->putData($model, $value);
                 });
             }
