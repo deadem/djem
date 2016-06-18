@@ -11,7 +11,7 @@ class Control extends Item
     protected $saveHandler = null;
     protected $associate = null;
 
-    protected function __construct($name = null)
+    public function __construct($name = null)
     {
         parent::__construct($name);
 

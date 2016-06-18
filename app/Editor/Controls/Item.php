@@ -12,7 +12,7 @@ class Item
     protected $customValue = null;
     protected $editor = null;
 
-    protected function __construct($value = null)
+    public function __construct($value = null)
     {
         $value; // not used
     }

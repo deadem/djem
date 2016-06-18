@@ -4,10 +4,8 @@ namespace DJEM\Editor\Controls;
 
 use DJEM\Editor\Items;
 
-class Layout extends Item
+class Layout extends Panel
 {
-    private $items = null;
-
     public function __construct($value = null)
     {
         parent::__construct($value);
@@ -17,28 +15,9 @@ class Layout extends Item
         }
     }
 
-    public function items(\Closure $callback)
-    {
-        $this->items = new Items($callback);
-
-        return $this;
-    }
-
-    public function getItems()
-    {
-        return ($this->items) ? $this->items->getItems() : null;
-    }
-
     public function title($value)
     {
         $this->setProperty('title', $value);
-
-        return $this;
-    }
-
-    public function flex($value)
-    {
-        $this->setProperty('flex', $value);
 
         return $this;
     }
