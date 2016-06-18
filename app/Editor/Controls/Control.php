@@ -107,9 +107,8 @@ class Control extends Item
     {
         if (is_callable($this->saveHandler)) {
             $relation = call_user_func($getter->relation, $this->getName());
-            if ($relation) {
-                $value = call_user_func($this->saveHandler, $value, $relation->getRelated(), $getter);
-            }
+            $model = ($relation) ? $relation->getRelated() : null;
+            $value = call_user_func($this->saveHandler, $value, $model, $getter);
         }
 
         return $this->setUserValue($value);

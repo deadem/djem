@@ -6,6 +6,7 @@ class RichText extends Control
 {
     private $images = null;
     private $relatedData = [];
+    private $imageSaveHandler = null;
 
     public function __construct($name = null)
     {
@@ -14,24 +15,24 @@ class RichText extends Control
         $this->xtype('djem.html');
     }
 
-    public function images($values, $saveHandler)
+    public function images($values, $imageSaveHandler)
     {
         $this->images = $values;
-        $this->saveHandler = $saveHandler;
+        $this->imageSaveHandler = $imageSaveHandler;
 
         return $this;
     }
 
     public function prepareUserValue($value, $getValue = null)
     {
-        if (empty($this->images) || empty($this->saveHandler)) {
+        if (empty($this->images) || empty($this->imageSaveHandler)) {
             return parent::prepareUserValue($value, $getValue);
         }
 
         $value = preg_replace_callback('/(<img.*?src=\s*([\'"]))(.*?)(\\2)/is', function ($matches) use ($getValue) {
             if (preg_match('/^blob:http.*?#(.+)$/i', $matches[3], $urls)) {
                 $relation = call_user_func($getValue->relation, $this->images);
-                $value = call_user_func($this->saveHandler, [ 'file' => $urls[1] ], $relation->getRelated());
+                $value = call_user_func($this->imageSaveHandler, [ 'file' => $urls[1] ], $relation->getRelated(), $getValue);
 
                 if ($value) {
                     $this->relatedData[] = [
