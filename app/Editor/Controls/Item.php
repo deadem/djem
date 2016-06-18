@@ -37,6 +37,10 @@ class Item
 
     protected function getProperty($name, $model = null)
     {
+        if (!isset($this->properties[$name])) {
+            return null;
+        }
+
         $value = $this->properties[$name];
 
         if (is_subclass_of($value, self::class) && is_callable($value)) {
