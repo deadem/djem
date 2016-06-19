@@ -20,11 +20,21 @@ Ext.define('djem.widget.tag', {
         if (Ext.isArray(value)) {
             value = Ext.Array.unique(value);
         }
-        if (Ext.isArray(value) && value.length && Ext.isObject(value[0]) && !value.isModel && me.queryMode == 'remote') {
-            var store = me.store;
-            store.clearFilter(true);
-            store.loadData(value, false);
-            store.loadCount = 0;
+        if (Ext.isEmpty(value)) {
+            me.pickerSelectionModel.deselectAll();
+        }
+        if (Ext.isArray(value) && (!value.length || Ext.isObject(value[0])) && !value.isModel && me.queryMode == 'remote') {
+            var clearStore = function(store, value) {
+                if (store.isEmptyStore) {
+                    return;
+                }
+                store.clearFilter(true);
+                store.loadData(value || [], false);
+                store.loadCount = 0;
+            };
+            clearStore(me.store, value);
+            clearStore(me.valueStore);
+            me.lastQuery = undefined;
 
             var values = [];
             for (var i = 0, len = value.length; i < len; ++i) {

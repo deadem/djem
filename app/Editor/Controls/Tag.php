@@ -45,8 +45,6 @@ class Tag extends Control
 
     public function prepareUserValue($values, $getValue = null)
     {
-        $getValue; // unused
-
         $data = null;
         if (!empty($values)) {
             if ($this->getProperty('queryMode') == 'local') {
@@ -63,6 +61,6 @@ class Tag extends Control
             }
         }
 
-        return $this->setUserValue($data);
+        return parent::prepareUserValue($data, $getValue);
     }
 }

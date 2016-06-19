@@ -161,6 +161,8 @@ Ext.define('djem.view.crosslink.FilesController', {
         me.getView().emptyText = '<input style="margin:5%;" type="file" ' +
             (me.getView().single ? '' : ' multiple="" ') +
             ' onchange="Ext.get(this.parentNode).fireEvent(\'filechange\', event, this);">';
+
+        this.callParent(arguments);
     },
 
     onBeforeDestroy: function() {
@@ -255,6 +257,12 @@ Ext.define('djem.view.crosslink.FilesController', {
             }
         });
         if (view.single) {
+            view.on('resize', function() {
+                me.recalcImageZoom();
+            });
+            view.on('show', function() {
+                me.recalcImageZoom();
+            });
             el.on('mousedown', function(evt) {
                 if (view.getStore().getCount() == 1) {
                     var body = Ext.get(document.body),
@@ -311,6 +319,7 @@ Ext.define('djem.view.crosslink.FilesController', {
         if (me.getView().width === undefined) {
             me.getView().addCls('width-scale');
         }
+        this.callParent(arguments);
     },
 
     // редактор
@@ -325,6 +334,7 @@ Ext.define('djem.view.crosslink.FilesController', {
             record.commit();
             me.setDirty(true);
         }, this, { single: true });
+        this.callParent(arguments);
     },
 
     // картинка
@@ -357,17 +367,7 @@ Ext.define('djem.view.crosslink.FilesController', {
 
         image.onload = function() {
             view.setStyle('cursor', 'default');
-            if (image.width - view.getWidth() > 0 && image.height - view.getHeight() > 0) {
-                var zoomV = view.getHeight() / image.height;
-                var zoomH = view.getWidth() / image.width;
-                if (zoomV > zoomH) {
-                    view.setStyle('cursor', 'ew-resize');
-                } else if (zoomH > zoomV) {
-                    view.setStyle('cursor', 'ns-resize');
-                }
-                me.setImageZoom(Math.max(zoomV, zoomH));
-            }
-
+            me.recalcImageZoom();
             me.moveSingleImage({ x: 0, y: 0 });
         };
 
@@ -378,11 +378,33 @@ Ext.define('djem.view.crosslink.FilesController', {
         return image;
     },
 
+    recalcImageZoom: function() {
+        var me = this,
+            image = me.getImage(),
+            view = me.getView();
+
+        if (!view.single || !image) {
+            return;
+        }
+
+        if (image.width - view.getWidth() > 0 && image.height - view.getHeight() > 0) {
+            var zoomV = view.getHeight() / image.height;
+            var zoomH = view.getWidth() / image.width;
+            if (zoomV > zoomH) {
+                view.setStyle('cursor', 'ew-resize');
+            } else if (zoomH > zoomV) {
+                view.setStyle('cursor', 'ns-resize');
+            }
+            me.setImageZoom(Math.max(zoomV, zoomH));
+            me.moveSingleImage(me.getImageMoveOffset());
+        }
+    },
+
     moveSingleImage: function(offset) {
         var me = this,
             image = me.getImage(),
             store = me.getView().getStore(),
-            zoom = me.getImageZoom(),
+            zoom = me.getImageZoom() || 1,
             width = image.width * zoom,
             height = image.height * zoom;
 
@@ -407,7 +429,7 @@ Ext.define('djem.view.crosslink.FilesController', {
         var image = me.getImage(),
             zoom = me.getImageZoom(),
             el = me.getView().getEl(),
-            startOffset = me.getImageMoveOffset({ x: evt.screenX, y: evt.screenY }),
+            startOffset = me.getImageMoveOffset(),
             offset = {};
 
         offset.x = -Math.min(0, Math.max(el.getWidth() - image.width * zoom, evt.screenX - startOffset.x));

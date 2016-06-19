@@ -20,6 +20,14 @@ class Editor
         $this->create($item);
     }
 
+    public function loadModelClass($model)
+    {
+        $this->model = null;
+        $this->modelClass = $model;
+
+        return $this->loadModel();
+    }
+
     public function loadModel($model = null)
     {
         if (!$this->modelClass) {
@@ -65,8 +73,14 @@ class Editor
 
         foreach ($controls as $field => $item) {
             if ($this->isRelation($field)) {
-                $data->{$field} = $item->loadRelation($model);
-            } elseif ($item->hasCustomValue()) {
+                $result = $item->loadRelation($model);
+                $data->{$field} = $result;
+
+                if (!empty($result) && (!($result instanceof \Countable) || $result->count())) {
+                    continue;
+                }
+            }
+            if ($item->hasCustomValue()) {
                 $data->{$field} = $item->getCustomValue($model);
             }
         }
