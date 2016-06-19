@@ -2,6 +2,8 @@
 
 namespace DJEM\Editor\Controls;
 
+use Illuminate\Database\Eloquent\Model;
+
 class Tag extends Control
 {
     public function __construct($name = null)
@@ -35,7 +37,7 @@ class Tag extends Control
 
     public function loadRelation($model)
     {
-        return $this->getRelation($model)->select('id', 'name')->get()->map(function ($value) {
+        return $this->getRelation($model)->select('id', 'name')->get()->map(function (Model $value) {
             return [
                 'value' => $value->id,
                 'text'  => $value->name
