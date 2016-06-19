@@ -334,7 +334,6 @@ Ext.define('djem.view.crosslink.FilesController', {
             record.commit();
             me.setDirty(true);
         }, this, { single: true });
-        this.callParent(arguments);
     },
 
     // картинка
