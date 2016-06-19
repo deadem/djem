@@ -1,8 +1,6 @@
 <?php
 namespace DJEM\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class Api extends \Illuminate\Routing\Controller
 {
     public function getState()

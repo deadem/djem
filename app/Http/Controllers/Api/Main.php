@@ -1,7 +1,6 @@
 <?php
 namespace DJEM\Http\Controllers\Api;
 
-use DJEM\Doctype as Doctype;
 use Illuminate\Http\Request;
 
 class Main extends \Illuminate\Routing\Controller

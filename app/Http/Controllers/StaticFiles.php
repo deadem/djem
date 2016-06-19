@@ -3,7 +3,6 @@
 namespace DJEM\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class StaticFiles extends Controller

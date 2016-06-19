@@ -2,10 +2,8 @@
 namespace DJEM;
 
 use DJEM\GridHeader;
-use DJEM\LoadEditorFields;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
-use Input;
 
 /**
  * Базовый тип документа.

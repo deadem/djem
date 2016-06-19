@@ -2,8 +2,6 @@
 
 namespace DJEM\Editor\Controls;
 
-use DJEM\Editor\Items;
-
 class Layout extends Panel
 {
     public function __construct($value = null)

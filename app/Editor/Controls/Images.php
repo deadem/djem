@@ -3,7 +3,6 @@
 namespace DJEM\Editor\Controls;
 
 use DJEM\Editor;
-use Illuminate\Database\Eloquent\Relations;
 
 class Images extends Control
 {
