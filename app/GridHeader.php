@@ -4,7 +4,7 @@ namespace DJEM;
 
 class GridHeader
 {
-    private function nameField($row)
+    protected function nameField($row)
     {
         $column = [];
         if (isset($row['text'])) {
@@ -16,27 +16,27 @@ class GridHeader
         return [ 'field' => [ 'name' => $row['name'] ], 'column' => $column ];
     }
 
-    private function typeField($row)
+    protected function typeField($row)
     {
         return [ 'field' => [ 'type' => $row['type'] ] ];
     }
 
-    private function sortableField($row)
+    protected function sortableField($row)
     {
         return [ 'field' => [], 'column' => [ 'sortable' => $row['sortable'] ] ];
     }
 
-    private function textField($row)
+    protected function textField($row)
     {
         return [ 'column' => [ 'text' => $row['text'] ] ];
     }
 
-    private function flexField($row)
+    protected function flexField($row)
     {
         return [ 'column' => [ 'flex' => $row['flex'] ] ];
     }
 
-    private function widthField($row)
+    protected function widthField($row)
     {
         return [ 'column' => [ 'width' => $row['width'] ] ];
     }

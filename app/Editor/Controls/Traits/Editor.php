@@ -82,11 +82,9 @@ trait Editor
 
     public function getControls($item = null)
     {
-        $isRoot = false;
         $controls = collect([]);
 
         if (!$item) {
-            $isRoot = true;
             $item = $this->root;
         }
 
@@ -128,7 +126,6 @@ trait Editor
             $item->initControl($controls);
 
             $value = isset($data[$field]) ? $data[$field] : null;
-            $model = null;
             if ($this->isRelation($field)) {
                 $item->prepareUserValue($value, $getField, $this->getRelation($field));
             } else {
