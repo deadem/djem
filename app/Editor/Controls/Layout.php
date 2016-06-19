@@ -21,4 +21,27 @@ class Layout extends Panel
 
         return $this;
     }
+
+    public function align($value)
+    {
+        $layout = $this->getProperty('layout');
+        if (empty($layout)) {
+            $layout = [];
+        }
+        if (is_string($layout)) {
+            $layout = [ 'type' => $layout ];
+        }
+        $layout['align'] = $value;
+
+        $this->setProperty('layout', $layout);
+
+        return $this;
+    }
+
+    public function type($value)
+    {
+        $this->setProperty('type', $value);
+
+        return $this;
+    }
 }
