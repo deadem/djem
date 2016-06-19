@@ -2,5 +2,6 @@ ext
 build
 bootstrap.*
 saas/example
+.sass-cache/
 .sencha/app/codegen.json
 packages/theme-djem/docs
