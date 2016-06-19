@@ -3,4 +3,5 @@ build
 bootstrap.*
 saas/example
 .sencha/app/codegen.json
+.sass-cache/
 packages/theme-djem/docs

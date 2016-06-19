@@ -24,21 +24,23 @@ Ext.define('djem.view.main.Main', {
 
     controller: 'main',
 
-    layout:'border',
+    layout: 'border',
     items: [ {
         region: 'north',
         xtype: 'main-toolbar',
+        cls: 'top-toolbar',
         reference: 'toolbar'
     }, {
         region: 'center',
         xtype: 'tabpanel',
+        cls: 'top-toolbar',
         reference: 'tabs',
-        items:[ {
+        items: [ {
             title: 'Main',
             layout: 'border',
             reference: 'main',
             listeners: {
-                'click.toolbar': function (ref, params) {
+                'click.toolbar': function(ref, params) {
                     var toolbar = this.down('main-grid{display!="none"}');
                     if (toolbar) {
                         toolbar.fireEvent('click.toolbar', ref, params);

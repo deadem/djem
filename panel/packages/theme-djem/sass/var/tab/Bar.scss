@@ -1,0 +1,11 @@
+.top-toolbar .x-tab-bar {
+    background-color: $base-color;
+    height: 40px;
+    padding: 0;
+    .x-tab-bar-body {
+        padding: 0;
+        .x-box-scroller-body-horizontal {
+            margin-left: 14px;
+        }
+    }
+}

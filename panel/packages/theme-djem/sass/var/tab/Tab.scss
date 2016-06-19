@@ -1,0 +1,42 @@
+.top-toolbar .x-tab {
+    $top-tab-color: #29b7f6;
+
+    height: 40px;
+    &.x-tab-default-top {
+        border: none;
+        border-radius: none;
+        margin: 0 2px 0 0;
+        padding: 0;
+        &.x-tab-focus.x-tab-active {
+            box-shadow: none;
+        }
+    }
+    &.x-tab-default {
+        background-color: $top-tab-color;
+        .x-tab-button {
+            padding: 8px 24px 5px 24px;
+            background: linear-gradient(to bottom, transparent 50%, $color-blue 50%);
+            background-size: 100% 200%;
+            background-position: top left;
+            transition: background-position 0.1s ease;
+        }
+    }
+    &.x-tab-active {
+        color: #ffffff;
+        background-color: $color-blue;
+        .x-tab-button {
+            background-position: bottom left;
+        }
+    }
+    .x-tab-button {
+        border-bottom: 5px solid $color-blue;
+        .x-tab-inner-default {
+            color: #b4e6fc;
+            font: $font-medium;
+            font-weight: normal;
+        }
+        .x-tab-inner {
+            max-width: 250px;
+        }
+    }
+}
