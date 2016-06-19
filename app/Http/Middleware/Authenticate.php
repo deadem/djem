@@ -4,6 +4,7 @@ namespace DJEM\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class Authenticate
 {
@@ -15,7 +16,7 @@ class Authenticate
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];

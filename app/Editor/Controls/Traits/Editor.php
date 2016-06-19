@@ -134,10 +134,10 @@ trait Editor
         }
     }
 
-    public function putFillableData($controls)
+    public function putFillableData(Controls\Control $controls)
     {
         $fillable = $this->model()->getFillable();
-        $controls->each(function ($item, $field) use ($fillable) {
+        $controls->each(function (Controls\Control $item, $field) use ($fillable) {
             if ($this->isRelation($field)) {
                 if (get_class($this->getRelation($field)) == Relations\BelongsTo::class) {
                     $this->addSingleRelation($item, $field);
@@ -148,9 +148,9 @@ trait Editor
         });
     }
 
-    private function putRelatedData($controls)
+    private function putRelatedData(Controls\Control $controls)
     {
-        $controls->each(function ($item, $field) {
+        $controls->each(function (Controls\Control $item, $field) {
             if ($this->isRelation($field)) {
                 switch (get_class($this->getRelation($field))) {
                     case Relations\BelongsToMany::class:
@@ -167,7 +167,7 @@ trait Editor
         });
     }
 
-    private function addSingleRelation($item, $field)
+    private function addSingleRelation(Controls\Item $item, $field)
     {
         $relation = $this->getRelation($field);
 
@@ -180,7 +180,7 @@ trait Editor
         }
     }
 
-    private function addMultipleRelation($item, $field)
+    private function addMultipleRelation(Controls\Item $item, $field)
     {
         $values = $item->getUserValue();
         $relation = $this->getRelation($field);
