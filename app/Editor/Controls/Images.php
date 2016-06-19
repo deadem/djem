@@ -41,7 +41,7 @@ class Images extends Control
             $this->editor->loadModel($relation->getRelated());
             $controls = $this->editor->getControls();
 
-            $models->transform(function (Controls\Item $item) use ($image, $controls) {
+            $models->transform(function (Item $item) use ($image, $controls) {
                 $data = $item->getAttributes();
 
                 foreach ($controls as $field => $control) {
