@@ -13,6 +13,5 @@ class Doctype extends \DJEM\Doctype
 
     public function controller()
     {
-        return;
     }
 }
