@@ -22,6 +22,7 @@ class Item
         $name = '\\DJEM\\Editor\\Controls\\'.$name;
         if (class_exists($name)) {
             $object = new ReflectionClass($name);
+
             return $object->newInstanceArgs($args);
         }
 
@@ -37,8 +38,8 @@ class Item
 
     protected function getProperty($name, $model = null)
     {
-        if (!isset($this->properties[$name])) {
-            return null;
+        if (! isset($this->properties[$name])) {
+            return;
         }
 
         $value = $this->properties[$name];
@@ -93,8 +94,8 @@ class Item
 
     public function __call($name, $values)
     {
-        $methods = [ 'xtype', 'style', 'height', 'width', 'flex', 'title', 'reference', 'cls' ];
-        if (!in_array($name, $methods)) {
+        $methods = ['xtype', 'style', 'height', 'width', 'flex', 'title', 'reference', 'cls'];
+        if (! in_array($name, $methods)) {
             throw new BadMethodCallException('Call to undefined method '.get_class($this).'::'.$name);
         }
         $this->setProperty($name, $values[0]);

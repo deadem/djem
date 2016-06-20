@@ -20,12 +20,13 @@ class Authenticate
     {
         if (Auth::guard($guard)->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];
-            if (!Auth::guard($guard)->attempt($credentials)) {
+            if (! Auth::guard($guard)->attempt($credentials)) {
                 return response([
-                    'state' => 'unauthorized'
+                    'state' => 'unauthorized',
                 ], 401)->header('x-csrf-token', $request->session()->token());
             }
         }
+
         return $next($request)->header('x-csrf-token', $request->session()->token());
     }
 }

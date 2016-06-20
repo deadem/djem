@@ -27,7 +27,7 @@ class Layout extends Panel
             $layout = [];
         }
         if (is_string($layout)) {
-            $layout = [ 'type' => $layout ];
+            $layout = ['type' => $layout];
         }
         $layout['align'] = $value;
 

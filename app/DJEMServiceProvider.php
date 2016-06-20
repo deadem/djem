@@ -1,4 +1,5 @@
 <?php
+
 namespace DJEM;
 
 use Illuminate\Support\ServiceProvider;

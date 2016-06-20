@@ -18,10 +18,10 @@ class Image extends Control
         $dimensions = [];
 
         if ($this->bind === true) {
-            $related = call_user_func([ $model, $this->getProperty('name') ])->getRelated();
+            $related = call_user_func([$model, $this->getProperty('name')])->getRelated();
             $dimensions = [
                 'height' => $related->height,
-                'width'  => $related->width
+                'width'  => $related->width,
             ];
         }
 
@@ -68,20 +68,21 @@ class Image extends Control
                 if (is_array($parentValue)) {
                     $parentValue = array_shift($parentValue);
                 }
-                if (!empty($parentValue) && isset($parentValue['file'])) {
+                if (! empty($parentValue) && isset($parentValue['file'])) {
                     $value = $parentValue;
                     break;
                 }
             }
         }
 
-        if (!empty($value)) {
+        if (! empty($value)) {
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
                 return parent::prepareUserValue($value, $getValue);
             }
             // если файл не указан, значит нужно обновить данные уже подцепленной картинки
             $relation = call_user_func($getValue->relation, $this->getName());
+
             return $this->setUserValue($relation->first());
         }
 

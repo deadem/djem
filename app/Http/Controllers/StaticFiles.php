@@ -19,7 +19,7 @@ class StaticFiles extends Controller
             $response = new Response(
                 file_get_contents($file),
                 200,
-                [ 'Content-type' => self::getContentType($file) ]
+                ['Content-type' => self::getContentType($file)]
             );
 
             $response->setSharedMaxAge(3600);
@@ -43,6 +43,7 @@ class StaticFiles extends Controller
         if (preg_match('/\.(html|htm)$/i', $file)) {
             return 'text/html';
         }
+
         return 'text/plain';
     }
 }

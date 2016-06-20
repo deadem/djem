@@ -57,6 +57,7 @@ class Images extends Control
                     $image = $item->{$image};
                     $data += $image->getAttributes();
                 }
+
                 return (object) $data;
             });
         }
@@ -108,7 +109,7 @@ class Images extends Control
     {
         $image = null;
         if (method_exists($model, $field) && is_callable($this->saveHandler)) {
-            $relation = call_user_func([ $model, $field ]);
+            $relation = call_user_func([$model, $field]);
 
             $image = $relation->getRelated();
             $image = call_user_func($this->saveHandler, $value, $image, $getter);
@@ -122,7 +123,7 @@ class Images extends Control
     {
         foreach ($this->getUserValue() as $value) {
             if ($this->associate) {
-                call_user_func([ $value, $this->associate ])->associate($model);
+                call_user_func([$value, $this->associate])->associate($model);
             }
             $value->save();
         }

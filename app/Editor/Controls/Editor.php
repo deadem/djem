@@ -20,6 +20,7 @@ class Editor extends Item
     public function __invoke($model)
     {
         $this->loadModel($model);
+
         return $this->getView();
     }
 

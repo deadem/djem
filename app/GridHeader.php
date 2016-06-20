@@ -10,35 +10,36 @@ class GridHeader
         if (isset($row['text'])) {
             $column = [
                 'hideable' => false,
-                'dataIndex' => $row['name']
+                'dataIndex' => $row['name'],
             ];
         }
-        return [ 'field' => [ 'name' => $row['name'] ], 'column' => $column ];
+
+        return ['field' => ['name' => $row['name']], 'column' => $column];
     }
 
     protected function typeField($row)
     {
-        return [ 'field' => [ 'type' => $row['type'] ] ];
+        return ['field' => ['type' => $row['type']]];
     }
 
     protected function sortableField($row)
     {
-        return [ 'field' => [], 'column' => [ 'sortable' => $row['sortable'] ] ];
+        return ['field' => [], 'column' => ['sortable' => $row['sortable']]];
     }
 
     protected function textField($row)
     {
-        return [ 'column' => [ 'text' => $row['text'] ] ];
+        return ['column' => ['text' => $row['text']]];
     }
 
     protected function flexField($row)
     {
-        return [ 'column' => [ 'flex' => $row['flex'] ] ];
+        return ['column' => ['flex' => $row['flex']]];
     }
 
     protected function widthField($row)
     {
-        return [ 'column' => [ 'width' => $row['width'] ] ];
+        return ['column' => ['width' => $row['width']]];
     }
 
     public function getFields($fieldsData)
@@ -58,7 +59,7 @@ class GridHeader
                 }
             }
 
-            if (!empty($row['name']) && !empty($row['title'])) {
+            if (! empty($row['name']) && ! empty($row['title'])) {
                 $options['title'] = $row['name'];
             }
 
@@ -67,6 +68,7 @@ class GridHeader
                 $columns[] = $column;
             }
         }
-        return [ 'fields' => $fields, 'columns' => $columns, 'options' => $options ];
+
+        return ['fields' => $fields, 'columns' => $columns, 'options' => $options];
     }
 }

@@ -9,6 +9,7 @@ class StaticImage extends Item
         parent::__construct();
 
         $this->xtype('image');
+
         return $this;
     }
 }

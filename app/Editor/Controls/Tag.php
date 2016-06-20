@@ -23,7 +23,7 @@ class Tag extends Control
     public function queryMode($value)
     {
         $this->setProperty('queryMode', $value);
-        
+
         return $this;
     }
 
@@ -40,7 +40,7 @@ class Tag extends Control
         return $this->getRelation($model)->select('id', 'name')->get()->map(function (Model $value) {
             return [
                 'value' => $value->id,
-                'text'  => $value->name
+                'text'  => $value->name,
             ];
         });
     }
@@ -48,7 +48,7 @@ class Tag extends Control
     public function prepareUserValue($values, $getValue = null)
     {
         $data = null;
-        if (!empty($values)) {
+        if (! empty($values)) {
             if ($this->getProperty('queryMode') == 'local') {
                 $data = implode(',', $values);
             } else {

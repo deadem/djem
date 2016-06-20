@@ -22,14 +22,16 @@ trait Editor
     public function loadModel($model = null)
     {
         $this->model = $model;
+
         return $this;
     }
 
     public function model()
     {
-        if (!$this->model) {
+        if (! $this->model) {
             $this->loadModel();
         }
+
         return $this->model;
     }
 
@@ -38,6 +40,7 @@ trait Editor
         $name = '\\DJEM\\Editor\\Controls\\'.$name;
         if (class_exists($name)) {
             $object = new ReflectionClass($name);
+
             return $object->newInstanceArgs($args);
         }
 
@@ -46,17 +49,18 @@ trait Editor
 
     public function __call($name, $args)
     {
-        if (!preg_match('/^create/', $name)) {
+        if (! preg_match('/^create/', $name)) {
             throw new BadMethodCallException('Call to undefined method '.get_class($this).'::'.$name);
         }
 
         $className = preg_replace('/^create/', '', $name);
+
         return $this->create(self::createControl($className, $args))->root;
     }
 
     public function getView($item = null)
     {
-        if (!$item) {
+        if (! $item) {
             $item = $this->root;
         }
 
@@ -84,7 +88,7 @@ trait Editor
     {
         $controls = collect([]);
 
-        if (!$item) {
+        if (! $item) {
             $item = $this->root;
         }
 
@@ -119,7 +123,7 @@ trait Editor
             },
             'relation' => function ($field) {
                 return $this->isRelation($field) ? $this->getRelation($field) : null;
-            }
+            },
         ];
 
         foreach ($controls as $field => $item) {
@@ -186,7 +190,7 @@ trait Editor
         $relation = $this->getRelation($field);
         $relation->detach();
 
-        if (!empty($values)) {
+        if (! empty($values)) {
             foreach ($values as $value) {
                 $relation->attach($value);
             }

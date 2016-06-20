@@ -75,12 +75,12 @@ class Control extends Item
     protected function getRelation($model)
     {
         $field = $this->getName();
+
         return $model->{$field}();
     }
 
     protected function detachRelation($relation, $field)
     {
-
     }
 
     protected function attachToRelation($relation, $value)
@@ -131,10 +131,11 @@ class Control extends Item
         if ($this->associate) {
             $value = $this->getUserValue();
             if (is_object($value)) {
-                call_user_func([ $value, $this->associate ])->associate($model);
+                call_user_func([$value, $this->associate])->associate($model);
                 $value->save();
             }
         }
+
         return $this;
     }
 
