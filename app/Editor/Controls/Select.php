@@ -17,8 +17,6 @@ class Select extends Control
         if ($value) {
             return ['value' => $value->id, 'text' => $value->name];
         }
-
-        return;
     }
 
     public function triggerAction($mode)
