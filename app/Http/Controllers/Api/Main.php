@@ -1,7 +1,7 @@
 <?php
+
 namespace DJEM\Http\Controllers\Api;
 
-use DJEM\Doctype as Doctype;
 use Illuminate\Http\Request;
 
 class Main extends \Illuminate\Routing\Controller
@@ -14,6 +14,7 @@ class Main extends \Illuminate\Routing\Controller
     public function grid(Request $request)
     {
         $id = $request->input('tree');
+
         return $this->getDoctype($id)->grid($id);
     }
 
@@ -25,7 +26,7 @@ class Main extends \Illuminate\Routing\Controller
     protected function findLeaf($id, $tree = null)
     {
         if ($tree === null) {
-             $tree = $this->getTree();
+            $tree = $this->getTree();
         }
         foreach ($tree as $key => $leaf) {
             if (isset($leaf['id']) && $leaf['id'] == $id) {
@@ -38,6 +39,7 @@ class Main extends \Illuminate\Routing\Controller
                 }
             }
         }
+
         return false;
     }
 
@@ -48,6 +50,7 @@ class Main extends \Illuminate\Routing\Controller
         if ($leaf) {
             $doctype = $leaf['_doctype'];
         }
+
         return new $doctype;
     }
 }

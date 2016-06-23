@@ -1,11 +1,9 @@
 <?php
+
 namespace DJEM;
 
-use DJEM\GridHeader;
-use DJEM\LoadEditorFields;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
-use Input;
 
 /**
  * Базовый тип документа.
@@ -27,7 +25,7 @@ class Doctype extends \Illuminate\Routing\Controller
     public $controller;
 
     /**
-     * Поиск данных для отображения по URL
+     * Поиск данных для отображения по URL.
      *
      * @param  string $url      URL.
      * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
@@ -37,9 +35,10 @@ class Doctype extends \Illuminate\Routing\Controller
     public function findUrl($url, $urlModel)
     {
         $address = $urlModel::where('url', '=', $url)->first();
-        if (!$address) {
+        if (! $address) {
             abort(404);
         }
+
         return $address;
     }
 
@@ -66,7 +65,7 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Переопределение вью для грида
+     * Переопределение вью для грида.
      *
      * @return array описание вьювера и данных для просмотра
      */
@@ -91,7 +90,7 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Получить список моделей, доступных для создания
+     * Получить список моделей, доступных для создания.
      *
      * @return array список классов типов, которые можно создавать внутри этого типа.
      */
@@ -101,21 +100,21 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Список полей грида для указанного mount-id
+     * Список полей грида для указанного mount-id.
      *
      * @return array массив с типами и именами полей.
      */
     protected function gridFields()
     {
         return [
-            [ 'name' => 'id', 'type' => 'string' ],
-            [ 'name' => '_doctype', 'type' => 'string' ],
-            [ 'name' => 'name', 'title' => true, 'text' => 'Name', 'type' => 'string', 'flex' => 1 ]
+            ['name' => 'id', 'type' => 'string'],
+            ['name' => '_doctype', 'type' => 'string'],
+            ['name' => 'name', 'title' => true, 'text' => 'Name', 'type' => 'string', 'flex' => 1],
         ];
     }
 
     /**
-     * Получить список документов для грида
+     * Получить список документов для грида.
      *
      * @return Illuminate\Support\Collection список документов в гриде
      */
@@ -125,7 +124,7 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Получить контекстное меню для текущего раздела
+     * Получить контекстное меню для текущего раздела.
      *
      * @return array массив с указанием возможных действий
      */
@@ -135,7 +134,7 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Получить заголовок грида со служебными данными для указанного mount-id
+     * Получить заголовок грида со служебными данными для указанного mount-id.
      *
      * @return array объект со списком полей, их типами и описанием.
      */
@@ -145,8 +144,9 @@ class Doctype extends \Illuminate\Routing\Controller
         $fields['options'] += [
             'subtypes' => $this->getSubtypes(),
             '_doctype' => get_class($this),
-            'contextMenu' => $this->getContextMenu()
+            'contextMenu' => $this->getContextMenu(),
         ];
+
         return $fields;
     }
 
@@ -162,15 +162,16 @@ class Doctype extends \Illuminate\Routing\Controller
         if ($total && method_exists($items, 'total')) {
             $total = $items->total();
         }
+
         return [
             'metaData' => $this->header(),
             'items' => $items->all(),
-            'total' => $total
+            'total' => $total,
         ];
     }
 
     /**
-     * Загрузить связанные с моделью данные для редактирования
+     * Загрузить связанные с моделью данные для редактирования.
      *
      * @return Editor класс для подгрузки полей в нужном формате
      */
@@ -182,15 +183,17 @@ class Doctype extends \Illuminate\Routing\Controller
     public function save()
     {
         $editor = $this->editor();
+
         return $editor->putData();
     }
 
     public function load()
     {
         $editor = $this->editor();
+
         return [
             'data' => $editor->getData(),
-            'view' => $editor->getView()
+            'view' => $editor->getView(),
         ];
     }
 }

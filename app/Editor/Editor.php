@@ -2,7 +2,6 @@
 
 namespace DJEM\Editor;
 
-use DJEM\Editor\Controls;
 use Input;
 use DB;
 
@@ -30,20 +29,20 @@ class Editor
 
     public function loadModel($model = null)
     {
-        if (!$this->modelClass) {
+        if (! $this->modelClass) {
             return $this;
         }
 
         if ($model === null) {
             $id = Input::get('id');
-            if (!$id) {
+            if (! $id) {
                 $id = Input::get('clone');
             }
             if ($id) {
                 $myModel = $this->modelClass;
                 $model = $myModel::find($id);
 
-                if (!Input::get('id') && Input::get('clone')) {
+                if (! Input::get('id') && Input::get('clone')) {
                     $model = $model->replicate();
                 }
             }
@@ -76,7 +75,7 @@ class Editor
                 $result = $item->loadRelation($model);
                 $data->{$field} = $result;
 
-                if (!empty($result) && (!($result instanceof \Countable) || $result->count())) {
+                if (! empty($result) && (! ($result instanceof \Countable) || $result->count())) {
                     continue;
                 }
             }
@@ -84,6 +83,7 @@ class Editor
                 $data->{$field} = $item->getCustomValue($model);
             }
         }
+
         return $data;
     }
 
@@ -101,7 +101,7 @@ class Editor
             $this->putRelatedData($controls);
         });
 
-        Input::merge([ 'id' => $this->model()->id ]);
+        Input::merge(['id' => $this->model()->id]);
 
         return $this;
     }

@@ -8,33 +8,32 @@ Ext.define('djem.view.main.MainController', {
         'djem.view.main.Content'
     ],
 
-    init: function () {
+    init: function() {
         var me = this;
 
         function tabChange(newTab) {
             me.lookupReference('toolbar').fireEvent('change.toolbar', newTab, (newTab && newTab.getXType()) || 'panel');
         }
 
-        djem.app.on('update.toolbar', function (ref, data) {
+        djem.app.on('update.toolbar', function(ref, data) {
             me.lookupReference('toolbar').fireEvent('update.toolbar', ref, data);
-        }).on('click.toolbar', function (ref, params) {
+        }).on('click.toolbar', function(ref, params) {
             me.lookupReference('tabs').getActiveTab().fireEvent('click.toolbar', ref, params);
-        }).on('show.toolbar', function (result) {
+        }).on('show.toolbar', function(result) {
             me.lookupReference('tabs').getActiveTab().fireEvent('show.toolbar', result);
-        }).on('change.toolbar', function () {
+        }).on('change.toolbar', function() {
             tabChange(me.lookupReference('tabs').getActiveTab());
-        }).on('deleteDocument', function (_this, data) {
-            Ext.MessageBox.confirm('Delete document', 'Delete ' +  data.title + ' ?', function (button) {
+        }).on('deleteDocument', function(_this, data) {
+            Ext.MessageBox.confirm('Delete document', 'Delete ' + data.title + ' ?', function(button) {
                 if (button == 'yes') {
                     Ext.create('djem.store.main.Content').action('delete').load({
-                        callback: function () {
-                            // TODO: notify
+                        callback: function() {
                         },
                         params: { _doctype: data._doctype, id: data.id }
                     });
                 }
             });
-        }).on('update.tab', function (_this, data) {
+        }).on('update.tab', function(_this, data) {
             var tabs = me.lookupReference('tabs');
             var tabId = data.id;
             var tab = tabs.query('#' + tabId)[0];
@@ -44,20 +43,20 @@ Ext.define('djem.view.main.MainController', {
                 }
             }
         });
-        me.lookupReference('tabs').on('tabchange', function (_this, newTab) {
+        me.lookupReference('tabs').on('tabchange', function(_this, newTab) {
             tabChange(newTab);
         }).fireEvent('tabchange');
 
-        me.lookupReference('tree').on('select', function (_this, record) {
+        me.lookupReference('tree').on('select', function(_this, record) {
             me.lookupReference('grid').fireEvent('load', record.data.id);
-        }).on('load', function () {
+        }).on('load', function() {
             this.getRootNode().expand();
             if (this.getSelectionModel().getCount() === 0) {
                 this.getSelectionModel().select(this.getRootNode().getChildAt(0));
             }
         });
 
-        me.lookupReference('grid').on('openDocument', function (_this, data) {
+        me.lookupReference('grid').on('openDocument', function(_this, data) {
             var tabs = me.lookupReference('tabs');
             var id = data.id || ++SharedData.nextDocumentNumber;
             var tabId = 'main-tab-' + String(data._doctype).replace(/[^0-9a-z]+/ig, '_') + '-' + (data.id || 'x-' + id);
@@ -79,7 +78,7 @@ Ext.define('djem.view.main.MainController', {
 
         // инициализируем авторизационный токен
         djem.app.fireEvent('initSession', {
-            success: function () {
+            success: function() {
                 me.lookupReference('tree').getStore().load();
             }
         });

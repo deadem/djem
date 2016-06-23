@@ -1,4 +1,5 @@
 <?php
+
 namespace DJEM;
 
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,7 @@ class DJEMServiceProvider extends ServiceProvider
         });
         Route::get('djem/{file?}', '\DJEM\Http\Controllers\StaticFiles@get')->where('file', '.*');
     }
+
     /**
      * Bootstrap the application services.
      * @param Router $router

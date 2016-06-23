@@ -1,4 +1,5 @@
 <?php
+
 namespace DJEM\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
@@ -8,6 +9,7 @@ class Files extends \Illuminate\Routing\Controller
     public function get(Request $request)
     {
         $request;
+
         return [];
     }
 
@@ -28,7 +30,7 @@ class Files extends \Illuminate\Routing\Controller
                 $file->move(sys_get_temp_dir(), $tempFileName);
                 $result[] = [
                     'name' => $file->getClientOriginalName(),
-                    'file' => $tempFileName
+                    'file' => $tempFileName,
                 ];
             } else {
                 $isValid = false;

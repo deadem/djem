@@ -1,8 +1,7 @@
 <?php
+
 namespace DJEM\Http\Controllers\Api;
 
-use DJEM\Doctype as Doctype;
-use Illuminate\Http\Request;
 use Input;
 
 class Content extends \Illuminate\Routing\Controller
@@ -20,7 +19,7 @@ class Content extends \Illuminate\Routing\Controller
         }
 
         return [
-            'metaData' => (new $doctype)->load()
+            'metaData' => (new $doctype)->load(),
         ];
     }
 
@@ -28,6 +27,7 @@ class Content extends \Illuminate\Routing\Controller
     {
         $doctype = $this->doctype();
         (new $doctype)->save();
+
         return $this->get();
     }
 
@@ -35,12 +35,14 @@ class Content extends \Illuminate\Routing\Controller
     {
         $doctype = $this->doctype();
         (new $doctype)->delete();
+
         return [];
     }
 
     public function loadRelation()
     {
         $doctype = $this->doctype();
+
         return (new $doctype)->loadRelation(Input::get('field'));
     }
 }

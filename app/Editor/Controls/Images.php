@@ -3,7 +3,6 @@
 namespace DJEM\Editor\Controls;
 
 use DJEM\Editor;
-use Illuminate\Database\Eloquent\Relations;
 
 class Images extends Control
 {
@@ -42,7 +41,7 @@ class Images extends Control
             $this->editor->loadModel($relation->getRelated());
             $controls = $this->editor->getControls();
 
-            $models->transform(function ($item) use ($image, $controls, $model) {
+            $models->transform(function (Item $item) use ($image, $controls) {
                 $data = $item->getAttributes();
 
                 foreach ($controls as $field => $control) {
@@ -58,6 +57,7 @@ class Images extends Control
                     $image = $item->{$image};
                     $data += $image->getAttributes();
                 }
+
                 return (object) $data;
             });
         }
@@ -109,7 +109,7 @@ class Images extends Control
     {
         $image = null;
         if (method_exists($model, $field) && is_callable($this->saveHandler)) {
-            $relation = call_user_func([ $model, $field ]);
+            $relation = call_user_func([$model, $field]);
 
             $image = $relation->getRelated();
             $image = call_user_func($this->saveHandler, $value, $image, $getter);
@@ -123,7 +123,7 @@ class Images extends Control
     {
         foreach ($this->getUserValue() as $value) {
             if ($this->associate) {
-                call_user_func([ $value, $this->associate ])->associate($model);
+                call_user_func([$value, $this->associate])->associate($model);
             }
             $value->save();
         }

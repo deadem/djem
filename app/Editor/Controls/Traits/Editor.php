@@ -22,14 +22,16 @@ trait Editor
     public function loadModel($model = null)
     {
         $this->model = $model;
+
         return $this;
     }
 
     public function model()
     {
-        if (!$this->model) {
+        if (! $this->model) {
             $this->loadModel();
         }
+
         return $this->model;
     }
 
@@ -38,6 +40,7 @@ trait Editor
         $name = '\\DJEM\\Editor\\Controls\\'.$name;
         if (class_exists($name)) {
             $object = new ReflectionClass($name);
+
             return $object->newInstanceArgs($args);
         }
 
@@ -46,17 +49,18 @@ trait Editor
 
     public function __call($name, $args)
     {
-        if (!preg_match('/^create/', $name)) {
+        if (! preg_match('/^create/', $name)) {
             throw new BadMethodCallException('Call to undefined method '.get_class($this).'::'.$name);
         }
 
         $className = preg_replace('/^create/', '', $name);
+
         return $this->create(self::createControl($className, $args))->root;
     }
 
     public function getView($item = null)
     {
-        if (!$item) {
+        if (! $item) {
             $item = $this->root;
         }
 
@@ -82,11 +86,9 @@ trait Editor
 
     public function getControls($item = null)
     {
-        $isRoot = false;
         $controls = collect([]);
 
-        if (!$item) {
-            $isRoot = true;
+        if (! $item) {
             $item = $this->root;
         }
 
@@ -121,14 +123,13 @@ trait Editor
             },
             'relation' => function ($field) {
                 return $this->isRelation($field) ? $this->getRelation($field) : null;
-            }
+            },
         ];
 
         foreach ($controls as $field => $item) {
             $item->initControl($controls);
 
             $value = isset($data[$field]) ? $data[$field] : null;
-            $model = null;
             if ($this->isRelation($field)) {
                 $item->prepareUserValue($value, $getField, $this->getRelation($field));
             } else {
@@ -137,10 +138,10 @@ trait Editor
         }
     }
 
-    public function putFillableData($controls)
+    public function putFillableData(Controls\Control $controls)
     {
         $fillable = $this->model()->getFillable();
-        $controls->each(function ($item, $field) use ($fillable) {
+        $controls->each(function (Controls\Control $item, $field) use ($fillable) {
             if ($this->isRelation($field)) {
                 if (get_class($this->getRelation($field)) == Relations\BelongsTo::class) {
                     $this->addSingleRelation($item, $field);
@@ -151,9 +152,9 @@ trait Editor
         });
     }
 
-    private function putRelatedData($controls)
+    private function putRelatedData(Controls\Control $controls)
     {
-        $controls->each(function ($item, $field) {
+        $controls->each(function (Controls\Control $item, $field) {
             if ($this->isRelation($field)) {
                 switch (get_class($this->getRelation($field))) {
                     case Relations\BelongsToMany::class:
@@ -170,7 +171,7 @@ trait Editor
         });
     }
 
-    private function addSingleRelation($item, $field)
+    private function addSingleRelation(Controls\Item $item, $field)
     {
         $relation = $this->getRelation($field);
 
@@ -183,13 +184,13 @@ trait Editor
         }
     }
 
-    private function addMultipleRelation($item, $field)
+    private function addMultipleRelation(Controls\Item $item, $field)
     {
         $values = $item->getUserValue();
         $relation = $this->getRelation($field);
         $relation->detach();
 
-        if (!empty($values)) {
+        if (! empty($values)) {
             foreach ($values as $value) {
                 $relation->attach($value);
             }

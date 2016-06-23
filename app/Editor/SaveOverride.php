@@ -15,6 +15,7 @@ class SaveOverride
     public function __set($name, $value)
     {
         $this->originalModel->{$name} = $value;
+
         return $this;
     }
 
@@ -25,7 +26,7 @@ class SaveOverride
 
     public function __call($name, $args)
     {
-        return call_user_func_array([ $this->originalModel, $name ], $args);
+        return call_user_func_array([$this->originalModel, $name], $args);
     }
 
     public function saveHandler($saveCallback)
@@ -47,10 +48,11 @@ class SaveOverride
 
     public function save()
     {
-        $saved = call_user_func_array([ $this->originalModel, 'save' ], func_get_args());
+        $saved = call_user_func_array([$this->originalModel, 'save'], func_get_args());
         if ($saved && $this->saveCallback) {
             call_user_func($this->saveCallback);
         }
+
         return $saved;
     }
 }

@@ -4,6 +4,7 @@ namespace DJEM\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class Authenticate
 {
@@ -15,17 +16,17 @@ class Authenticate
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, $guard = null)
     {
-        // Auth::guard($guard)->logoff();
         if (Auth::guard($guard)->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];
-            if (!Auth::guard($guard)->attempt($credentials)) {
+            if (! Auth::guard($guard)->attempt($credentials)) {
                 return response([
-                    'state' => 'unauthorized'
+                    'state' => 'unauthorized',
                 ], 401)->header('x-csrf-token', $request->session()->token());
             }
         }
+
         return $next($request)->header('x-csrf-token', $request->session()->token());
     }
 }

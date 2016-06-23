@@ -13,11 +13,10 @@ class Select extends Control
 
     public function loadRelation($model)
     {
-        $value = $this->getRelation($model)->select([ 'id', 'name' ])->first();
+        $value = $this->getRelation($model)->select(['id', 'name'])->first();
         if ($value) {
-            return [ 'value' => $value->id, 'text' => $value->name ];
+            return ['value' => $value->id, 'text' => $value->name];
         }
-        return null;
     }
 
     public function triggerAction($mode)
@@ -32,9 +31,10 @@ class Select extends Control
 
     public function autocomplete($value = true)
     {
-        if (!$value) {
+        if (! $value) {
             $this->forceSelection(false);
         }
+
         return $this->setProperty('minChars', ($value) ? 1 : 255);
     }
 }

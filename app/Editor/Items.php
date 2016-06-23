@@ -2,7 +2,6 @@
 
 namespace DJEM\Editor;
 
-use DJEM\Editor\Controls;
 use BadMethodCallException;
 
 class Items
@@ -29,16 +28,18 @@ class Items
     private function addControl(Controls\Item $item)
     {
         $this->items[] = $item;
+
         return $item;
     }
 
     public function __call($name, $args)
     {
-        if (!preg_match('/^add/', $name)) {
+        if (! preg_match('/^add/', $name)) {
             throw new BadMethodCallException('Call to undefined method '.get_class($this).'::'.$name);
         }
 
         $className = preg_replace('/^add/', '', $name);
+
         return $this->addControl(Controls\Item::createControl($className, $args));
     }
 }
