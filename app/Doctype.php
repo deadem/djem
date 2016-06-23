@@ -20,22 +20,26 @@ class Doctype extends \Illuminate\Routing\Controller
     /**
      * Контроллер, которому должно быть передано управление при обработке http-запроса к этому типу.
      *
-     * @var class
+     * @return class | null
      */
-    public $controller;
+    public function controller()
+    {
+        return '';
+    }
 
     /**
      * Поиск данных для отображения по URL.
      *
-     * @param  string $url      URL.
-     * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     * @param string $url      URL.
+     * @param string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     *
      * @return object класс с полями doctype, refid для отображения соответствующим
-     *         типом модели, найденной по идентификатору.
+     *                типом модели, найденной по идентификатору.
      */
     public function findUrl($url, $urlModel)
     {
         $address = $urlModel::where('url', '=', $url)->first();
-        if (! $address) {
+        if (!$address) {
             abort(404);
         }
 
@@ -45,15 +49,16 @@ class Doctype extends \Illuminate\Routing\Controller
     /**
      * Поиск и создание прокси-объекта для вызова методов типа документа.
      *
-     * @param  string $url      URL.
-     * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     * @param string $url      URL.
+     * @param string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     *
      * @return DoctypeResolver прокси-объект для вызова типа документа.
      */
     public function find($url, $urlModel)
     {
         $address = $this->findUrl($url, $urlModel);
 
-        $container = new Container;
+        $container = new Container();
         $container->bind(Container::class, function () use ($container) {
             return $container;
         });
@@ -140,7 +145,7 @@ class Doctype extends \Illuminate\Routing\Controller
      */
     private function header()
     {
-        $fields = (new GridHeader)->getFields($this->gridFields());
+        $fields = (new GridHeader())->getFields($this->gridFields());
         $fields['options'] += [
             'subtypes' => $this->getSubtypes(),
             '_doctype' => get_class($this),

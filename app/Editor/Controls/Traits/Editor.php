@@ -4,6 +4,7 @@ namespace DJEM\Editor\Controls\Traits;
 
 use DJEM\Editor\Controls;
 use Illuminate\Database\Eloquent\Relations;
+use Illuminate\Support\Collection;
 use BadMethodCallException;
 use ReflectionClass;
 
@@ -28,7 +29,7 @@ trait Editor
 
     public function model()
     {
-        if (! $this->model) {
+        if (!$this->model) {
             $this->loadModel();
         }
 
@@ -49,7 +50,7 @@ trait Editor
 
     public function __call($name, $args)
     {
-        if (! preg_match('/^create/', $name)) {
+        if (!preg_match('/^create/', $name)) {
             throw new BadMethodCallException('Call to undefined method '.get_class($this).'::'.$name);
         }
 
@@ -60,7 +61,7 @@ trait Editor
 
     public function getView($item = null)
     {
-        if (! $item) {
+        if (!$item) {
             $item = $this->root;
         }
 
@@ -88,7 +89,7 @@ trait Editor
     {
         $controls = collect([]);
 
-        if (! $item) {
+        if (!$item) {
             $item = $this->root;
         }
 
@@ -138,7 +139,7 @@ trait Editor
         }
     }
 
-    public function putFillableData(Controls\Control $controls)
+    public function putFillableData(Collection $controls)
     {
         $fillable = $this->model()->getFillable();
         $controls->each(function (Controls\Control $item, $field) use ($fillable) {
@@ -152,7 +153,7 @@ trait Editor
         });
     }
 
-    private function putRelatedData(Controls\Control $controls)
+    private function putRelatedData(Collection $controls)
     {
         $controls->each(function (Controls\Control $item, $field) {
             if ($this->isRelation($field)) {
@@ -190,7 +191,7 @@ trait Editor
         $relation = $this->getRelation($field);
         $relation->detach();
 
-        if (! empty($values)) {
+        if (!empty($values)) {
             foreach ($values as $value) {
                 $relation->attach($value);
             }
