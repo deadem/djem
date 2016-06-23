@@ -26,6 +26,9 @@
         background-color: $color-blue;
         .x-tab-button {
             background-position: bottom left;
+            .x-tab-glyph {
+                opacity: 1;
+            }
         }
     }
     .x-tab-button {
@@ -38,6 +41,15 @@
         }
         .x-tab-inner {
             max-width: 250px;
+        }
+
+        .x-tab-glyph {
+            font-size: 24px;
+            height: 24px;
+            width: 24px;
+            line-height: 24px;
+            color: white;
+            opacity: 0.5;
         }
     }
 }
