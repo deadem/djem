@@ -1,0 +1,13 @@
+@mixin extjs-tab-djem() {
+    .#{$prefix}tab-button {
+        text-transform: uppercase;
+    }
+
+    .#{$prefix}tab-inner {
+        max-width: 250px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@include extjs-tab-djem();

@@ -9,18 +9,13 @@ $color-top-toolbar-light: #29b7f6;
 
 $color: $color-black !default;
 
-$base-font-size: 14px !default;
-
-$font-family: Roboto, sans-serif !default;
-$font-size: $base-font-size !default;
 $font-weight: normal !default;
 $font-weight-bold: bold !default;
-$line-height: $base-font-size + 4 !default;
 
-$font-size-small: $font-size !default;
+$font-size-small: 14px !default;
 $font-family-small: "Roboto", sans-serif !default;
 $font-weight-small: $font-weight !default;
-$line-height-small: $line-height !default;
+$line-height-small: $font-size-small + 4 !default;
 
 $font-size-medium: $font-size-small + 2 !default;
 $font-family-medium: "Roboto Medium", sans-serif !default;
@@ -32,7 +27,11 @@ $font-family-large: "Roboto Medium", sans-serif !default;
 $font-weight-large: $font-weight !default;
 $line-height-large: $line-height-medium + 2 !default;
 
-$base-color: $color-top-toolbar !default;
+$font-family: $font-family-small !default;
+$font-size: $font-size-small !default;
+$line-height: $line-height-small !default;
+
+$base-color: $color-white !default;
 $base-light-color: $color-top-toolbar-light !default;
 $base-highlight-color: $color-top-toolbar-light !default;
 
