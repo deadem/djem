@@ -16,7 +16,6 @@ Ext.define('djem.view.main.Toolbar', {
     items: [ {
         text: 'Save',
         scale: 'medium',
-        glyph: 'xf0c7@FontAwesome',
         reference: 'save'
     }, {
         text: '?',
@@ -25,18 +24,15 @@ Ext.define('djem.view.main.Toolbar', {
     }, {
         text: 'Undo',
         scale: 'medium',
-        glyph: 'xf0e2@FontAwesome',
         reference: 'undo'
     }, {
         text: 'Redo',
         scale: 'medium',
-        glyph: 'xf01e@FontAwesome',
         disabled: true,
         reference: 'redo'
     }, {
         text: 'Close',
         scale: 'medium',
-        glyph: 'xf00d@FontAwesome',
         reference: 'close'
     }, {
         reference: 'user'

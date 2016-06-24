@@ -115,7 +115,6 @@ Ext.define('djem.view.main.GridController', {
         }
         menu.push({
             text: 'Edit',
-            glyph: 'xf044@FontAwesome',
             handler: 'openDocument'
         });
         Ext.each((me.getView().getStore().userOptions || {}).contextMenu || [], function (v) {

@@ -1,34 +1,67 @@
-/** @class Global_CSS */
-//
+/// fixed colors
 
-$color: #000 !default;
+
+$color-white: #ffffff;
+$color-blue: #2196f3;
+$color-black: #000000;
+
+$color-top-toolbar: #03A9F4;
+$color-top-toolbar-light: #29b7f6;
+
+$color: $color-black !default;
+
+$base-font-size: 14px !default;
 
 $font-family: Roboto, sans-serif !default;
-$font-size: 14px !default;
+$font-size: $base-font-size !default;
 $font-weight: normal !default;
 $font-weight-bold: bold !default;
-$line-height: 18px !default;
+$line-height: $base-font-size + 4 !default;
 
-$font-medium: 18px/22px "Roboto Medium", sans-serif !default;
+$font-small-size: $font-size !default;
+$font-small-family: "Roboto", sans-serif !default;
+$line-small-height: $line-height !default;
 
-$base-color: #03A9F4 !default;
-$base-highlight-color: #29b7f6 !default;
-$base-light-color: #29b7f6 !default;
+$font-medium-size: $font-size + 2 !default;
+$font-medium-family: "Roboto Medium", sans-serif !default;
+$line-medium-height: $line-height + 2 !default;
 
+$font-large-size: $font-medium-size + 2 !default;
+$font-large-family: "Roboto Medium", sans-serif !default;
+$line-large-height: $line-medium-height + 2 !default;
 
+$base-color: $color-top-toolbar !default;
+$base-light-color: $color-top-toolbar-light !default;
+$base-highlight-color: $color-top-toolbar-light !default;
+
+$base-dark-color: $color-black !default;
+
+$neutral-color: red;
+$neutral-light-color: red;
+$neutral-dark-color: red !default;
+
+$icon-spacing: 5px !default;
+
+$neutral-medium-dark-color: red !default;
+$include-default-uis: true !default;
+$error-color: red !default;
+
+/*
+
+$color: #000 !default;
+$font-family: helvetica, arial, verdana, sans-serif !default;
+$font-size: 13px !default;
+$font-weight: normal !default;
+$font-weight-bold: bold !default;
+$line-height: 17px !default;
+$base-color: #157fcc !default;
+$base-highlight-color: mix(#fff, $base-color, 15%) !default;
+$base-light-color: mix(#fff, $base-color, 65%) !default;
 $base-dark-color: mix(#000, $base-color, 14%) !default;
 $neutral-color: #e1e1e1 !default;
 $neutral-light-color: mix(#fff, $neutral-color, 68%) !default;
-$neutral-medium-dark-color: mix(#000, $neutral-color, 14%) !default;
-$neutral-dark-color: mix(#000, $neutral-color, 22%) !default;
-$error-color: #cf4c35 !default;
 $confirmation-color: #73b51e !default;
 $error-light-color: mix(#fff, $error-color, 20%) !default;
 $confirmation-light-color: mix(#fff, $confirmation-color, 35%) !default;
 $body-background-color: $neutral-light-color !default;
-$include-default-uis: true !default;
-
-
-/// fixed colors
-
-$color-blue: #2196f3;
+*/
