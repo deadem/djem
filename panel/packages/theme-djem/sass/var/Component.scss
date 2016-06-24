@@ -1,6 +1,5 @@
 /// fixed colors
 
-
 $color-white: #ffffff;
 $color-blue: #2196f3;
 $color-black: #000000;
@@ -18,17 +17,20 @@ $font-weight: normal !default;
 $font-weight-bold: bold !default;
 $line-height: $base-font-size + 4 !default;
 
-$font-small-size: $font-size !default;
-$font-small-family: "Roboto", sans-serif !default;
-$line-small-height: $line-height !default;
+$font-size-small: $font-size !default;
+$font-family-small: "Roboto", sans-serif !default;
+$font-weight-small: $font-weight !default;
+$line-height-small: $line-height !default;
 
-$font-medium-size: $font-size + 2 !default;
-$font-medium-family: "Roboto Medium", sans-serif !default;
-$line-medium-height: $line-height + 2 !default;
+$font-size-medium: $font-size-small + 2 !default;
+$font-family-medium: "Roboto Medium", sans-serif !default;
+$font-weight-medium: $font-weight !default;
+$line-height-medium: $line-height-small + 2 !default;
 
-$font-large-size: $font-medium-size + 2 !default;
-$font-large-family: "Roboto Medium", sans-serif !default;
-$line-large-height: $line-medium-height + 2 !default;
+$font-size-large: $font-size-medium + 2 !default;
+$font-family-large: "Roboto Medium", sans-serif !default;
+$font-weight-large: $font-weight !default;
+$line-height-large: $line-height-medium + 2 !default;
 
 $base-color: $color-top-toolbar !default;
 $base-light-color: $color-top-toolbar-light !default;

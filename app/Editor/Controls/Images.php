@@ -41,7 +41,7 @@ class Images extends Control
             $this->editor->loadModel($relation->getRelated());
             $controls = $this->editor->getControls();
 
-            $models->transform(function (Item $item) use ($image, $controls) {
+            $models->transform(function ($item) use ($image, $controls) {
                 $data = $item->getAttributes();
 
                 foreach ($controls as $field => $control) {
@@ -75,7 +75,7 @@ class Images extends Control
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
                 $model = $relation->getRelated();
-                $model = new $model;
+                $model = new $model();
 
                 foreach ($this->images as $image) {
                     $this->createImage($value, $model, $image, $getValue);

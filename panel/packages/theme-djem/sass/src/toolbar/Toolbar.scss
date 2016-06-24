@@ -1,0 +1,10 @@
+@mixin extjs-toolbar-djem($ui: 'default') {
+    .#{$prefix}toolbar-#{$ui} {
+        padding-left: $toolbar-left-padding;
+        > .#{$prefix}box-inner {
+            overflow: visible;
+        }
+    }
+}
+
+@include extjs-toolbar-djem();
