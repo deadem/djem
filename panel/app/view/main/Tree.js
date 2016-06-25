@@ -11,14 +11,21 @@ Ext.define('djem.view.main.Tree', {
         cls: 'main-tree'
     },
 
-
     columns: [
         {
-            dataIndex: 'text',
             flex: 1,
-            renderer: function(value, record) {
-                console.log(record);
-                return Ext.String.format('<div>{0}</div>', value);
+            renderer: function(value, data) {
+                var row = '';
+                row += '<div>';
+                row += '<div class="icon bgcolor-gray color-white">{0}</div>';
+                row += '<div class="title"><div class="name">{1}</div><div class="desc">{2}</div></div>';
+                row += '</div>';
+
+                return Ext.String.format(row,
+                    data.record.get('icon') || '&#xE2C7;',
+                    data.record.get('text'),
+                    data.record.get('text')
+                );
             }
         }
     ]

@@ -1,0 +1,39 @@
+.x-tree-panel.main-tree .x-grid-cell-inner {
+    > div {
+        padding: 3px 4px;
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+
+        .icon {
+            display: table-cell;
+            font-family: Icons;
+            font-size: 28px;
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 40px;
+        }
+        .title {
+            display: table-cell;
+            width: 100%;
+            padding-left: 8px;
+            vertical-align: middle;
+            white-space: nowrap;
+            .name {
+                font-size: 16px;
+                color: #000;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .desc {
+                font-size: 14px;
+                color: #999999;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
