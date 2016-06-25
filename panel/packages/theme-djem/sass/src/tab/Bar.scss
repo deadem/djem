@@ -1,18 +1,25 @@
 // отображение верхнего тулбара
 .top-toolbar {
-    > .#{$prefix}tab-bar {
+    > .x-tab-bar {
         background-color: $color-top-toolbar;
+        z-index: 2;
 
         @include extjs-tab-animate-djem($color-top-toolbar-light, color('blue'));
 
-        .#{$prefix}tab {
-            .#{$prefix}tab-inner-default, .#{$prefix}tab-glyph {
+        .x-tab {
+            .x-tab-inner-default, .x-tab-glyph {
                 color: #b4e6fc;
             }
-            &.#{$prefix}tab-active {
-                .#{$prefix}tab-inner-default, .#{$prefix}tab-glyph {
+            &.x-tab-active {
+                .x-tab-inner-default, .x-tab-glyph {
                     color: color('white');
                 }
+            }
+        }
+
+        &.x-tab-bar-top {
+            > .x-tab-bar-body {
+                box-shadow: 10px 0px 15px 4px rgba(0, 0, 0, 0.5);
             }
         }
     }

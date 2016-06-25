@@ -8,6 +8,7 @@ Ext.define('djem.view.main.Main', {
         'djem.view.main.Grid',
         'djem.view.main.Content',
         'djem.view.main.Toolbar',
+        'djem.view.main.Tree',
 
         'widget.image',
 
@@ -51,7 +52,7 @@ Ext.define('djem.view.main.Main', {
                 width: 250,
                 split: true,
 
-                xtype: 'treepanel',
+                xtype: 'main-tree',
                 rootVisible: false,
                 store: 'djem.store.main.Tree',
                 reference: 'tree'
