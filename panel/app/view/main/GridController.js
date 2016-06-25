@@ -6,28 +6,34 @@ Ext.define('djem.view.main.GridController', {
     requires: [
         'djem.store.main.Grid'
     ],
-    init: function () {
+
+    config: {
+        color: null
+    },
+
+    init: function() {
         var me = this;
-        me.getView().on('load', function (id) {
+        me.getView().on('load', function(id, color) {
+            me.setColor(color);
             var store = me.getView().getStore();
             store.getProxy().setExtraParam('tree', id);
             store.getSorters().clear();
 
             var filter = me.lookupReference('filter');
-            if (filter.getValue()  !== '') {
-                filter.setValue('');
-            } else {
+            if (filter.getValue() === '') {
                 store.getProxy().setExtraParam('filter', null);
                 store.loadPage(1);
+            } else {
+                filter.setValue('');
             }
         });
-        me.getView().on('click.toolbar', function (ref, params) {
+        me.getView().on('click.toolbar', function(ref, params) {
             params = params || {};
             me.openDocument(me.getView(), { data: { _doctype: params._doctype } });
         });
     },
 
-    initViewModel: function () {
+    initViewModel: function() {
         var me = this;
         // новый вид - новый стор
         var store = Ext.create('djem.store.main.Grid');
@@ -49,23 +55,23 @@ Ext.define('djem.view.main.GridController', {
         });
 
         var filterTimeout;
-        me.lookupReference('filter').on('change', function () {
+        me.lookupReference('filter').on('change', function() {
             var store = me.getView().getStore();
             store.getProxy().setExtraParam('filter', this.getValue());
             clearTimeout(filterTimeout);
-            Ext.defer(function () {
+            Ext.defer(function() {
                 store.getSorters().clear();
                 store.loadPage(1);
             }, this.getValue() ? 300 : 0);
         });
 
-        store.on('metachange', function (_store, meta) {
+        store.on('metachange', function(_store, meta) {
             _store.userOptions = meta.options || {};
             me.titleField = _store.userOptions.title;
             var subtypes = _store.userOptions.subtypes;
             if (!subtypes || subtypes.length === 0) {
-                djem.app.fireEvent('update.toolbar', 'add', { 'action': 'replace' });
-                djem.app.fireEvent('update.toolbar', 'add', { 'action': 'disable' });
+                djem.app.fireEvent('update.toolbar', 'add', { action: 'replace' });
+                djem.app.fireEvent('update.toolbar', 'add', { action: 'disable' });
             } else {
                 var menu = { };
                 if (subtypes.length == 1) {
@@ -75,7 +81,7 @@ Ext.define('djem.view.main.GridController', {
                 }
                 menu.action = 'replace';
                 djem.app.fireEvent('update.toolbar', 'add', menu);
-                djem.app.fireEvent('update.toolbar', 'add', { 'action': 'enable' });
+                djem.app.fireEvent('update.toolbar', 'add', { action: 'enable' });
             }
 
             var parent = me.getView().lookupReferenceHolder();
@@ -101,11 +107,11 @@ Ext.define('djem.view.main.GridController', {
         });
     },
 
-    cellcontextmenu: function (_this, td, cellIndex, record, tr, rowIndex, e) {
+    cellcontextmenu: function(_this, td, cellIndex, record, tr, rowIndex, e) {
         var me = this;
         var menu = [];
         function handler(code) {
-            return function () {
+            return function() {
                 if (me[code]) {
                     me[code](_this, record);
                 } else {
@@ -117,10 +123,10 @@ Ext.define('djem.view.main.GridController', {
             text: 'Edit',
             handler: 'openDocument'
         });
-        Ext.each((me.getView().getStore().userOptions || {}).contextMenu || [], function (v) {
+        Ext.each((me.getView().getStore().userOptions || {}).contextMenu || [], function(v) {
             menu.push(Ext.apply({}, v));
         });
-        Ext.each(menu, function (v) {
+        Ext.each(menu, function(v) {
             var command = v.handler;
             if (command && typeof command != 'function') {
                 v.handler = handler(command);
@@ -128,9 +134,9 @@ Ext.define('djem.view.main.GridController', {
         });
         var contextMenu = new Ext.menu.Menu({
             listeners: {
-                hide: function (_this) {
+                hide: function(_this) {
                     // хак для того, чтобы вызвались штатные хендлеры
-                    Ext.defer(function () {
+                    Ext.defer(function() {
                         _this.destroy();
                     }, 1);
                 }
@@ -141,22 +147,22 @@ Ext.define('djem.view.main.GridController', {
         e.stopEvent();
     },
 
-    rowdblclick: function (_this, record) {
+    rowdblclick: function(_this, record) {
         this.openDocument(_this, record);
     },
 
-    itemkeydown: function (_this, record, item, index, e) {
+    itemkeydown: function(_this, record, item, index, e) {
         if (e.getKey() == e.ENTER) {
             this.openDocument(_this, record);
         }
     },
 
-    cloneDocument: function (_this, record) {
+    cloneDocument: function(_this, record) {
         var me = this;
         me.openDocument(_this, record, { clone: true });
     },
 
-    openDocument: function (_this, record, options) {
+    openDocument: function(_this, record, options) {
         var me = this;
         var data = record.data || {};
         options = options || {};
@@ -164,11 +170,12 @@ Ext.define('djem.view.main.GridController', {
             id: options.clone ? undefined : record.id,
             title: data[me.titleField],
             _doctype: data._doctype,
-            clone: options.clone ? record.id : undefined
+            clone: options.clone ? record.id : undefined,
+            color: me.getColor()
         });
     },
 
-    deleteDocument: function (_this, record) {
+    deleteDocument: function(_this, record) {
         var me = this;
         var data = record.data || {};
         djem.app.fireEvent('deleteDocument', _this, {

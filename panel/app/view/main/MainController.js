@@ -48,7 +48,7 @@ Ext.define('djem.view.main.MainController', {
         }).fireEvent('tabchange');
 
         me.lookupReference('tree').on('select', function(_this, record) {
-            me.lookupReference('grid').fireEvent('load', record.data.id);
+            me.lookupReference('grid').fireEvent('load', record.get('id'), record.get('color'));
         }).on('load', function() {
             this.getRootNode().expand();
             if (this.getSelectionModel().getCount() === 0) {
@@ -72,6 +72,13 @@ Ext.define('djem.view.main.MainController', {
                     id: tabId,
                     closable: true
                 }));
+                var field = tabs.items.findIndex('id', tab.getId());
+                var item = tabs.getTabBar().items.get(field);
+                if (item) {
+                    item.addCls('tab-color-' + (data.color || 'blue'));
+                }
+                //var tabField = var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id):
+                //console.log(tab);
             }
             tabs.setActiveTab(tab);
         });

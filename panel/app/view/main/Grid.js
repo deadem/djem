@@ -14,7 +14,7 @@ Ext.define('djem.view.main.Grid', {
     },
 
     viewConfig: {
-        getRowClass: function (record) {
+        getRowClass: function(record) {
             return record.get('djem-grid-color') || '';
         }
     },

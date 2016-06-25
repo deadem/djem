@@ -5,24 +5,24 @@ Ext.define('djem.view.main.ContentController', {
 
     loadingMask: null,
 
-    updateButtons: function () {
+    updateButtons: function() {
         var me = this;
         djem.app.fireEvent('update.toolbar', 'save', { action: me.getView().isDirty() ? 'enable' : 'disable' });
     },
 
-    onDirtyChange: function () {
+    onDirtyChange: function() {
         var me = this;
         me.updateButtons();
     },
 
-    onSyncData: function () {
+    onSyncData: function() {
         var me = this;
         if (me.getView().getForm().isValid()) {
             me.onSave();
         }
     },
 
-    validate: function () {
+    validate: function() {
         var me = this;
         if (me.getView().getForm().isValid()) {
             me.onSave();
@@ -31,11 +31,11 @@ Ext.define('djem.view.main.ContentController', {
         }
     },
 
-    onSave: function () {
+    onSave: function() {
         var me = this;
         var values = { };
         var fields = [];
-        Ext.each(me.getView().getForm().getFields().items, function (obj) {
+        Ext.each(me.getView().getForm().getFields().items, function(obj) {
             values = Ext.Object.merge(values, obj.getSubmitData());
             fields.push({ name: obj.name, type: 'string' });
         });
@@ -50,17 +50,17 @@ Ext.define('djem.view.main.ContentController', {
         me.store.add([ values ]);
         me.store.sync({
             params: params,
-            callback: function () {
+            callback: function() {
                 if (me.loadingMask) {
                     me.loadingMask.hide();
                 }
             },
-            failure: function (response) {
-                Ext.each(response.exceptions, function (exception) {
+            failure: function(response) {
+                Ext.each(response.exceptions, function(exception) {
                     var messages = {};
                     try {
                         messages = JSON.parse(exception.error.response.responseText);
-                        Ext.each(me.getView().getForm().getFields().items, function (item) {
+                        Ext.each(me.getView().getForm().getFields().items, function(item) {
                             if (messages[item.name]) {
                                 item.markInvalid(messages[item.name].join(' '));
                             }
@@ -72,14 +72,14 @@ Ext.define('djem.view.main.ContentController', {
         });
     },
 
-    onClose: function () {
+    onClose: function() {
         this.getView().destroy();
     },
 
-    getStoreOptions: function () {
+    getStoreOptions: function() {
         var me = this;
         var params = {};
-        Ext.Object.each(me.store.lastOptions.params, function (key, value) {
+        Ext.Object.each(me.store.lastOptions.params, function(key, value) {
             switch (key) {
                 case '_doctype':
                 case 'id':
@@ -93,18 +93,18 @@ Ext.define('djem.view.main.ContentController', {
         return params;
     },
 
-    init: function () {
+    init: function() {
         var me = this;
         var view = me.getView();
-        view.on('click.toolbar', function (ref) {
+        view.on('click.toolbar', function(ref) {
             var actions = {
-                'save': function () { view.fireEvent('validate'); },
-                'close': function () { me.onClose(); }
+                'save': function() { view.fireEvent('validate'); },
+                'close': function() { me.onClose(); }
             };
-            (actions[ref] || function () {})();
-        }).on('show.toolbar', function (result) {
+            (actions[ref] || function() {})();
+        }).on('show.toolbar', function(result) {
             result.value = me.store.toolbar || [];
-        }).on('update.title', function (data) {
+        }).on('update.title', function(data) {
             var _this = this;
             data = data || {};
             if (typeof data != 'object') {
@@ -113,31 +113,31 @@ Ext.define('djem.view.main.ContentController', {
             data.id = _this.id;
             djem.app.fireEvent('update.tab', _this, data);
         });
-        view.getForm().on('dataReady', function () { me.onSyncData(); });
+        view.getForm().on('dataReady', function() { me.onSyncData(); });
 
-        view.on('reload', function (params) {
+        view.on('reload', function(params) {
             me.reload(params);
         });
     },
 
-    initValues: function () {
+    initValues: function() {
         var me = this;
-        Ext.each(me.getView().getForm().getFields().items, function (obj) {
+        Ext.each(me.getView().getForm().getFields().items, function(obj) {
             obj.resetOriginalValue();
         });
         me.getView().getForm().checkDirty();
         me.updateButtons();
     },
 
-    initViewModel: function () {
+    initViewModel: function() {
         var me = this;
 
         me.store = Ext.create('djem.store.main.Content')
-            .on('load', function () { me.onLoadContent.apply(me, arguments); })
-            .on('write', function () { me.onWriteContent.apply(me, arguments); })
-            .on('metachange', function () { me.onViewChange.apply(me, arguments); }, me, { single: true })
-            .on('metachange', function () { me.onCodeChange.apply(me, arguments); }, me, { single: true })
-            .on('metachange', function () { me.onDataChange.apply(me, arguments); }, me);
+            .on('load', function() { me.onLoadContent.apply(me, arguments); })
+            .on('write', function() { me.onWriteContent.apply(me, arguments); })
+            .on('metachange', function() { me.onViewChange.apply(me, arguments); }, me, { single: true })
+            .on('metachange', function() { me.onCodeChange.apply(me, arguments); }, me, { single: true })
+            .on('metachange', function() { me.onDataChange.apply(me, arguments); }, me);
 
         me.loadingMask = new Ext.LoadMask({
             target: me.getView().up(),
@@ -147,7 +147,7 @@ Ext.define('djem.view.main.ContentController', {
         me.reload();
     },
 
-    reload: function (ext) {
+    reload: function(ext) {
         var me = this;
         var data = me.getView().config.data;
         var params = { _doctype: data._doctype, id: data.id, clone: data.clone };
@@ -156,17 +156,17 @@ Ext.define('djem.view.main.ContentController', {
         });
     },
 
-    onLoadContent: function () {
+    onLoadContent: function() {
         var me = this;
         me.initValues();
     },
 
-    onWriteContent: function () {
+    onWriteContent: function() {
         var me = this;
         me.initValues();
     },
 
-    onCodeChange: function (_this, meta) {
+    onCodeChange: function(_this, meta) {
         var me = this;
         function evalContext() {
             /* jshint -W061 */ // Разрешаем eval
@@ -176,12 +176,12 @@ Ext.define('djem.view.main.ContentController', {
         evalContext.call(me.getView());
     },
 
-    onViewChange: function (_this, meta) {
+    onViewChange: function(_this, meta) {
         var me = this;
         me.getView().add(meta.view);
     },
 
-    onDataChange: function (_this, meta) {
+    onDataChange: function(_this, meta) {
         var me = this;
         if (meta.data && meta.data.id) {
             me.getView().config.data.id = meta.data.id;
@@ -192,7 +192,7 @@ Ext.define('djem.view.main.ContentController', {
         djem.app.fireEvent('change.toolbar');
 
         me.getViewModel().setData(meta.data);
-        var bind = me.getViewModel().bind('{name}', function () {
+        var bind = me.getViewModel().bind('{name}', function() {
             // ждём окончания биндов, чтобы проинициализировать форму
             bind.destroy();
             me.initValues();

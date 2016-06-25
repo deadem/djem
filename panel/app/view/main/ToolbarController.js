@@ -3,7 +3,7 @@ Ext.define('djem.view.main.ToolbarController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.main-toolbar',
 
-    getButtons: function () {
+    getButtons: function() {
         var buttons = [];
         var refs = this.getReferences();
         for (var ref in refs) {
@@ -15,10 +15,10 @@ Ext.define('djem.view.main.ToolbarController', {
         return buttons;
     },
 
-    init: function () {
+    init: function() {
         var me = this;
         var view = me.getView();
-        view.on('change.toolbar', function (_this, name) {
+        view.on('change.toolbar', function(_this, name) {
             var toolbars = {
                 'panel': [ 'add' ],
                 'main-content': [ 'save', 'close' ]
@@ -27,37 +27,37 @@ Ext.define('djem.view.main.ToolbarController', {
             while (user.nextSibling()) {
                 user.nextSibling().destroy();
             }
-            Ext.each(me.getButtons(), function (data) {
+            Ext.each(me.getButtons(), function(data) {
                 data.obj[toolbars[name].indexOf(data.ref) < 0 ? 'hide' : 'show']();
             });
             var buttons = {};
             djem.app.fireEvent('show.toolbar', buttons);
-            Ext.each(buttons.value || [], function (button) {
-                view.add(button).on('click', function () {
+            Ext.each(buttons.value || [], function(button) {
+                view.add(button).on('click', function() {
                     djem.app.fireEvent('click.toolbar', button.ref);
                 });
             });
-        }).on('update.toolbar', function (ref, data) {
+        }).on('update.toolbar', function(ref, data) {
             var button = me.getReferences()[ref];
             if (button) {
                 var actions = {
-                    'enable': function () { button.enable(); },
-                    'disable': function () { button.disable(); },
-                    'hide': function () { button.hide(); },
-                    'show': function () { button.show(); },
-                    'replace': function (data) {
+                    'enable': function() { button.enable(); },
+                    'disable': function() { button.disable(); },
+                    'hide': function() { button.hide(); },
+                    'show': function() { button.show(); },
+                    'replace': function(data) {
                         button.setGlyph(data.glyph);
                         button.setText(data.text || '?');
                         button.setParams(data);
                         if (data.menu !== undefined) { button.setMenu(data.menu); }
                     }
                 };
-                (actions[data.action] || function () {})(data);
+                (actions[data.action] || function() {})(data);
             }
         });
 
-        Ext.each(me.getButtons(), function (data) {
-            data.obj.on('click', function () {
+        Ext.each(me.getButtons(), function(data) {
+            data.obj.on('click', function() {
                 djem.app.fireEvent('click.toolbar', data.ref, data.obj.params);
             });
         });
