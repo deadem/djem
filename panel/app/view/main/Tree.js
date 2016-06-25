@@ -17,14 +17,15 @@ Ext.define('djem.view.main.Tree', {
             renderer: function(value, data) {
                 var row = '';
                 row += '<div>';
-                row += '<div class="icon bgcolor-gray color-white">{0}</div>';
-                row += '<div class="title"><div class="name">{1}</div><div class="desc">{2}</div></div>';
+                row += '<div class="icon bgcolor-{0}">{1}</div>';
+                row += '<div class="title"><div class="name">{2}</div><div class="desc">{3}</div></div>';
                 row += '</div>';
 
                 return Ext.String.format(row,
+                    data.record.get('color') || 'gray',
                     data.record.get('icon') || '&#xE2C7;',
                     data.record.get('text'),
-                    data.record.get('text')
+                    data.record.get('description')
                 );
             }
         }
