@@ -1,8 +1,12 @@
+@import 'Tab_animate';
+
 @mixin extjs-tab-djem() {
+    @include extjs-tab-animate-djem($tab-base-color, $tab-base-color-active);
+
     .#{$prefix}tab-button {
         text-transform: uppercase;
-    }
 
+    }
     .#{$prefix}tab-inner {
         max-width: 250px;
         overflow: hidden;
