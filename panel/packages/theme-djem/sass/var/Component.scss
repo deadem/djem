@@ -1,14 +1,22 @@
 /// fixed colors
+$color-names:  ('white', 'indigo', 'blue',  'cyan',  'teal',  'green', 'lignt-green', 'lime',  'amber', 'orange', 'deep-orange', 'purple', 'deep-purple', 'pink', 'red',    'gray',  'grey',  'black');
+$color-values: (#ffffff, #3F51B5,  #2196f3, #00BCD4, #009688, #4CAF50,  #8BC34A,      #CDDC39, #FFC107, #FF9800,  #FF5722,       #673AB7,  #9C27B0,       #e91e63, #F44336, #9E9E9E, #9E9E9E, #000000);
 
-$color-white: #ffffff;
-$color-blue: #2196f3;
-$color-red: #e91e63;
-$color-black: #000000;
+@function color($color) {
+    $color-index: index($color-names, $color);
+
+    @if $color-index == false {
+        @warn "Invalid color: #{$color}";
+        @return ();
+    }
+
+    @return nth($color-values, $color-index);
+}
 
 $color-top-toolbar: #03A9F4;
 $color-top-toolbar-light: #29b7f6;
 
-$color: $color-black !default;
+$color: color('black') !default;
 
 $font-weight: normal !default;
 $font-weight-bold: bold !default;
@@ -32,11 +40,11 @@ $font-family: $font-family-small !default;
 $font-size: $font-size-small !default;
 $line-height: $line-height-small !default;
 
-$base-color: $color-white !default;
+$base-color: color('white') !default;
 $base-light-color: $color-top-toolbar-light !default;
 $base-highlight-color: $color-top-toolbar-light !default;
 
-$base-dark-color: $color-black !default;
+$base-dark-color: color('black') !default;
 
 $neutral-color: red;
 $neutral-light-color: red;

@@ -13,7 +13,7 @@ $tab-base-color: #efefef !default;
 
 $tab-base-color-focus: $tab-base-color !default;
 $tab-base-color-over: $tab-base-color !default;
-$tab-base-color-active: $color-white !default;
+$tab-base-color-active: color('white') !default;
 $tab-base-color-focus-over: $tab-base-color-over !default;
 $tab-base-color-focus-active: $tab-base-color-active !default;
 
@@ -27,7 +27,7 @@ $tab-border-color-disabled: $tab-border-color !default;
 $tab-color: #999999 !default;
 $tab-color-focus: $tab-color !default;
 $tab-color-over: $tab-color !default;
-$tab-color-active: $color-black !default;
+$tab-color-active: color('black') !default;
 $tab-color-focus-over: $tab-color-over !default;
 $tab-color-focus-active: $tab-color-active !default;
 
