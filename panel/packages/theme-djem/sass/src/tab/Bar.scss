@@ -1,0 +1,19 @@
+// отображение верхнего тулбара
+.top-toolbar {
+    > .#{$prefix}tab-bar {
+        background-color: $color-top-toolbar;
+
+        @include extjs-tab-animate-djem($color-top-toolbar-light, $color-blue);
+
+        .#{$prefix}tab {
+            .#{$prefix}tab-inner-default, .#{$prefix}tab-glyph {
+                color: #b4e6fc;
+            }
+            &.#{$prefix}tab-active {
+                .#{$prefix}tab-inner-default, .#{$prefix}tab-glyph {
+                    color: white;
+                }
+            }
+        }
+    }
+}
