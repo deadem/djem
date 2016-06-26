@@ -7,6 +7,7 @@ Ext.define('djem.widget.html', {
         'djem.store.FileUpload',
         'djem.widget.htmlPlugins.simpleimage'
     ],
+
     liquidLayout: false,
     labelPad: null,
     labelAlign: 'top',
@@ -30,6 +31,9 @@ Ext.define('djem.widget.html', {
         var me = this;
         if (!me.editor || me.editor.status != 'ready') {
             return;
+        }
+        if (me.hasVisibleLabel() && me.labelEl && me.labelAlign == 'top') {
+            height -= me.labelEl.getHeight();
         }
         me.editor.resize('100%', height);
     },
