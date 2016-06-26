@@ -50,9 +50,6 @@ Ext.define('djem.widget.tag', {
     },
 
     listeners: {
-        change: function() {
-            this.completeEdit();
-        },
         added: function() {
             var me = this;
             if (me.queryMode == 'remote') {
@@ -70,10 +67,11 @@ Ext.define('djem.widget.tag', {
             }
         },
         change: function(field, newValue) {
-            if (newValue) {
-                field.addCls('app-field-filled');
-            } else {
+            this.completeEdit();
+            if (Ext.isEmpty(newValue)) {
                 field.removeCls('app-field-filled');
+            } else {
+                field.addCls('app-field-filled');
             }
         }
     }

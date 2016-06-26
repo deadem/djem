@@ -115,7 +115,21 @@ Ext.define('djem.widget.html', {
             }
         });
 
+        editor.on('blur', function() {
+            me.onFocusLeave();
+            me.onBlur();
+        });
+
+        var form = me.up('form');
         editor.on('focus', function() {
+            editor.window.$.focus();
+            form.query('field').forEach(function(item) {
+                if (item.hasFocus) {
+                    item.onFocusLeave();
+                    item.onBlur();
+                }
+            });
+
             // simulate editor focus
             var node = me.getEl().dom;
             [ 'mouseover', 'mousedown', 'mouseup', 'click' ].forEach(function(eventName) {
@@ -123,6 +137,10 @@ Ext.define('djem.widget.html', {
                 clickEvent.initEvent(eventName, true, true);
                 node.dispatchEvent(clickEvent);
             });
+            me.onFocus(me);
+            setTimeout(function() {
+                editor.window.$.focus();
+            }, 10);
         });
     },
     getRawValue: function() {

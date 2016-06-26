@@ -72,10 +72,10 @@ Ext.define('djem.widget.combobox', {
             return this.initStore();
         },
         change: function(field, newValue) {
-            if (newValue) {
-                field.addCls('app-field-filled');
-            } else {
+            if (Ext.isEmpty(newValue)) {
                 field.removeCls('app-field-filled');
+            } else {
+                field.addCls('app-field-filled');
             }
         }
     }
