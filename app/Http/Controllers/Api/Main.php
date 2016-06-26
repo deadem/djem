@@ -51,6 +51,6 @@ class Main extends \Illuminate\Routing\Controller
             $doctype = $leaf['_doctype'];
         }
 
-        return new $doctype;
+        return new $doctype();
     }
 }

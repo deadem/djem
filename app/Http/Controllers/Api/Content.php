@@ -15,18 +15,18 @@ class Content extends \Illuminate\Routing\Controller
     {
         $doctype = $this->doctype();
         if (Input::get('raw')) {
-            return (new $doctype)->load();
+            return (new $doctype())->load();
         }
 
         return [
-            'metaData' => (new $doctype)->load(),
+            'metaData' => (new $doctype())->load(),
         ];
     }
 
     public function set()
     {
         $doctype = $this->doctype();
-        (new $doctype)->save();
+        (new $doctype())->save();
 
         return $this->get();
     }
@@ -34,7 +34,7 @@ class Content extends \Illuminate\Routing\Controller
     public function delete()
     {
         $doctype = $this->doctype();
-        (new $doctype)->delete();
+        (new $doctype())->delete();
 
         return [];
     }
@@ -43,6 +43,6 @@ class Content extends \Illuminate\Routing\Controller
     {
         $doctype = $this->doctype();
 
-        return (new $doctype)->loadRelation(Input::get('field'));
+        return (new $doctype())->loadRelation(Input::get('field'));
     }
 }

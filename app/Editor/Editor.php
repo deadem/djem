@@ -50,7 +50,7 @@ class Editor
         if ($model) {
             $this->editorLoadModel($model);
         } else {
-            $this->editorLoadModel(new $this->modelClass);
+            $this->editorLoadModel(new $this->modelClass());
         }
 
         return $this;

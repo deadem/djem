@@ -428,7 +428,6 @@ Ext.theme = {
             // This might be fixed in a later WebKit, but for now we're going to
             // strip it out here since compass generates it.
             //
-            // TODO: Upgrade to later WebKit revision
             css = css.replace(/background(-image)?: ?-webkit-linear-gradient(?:.*?);/g, '');
 
             style.type = 'text/css';

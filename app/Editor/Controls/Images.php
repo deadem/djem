@@ -41,20 +41,20 @@ class Images extends Control
             $this->editor->loadModel($relation->getRelated());
             $controls = $this->editor->getControls();
 
-            $models->transform(function ($item) use ($image, $controls) {
-                $data = $item->getAttributes();
+            $models->transform(function ($model) use ($image, $controls) {
+                $data = $model->getAttributes();
 
                 foreach ($controls as $field => $control) {
                     if ($this->editor->isRelation($field)) {
-                        $data[$field] = $control->loadRelation($item);
+                        $data[$field] = $control->loadRelation($model);
                     } elseif ($control->hasCustomValue()) {
-                        $data[$field] = $control->getCustomValue($item);
+                        $data[$field] = $control->getCustomValue($model);
                     }
                 }
 
-                if ($image && $item->{$image}) {
+                if ($image && $model->{$image}) {
                     // если есть картинка, добавим её неперекрывающиеся свойства в контроль
-                    $image = $item->{$image};
+                    $image = $model->{$image};
                     $data += $image->getAttributes();
                 }
 

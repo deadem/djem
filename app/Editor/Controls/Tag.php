@@ -40,7 +40,7 @@ class Tag extends Control
         return $this->getRelation($model)->select('id', 'name')->get()->map(function (Model $value) {
             return [
                 'value' => $value->id,
-                'text'  => $value->name,
+                'text' => $value->name,
             ];
         });
     }

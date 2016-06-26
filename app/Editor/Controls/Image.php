@@ -21,7 +21,7 @@ class Image extends Control
             $related = call_user_func([$model, $this->getProperty('name')])->getRelated();
             $dimensions = [
                 'height' => $related->height,
-                'width'  => $related->width,
+                'width' => $related->width,
             ];
         }
 

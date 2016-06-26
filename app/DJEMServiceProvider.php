@@ -29,8 +29,8 @@ class DJEMServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application services.
+     *
      * @param Router $router
-     * @return void
      */
     public function boot(Router $router)
     {
@@ -44,8 +44,6 @@ class DJEMServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {

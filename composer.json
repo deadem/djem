@@ -1,7 +1,7 @@
 {
     "name": "deadem/djem",
     "description": "DJEM",
-    "license": "MIT GPL",
+    "license": [ "MIT", "GPL-3.0+" ],
 
     "require": {
         "php": ">=5.6"
