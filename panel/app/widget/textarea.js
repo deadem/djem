@@ -1,10 +1,10 @@
 /* global Ext */
-Ext.define('djem.widget.text', {
-    extend: 'Ext.form.field.Text',
-    alias: [ 'widget.djem.text' ],
+Ext.define('djem.widget.textarea', {
+    extend: 'Ext.form.field.TextArea',
+    alias: [ 'widget.djem.textarea' ],
 
-    labelAlign: 'top',
     labelPad: null,
+    labelAlign: 'top',
     labelSeparator: '',
 
     listeners: {

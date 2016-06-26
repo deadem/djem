@@ -8,7 +8,7 @@ class Time extends Control
     {
         parent::__construct($name);
 
-        $this->xtype('time');
+        $this->xtype('djem.time');
     }
 
     public function increment($value)

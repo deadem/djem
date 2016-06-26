@@ -1,8 +1,11 @@
 /* global Ext */
 Ext.define('djem.widget.combobox', {
     extend: 'Ext.form.field.ComboBox',
-    alias: [ 'widget.djem.combobox', 'widget.djem.combo', 'widget.djem.select', 'widget.combobox', 'widget.combo', 'widget.select' ],
+    alias: [ 'widget.djem.combobox', 'widget.djem.combo', 'widget.djem.select' ],
 
+    labelSeparator: '',
+    labelPad: null,
+    labelAlign: 'top',
     pageSize: 100,
     queryParam: 'filter',
     minChars: 1,
@@ -67,6 +70,13 @@ Ext.define('djem.widget.combobox', {
         },
         initStore: function() {
             return this.initStore();
+        },
+        change: function(field, newValue) {
+            if (newValue) {
+                field.addCls('app-field-filled');
+            } else {
+                field.removeCls('app-field-filled');
+            }
         }
     }
 });

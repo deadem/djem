@@ -1,3 +1,4 @@
+/* global Ext */
 Ext.define('djem.view.main.Content', {
     extend: 'Ext.form.Panel',
     alias: 'widget.main-content',
@@ -18,9 +19,16 @@ Ext.define('djem.view.main.Content', {
 
     listeners: {
         dirtychange: 'onDirtyChange',
-        'syncData': 'onSyncData',
-        'validate': 'validate',
-        'save': 'onSave'
+        syncData: 'onSyncData',
+        validate: 'validate',
+        save: 'onSave',
+        fielderrorchange: function(container, field, error) {
+            if (error) {
+                field.addCls('app-form-invalid');
+            } else {
+                field.removeCls('app-form-invalid');
+            }
+        }
     },
 
     bind: {},

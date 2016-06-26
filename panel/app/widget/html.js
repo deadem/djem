@@ -1,13 +1,16 @@
 /* global Ext, CKEDITOR */
 Ext.define('djem.widget.html', {
     extend: 'Ext.form.field.TextArea',
-    alias: [ 'widget.djem.html', 'widget.html' ],
+    alias: [ 'widget.djem.html' ],
 
     requires: [
         'djem.store.FileUpload',
         'djem.widget.htmlPlugins.simpleimage'
     ],
     liquidLayout: false,
+    labelPad: null,
+    labelAlign: 'top',
+    labelSeparator: '',
 
     editorConfig: undefined,
     files: null,
@@ -48,6 +51,8 @@ Ext.define('djem.widget.html', {
         var me = this;
         me.callParent(arguments);
         me.files = new Ext.create('djem.store.FileUpload');
+
+        me.getEl().addCls('app-field-filled');
 
         var id = me.inputEl.id;
         var editor = me.editor = CKEDITOR.replace(id, {

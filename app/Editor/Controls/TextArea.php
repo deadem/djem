@@ -8,6 +8,6 @@ class TextArea extends Control
     {
         parent::__construct($name);
 
-        $this->xtype('textarea');
+        $this->xtype('djem.textarea');
     }
 }

@@ -1,0 +1,33 @@
+.x-form-type-text.x-vbox-form-item {
+    .x-form-item-label {
+        transform: scale(1.5) translateY(6px);
+        transform-origin: top left 0px;
+        -webkit-font-smoothing: antialiased;
+        color: $form-label-empty-color;
+        transition: transform .4s cubic-bezier(.25,.8,.25,1);
+    }
+    &.x-field-focus {
+        .x-form-item-label {
+            transform: scale(1) translateY(0px);
+        }
+    }
+    &.app-field-filled {
+        .x-form-item-label {
+            color: $form-label-font-color;
+            transform: scale(1);
+            transition: none; //transform .1s linear;
+        }
+    }
+}
+
+.x-field.x-field-focus {
+    .x-form-item-label {
+        color: $form-label-focus-color;
+    }
+}
+
+.app-form-invalid.x-field {
+    .x-form-item-label {
+        color: $form-error-msg-color;
+    }
+}

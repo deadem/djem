@@ -8,7 +8,7 @@ class Date extends Control
     {
         parent::__construct($name);
 
-        $this->xtype('date');
+        $this->xtype('djem.date');
     }
 
     public function prepareUserValue($value, $getValue = null)

@@ -1,8 +1,11 @@
 /* global Ext */
 Ext.define('djem.widget.tag', {
     extend: 'Ext.form.field.Tag',
-    alias: [ 'widget.djem.tag', 'widget.tag' ],
+    alias: [ 'widget.djem.tag' ],
 
+    labelPad: null,
+    labelSeparator: '',
+    labelAlign: 'top',
     pageSize: 100,
     minChars: 1,
     filterPickList: true,
@@ -64,6 +67,13 @@ Ext.define('djem.widget.tag', {
                     id: view.config.data.id,
                     field: me.name
                 });
+            }
+        },
+        change: function(field, newValue) {
+            if (newValue) {
+                field.addCls('app-field-filled');
+            } else {
+                field.removeCls('app-field-filled');
             }
         }
     }

@@ -1,7 +1,7 @@
 /// fixed colors
 @import 'generate-colors';
 
-$color-top-toolbar: #03A9F4;
+$color-top-toolbar: color('active');
 $color-top-toolbar-light: #29b7f6;
 
 $color: color('black') !default;
