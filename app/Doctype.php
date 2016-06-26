@@ -39,7 +39,7 @@ class Doctype extends \Illuminate\Routing\Controller
     public function findUrl($url, $urlModel)
     {
         $address = $urlModel::where('url', '=', $url)->first();
-        if (!$address) {
+        if (! $address) {
             abort(404);
         }
 
