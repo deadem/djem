@@ -122,7 +122,9 @@ Ext.define('djem.widget.html', {
 
         var form = me.up('form');
         editor.on('focus', function() {
-            editor.window.$.focus();
+            if (editor.window && editor.window.$) {
+                editor.window.$.focus();
+            }
             form.query('field').forEach(function(item) {
                 if (item.hasFocus) {
                     item.onFocusLeave();
@@ -139,7 +141,9 @@ Ext.define('djem.widget.html', {
             });
             me.onFocus(me);
             setTimeout(function() {
-                editor.window.$.focus();
+                if (editor.window && editor.window.$) {
+                    editor.window.$.focus();
+                }
             }, 10);
         });
     },
