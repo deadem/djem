@@ -1,0 +1,13 @@
+$form-text-field-border-width: 0 0 1px 0 !default;
+$form-text-field-border-color: #cccccc !default;
+$form-text-field-border-style: solid !default;
+
+$form-text-field-invalid-border-color: color('red');
+
+$form-text-field-focus-border-width: 0 0 2px 0 !default;
+$form-text-field-focus-border-color: #03a9f4 !default;
+
+$form-trigger-border-width: 0 0 2px 0 !default;
+$form-trigger-focus-border-width: $form-trigger-border-width !default;
+$form-trigger-focus-border-color: #03a9f4 !default;
+$form-trigger-focus-border-style: solid !default;

@@ -17,6 +17,7 @@ Ext.application({
     //-------------------------------------------------------------------------
 
     requires: [
-        'fix.Overrides.Store'
+        'fix.Overrides.Store',
+        'fix.Overrides.ViewBoundList'
     ]
 });
