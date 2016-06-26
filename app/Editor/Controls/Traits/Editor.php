@@ -29,7 +29,7 @@ trait Editor
 
     public function model()
     {
-        if (!$this->model) {
+        if (! $this->model) {
             $this->loadModel();
         }
 
@@ -50,7 +50,7 @@ trait Editor
 
     public function __call($name, $args)
     {
-        if (!preg_match('/^create/', $name)) {
+        if (! preg_match('/^create/', $name)) {
             throw new BadMethodCallException('Call to undefined method '.get_class($this).'::'.$name);
         }
 
@@ -61,7 +61,7 @@ trait Editor
 
     public function getView($item = null)
     {
-        if (!$item) {
+        if (! $item) {
             $item = $this->root;
         }
 
@@ -89,7 +89,7 @@ trait Editor
     {
         $controls = collect([]);
 
-        if (!$item) {
+        if (! $item) {
             $item = $this->root;
         }
 
@@ -191,7 +191,7 @@ trait Editor
         $relation = $this->getRelation($field);
         $relation->detach();
 
-        if (!empty($values)) {
+        if (! empty($values)) {
             foreach ($values as $value) {
                 $relation->attach($value);
             }
