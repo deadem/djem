@@ -26,7 +26,7 @@
     }
 }
 
-.app-form-invalid.x-field, .x-field.x-field-focus.app-field-filled.app-form-invalid {
+.x-field.app-form-invalid, .x-field.x-field-focus.app-field-filled.app-form-invalid {
     .x-form-item-label span {
         color: $form-error-msg-color;
     }
