@@ -414,6 +414,7 @@ Ext.define('djem.view.crosslink.FilesController', {
                     x: offset.x / zoom,
                     y: offset.y / zoom
                 },
+                url: image.src,
                 width: width,
                 height: height,
                 calcOffset: -offset.x + 'px ' + -offset.y + 'px',
