@@ -33,7 +33,7 @@
 
         &.x-tab-bar-top {
             > .x-tab-bar-body {
-                @include elevation(16);
+                @include elevation(4);
             }
         }
     }

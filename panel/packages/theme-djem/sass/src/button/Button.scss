@@ -17,7 +17,7 @@
         &, &.x-btn-over {
             @include elevation(2);
             &.x-btn-pressed {
-                @include elevation(4);
+                @include elevation(8);
 
                 &:after {
                     width: 100%;
@@ -26,10 +26,10 @@
                     transform: scale(2);
 
                     transition: 
-                        left .7s cubic-bezier(.25, .8, .25, 1),
-                        width .7s cubic-bezier(.25, .8, .25, 1),
-                        opacity .7s cubic-bezier(.25, .8, .25, 1),
-                        transform .7s cubic-bezier(.25, .8, .25, 1);
+                        left .4s cubic-bezier(.25, .8, .25, 1),
+                        width .4s cubic-bezier(.25, .8, .25, 1),
+                        opacity .4s cubic-bezier(.25, .8, .25, 1),
+                        transform .4s cubic-bezier(.25, .8, .25, 1);
                 }
             }
         }
