@@ -14,7 +14,7 @@ Ext.define('djem.view.login.LoginController', {
                     }
                 }
             }
-        }); 
+        });
     },
 
     onLoginClick: function(_this) {

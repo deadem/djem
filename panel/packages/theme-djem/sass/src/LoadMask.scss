@@ -1,0 +1,105 @@
+.x-mask-msg {
+    .x-mask-loading {
+        .app-mask-wrapper {
+            animation: app-mask-wrapper-animation 1568ms linear infinite;
+            width: $loadmask-spinner-size;
+            height: $loadmask-spinner-size;
+            position: relative;
+            .app-mask-spinner {
+                animation: app-mask-spinner-animation 5332ms cubic-bezier(.4,0,.2,1) infinite both;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                .app-mask-clip {
+                    display: inline-block;
+                    position: relative;
+                    width: 50%;
+                    height: 100%;
+                    overflow: hidden;
+                    div {
+                        border-color: $loadmask-spinner-color;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        right: 0;
+                        bottom: 0;
+                        width: 200%;
+                        height: 100%;
+                        border-width: $loadmask-spinner-width;
+                        border-style: solid;
+                        border-radius: 50%;
+                    }
+                }
+                .app-mask-clip-left {
+                    @extend .app-mask-clip;
+                    div {
+                        animation: app-mask-clip-left-animation 1333ms cubic-bezier(.4,0,.2,1) infinite both;
+                        transform: rotate(129deg);
+                        border-right-color: transparent;
+                        border-bottom-color: transparent;
+                        width: 200%;
+                        height: 100%;
+                    }
+                }
+                .app-mask-clip-right {
+                    @extend .app-mask-clip;
+                    div {
+                        animation: app-mask-clip-right-animation 1333ms cubic-bezier(.4,0,.2,1) infinite both;
+                        transform: rotate(-129deg);
+                        left: -100%;
+                        border-left-color: transparent;
+                        border-bottom-color: transparent;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes app-mask-wrapper-animation {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes app-mask-spinner-animation {
+    12.5% {
+        transform: rotate(135deg);
+    }
+    25% {
+        transform: rotate(270deg);
+    }
+    37.5% {
+        transform: rotate(405deg);
+    }
+    50% {
+        transform: rotate(540deg);
+    }
+    62.5% {
+        transform: rotate(675deg);
+    }
+    75% {
+        transform: rotate(810deg);
+    }
+    87.5% {
+        transform: rotate(945deg);
+    }
+    100% {
+        transform: rotate(1080deg);
+    }
+}
+@keyframes app-mask-clip-left-animation {
+    0%, 100% {
+        transform: rotate(130deg);
+    }
+    50% {
+        transform: rotate(-5deg);
+    }
+}
+@keyframes app-mask-clip-right-animation {
+    0%, 100% {
+        transform: rotate(-130deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}

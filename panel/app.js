@@ -18,6 +18,8 @@ Ext.application({
 
     requires: [
         'fix.Overrides.Store',
-        'fix.Overrides.ViewBoundList'
+        'fix.Overrides.ViewBoundList',
+
+        'djem.Overrides.LoadMask'
     ]
 });
