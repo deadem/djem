@@ -1,5 +1,5 @@
 /* global Ext */
-Ext.define('djem.Overrides.LoadMask', {
+Ext.define('djem.overrides.LoadMask', {
     override: 'Ext.LoadMask',
     msg: '',
     renderTpl: [

@@ -17,9 +17,10 @@ Ext.application({
     //-------------------------------------------------------------------------
 
     requires: [
-        'fix.Overrides.Store',
-        'fix.Overrides.ViewBoundList',
+        'fix.overrides.Store',
+        'fix.overrides.ViewBoundList',
 
-        'djem.Overrides.LoadMask'
+        'djem.overrides.LoadMask',
+        'djem.overrides.viewAbstractView'
     ]
 });

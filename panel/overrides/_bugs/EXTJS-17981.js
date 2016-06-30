@@ -1,7 +1,7 @@
 // EXTJS-17981
 // ChainedStore getByInternalId fails if called after filtering
 /* global Ext */
-Ext.define('fix.Overrides.Store', {
+Ext.define('fix.overrides.Store', {
     override: 'Ext.data.Store',
 
     getByInternalId: function(internalId) {

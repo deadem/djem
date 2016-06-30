@@ -3,7 +3,7 @@ Ext.define('djem.view.main.ContentController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.main-content',
 
-    loadingMask: null,
+    loadingText: false,
 
     updateButtons: function() {
         var me = this;
