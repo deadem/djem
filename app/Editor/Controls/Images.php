@@ -3,6 +3,7 @@
 namespace DJEM\Editor\Controls;
 
 use DJEM\Editor;
+use Illuminate\Database\Eloquent\Model;
 
 class Images extends Control
 {
@@ -41,7 +42,7 @@ class Images extends Control
             $this->editor->loadModel($relation->getRelated());
             $controls = $this->editor->getControls();
 
-            $models->transform(function ($model) use ($image, $controls) {
+            $models->transform(function (Model $model) use ($image, $controls) {
                 $data = $model->getAttributes();
 
                 foreach ($controls as $field => $control) {
