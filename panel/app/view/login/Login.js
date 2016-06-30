@@ -17,7 +17,7 @@ Ext.define('djem.view.login.Login', {
 
     controller: 'login',
     bodyPadding: 10,
-    title: 'Login',
+    title: 'Авторизация',
     closable: false,
     autoShow: true,
     modal: true,
@@ -26,6 +26,7 @@ Ext.define('djem.view.login.Login', {
     items: {
         xtype: 'form',
         flex: 1,
+        width: 440,
         layout: {
             type: 'vbox',
             align: 'stretch'
@@ -33,15 +34,15 @@ Ext.define('djem.view.login.Login', {
         items: [
             {
                 xtype: 'djem.text',
-                labelAlign: 'left',
-                fieldLabel: 'Username',
+                cls: 'medium-label',
+                fieldLabel: 'Имя пользователя',
                 reference: 'login',
                 tabIndex: 1
             }, {
                 xtype: 'djem.text',
-                labelAlign: 'left',
+                cls: 'medium-label',
                 inputType: 'password',
-                fieldLabel: 'Password',
+                fieldLabel: 'Пароль',
                 reference: 'password',
                 tabIndex: 2
             }, {
@@ -52,7 +53,8 @@ Ext.define('djem.view.login.Login', {
         ],
         buttons: [
             {
-                text: 'Login',
+                text: 'Войти',
+                scale: 'medium',
                 listeners: {
                     click: 'onLoginClick'
                 }
