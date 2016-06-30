@@ -13,15 +13,16 @@ class Authenticate
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
-     * @param string $guard
+     * @param string $usertype
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, $usertype = null)
     {
-        if (Auth::guard($guard)->guest()) {
+        $auth = Auth::guard($usertype);
+        if ($auth->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];
-            if (! Auth::guard($guard)->attempt($credentials)) {
+            if (! $auth->attempt($credentials)) {
                 return response([
                     'state' => 'unauthorized',
                 ], 401)->header('x-csrf-token', $request->session()->token());
