@@ -1,6 +1,8 @@
 @import 'generate-colors';
 @import 'generate-elevation';
 
+//$include-ie: false;
+
 $color-top-toolbar: color('active');
 $color-top-toolbar-light: #29b7f6;
 

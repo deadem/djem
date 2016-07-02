@@ -122,6 +122,22 @@ class Item
         $this->customValue = $value;
     }
 
+    public function color($value)
+    {
+        $cls = $this->getProperty('cls') ?: '';
+        $this->setProperty('cls', $cls.' color-'.$value);
+
+        return $this;
+    }
+
+    public function bgcolor($value)
+    {
+        $cls = $this->getProperty('cls') ?: '';
+        $this->setProperty('cls', $cls.' bgcolor-'.$value);
+
+        return $this;
+    }
+
     public function hasCustomValue()
     {
         return $this->customValue !== null;

@@ -20,14 +20,20 @@ $color-values: (#6d6d6d,    #03a9f4,  #ffffff, #3F51B5,  #2196f3, #00BCD4, #0096
         $color: nth($color-values, $i);
 
         #{ ".color-" + $name } {
-            color: $color;
+            &, &.x-btn .x-btn-inner {
+                color: $color;
+            }
         }
         #{ ".bgcolor-" + $name } {
-            background-color: $color;
+            &, &.x-btn, &.x-btn.x-btn-pressed {
+               background-color: $color;
+            }
         }
 
         $i: $i - 1;
     }
 }
 
-@include generate-colors();
+.x-body, body {
+    @include generate-colors();
+}

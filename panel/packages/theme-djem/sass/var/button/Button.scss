@@ -1,10 +1,12 @@
-
-$button-toolbar-color: color('black') !default;
-$button-toolbar-background-color: #F5F5F5 !default;
-$button-toolbar-background-color-pressed: #EEEEEE !default;
-$button-toolbar-background-color-over: $button-toolbar-background-color !default;
-$button-toolbar-border-color: null !default;
-$button-toolbar-inner-border-width-focus: 0 !default;
+$button-default-color: color('black');
+$button-default-base-color: $base-color !default;
+$button-default-base-color-over: $base-color !default;
+$button-default-base-color-pressed: $base-color !default;
+$button-default-color-disabled: color('disabled') !default;
+$button-default-base-color-focus: $button-default-base-color !default;
+$button-default-base-color-focus-over: $button-default-base-color-over !default;
+$button-default-base-color-focus-pressed: $button-default-base-color-pressed !default;
+$button-default-inner-border-width-focus: 0 !default;
 
 $button-opacity-disabled: 0.7 !default;
 $button-toolbar-opacity-disabled: 0.7 !default;
@@ -32,15 +34,12 @@ $button-large-font-weight: $font-weight-large !default;
 $button-large-border-width: 0 !default;
 $button-large-text-padding: 16px !default;
 
-$button-default-color: color('black');
-$button-default-base-color: $base-color !default;
-$button-default-base-color-over: #EEEEEE !default;
-$button-default-base-color-pressed: #E0E0E0 !default;
-$button-default-color-disabled: color('disabled') !default;
-$button-default-base-color-focus: $button-default-base-color !default;
-$button-default-base-color-focus-over: $button-default-base-color-over !default;
-$button-default-base-color-focus-pressed: $button-default-base-color-pressed !default;
-$button-default-inner-border-width-focus: 0 !default;
+$button-toolbar-color: $button-default-color !default;
+$button-toolbar-background-color: $base-color !default;
+$button-toolbar-background-color-pressed: $base-color !default;
+$button-toolbar-background-color-over: $button-toolbar-background-color !default;
+$button-toolbar-border-color: null !default;
+$button-toolbar-inner-border-width-focus: 0 !default;
 
 
 /// disable styles
