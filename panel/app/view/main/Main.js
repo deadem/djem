@@ -30,6 +30,7 @@ Ext.define('djem.view.main.Main', {
     items: [ {
         region: 'north',
         xtype: 'main-toolbar',
+        cls: 'top-toolbar',
         reference: 'toolbar'
     }, {
         region: 'center',

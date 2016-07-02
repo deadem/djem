@@ -5,6 +5,6 @@ Ext.define('fix.overrides.ViewBoundList', {
     override: 'Ext.view.BoundList',
 
     onHide: function() {
-        this.callParent(arguments);
+        this.callSuper(arguments);
     }
 });

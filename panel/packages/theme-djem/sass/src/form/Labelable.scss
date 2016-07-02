@@ -1,6 +1,7 @@
 .x-form-type-text, .x-form-type-password {
     &, &.medium-label {
         .x-form-item-label-top span {
+            pointer-events: none;
             transform: scale(1.5) translateY(6px);
             transform-origin: top left 0px;
             -webkit-font-smoothing: antialiased;
