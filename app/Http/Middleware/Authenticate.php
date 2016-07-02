@@ -23,9 +23,9 @@ class Authenticate
         if ($auth->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];
             if (! $auth->attempt($credentials)) {
-                return response([
+                return response()->json([
                     'state' => 'unauthorized',
-                ], 401)->header('x-csrf-token', $request->session()->token());
+                ])->header('x-csrf-token', $request->session()->token())->setStatusCode(401);
             }
         }
 
