@@ -22,6 +22,11 @@ class GridHeader
         return ['field' => ['type' => $row['type']]];
     }
 
+    protected function xtypeField($row)
+    {
+        return ['column' => ['xtype' => $row['xtype']]];
+    }
+
     protected function sortableField($row)
     {
         return ['field' => [], 'column' => ['sortable' => $row['sortable']]];

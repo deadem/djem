@@ -1,10 +1,8 @@
+/* global Ext, djem, SharedData*/
 Ext.data.Connection.override({
-    onComplete: function(request, xdrResult) {
+    onComplete: function(request) {
         var me = this, options = request.options || {};
         try {
-            //console.log('connection options:');
-            //console.log(options);
-            //debugger;
             if (request.xhr && request.xhr) {
                 djem.app.fireEvent('token', request.xhr.getResponseHeader('x-csrf-token'));
             }
@@ -27,7 +25,7 @@ Ext.data.Connection.override({
             }
         } catch (e) {
             Ext.MessageBox.show({
-                title: 'Error', msg: request.xhr.response, buttons: Ext.MessageBox.OK, fn: function() {
+                title: 'Error', msg: (e && e.message || '') + request.xhr.response, buttons: Ext.MessageBox.OK, fn: function() {
                 }
             });
         }
@@ -36,13 +34,15 @@ Ext.data.Connection.override({
 });
 
 Ext.define('djem.store.proxy', {
-    extend:'Ext.data.proxy.Ajax',
+    extend: 'Ext.data.proxy.Ajax',
 
-    alias:'proxy.djem',
-    url : 'api',
+    alias: 'proxy.djem',
+    url: 'api',
 
-    buildRequest: function(operation) {
-        SharedData.token && this.setExtraParam('_token', SharedData.token);
+    buildRequest: function() {
+        if (SharedData.token) {
+            this.setExtraParam('_token', SharedData.token);
+        }
         return this.callParent(arguments);
     },
 
