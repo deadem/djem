@@ -18,6 +18,7 @@ $button-small-font-size: $font-size-small !default;
 $button-small-font-weight: $font-weight-small !default;
 $button-small-border-width: 0 !default;
 $button-small-text-padding: 16px !default;
+$button-small-padding: 6px 0 !default;
 
 $button-medium-font-family: $font-family-medium !default;
 $button-medium-font-size: $font-size-medium !default;
@@ -33,12 +34,12 @@ $button-large-text-padding: 16px !default;
 
 $button-default-color: color('black');
 $button-default-base-color: $base-color !default;
-$button-default-base-color-over: #F5F5F5 !default;
-$button-default-base-color-focus: $button-default-base-color-over !default;
-$button-default-base-color-focus-over: $button-default-base-color-focus !default;
-$button-default-base-color-focus-pressed: $button-default-base-color-focus !default;
-$button-default-base-color-pressed: #EEEEEE !default;
+$button-default-base-color-over: #EEEEEE !default;
+$button-default-base-color-pressed: #E0E0E0 !default;
 $button-default-color-disabled: color('disabled') !default;
+$button-default-base-color-focus: $button-default-base-color !default;
+$button-default-base-color-focus-over: $button-default-base-color-over !default;
+$button-default-base-color-focus-pressed: $button-default-base-color-pressed !default;
 $button-default-inner-border-width-focus: 0 !default;
 
 

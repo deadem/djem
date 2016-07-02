@@ -36,7 +36,7 @@ Ext.define('djem.view.main.Main', {
         region: 'center',
         xtype: 'tabpanel',
         reference: 'tabs',
-        cls: 'top-toolbar',
+        cls: 'top-panel',
         items: [ {
             glyph: 'xE88A@Icons',
             layout: 'border',
