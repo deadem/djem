@@ -5,8 +5,8 @@ class AuthTest extends TestCase
     public function testDjemApi()
     {
         $response = $this->call('GET', '/djem/api');
+        dd($response);
         $this->assertEquals(401, $response->status());
-
         $data = $response->getData();
         $this->assertObjectNotHasAttribute('username', $data);
         $this->assertEquals('unauthorized', $data->state);
