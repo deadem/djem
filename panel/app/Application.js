@@ -20,7 +20,10 @@ Ext.define('djem.Application', {
             Ext.Ajax.request(options);
         },
         authorize: function() {
-            if (!Ext.get('login')) {
+            var login = Ext.get('login');
+            if (login) {
+                login.component.fireEvent('reinit');
+            } else {
                 Ext.widget('login');
             }
         },
