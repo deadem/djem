@@ -21,7 +21,8 @@ Ext.define('djem.view.main.Main', {
         'djem.widget.checkbox',
         'djem.widget.combobox',
         'djem.widget.date',
-        'djem.widget.time'
+        'djem.widget.time',
+        'djem.widget.grid'
     ],
 
     controller: 'main',
