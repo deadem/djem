@@ -25,7 +25,11 @@ Ext.data.Connection.override({
             }
         } catch (e) {
             Ext.MessageBox.show({
-                title: 'Error', msg: (e && e.message || '') + request.xhr.response, buttons: Ext.MessageBox.OK, fn: function() {
+                title: 'Error',
+                closable: false,
+                msg: (e && e.message || '') + request.xhr.response,
+                buttons: Ext.MessageBox.OK,
+                fn: function() {
                 }
             });
         }

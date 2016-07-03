@@ -3,6 +3,7 @@
 namespace DJEM\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use BadMethodCallException;
 
 class Main extends \Illuminate\Routing\Controller
 {
@@ -49,6 +50,10 @@ class Main extends \Illuminate\Routing\Controller
         $leaf = $this->findLeaf($id);
         if ($leaf) {
             $doctype = $leaf['_doctype'];
+        }
+
+        if (! class_exists($doctype)) {
+            throw new BadMethodCallException('Can\'t create class '.$doctype);
         }
 
         return new $doctype();
