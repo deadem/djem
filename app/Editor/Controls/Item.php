@@ -71,9 +71,9 @@ class Item
         return $this;
     }
 
-    public function bind($name = null)
+    public function bind($name = true)
     {
-        $this->bind = ($name) ?: true;
+        $this->bind = $name;
 
         return $this;
     }
