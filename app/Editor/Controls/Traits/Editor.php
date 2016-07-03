@@ -125,6 +125,9 @@ trait Editor
             'relation' => function ($field) {
                 return $this->isRelation($field) ? $this->getRelation($field) : null;
             },
+            'model' => function () {
+                return $this->model();
+            },
         ];
 
         foreach ($controls as $field => $item) {
