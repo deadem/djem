@@ -4,10 +4,10 @@ Ext.define('djem.widget.grid', {
     alias: [ 'widget.djem.grid' ],
 
     requires: [
-        'djem.widget.grid.Controller'
+        'djem.widget.gridController'
     ],
 
-    controller: 'djem.grid',
+    controller: 'djem-grid',
 
     viewConfig: {
         plugins: {

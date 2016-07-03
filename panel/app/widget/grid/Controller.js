@@ -1,7 +1,7 @@
 /* global Ext */
-Ext.define('djem.widget.grid.Controller', {
+Ext.define('djem.widget.gridController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.djem.grid',
+    alias: 'controller.djem-grid',
 
     init: function() {
         var me = this,
