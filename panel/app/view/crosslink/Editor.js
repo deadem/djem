@@ -1,3 +1,4 @@
+/* global Ext */
 Ext.define('djem.view.crosslink.Editor', {
     extend: 'Ext.window.Window',
     alias: [ 'widget.crosslink.Editor', 'widget.crosslink-editor' ],
@@ -12,7 +13,7 @@ Ext.define('djem.view.crosslink.Editor', {
         type: 'crosslink-editor'
     },
 
-    closable: true,
+    closable: false,
     autoShow: true,
     modal: true,
     bodyPadding: 10,
@@ -21,20 +22,16 @@ Ext.define('djem.view.crosslink.Editor', {
     height: '90%',
     layout: 'fit',
 
-    html: 'Hello, World!',
-/*
-    items: [{
-        xtype: 'crosslink.Browser',
-        reference: 'browser',
-        autoScroll: true
-    }],
-*/
+    html: '',
     buttons: [
-        '->', {
+        '->',
+        {
             text: 'OK',
             handler: 'ok'
-        }, {
-        text: 'Cancel',
-        handler: 'cancel'
-    } ]
+        },
+        {
+            text: 'Cancel',
+            handler: 'cancel'
+        }
+    ]
 });
