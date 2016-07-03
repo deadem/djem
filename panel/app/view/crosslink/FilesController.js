@@ -4,9 +4,10 @@ Ext.define('djem.view.crosslink.FilesController', {
     alias: 'controller.crosslink-files',
 
     config: {
-        image: null,
+        image: undefined,
         imageZoom: 1,
-        imageMoveOffset: { x: 0, y: 0 }
+        imageMoveOffset: { x: 0, y: 0 },
+        loadingMask: undefined
     },
 
     uploader: Ext.create('djem.store.FileUpload'),
@@ -41,6 +42,7 @@ Ext.define('djem.view.crosslink.FilesController', {
 
     onDestroy: function() {
         var me = this;
+        me.getLoadingMask().destroy();
         me.uploader.destroy();
     },
 
@@ -86,7 +88,9 @@ Ext.define('djem.view.crosslink.FilesController', {
                 }
                 return;
             }
+            me.getLoadingMask().show();
             me.uploader.upload(filePacks[i].records, function(successData) {
+                me.getLoadingMask().hide();
                 if (successData) {
                     Ext.each(filePacks[i].records, function(record, index) {
                         var data = successData[index];
@@ -158,9 +162,25 @@ Ext.define('djem.view.crosslink.FilesController', {
         if (me.getView().single) {
             me.getView().addCls('x-form-crosslink-files-single');
         }
-        me.getView().emptyText = '<input style="margin:5%;" type="file" ' +
+        me.setLoadingMask(new Ext.LoadMask({
+            target: me.getView()
+        }));
+        me.getView().emptyText = '' +
+            '<label>' +
+            '<svg style="position:absolute;cursor:pointer;" fill="#EEEEEE" height="100%" viewBox="0 0 24 24" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+                '<defs>' +
+                    '<path d="M24 24H0V0h24v24z" id="a"/>' +
+                '</defs>' +
+                '<clipPath id="b">' +
+                    '<use overflow="visible" xlink:href="#a"/>' +
+                '</clipPath>' +
+                '<path clip-path="url(#b)" d="M3 4V1h2v3h3v2H5v3H3V6H0V4h3zm3 6V7h3V4h7l1.83 2H21c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V10h3zm7 9c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-3.2-5c0 1.77 1.43 3.2 3.2 3.2s3.2-1.43 3.2-3.2-1.43-3.2-3.2-3.2-3.2 1.43-3.2 3.2z"/>' +
+            '</svg>' +
+
+            '<input style="visibility:hidden;" type="file" ' +
             (me.getView().single ? '' : ' multiple="" ') +
-            ' onchange="Ext.get(this.parentNode).fireEvent(\'filechange\', event, this);">';
+            ' onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">' +
+            '</label>';
 
         this.callParent(arguments);
     },

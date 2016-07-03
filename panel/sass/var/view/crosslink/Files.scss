@@ -3,7 +3,6 @@
     margin: 1px;
     box-shadow: 0px 0px 0px 1px gray;
     overflow: auto;
-    font-family: FontAwesome;
     a {
         text-decoration: none;
     }
@@ -44,35 +43,23 @@
 
         .trash {
             position: absolute;
-            top: -0.14em;
+            font-family: Icons;
+            top: -0.05em;
             right: 0;
             color: #C00000;
             font-size: 20px;
             line-height: 100%;
             text-shadow: -1px 0px 0px white, 1px 0px 0px white;
         }
-
         &.new::before {
-            content: '\0f01b';
+            content: '\0E2C6';
             position:absolute;
-            font-family: FontAwesome;
+            font-family: Icons;
             color: white;
             text-shadow: 0px 0px 6px black;
-            font-size: 28px;
-            padding: 2px;
+            font-size: 16px;
+            padding: 0;
             line-height: 1em;
-        }
-
-        &.done::before {
-            content: '\0f05d';
-        }
-
-        &.upload::before {
-            content: '\0f01e';
-            animation-name: spin;
-            animation-duration: 4000ms;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
         }
 
         &.x-grid-item-over {
@@ -103,9 +90,3 @@
         }
     }
 }
-
-@keyframes spin {
-    from { transform:rotate(0deg); }
-    to { transform:rotate(360deg); }
-}
-
