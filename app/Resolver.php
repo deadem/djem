@@ -12,7 +12,7 @@ class Resolver
         $this->object = $object;
         $this->container = $container;
     }
-    
+
     public function __get($name)
     {
         return $this->object->$name;
