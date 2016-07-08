@@ -12,10 +12,11 @@ Ext.define('djem.view.main.GridController', {
     },
 
     init: function() {
-        var me = this;
-        me.getView().on('load', function(id, color) {
+        var me = this, view = me.getView();
+
+        view.on('load', function(id, color) {
             me.setColor(color);
-            var store = me.getView().getStore();
+            var store = view.getStore();
             store.getProxy().setExtraParam('tree', id);
             store.getSorters().clear();
 
@@ -27,14 +28,15 @@ Ext.define('djem.view.main.GridController', {
                 filter.setValue('');
             }
         });
-        me.getView().on('click.toolbar', function(ref, params) {
+        view.on('click.toolbar', function(ref, params) {
             params = params || {};
-            me.openDocument(me.getView(), { data: { _doctype: params._doctype } });
+            me.openDocument(view, { data: { _doctype: params._doctype } });
         });
     },
 
     initViewModel: function() {
         var me = this;
+
         // новый вид - новый стор
         var store = Ext.create('djem.store.main.Grid');
         me.getView().setStore(store);

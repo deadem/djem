@@ -1,0 +1,23 @@
+.x-column-header-sort-ASC, .x-column-header-sort-DESC {
+    .x-column-header-text {
+        background-image: none;
+        &:before {
+            content: '';
+            font: normal 14px/14px Icons;
+            margin-left: -18px;
+            position: absolute;
+        }
+    }
+}
+
+.x-column-header-sort-ASC {
+    .x-column-header-text:before {
+        content: '\0E5D8';
+    }
+}
+
+.x-column-header-sort-DESC {
+    .x-column-header-text:before {
+        content: '\0E5DB';
+    }
+}

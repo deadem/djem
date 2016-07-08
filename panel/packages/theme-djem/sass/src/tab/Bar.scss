@@ -15,7 +15,7 @@
 .top-panel {
     > .x-tab-bar {
         background-color: $color-top-toolbar;
-        z-index: 2;
+        z-index: 4;
 
         @include extjs-tab-animate-djem($color-top-toolbar-light, color('blue'), 'x-tab-default');
         @include generate-top-toolbar-colors();
