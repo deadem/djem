@@ -58,7 +58,7 @@ class Doctype extends \Illuminate\Routing\Controller
     {
         $address = $this->findUrl($url, $urlModel);
 
-        $container = new Container();
+        $container = Container::getInstance();
         $container->bind(Container::class, function () use ($container) {
             return $container;
         });
