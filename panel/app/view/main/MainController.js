@@ -9,20 +9,22 @@ Ext.define('djem.view.main.MainController', {
     ],
 
     init: function() {
-        var me = this;
+        var me = this,
+            toolbar = me.lookupReference('toolbar'),
+            tabs = me.lookupReference('tabs');
 
         function tabChange(newTab) {
-            me.lookupReference('toolbar').fireEvent('change.toolbar', newTab, (newTab && newTab.getXType()) || 'panel');
+            toolbar.fireEvent('change.toolbar', newTab, (newTab && newTab.getXType()) || 'panel');
         }
 
         djem.app.on('update.toolbar', function(ref, data) {
-            me.lookupReference('toolbar').fireEvent('update.toolbar', ref, data);
+            toolbar.fireEvent('update.toolbar', ref, data);
         }).on('click.toolbar', function(ref, params) {
-            me.lookupReference('tabs').getActiveTab().fireEvent('click.toolbar', ref, params);
+            tabs.getActiveTab().fireEvent('click.toolbar', ref, params);
         }).on('show.toolbar', function(result) {
-            me.lookupReference('tabs').getActiveTab().fireEvent('show.toolbar', result);
+            tabs.getActiveTab().fireEvent('show.toolbar', result);
         }).on('change.toolbar', function() {
-            tabChange(me.lookupReference('tabs').getActiveTab());
+            tabChange(tabs.getActiveTab());
         }).on('deleteDocument', function(_this, data) {
             Ext.MessageBox.confirm('Delete document', 'Delete ' + data.title + ' ?', function(button) {
                 if (button == 'yes') {
@@ -34,7 +36,6 @@ Ext.define('djem.view.main.MainController', {
                 }
             });
         }).on('update.tab', function(_this, data) {
-            var tabs = me.lookupReference('tabs');
             var tabId = data.id;
             var tab = tabs.query('#' + tabId)[0];
             if (tab) {
@@ -43,7 +44,7 @@ Ext.define('djem.view.main.MainController', {
                 }
             }
         });
-        me.lookupReference('tabs').on('tabchange', function(_this, newTab) {
+        tabs.on('tabchange', function(_this, newTab) {
             tabChange(newTab);
         }).fireEvent('tabchange');
 
@@ -57,7 +58,6 @@ Ext.define('djem.view.main.MainController', {
         });
 
         me.lookupReference('grid').on('openDocument', function(_this, data) {
-            var tabs = me.lookupReference('tabs');
             var id = data.id || ++SharedData.nextDocumentNumber;
             var tabId = 'main-tab-' + String(data._doctype).replace(/[^0-9a-z]+/ig, '_') + '-' + (data.id || 'x-' + id);
             var tab = tabs.query('#' + tabId)[0];

@@ -26,6 +26,10 @@ Ext.define('djem.view.main.Main', {
         'djem.widget.searchToolbarField'
     ],
 
+    getToolbar: function() {
+        return this.lookupReference('toolbar');
+    },
+
     controller: 'main',
 
     layout: 'border',

@@ -8,25 +8,56 @@ Ext.define('djem.view.main.GridController', {
     ],
 
     config: {
-        color: null
+        color: null,
+        filter: null,
+        filterListeners: null,
+        filterTimeout: null
+    },
+
+    destroyFilterListeners: function() {
+        var me = this,
+            listeners = me.getFilterListeners();
+
+        clearTimeout(me.getFilterTimeout());
+        if (listeners) {
+            listeners.destroy();
+        }
+        me.setFilterListeners(null);
+    },
+
+    changeFilter: function() {
+        var me = this,
+            store = me.getView().getStore(),
+            value = me.getFilter().getValue();
+
+        store.getProxy().setExtraParam('filter', value);
+        clearTimeout(me.getFilterTimeout());
+        me.setFilterTimeout(setTimeout(function() {
+            store.getSorters().clear();
+            store.loadPage(1);
+        }, value ? 300 : 0));
     },
 
     init: function() {
-        var me = this, view = me.getView();
+        var me = this,
+            view = me.getView(),
+            main = view.up('app-main'),
+            toolbar = main.getToolbar();
+
+        me.setFilter(toolbar.lookupReference('search'));
 
         view.on('load', function(id, color) {
             me.setColor(color);
+
             var store = view.getStore();
             store.getProxy().setExtraParam('tree', id);
             store.getSorters().clear();
 
-            var filter = me.lookupReference('filter');
-            if (filter.getValue() === '') {
-                store.getProxy().setExtraParam('filter', null);
-                store.loadPage(1);
-            } else {
-                filter.setValue('');
-            }
+            var filter = me.getFilter();
+
+            filter.setValue('');
+            store.getProxy().setExtraParam('filter', null);
+            store.loadPage(1);
         });
         view.on('click.toolbar', function(ref, params) {
             params = params || {};
@@ -35,36 +66,23 @@ Ext.define('djem.view.main.GridController', {
     },
 
     initViewModel: function() {
-        var me = this;
+        var me = this,
+            view = me.getView();
 
         // новый вид - новый стор
         var store = Ext.create('djem.store.main.Grid');
-        me.getView().setStore(store);
+        view.setStore(store);
 
-        me.getView().addDocked({
+        view.addDocked({
             xtype: 'pagingtoolbar',
             dock: 'bottom',
             store: store,
 
             items: [
-                '-',
-                { xtype: 'label', text: 'Filter:' },
-                { xtype: 'textfield', reference: 'filter' }
             ],
             displayInfo: true,
             displayMsg: 'Displaying rows {0} - {1} of {2}',
             emptyMsg: 'No rows to display'
-        });
-
-        var filterTimeout;
-        me.lookupReference('filter').on('change', function() {
-            var store = me.getView().getStore();
-            store.getProxy().setExtraParam('filter', this.getValue());
-            clearTimeout(filterTimeout);
-            Ext.defer(function() {
-                store.getSorters().clear();
-                store.loadPage(1);
-            }, this.getValue() ? 300 : 0);
         });
 
         store.on('metachange', function(_store, meta) {
@@ -86,26 +104,47 @@ Ext.define('djem.view.main.GridController', {
                 djem.app.fireEvent('update.toolbar', 'add', { action: 'enable' });
             }
 
-            var parent = me.getView().lookupReferenceHolder();
-            var view = parent.lookupReference('grid-view');
+            var parent = view.lookupReferenceHolder();
+            var gridView = parent.lookupReference('grid-view');
+
+            me.destroyFilterListeners();
 
             if (meta.view) {
                 // замена вьювера
                 parent.lookupReference('grid').hide();
-                view.show();
-                view.add(Ext.create('widget.main-content', {
+                gridView.show();
+                gridView.add(Ext.create('widget.main-content', {
                     data: meta
                 }));
                 return;
             }
-            view.hide();
+            gridView.hide();
             parent.lookupReference('grid').show();
-            if (view.down()) {
-                view.down().destroy();
+            if (gridView.down()) {
+                gridView.down().destroy();
             }
 
+            var listeners = me.getFilter().on({
+                change: me.changeFilter,
+                scope: me,
+                destroyable: true
+            });
+
+            me.setFilterListeners(listeners);
+
+            view.on({
+                destroy: function() {
+                    me.destroyFilterListeners();
+                },
+                options: {
+                    single: true
+                }
+            });
+
             _store.model.replaceFields(meta.fields, true);
-            me.getView().reconfigure(_store, meta.columns);
+            view.reconfigure(_store, meta.columns);
+
+            view.getView().setScrollY(0);
         });
     },
 
