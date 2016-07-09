@@ -5,7 +5,7 @@
             content: '\0E8B6';
             font: normal 24px/24px Icons;
             display: inline-block;
-            color: color('black');
+            color: color('white');
             right: 0;
             top: 30px / 2 - 24px / 2;
             position: absolute;
@@ -13,10 +13,27 @@
         }
         .x-form-text {
             padding: 0 28px 0 4px;
+            padding: 0;
+            width: 0;
+            float: right;
         }
     }
-    .x-form-trigger-wrap-default.x-form-trigger-wrap-focus {
-        border-color: color('amber');
-        transition: all .2s transition('fast-slow');
+    .x-form-trigger-wrap-default {
+        border-color: transparent;
+    }
+    &.x-field-focus, &.app-field-filled {
+        .x-form-text-wrap:before {
+            color: color('black');
+            transition: all .2s transition();
+        }
+        .x-form-trigger-wrap-default {
+            border-color: color('amber');
+            transition: all .2s transition('fast-slow');
+        }
+        .x-form-text {
+            padding: 0 28px 0 4px;
+            width: 100%;
+            transition: all .2s transition();
+        }
     }
 }

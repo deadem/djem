@@ -1,6 +1,6 @@
 /* global Ext */
 Ext.define('djem.widget.searchToolbarField', {
-    extend: 'Ext.form.field.Text',
+    extend: 'djem.widget.text',
     alias: [ 'widget.searchToolbarField' ],
 
     config: {
@@ -10,14 +10,12 @@ Ext.define('djem.widget.searchToolbarField', {
         height: 30,
         cls: 'main-searchToolbarField'
     },
-/*
-,
-        {
-            glyph: 'xE8B6@Icons',
-            scale: 'medium',
-            reference: 'searchIcon'
-        }
-*/
     listeners: {
+        afterrender: function() {
+            var me = this;
+            me.getEl().on('click', function() {
+                me.focus();
+            });
+        }
     }
 });
