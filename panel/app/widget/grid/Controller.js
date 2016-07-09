@@ -3,6 +3,10 @@ Ext.define('djem.widget.gridController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.djem-grid',
 
+    requires: [
+            'djem.store.Grid'
+    ],
+
     init: function() {
         var me = this,
             view = me.getView();
