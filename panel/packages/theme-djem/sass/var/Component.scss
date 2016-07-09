@@ -1,5 +1,11 @@
 @import 'generate-colors';
 @import 'generate-elevation';
+@import 'transitions';
+
+.x-body, body {
+    @include generate-colors();
+}
+@include generate-elevation();
 
 //$include-ie: false;
 

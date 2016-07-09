@@ -10,7 +10,7 @@
             transform-origin: top left 0px;
             -webkit-font-smoothing: antialiased;
             color: $form-label-empty-color;
-            transition: transform .4s cubic-bezier(.25,.8,.25,1);
+            transition: transform .4s transition();
         }
         &.x-field-focus {
             .x-form-item-label-top span {

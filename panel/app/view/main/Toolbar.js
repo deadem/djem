@@ -13,28 +13,44 @@ Ext.define('djem.view.main.Toolbar', {
         type: 'main-toolbar'
     },
 
-    items: [ {
-        text: 'Save',
-        scale: 'medium',
-        reference: 'save'
-    }, {
-        text: '?',
-        scale: 'medium',
-        reference: 'add'
-    }, {
-        text: 'Undo',
-        scale: 'medium',
-        reference: 'undo'
-    }, {
-        text: 'Redo',
-        scale: 'medium',
-        disabled: true,
-        reference: 'redo'
-    }, {
-        text: 'Close',
-        scale: 'medium',
-        reference: 'close'
-    }, {
-        reference: 'user'
-    } ]
+    items: [
+        {
+            text: 'Save',
+            scale: 'medium',
+            reference: 'save'
+        },
+        {
+            text: '?',
+            scale: 'medium',
+            reference: 'add'
+        },
+        {
+            text: 'Undo',
+            scale: 'medium',
+            reference: 'undo'
+        },
+        {
+            text: 'Redo',
+            scale: 'medium',
+            disabled: true,
+            reference: 'redo'
+        },
+        {
+            text: 'Close',
+            scale: 'medium',
+            reference: 'close'
+        },
+        '->',
+        {
+            reference: 'user'
+        },
+        {
+            reference: 'system'
+        },
+        {
+            xtype: 'searchToolbarField',
+            scale: 'medium',
+            reference: 'search'
+        }
+    ]
 });

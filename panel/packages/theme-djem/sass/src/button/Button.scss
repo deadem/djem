@@ -1,6 +1,6 @@
 .x-btn {
     text-transform: uppercase;
-    transition: background-color .4s cubic-bezier(.25, .8, .25, 1);
+    transition: background-color .4s transition();
     padding: 0;
     color: $button-default-color;
     &:after {
@@ -25,12 +25,12 @@
         display: block;
         opacity: 0;
         background-color: rgb(33, 33, 33);
-        transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+        transition: opacity .4s transition();
     }
     &.x-btn-over {
         &:before {
             opacity: 0.1;
-            transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+            transition: opacity .4s transition();
         }
     }
     &, &.x-btn-over {
@@ -43,10 +43,10 @@
                     transform: scale(2);
 
                     transition:
-                        left .4s cubic-bezier(.25, .8, .25, 1),
-                        width .4s cubic-bezier(.25, .8, .25, 1),
-                        opacity .4s cubic-bezier(.25, .8, .25, 1),
-                        transform .4s cubic-bezier(.25, .8, .25, 1);
+                        left .4s transition(),
+                        width .4s transition(),
+                        opacity .4s transition(),
+                        transform .4s transition();
                 }
             }
         }
@@ -68,7 +68,7 @@
                 @include elevation(2);
                 &.x-btn-pressed {
                     @include elevation(8);
-                    transition: box-shadow .4s cubic-bezier(.25, .8, .25, 1);
+                    transition: box-shadow .4s transition();
                 }
             }
         }

@@ -20,20 +20,22 @@ Ext.define('djem.view.main.ToolbarController', {
         var view = me.getView();
         view.on('change.toolbar', function(_this, name) {
             var toolbars = {
-                'panel': [ 'add' ],
+                'panel': [ 'add', 'search', 'searchIcon' ],
                 'main-content': [ 'save', 'close' ]
             };
             var user = me.lookupReference('user');
-            while (user.nextSibling()) {
+            while (user.nextSibling() && user.nextSibling().getReference() != 'system') {
                 user.nextSibling().destroy();
             }
             Ext.each(me.getButtons(), function(data) {
                 data.obj[toolbars[name].indexOf(data.ref) < 0 ? 'hide' : 'show']();
             });
+
+            var index = me.getView().items.indexOf(user);
             var buttons = {};
             djem.app.fireEvent('show.toolbar', buttons);
-            Ext.each(buttons.value || [], function(button) {
-                view.add(button).on('click', function() {
+            Ext.each(buttons.value || [], function(button, pos) {
+                view.insert(index + pos + 1, button).on('click', function() {
                     djem.app.fireEvent('click.toolbar', button.ref);
                 });
             });
@@ -41,15 +43,17 @@ Ext.define('djem.view.main.ToolbarController', {
             var button = me.getReferences()[ref];
             if (button) {
                 var actions = {
-                    'enable': function() { button.enable(); },
-                    'disable': function() { button.disable(); },
-                    'hide': function() { button.hide(); },
-                    'show': function() { button.show(); },
-                    'replace': function(data) {
+                    enable: function() { button.enable(); },
+                    disable: function() { button.disable(); },
+                    hide: function() { button.hide(); },
+                    show: function() { button.show(); },
+                    replace: function(data) {
                         button.setGlyph(data.glyph);
                         button.setText(data.text || '?');
                         button.setParams(data);
-                        if (data.menu !== undefined) { button.setMenu(data.menu); }
+                        if (data.menu !== undefined) {
+                            button.setMenu(data.menu);
+                        }
                     }
                 };
                 (actions[data.action] || function() {})(data);

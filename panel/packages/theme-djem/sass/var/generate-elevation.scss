@@ -24,5 +24,3 @@ $elevation-list3: ('1px 3px 0px', '1px 5px 0px', '1px 8px 0px', '1px 10px 0px', 
         $level: $level - 1;
     }
 }
-
-@include generate-elevation();
