@@ -7,8 +7,8 @@ Ext.define('djem.view.main.ToolbarController', {
         var buttons = [];
         var refs = this.getReferences();
         for (var ref in refs) {
-            var obj = refs[ref];
-            if (obj instanceof Ext.button.Button) {
+            if (refs.hasOwnProperty(ref)) {
+                var obj = refs[ref];
                 buttons.push({ ref: ref, obj: obj });
             }
         }

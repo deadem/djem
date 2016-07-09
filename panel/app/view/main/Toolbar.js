@@ -52,5 +52,13 @@ Ext.define('djem.view.main.Toolbar', {
             scale: 'medium',
             reference: 'search'
         }
+/*        ,
+        {
+            xtype: 'label',
+            cls: 'bgcolor-active',
+            html: '<div style="font: normal 32px/32px Icons;color:white;">&#xE853;</div>',
+            width: 32
+        }
+*/
     ]
 });
