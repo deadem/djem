@@ -4,7 +4,7 @@ Ext.define('djem.widget.gridController', {
     alias: 'controller.djem-grid',
 
     requires: [
-            'djem.store.Grid'
+        'djem.store.Grid'
     ],
 
     init: function() {
