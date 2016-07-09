@@ -10,6 +10,7 @@ Ext.define('djem.widget.searchToolbarField', {
         height: 30,
         cls: 'main-searchToolbarField'
     },
+    emptyText: 'Найти',
     listeners: {
         afterrender: function() {
             var me = this;
