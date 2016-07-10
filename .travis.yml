@@ -22,5 +22,6 @@ before_script:
   - cd ./tests
   - composer update
   - php artisan migrate
+  - php artisan db:seed
 
 script: "vendor/bin/phpunit"
