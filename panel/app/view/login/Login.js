@@ -45,10 +45,6 @@ Ext.define('djem.view.login.Login', {
                 fieldLabel: 'Пароль',
                 reference: 'password',
                 tabIndex: 2
-            }, {
-                xtype: 'label',
-                hideEmptyLabel: false,
-                value: 'Enter your credentials'
             }
         ],
         buttons: [
