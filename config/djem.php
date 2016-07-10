@@ -5,7 +5,7 @@ return [
     'tree' => function () {
         return [
             'items' => [
-                ['id' => 1, 'text' => 'Главные страницы', 'leaf' => true, '_doctype' => App\Doctypes\Doctype::class],
+                ['id' => 1, 'text' => 'djem.example.com', 'description' => 'Главные страницы', 'leaf' => true, '_doctype' => DJEM\Doctype::class, 'color' => 'red', 'icon' => '&#xE838;'],
             ],
         ];
     },
