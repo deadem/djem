@@ -4,6 +4,8 @@ Ext.define('djem.view.main.Main', {
     alias: 'widget.app-main',
 
     requires: [
+        'Ext.form.Label',
+
         'djem.view.main.MainController',
         'djem.view.main.Grid',
         'djem.view.main.Content',
@@ -16,7 +18,6 @@ Ext.define('djem.view.main.Main', {
         'djem.widget.image',
         'djem.widget.images',
         'djem.widget.tag',
-        'djem.widget.label',
         'djem.widget.text',
         'djem.widget.textarea',
         'djem.widget.checkbox',
