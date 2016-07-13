@@ -5,6 +5,7 @@ namespace DJEM\Editor\Controls;
 class Image extends Control
 {
     private $copy = [];
+    private $images = [];
 
     public function __construct($name = null)
     {
@@ -33,6 +34,26 @@ class Image extends Control
         $this->copy[] = $field;
 
         return $this;
+    }
+
+    public function images($images)
+    {
+        if (! is_array($images)) {
+            $images = func_get_args();
+        }
+
+        $this->images = [];
+
+        foreach ($images as $image) {
+            $this->images[] = new Relation($this, $image);
+        }
+
+        return $this;
+    }
+
+    public function getItems()
+    {
+        return $this->images;
     }
 
     public function initControl($controls)
@@ -78,9 +99,18 @@ class Image extends Control
         if (! empty($value)) {
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
+                foreach ($this->images as $image) {
+                    $image->setUserValue($this->prepareUserSaveValue($value, $image->getName(), $getValue));
+                }
+
                 return parent::prepareUserValue($value, $getValue);
             }
             // если файл не указан, значит нужно обновить данные уже подцепленной картинки
+            foreach ($this->images as $image) {
+                $relation = call_user_func($getValue->relation, $image->getName());
+                $image->setUserValue($relation->first());
+            }
+
             $relation = call_user_func($getValue->relation, $this->getName());
 
             return $this->setUserValue($relation->first());

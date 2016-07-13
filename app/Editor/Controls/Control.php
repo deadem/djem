@@ -109,12 +109,21 @@ class Control extends Item
     public function prepareUserValue($value, $getter = null)
     {
         if (is_callable($this->saveHandler)) {
-            $relation = call_user_func($getter->relation, $this->getName());
+            $value = $this->prepareUserSaveValue($value, $this->getName(), $getter);
+        }
+
+        return $this->setUserValue($value);
+    }
+
+    protected function prepareUserSaveValue($value, $field, $getter = null)
+    {
+        if (is_callable($this->saveHandler)) {
+            $relation = call_user_func($getter->relation, $field);
             $model = ($relation) ? $relation->getRelated() : null;
             $value = call_user_func($this->saveHandler, $value, $model, $getter);
         }
 
-        return $this->setUserValue($value);
+        return $value;
     }
 
     protected function setUserValue($value)
