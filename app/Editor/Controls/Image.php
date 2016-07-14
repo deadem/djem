@@ -45,7 +45,7 @@ class Image extends Control
         $this->images = [];
 
         foreach ($images as $image) {
-            $this->images[] = new Relation($this, $image);
+            $this->images[] = new Relation($image);
         }
 
         return $this;

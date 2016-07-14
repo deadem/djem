@@ -4,13 +4,9 @@ namespace DJEM\Editor\Controls;
 
 class Relation extends Control
 {
-    private $parent;
-
-    public function __construct($parent, $name = null)
+    public function __construct($name = null)
     {
         parent::__construct($name);
-
-        $this->parent = $parent;
     }
 
     public function getProperties($model)
