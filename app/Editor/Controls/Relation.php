@@ -5,6 +5,7 @@ namespace DJEM\Editor\Controls;
 class Relation extends Control
 {
     private $parent;
+
     public function __construct($parent, $name = null)
     {
         parent::__construct($name);
