@@ -161,7 +161,8 @@ Ext.define('djem.view.main.GridController', {
             };
         }
         menu.push({
-            text: 'Edit',
+            text: 'Редактировать',
+            glyph: 'xE3C9@Icons',
             handler: 'openDocument'
         });
         Ext.each((me.getView().getStore().userOptions || {}).contextMenu || [], function(v) {
@@ -169,6 +170,11 @@ Ext.define('djem.view.main.GridController', {
         });
         Ext.each(menu, function(v) {
             var command = v.handler;
+            if (v['function']) {
+                v.handler = command = function() {
+                    eval(v['function']);
+                };
+            }
             if (command && typeof command != 'function') {
                 v.handler = handler(command);
             }
