@@ -14,8 +14,8 @@ class DJEMServiceProvider extends ServiceProvider
 
         Route::group(['middleware' => ['web', 'djem.auth'], 'namespace' => '\DJEM\Http\Controllers'], function () {
             Route::any('djem/api', 'Api@getState');
-            Route::any('djem/api/tree', config('djem.main').'@tree');
-            Route::any('djem/api/grid', config('djem.main').'@grid');
+            Route::any('djem/api/tree', 'Api\Main@tree');
+            Route::any('djem/api/grid', 'Api\Main@grid');
             Route::any('djem/api/content/delete', 'Api\Content@delete');
             Route::any('djem/api/content/load', 'Api\Content@loadRelation');
             Route::get('djem/api/content', 'Api\Content@get');
@@ -37,7 +37,6 @@ class DJEMServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../app/Doctypes' => base_path('app/Doctypes'),
             __DIR__.'/../config' => base_path('config'),
-            __DIR__.'/../resources/djem' => base_path('resources/djem'),
         ]);
         $this->routes($router);
     }

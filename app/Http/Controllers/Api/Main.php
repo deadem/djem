@@ -9,7 +9,7 @@ class Main extends \Illuminate\Routing\Controller
 {
     public function tree(Request $request)
     {
-        return $this->getTree($request->input('node'));
+        return response()->json($this->getTree($request->input('node')));
     }
 
     public function grid(Request $request)
