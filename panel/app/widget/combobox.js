@@ -25,7 +25,7 @@ Ext.define('djem.widget.combobox', {
     afterRender: function() {
         var me = this;
         me.getEl().on('click', function() {
-            if (me.getStore().isLoaded()) {
+            if (me.queryMode !== 'remote' || me.getStore().isLoaded()) {
                 me.expand();
             } else {
                 me.getStore().load({
@@ -52,9 +52,9 @@ Ext.define('djem.widget.combobox', {
 
     initStore: function() {
         var me = this;
-        me.setStore(Ext.create('djem.store.ComboBox'));
-        var store = me.getStore();
-        if (store && me.queryMode == 'remote') {
+        if (me.queryMode == 'remote') {
+            me.setStore(Ext.create('djem.store.ComboBox'));
+            var store = me.getStore();
             var view = me.up('main-content') || me.up('crosslink-editor');
             store.getProxy().setExtraParams({
                 _doctype: view.config.data._doctype,

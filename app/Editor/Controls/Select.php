@@ -11,6 +11,28 @@ class Select extends Control
         $this->xtype('djem.select');
     }
 
+    public function filterPickList($value)
+    {
+        $this->setProperty('filterPickList', $value);
+
+        return $this;
+    }
+
+    public function queryMode($value)
+    {
+        $this->setProperty('queryMode', $value);
+
+        return $this;
+    }
+
+    public function store($value)
+    {
+        parent::store($value);
+        $this->queryMode('local');
+
+        return $this;
+    }
+
     public function loadRelation($model)
     {
         $value = $this->getRelation($model)->select(['id', 'name'])->first();

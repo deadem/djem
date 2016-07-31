@@ -4,35 +4,13 @@ namespace DJEM\Editor\Controls;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Control
+class Tag extends Select
 {
     public function __construct($name = null)
     {
         parent::__construct($name);
 
         $this->xtype('djem.tag');
-    }
-
-    public function filterPickList($value)
-    {
-        $this->setProperty('filterPickList', $value);
-
-        return $this;
-    }
-
-    public function queryMode($value)
-    {
-        $this->setProperty('queryMode', $value);
-
-        return $this;
-    }
-
-    public function store($value)
-    {
-        parent::store($value);
-        $this->queryMode('local');
-
-        return $this;
     }
 
     public function loadRelation($model)
