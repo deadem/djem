@@ -10,17 +10,15 @@ Ext.application({
 
     autoCreateViewport: 'djem.view.main.Main',
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Most customizations should be made to djem.Application. If you need to
     // customize this file, doing so below this section reduces the likelihood
     // of merge conflicts when upgrading to new versions of Sencha Cmd.
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     requires: [
-        'fix.overrides.Store',
-        'fix.overrides.ViewBoundList',
+        'fix.overrides.Store', 'fix.overrides.ViewBoundList', 'fix.overrides.Date',
 
-        'djem.overrides.LoadMask',
-        'djem.overrides.viewAbstractView'
+        'djem.overrides.LoadMask', 'djem.overrides.viewAbstractView'
     ]
 });
