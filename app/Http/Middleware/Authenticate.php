@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class Authenticate
 {
     use Unauthorized;
+
     /**
      * Handle an incoming request.
      *
