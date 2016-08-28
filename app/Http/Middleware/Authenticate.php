@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class Authenticate
 {
+    use Unauthorized;
     /**
      * Handle an incoming request.
      *
@@ -23,9 +24,7 @@ class Authenticate
         if ($auth->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];
             if (! $auth->attempt($credentials)) {
-                return response()->json([
-                    'state' => 'unauthorized',
-                ])->header('x-csrf-token', $request->session()->token())->setStatusCode(401);
+                return $this->unauthorizedResponse();
             }
         }
 

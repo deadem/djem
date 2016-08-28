@@ -10,9 +10,16 @@ class DJEMServiceProvider extends ServiceProvider
 {
     private function routes(Router $router)
     {
-        $router->middleware('djem.auth', '\DJEM\Http\Middleware\Authenticate');
+        $router->middleware('djem.auth', \DJEM\Http\Middleware\Authenticate::class);
+        $router->middlewareGroup('djem.web', [
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \DJEM\Http\Middleware\VerifyCsrfToken::class,
+        ]);
 
-        Route::group(['middleware' => ['web', 'djem.auth'], 'namespace' => '\DJEM\Http\Controllers'], function () {
+        Route::group(['middleware' => ['djem.web', 'djem.auth'], 'namespace' => '\DJEM\Http\Controllers'], function () {
             Route::any('djem/api', 'Api@getState');
             Route::any('djem/api/tree', 'Api\Main@tree');
             Route::any('djem/api/grid', 'Api\Main@grid');
