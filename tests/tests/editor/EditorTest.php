@@ -4,7 +4,7 @@ use App\Models;
 
 class Doctype extends DJEM\Doctype
 {
-//    public $model = Models\News::class;
+    //    public $model = Models\News::class;
 }
 
 class Editor extends TestCase
