@@ -30,7 +30,11 @@ class Editor
     public function loadModel($model = null)
     {
         if (! $this->modelClass) {
-            return $this;
+            if ($model === null) {
+                return $this;
+            }
+
+            $this->modelClass = get_class($model);
         }
 
         if ($model === null) {

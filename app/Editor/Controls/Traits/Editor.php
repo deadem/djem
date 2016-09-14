@@ -97,7 +97,7 @@ trait Editor
             $controls->put($item->getName(), $item);
         }
 
-        if ($item->getItems()) {
+        if ($item && $item->getItems()) {
             foreach ($item->getItems() as $item) {
                 $controls = $controls->merge($this->getControls($item));
             }
