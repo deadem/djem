@@ -19,13 +19,24 @@ class Editor extends TestCase
         $this->assertEquals($model, $editor->model());
     }
 
-    public function testTabPanel()
+    public function testModelFields()
     {
         $editor = (new Doctype())->editor();
 
         $model = Models\News::first();
         $editor->loadModel($model);
 
-        //dd($editor->getData());
+        $data = collect($editor->getData());
+        $attr = collect($model->getAttributes());
+
+        // проверяем, что все поля модели есть в выдаче
+        $attr->each(function ($value, $key) use ($data) {
+            $this->assertEquals($value, $data->get($key));
+        });
+
+        // проверяем, что в выдаче нет ничего, кроме полей модели
+        $data->each(function ($value, $key) use ($attr) {
+            $this->assertEquals($value, $attr->get($key));
+        });
     }
 }
