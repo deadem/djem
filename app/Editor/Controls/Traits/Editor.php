@@ -66,22 +66,23 @@ trait Editor
         }
 
         $viewItem = (object) [];
-        foreach ($item->getProperties($this->model()) as $key => $value) {
-            $viewItem->{$key} = $value;
-        }
+        if ($item) {
+            foreach ($item->getProperties($this->model()) as $key => $value) {
+                $viewItem->{$key} = $value;
+            }
 
-        $bind = $item->getBind();
-        if ($bind) {
-            $viewItem->bind = $bind;
-        }
+            $bind = $item->getBind();
+            if ($bind) {
+                $viewItem->bind = $bind;
+            }
 
-        if ($item->getItems()) {
-            $viewItem->items = [];
-            foreach ($item->getItems() as $item) {
-                $viewItem->items[] = $this->getView($item);
+            if ($item->getItems()) {
+                $viewItem->items = [];
+                foreach ($item->getItems() as $item) {
+                    $viewItem->items[] = $this->getView($item);
+                }
             }
         }
-
         return $viewItem;
     }
 

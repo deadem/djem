@@ -1,11 +1,7 @@
 <?php
 
 use App\Models;
-
-class Doctype extends DJEM\Doctype
-{
-    //    public $model = Models\News::class;
-}
+use DJEM\Doctype;
 
 class Editor extends TestCase
 {
@@ -19,15 +15,10 @@ class Editor extends TestCase
         $this->assertEquals($model, $editor->model());
     }
 
-    public function testModelFields()
+    private function checkData($editor)
     {
-        $editor = (new Doctype())->editor();
-
-        $model = Models\News::first();
-        $editor->loadModel($model);
-
         $data = collect($editor->getData());
-        $attr = collect($model->getAttributes());
+        $attr = collect($editor->model()->getAttributes());
 
         // проверяем, что все поля модели есть в выдаче
         $attr->each(function ($value, $key) use ($data) {
@@ -38,5 +29,67 @@ class Editor extends TestCase
         $data->each(function ($value, $key) use ($attr) {
             $this->assertEquals($value, $attr->get($key));
         });
+    }
+
+    public function testModelFields()
+    {
+        $editor = (new Doctype())->editor();
+
+        $model = Models\News::first();
+        $editor->loadModel($model);
+        $this->assertEquals($model, $editor->model());
+
+        $this->checkData($editor);
+    }
+
+    public function testEmptyView()
+    {
+        $editor = (new Doctype())->editor();
+
+        $model = Models\News::first();
+        $editor->loadModel($model);
+        $this->assertEquals((object) [], $editor->getView());
+    }
+
+    public function testTabPanel()
+    {
+        $editor = (new Doctype())->editor();
+
+        $model = Models\News::first();
+        $editor->loadModel($model);
+
+        $editor->createTabPanel();
+        $this->assertEquals((object) ['xtype' => 'tabpanel'], $editor->getView());
+
+        $editor->createTabPanel()->region('center')->plain(true)->tabPosition('left');
+        $this->assertEquals((object) [
+            'xtype' => 'tabpanel',
+            'region' => 'center',
+            'plain' => true,
+            'tabPosition' => 'left',
+        ], $editor->getView());
+
+        $this->checkData($editor);
+    }
+
+    public function testTags()
+    {
+        $editor = (new Doctype())->editor();
+
+        $model = Models\News::first();
+        $editor->loadModel($model);
+
+        $editor->createTag('name')->filterPickList(true)->store(['one', 'two', 'three'])->label('tag name');
+        $this->assertEquals((object) [
+            'xtype' => 'djem.tag',
+            'name' => 'name',
+            'filterPickList' => true,
+            'store' => ['one', 'two', 'three'],
+            'fieldLabel' => 'tag name',
+            'queryMode' => 'local',
+            'bind' => '{name}',
+        ], $editor->getView());
+
+        $this->checkData($editor);
     }
 }
