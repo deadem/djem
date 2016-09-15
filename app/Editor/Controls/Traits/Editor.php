@@ -83,6 +83,7 @@ trait Editor
                 }
             }
         }
+
         return $viewItem;
     }
 
