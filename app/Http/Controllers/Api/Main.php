@@ -4,6 +4,7 @@ namespace DJEM\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use BadMethodCallException;
+use DJEM\DoctypeResolver;
 
 class Main extends \Illuminate\Routing\Controller
 {
@@ -56,6 +57,6 @@ class Main extends \Illuminate\Routing\Controller
             throw new BadMethodCallException('Can\'t create class '.$doctype);
         }
 
-        return new $doctype();
+        return DoctypeResolver::createDoctype($doctype);
     }
 }

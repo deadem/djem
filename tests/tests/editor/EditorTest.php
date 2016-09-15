@@ -3,11 +3,25 @@
 use App\Models;
 use DJEM\Doctype;
 
+class NewsDocType extends Doctype
+{
+    public $model = Models\News::class;
+}
+
 class Editor extends TestCase
 {
     public function testEditor()
     {
-        $editor = (new Doctype())->editor();
+        $editor = (new NewsDoctype())->editor();
+        $this->assertNotEmpty($editor);
+
+        $model = new Models\News();
+        $this->assertEquals($model, $editor->model());
+    }
+
+    public function testExistingModel()
+    {
+        $editor = (new NewsDoctype())->editor();
         $this->assertNotEmpty($editor);
 
         $model = Models\News::first();

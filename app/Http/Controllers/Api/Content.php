@@ -2,47 +2,52 @@
 
 namespace DJEM\Http\Controllers\Api;
 
-use Input;
+use DJEM\DoctypeResolver;
+use Illuminate\Http\Request;
 
 class Content extends \Illuminate\Routing\Controller
 {
+    private $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     private function doctype()
     {
-        return Input::get('_doctype');
+        return DoctypeResolver::createDoctype($this->request->input('_doctype'));
     }
 
     public function get()
     {
         $doctype = $this->doctype();
-        if (Input::get('raw')) {
-            return (new $doctype())->load();
+
+        if ($this->request->input('raw')) {
+            return $doctype->load();
         }
 
         return [
-            'metaData' => (new $doctype())->load(),
+            'metaData' => $doctype->load(),
         ];
     }
 
     public function set()
     {
-        $doctype = $this->doctype();
-        (new $doctype())->save();
+        $this->doctype()->save();
 
         return $this->get();
     }
 
     public function delete()
     {
-        $doctype = $this->doctype();
-        (new $doctype())->delete();
+        $this->doctype()->delete();
 
         return [];
     }
 
     public function loadRelation()
     {
-        $doctype = $this->doctype();
-
-        return (new $doctype())->loadRelation(Input::get('field'));
+        return $this->doctype()->loadRelation($this->request->input('field'));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DJEM\Editor;
 
-use Input;
+use Request;
 use DB;
 
 class Editor
@@ -12,11 +12,14 @@ class Editor
     }
 
     private $modelClass = null;
+    private $request;
 
     public function __construct($model, Controls\Item $item = null)
     {
         $this->modelClass = $model;
         $this->create($item);
+
+        $this->request = Request();
     }
 
     public function loadModelClass($model)
@@ -38,15 +41,15 @@ class Editor
         }
 
         if ($model === null) {
-            $id = Input::get('id');
+            $id = $this->request->input('id');
             if (! $id) {
-                $id = Input::get('clone');
+                $id = $this->request->input('clone');
             }
             if ($id) {
                 $myModel = $this->modelClass;
                 $model = $myModel::find($id);
 
-                if (! Input::get('id') && Input::get('clone')) {
+                if (! $this->request->input('id') && $this->request->input('clone')) {
                     $model = $model->replicate();
                 }
             }
@@ -98,14 +101,14 @@ class Editor
             $controls = $this->getControls();
             $this->validate($controls);
 
-            $this->prepareValues($controls, Input::all());
+            $this->prepareValues($controls, $this->request->all());
             $this->putFillableData($controls);
 
             $this->model()->save();
             $this->putRelatedData($controls);
         });
 
-        Input::merge(['id' => $this->model()->id]);
+        $this->request->merge(['id' => $this->model()->id]);
 
         return $this;
     }

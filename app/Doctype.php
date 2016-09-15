@@ -3,7 +3,6 @@
 namespace DJEM;
 
 use Illuminate\Support\Collection;
-use Illuminate\Container\Container;
 
 /**
  * Базовый тип документа.
@@ -39,7 +38,7 @@ class Doctype extends \Illuminate\Routing\Controller
     public function findUrl($url, $urlModel)
     {
         $address = $urlModel::where('url', '=', $url)->first();
-        if (! $address) {
+        if (!$address) {
             abort(404);
         }
 
@@ -58,15 +57,9 @@ class Doctype extends \Illuminate\Routing\Controller
     {
         $address = $this->findUrl($url, $urlModel);
 
-        $container = Container::getInstance();
-        $container->bind(Container::class, function () use ($container) {
-            return $container;
-        });
-        $container->bind($urlModel, function () use ($address) {
+        return DoctypeResolver::createDoctype($address->doctype, [$urlModel => function () use ($address) {
             return $address;
-        });
-
-        return new DoctypeResolver($container->build($address->doctype), $container);
+        }]);
     }
 
     /**
