@@ -21,7 +21,13 @@ before_script:
   - composer self-update
   - cd ./tests
   - composer update
+  - composer require satooshi/php-coveralls
   - php artisan migrate
   - php artisan db:seed
 
-script: "vendor/bin/phpunit"
+script:
+  - mkdir -p build/logs
+  - "vendor/bin/phpunit" --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
