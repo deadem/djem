@@ -18,7 +18,7 @@ class StaticFiles extends Controller
 
         if (! is_file($file) || substr($file, 0, strlen($public)) !== $public) {
             abort(404);
-        }
+        } // @codeCoverageIgnore
 
         $response = new Response(
             file_get_contents($file),
