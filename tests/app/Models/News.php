@@ -8,5 +8,5 @@ class News extends Model
 {
     public $table = 'news';
 
-    public $fillable = ['name', 'text'];
+    public $fillable = ['name', 'text', 'tagsList'];
 }

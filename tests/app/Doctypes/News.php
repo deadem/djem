@@ -34,6 +34,7 @@ class News extends \DJEM\Doctype
 
         $editor->createLayout(['type' => 'vbox', 'align' => 'stretch'])->flex(1)->items(function ($items) {
             $items->addText('name')->label('Name')->validate('required|max:255');
+            $items->addTag('tagsList')->label('Field Tags')->filterPickList(true)->store(['one', 'two', 'three']);
             $items->addRichText('text')->label('Text')->flex(1);
         });
 

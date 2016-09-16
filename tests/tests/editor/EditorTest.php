@@ -1,11 +1,20 @@
 <?php
 
-use App\Models;
+namespace Tests\Editor;
+
+use TestCase;
 use DJEM\Doctype;
+use Illuminate\Database\Eloquent\Model;
+
+class News extends Model
+{
+    public $table = 'news';
+    public $fillable = ['name', 'text'];
+}
 
 class NewsDocType extends Doctype
 {
-    public $model = Models\News::class;
+    public $model = News::class;
 }
 
 class Editor extends TestCase
@@ -15,7 +24,7 @@ class Editor extends TestCase
         $editor = (new NewsDoctype())->editor();
         $this->assertNotEmpty($editor);
 
-        $model = new Models\News();
+        $model = new News();
         $this->assertEquals($model, $editor->model());
     }
 
@@ -24,7 +33,7 @@ class Editor extends TestCase
         $editor = (new NewsDoctype())->editor();
         $this->assertNotEmpty($editor);
 
-        $model = Models\News::first();
+        $model = News::first();
         $editor->loadModel($model);
         $this->assertEquals($model, $editor->model());
     }
@@ -49,7 +58,7 @@ class Editor extends TestCase
     {
         $editor = (new Doctype())->editor();
 
-        $model = Models\News::first();
+        $model = News::first();
         $editor->loadModel($model);
         $this->assertEquals($model, $editor->model());
 
@@ -60,7 +69,7 @@ class Editor extends TestCase
     {
         $editor = (new Doctype())->editor();
 
-        $model = Models\News::first();
+        $model = News::first();
         $editor->loadModel($model);
         $this->assertEquals((object) [], $editor->getView());
     }
@@ -69,7 +78,7 @@ class Editor extends TestCase
     {
         $editor = (new Doctype())->editor();
 
-        $model = Models\News::first();
+        $model = News::first();
         $editor->loadModel($model);
 
         $editor->createTabPanel();
@@ -90,7 +99,7 @@ class Editor extends TestCase
     {
         $editor = (new Doctype())->editor();
 
-        $model = Models\News::first();
+        $model = News::first();
         $editor->loadModel($model);
 
         $editor->createTag('name')->filterPickList(true)->store(['one', 'two', 'three'])->label('tag name');
