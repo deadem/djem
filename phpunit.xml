@@ -1,4 +1,9 @@
 <phpunit>
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory suffix="Test.php">./tests/tests</directory>
+        </testsuite>
+    </testsuites>
   <filter>
         <whitelist>
             <directory suffix=".php">./app</directory>
