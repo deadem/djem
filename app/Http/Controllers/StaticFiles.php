@@ -27,9 +27,8 @@ class StaticFiles extends Controller
             $response->setExpires(new \DateTime('+1 hour'));
 
             return $response;
-        } else {
-            abort(404);
         }
+        abort(404);
     }
 
     public static function getContentType($file)
