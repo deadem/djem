@@ -20,8 +20,8 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - composer self-update
   - cd ./tests
-  - composer update
   - composer require satooshi/php-coveralls
+  - composer update
   - php artisan migrate
   - php artisan db:seed
   - cd ..
