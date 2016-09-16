@@ -24,10 +24,11 @@ before_script:
   - composer require satooshi/php-coveralls
   - php artisan migrate
   - php artisan db:seed
+  - cd ..
   - mkdir -p build/logs
 
 script: 
- - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+ - tests/vendor/bin/phpunit --coverage-clover build/logs/clover.xml tests/tests
 
 after_script:
-  - php vendor/bin/coveralls -v --root_dir=".." --coverage_clover="tests/build/logs/clover.xml"
+  - php tests/vendor/bin/coveralls -v
