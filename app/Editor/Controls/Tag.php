@@ -15,6 +15,18 @@ class Tag extends Select
 
     public function loadRelation($model)
     {
+        if ($this->isLocalMode()) {
+            $store = $this->getStore();
+            $indexed = array_keys($store) === range(0, count($store) - 1);
+
+            return collect($store)->map(function ($text, $value) use ($indexed) {
+                return [
+                    'value' => $indexed ? $text : $value,
+                    'text' => $text,
+                ];
+            });
+        }
+
         return $this->getRelation($model)->select('id', 'name')->get()->map(function (Model $value) {
             return [
                 'value' => $value->id,
@@ -27,7 +39,7 @@ class Tag extends Select
     {
         $data = null;
         if (! empty($values)) {
-            if ($this->getProperty('queryMode') == 'local') {
+            if ($this->isLocalMode()) {
                 $data = implode(',', $values);
             } else {
                 $data = [];

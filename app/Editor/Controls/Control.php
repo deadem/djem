@@ -58,6 +58,11 @@ class Control extends Item
         return $this;
     }
 
+    public function getStore()
+    {
+        return $this->getProperty('store');
+    }
+
     public function validate($value)
     {
         $this->validation = $value;

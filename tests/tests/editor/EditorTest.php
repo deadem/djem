@@ -102,15 +102,15 @@ class Editor extends TestCase
         $model = News::first();
         $editor->loadModel($model);
 
-        $editor->createTag('name')->filterPickList(true)->store(['one', 'two', 'three'])->label('tag name');
+        $editor->createTag('tagsList')->filterPickList(true)->store(['one', 'two', 'three'])->label('tag name');
         $this->assertEquals((object) [
             'xtype' => 'djem.tag',
-            'name' => 'name',
+            'name' => 'tagsList',
             'filterPickList' => true,
             'store' => ['one', 'two', 'three'],
             'fieldLabel' => 'tag name',
             'queryMode' => 'local',
-            'bind' => '{name}',
+            'bind' => '{tagsList}',
         ], $editor->getView());
 
         $this->checkData($editor);

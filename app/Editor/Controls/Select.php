@@ -25,6 +25,11 @@ class Select extends Control
         return $this;
     }
 
+    public function isLocalMode()
+    {
+        return $this->getProperty('queryMode') === 'local';
+    }
+
     public function store($value)
     {
         parent::store($value);
