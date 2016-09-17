@@ -1,6 +1,10 @@
 <?php
 
-class DBSeedAuthTest extends TestCase
+namespace Tests\Seed;
+
+use TestCase;
+
+class AuthTest extends TestCase
 {
     public function testLogin()
     {

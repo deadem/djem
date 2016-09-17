@@ -176,7 +176,7 @@ class Doctype extends \Illuminate\Routing\Controller
      */
     public function editor()
     {
-        return new Editor\Editor($this->model, Request::all());
+        return (new Editor\Editor($this->model))->setInput(Request::all());
     }
 
     public function save()

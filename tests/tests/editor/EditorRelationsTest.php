@@ -23,7 +23,7 @@ class NewsDocType extends Doctype
     public $model = News::class;
 }
 
-class EditorRelations extends TestCase
+class EditorRelationsTest extends TestCase
 {
     public function testTags()
     {
