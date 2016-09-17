@@ -181,9 +181,12 @@ class Doctype extends \Illuminate\Routing\Controller
 
     public function save()
     {
-        $editor = $this->editor();
+        $editor = $this->editor()->putData();
+        if ($editor->model()->id) {
+            Request::merge(['id' => $editor->model()->id]);
+        }
 
-        return $editor->putData();
+        return $editor;
     }
 
     public function load()
