@@ -136,12 +136,16 @@ trait Editor
             $item->initControl($controls);
             $value = $this->input->get($field);
 
+            $relation = null;
+
             if ($this->isRelation($field)) {
-                $item->prepareUserValue($value, $getField, $this->getRelation($field));
-            } else {
-                $item->prepareUserValue($value, $getField);
+                $relation = $this->getRelation($field);
             }
+
+            $item->prepareUserValue($value, $getField, $relation);
         }
+
+        return $this;
     }
 
     public function putFillableData(Collection $controls)
@@ -156,6 +160,8 @@ trait Editor
                 $this->model()->{$field} = $item->getUserValue();
             }
         });
+
+        return $this;
     }
 
     private function putRelatedData(Collection $controls)
@@ -168,13 +174,20 @@ trait Editor
                         $this->addMultipleRelation($item, $field);
                         break;
 
+                    case Relations\HasMany::class:
+                        $this->addReversedSingleRelation($item, $field);
+                        break;
+
                     default:
-                        // неизвестный relation, ничего не делаем
+                        // неизвестный relation
+                        throw new \Exception('Unknown relation');
                         break;
                 }
             }
             $item->putRelatedData($this->model());
         });
+
+        return $this;
     }
 
     private function addSingleRelation(Controls\Item $item, $field)
@@ -203,14 +216,27 @@ trait Editor
         }
     }
 
+    private function addReversedSingleRelation(Controls\Item $item, $field)
+    {
+        $values = $item->getUserValue();
+        $relation = $this->getRelation($field);
+        $relation->delete();
+
+        if (! empty($values)) {
+            foreach ($values as $value) {
+                $relation->save($value);
+            }
+        }
+    }
+
     public function putData($model)
     {
         $this->loadModel($model);
         $controls = $this->getControls();
 
-        $this->prepareValues($controls);
-        $this->putFillableData($controls);
-        $this->putRelatedData($this->getControls());
+        $this->prepareValues($controls)
+            ->putFillableData($controls)
+            ->putRelatedData($this->getControls());
 
         return $this;
     }

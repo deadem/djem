@@ -104,7 +104,7 @@ class Control extends Item
                 break;
 
             default:
-                // неизвестный relation
+                throw \Exception('Unknown relation');
                 break;
         }
 

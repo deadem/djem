@@ -16,6 +16,9 @@ trait CheckModel
 
         // проверяем, что в выдаче нет ничего, кроме полей модели
         $data->each(function ($value, $key) use ($attr) {
+            if (is_object($value)) {
+                return;
+            }
             $this->assertEquals($value, $attr->get($key));
         });
     }
