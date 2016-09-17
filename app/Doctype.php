@@ -3,6 +3,7 @@
 namespace DJEM;
 
 use Illuminate\Support\Collection;
+use Request;
 
 /**
  * Базовый тип документа.
@@ -175,7 +176,7 @@ class Doctype extends \Illuminate\Routing\Controller
      */
     public function editor()
     {
-        return new Editor\Editor($this->model);
+        return new Editor\Editor($this->model, Request::all());
     }
 
     public function save()

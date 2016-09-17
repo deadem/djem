@@ -118,11 +118,11 @@ trait Editor
         return $this->model()->{$field}();
     }
 
-    public function prepareValues($controls, $data)
+    public function prepareValues($controls)
     {
         $getField = (object) [
-            'field' => function ($field) use ($data) {
-                return $data[$field];
+            'field' => function ($field) {
+                return $this->input->get($field);
             },
             'relation' => function ($field) {
                 return $this->isRelation($field) ? $this->getRelation($field) : null;
@@ -134,8 +134,8 @@ trait Editor
 
         foreach ($controls as $field => $item) {
             $item->initControl($controls);
+            $value = $this->input->get($field);
 
-            $value = isset($data[$field]) ? $data[$field] : null;
             if ($this->isRelation($field)) {
                 $item->prepareUserValue($value, $getField, $this->getRelation($field));
             } else {
@@ -203,12 +203,12 @@ trait Editor
         }
     }
 
-    public function putData($model, $values)
+    public function putData($model)
     {
         $this->loadModel($model);
         $controls = $this->getControls();
 
-        $this->prepareValues($controls, $values);
+        $this->prepareValues($controls);
         $this->putFillableData($controls);
         $this->putRelatedData($this->getControls());
 
