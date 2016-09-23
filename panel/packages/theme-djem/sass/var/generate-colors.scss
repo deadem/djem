@@ -1,0 +1,35 @@
+$color-names:  ('disabled', 'active', 'white', 'indigo', 'blue',  'cyan',  'teal',  'green', 'light-green', 'lime',  'amber', 'yellow', 'light-yellow', 'orange', 'deep-orange', 'purple', 'deep-purple', 'pink', 'red',    'gray',  'grey',  'black');
+$color-values: (#6d6d6d,    #03a9f4,  #ffffff, #3F51B5,  #2196f3, #00BCD4, #009688, #4CAF50,  #8BC34A,      #CDDC39, #FFC107, #FFEB3B,  #FFF59D,        #FF9800,  #FF5722,       #673AB7,  #9C27B0,       #e91e63, #F44336, #9E9E9E, #9E9E9E, #000000);
+
+@function color($color) {
+    $color-index: index($color-names, $color);
+
+    @if $color-index == false {
+        @warn "Invalid color: #{$color}";
+        @return ();
+    }
+
+    @return nth($color-values, $color-index);
+}
+
+@mixin generate-colors() {
+    $i: length($color-names);
+
+    @while ($i > 0) {
+        $name: nth($color-names, $i);
+        $color: nth($color-values, $i);
+
+        #{ ".color-" + $name } {
+            &, &.x-btn .x-btn-inner, &.x-field .x-form-field {
+                color: $color;
+            }
+        }
+        #{ ".bgcolor-" + $name } {
+            &, &.x-btn, &.x-btn.x-btn-pressed, &.x-field .x-form-field {
+               background-color: $color;
+            }
+        }
+
+        $i: $i - 1;
+    }
+}

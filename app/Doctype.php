@@ -1,10 +1,9 @@
 <?php
+
 namespace DJEM;
 
-use DJEM\GridHeader;
-use DJEM\LoadEditorFields;
 use Illuminate\Support\Collection;
-use Input;
+use Request;
 
 /**
  * Базовый тип документа.
@@ -21,47 +20,51 @@ class Doctype extends \Illuminate\Routing\Controller
     /**
      * Контроллер, которому должно быть передано управление при обработке http-запроса к этому типу.
      *
-     * @var class
+     * @return class | null
      */
-    public $controller;
+    public function controller()
+    {
+        return '';
+    }
 
     /**
-     * Поиск данных для отображения по URL
+     * Поиск данных для отображения по URL.
      *
-     * @param  string $url      URL.
-     * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     * @param string $url      URL.
+     * @param string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     *
      * @return object класс с полями doctype, refid для отображения соответствующим
-     *         типом модели, найденной по идентификатору.
+     *                типом модели, найденной по идентификатору.
      */
     public function findUrl($url, $urlModel)
     {
         $address = $urlModel::where('url', '=', $url)->first();
-        if (!$address) {
+        if (! $address) {
             abort(404);
         }
+
         return $address;
     }
 
     /**
      * Поиск и создание прокси-объекта для вызова методов типа документа.
      *
-     * @param  string $url      URL.
-     * @param  string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     * @param string $url      URL.
+     * @param string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
+     *
      * @return DoctypeResolver прокси-объект для вызова типа документа.
      */
     public function find($url, $urlModel)
     {
         $address = $this->findUrl($url, $urlModel);
 
-        return new DoctypeResolver(new $address->doctype, [
-            $urlModel => function () use ($address) {
-                return $address;
-            }
-        ]);
+        return DoctypeResolver::createDoctype($address->doctype, [$urlModel => function () use ($address) {
+            return $address;
+        }]);
     }
 
     /**
-     * Переопределение вью для грида
+     * Переопределение вью для грида.
      *
      * @return array описание вьювера и данных для просмотра
      */
@@ -75,14 +78,6 @@ class Doctype extends \Illuminate\Routing\Controller
         return [];
     }
 
-    public function save()
-    {
-    }
-
-    public function load()
-    {
-    }
-
     public function loadRelation($relation)
     {
         $relation;
@@ -94,7 +89,7 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Получить список моделей, доступных для создания
+     * Получить список моделей, доступных для создания.
      *
      * @return array список классов типов, которые можно создавать внутри этого типа.
      */
@@ -104,21 +99,21 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Список полей грида для указанного mount-id
+     * Список полей грида для указанного mount-id.
      *
      * @return array массив с типами и именами полей.
      */
     protected function gridFields()
     {
         return [
-            [ 'name' => 'id', 'type' => 'string' ],
-            [ 'name' => '_doctype', 'type' => 'string' ],
-            [ 'name' => 'name', 'title' => true, 'text' => 'Name', 'type' => 'string', 'flex' => 1 ]
+            ['name' => 'id', 'type' => 'string'],
+            ['name' => '_doctype', 'type' => 'string'],
+            ['name' => 'name', 'title' => true, 'text' => 'Name', 'type' => 'string', 'flex' => 1],
         ];
     }
 
     /**
-     * Получить список документов для грида
+     * Получить список документов для грида.
      *
      * @return Illuminate\Support\Collection список документов в гриде
      */
@@ -128,7 +123,7 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Получить контекстное меню для текущего раздела
+     * Получить контекстное меню для текущего раздела.
      *
      * @return array массив с указанием возможных действий
      */
@@ -138,18 +133,19 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Получить заголовок грида со служебными данными для указанного mount-id
+     * Получить заголовок грида со служебными данными для указанного mount-id.
      *
      * @return array объект со списком полей, их типами и описанием.
      */
     private function header()
     {
-        $fields = (new GridHeader)->getFields($this->gridFields());
+        $fields = (new GridHeader())->getFields($this->gridFields());
         $fields['options'] += [
             'subtypes' => $this->getSubtypes(),
             '_doctype' => get_class($this),
-            'contextMenu' => $this->getContextMenu()
+            'contextMenu' => $this->getContextMenu(),
         ];
+
         return $fields;
     }
 
@@ -165,39 +161,41 @@ class Doctype extends \Illuminate\Routing\Controller
         if ($total && method_exists($items, 'total')) {
             $total = $items->total();
         }
+
         return [
             'metaData' => $this->header(),
             'items' => $items->all(),
-            'total' => $total
+            'total' => $total,
         ];
     }
 
     /**
-     * Загрузить связанные с моделью данные для редактирования
+     * Загрузить связанные с моделью данные для редактирования.
      *
-     * @param  Model $model  Загруженная модель или ничего, для автоматической подгрузки
-     * @param  array $fields Массив полей для инициализации или ничего, для автоматического разбора
-     * @return LoadEditorFields класс для подгрузки полей в нужном формате
+     * @return Editor класс для подгрузки полей в нужном формате
      */
-    public function editor($model = null, $fields = null)
+    public function editor()
     {
-        if ($model === null) {
-            $id = Input::get('id');
-            if (!$id) {
-                $id = Input::get('clone');
-            }
-            if ($id) {
-                $myModel = $this->model;
-                $model = $myModel::find($id);
+        return (new Editor\Editor($this->model))->setInput(Request::all());
+    }
 
-                if (!Input::get('id') && Input::get('clone')) {
-                    $model = $model->replicate();
-                }
-            }
+    public function save()
+    {
+        $editor = $this->editor()->putData();
+        if ($editor->model()->id) {
+            Request::merge(['id' => $editor->model()->id]);
         }
-        if ($fields === null) {
-            $fields = Input::all();
-        }
-        return new EditorLoadFields($this, $model, $fields);
+
+        return $editor;
+    }
+
+    public function load()
+    {
+        $editor = $this->editor();
+
+        return [
+            'data' => $editor->getData(),
+            'view' => $editor->getView(),
+        ];
     }
 }

@@ -1,0 +1,9 @@
+$form-label-vertical-spacing: 2px !default;
+$form-label-font-size: 14px !default;
+$form-label-line-height: 12px !default;
+
+$form-label-font-color: color('disabled') !default;
+$form-label-empty-color: $form-label-font-color !default;
+$form-label-focus-color: color('active') !default;
+
+$form-toolbar-label-line-height: $form-label-line-height !default;

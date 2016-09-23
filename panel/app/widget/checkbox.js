@@ -1,9 +1,13 @@
+/* global Ext */
 Ext.define('djem.widget.checkbox', {
     extend: 'Ext.form.field.Checkbox',
-    alias: [ 'djem.checkbox', 'widget.checkbox' ],
+    alias: [ 'widget.djem.checkbox' ],
+
+    labelPad: null,
+    labelSeparator: '',
 
     config: {
-        'inputValue': true,
-        'uncheckedValue': false
+        inputValue: true,
+        uncheckedValue: false
     }
 });

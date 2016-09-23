@@ -4,10 +4,13 @@ Ext.define('djem.view.main.Main', {
     alias: 'widget.app-main',
 
     requires: [
+        'Ext.form.Label',
+
         'djem.view.main.MainController',
         'djem.view.main.Grid',
         'djem.view.main.Content',
         'djem.view.main.Toolbar',
+        'djem.view.main.Tree',
 
         'widget.image',
 
@@ -16,29 +19,38 @@ Ext.define('djem.view.main.Main', {
         'djem.widget.images',
         'djem.widget.tag',
         'djem.widget.text',
+        'djem.widget.textarea',
         'djem.widget.checkbox',
         'djem.widget.combobox',
         'djem.widget.date',
-        'djem.widget.time'
+        'djem.widget.time',
+        'djem.widget.grid',
+        'djem.widget.searchToolbarField'
     ],
+
+    getToolbar: function() {
+        return this.lookupReference('toolbar');
+    },
 
     controller: 'main',
 
-    layout:'border',
+    layout: 'border',
     items: [ {
         region: 'north',
         xtype: 'main-toolbar',
+        cls: 'top-toolbar',
         reference: 'toolbar'
     }, {
         region: 'center',
         xtype: 'tabpanel',
         reference: 'tabs',
-        items:[ {
-            title: 'Main',
+        cls: 'top-panel',
+        items: [ {
+            glyph: 'xE88A@Icons',
             layout: 'border',
             reference: 'main',
             listeners: {
-                'click.toolbar': function (ref, params) {
+                'click.toolbar': function(ref, params) {
                     var toolbar = this.down('main-grid{display!="none"}');
                     if (toolbar) {
                         toolbar.fireEvent('click.toolbar', ref, params);
@@ -50,7 +62,7 @@ Ext.define('djem.view.main.Main', {
                 width: 250,
                 split: true,
 
-                xtype: 'treepanel',
+                xtype: 'main-tree',
                 rootVisible: false,
                 store: 'djem.store.main.Tree',
                 reference: 'tree'

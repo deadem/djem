@@ -1,0 +1,56 @@
+$button-default-color: color('black');
+$button-default-base-color: $base-color !default;
+$button-default-base-color-over: $base-color !default;
+$button-default-base-color-pressed: $base-color !default;
+$button-default-color-disabled: color('disabled') !default;
+$button-default-base-color-focus: $button-default-base-color !default;
+$button-default-base-color-focus-over: $button-default-base-color-over !default;
+$button-default-base-color-focus-pressed: $button-default-base-color-pressed !default;
+$button-default-inner-border-width-focus: 0 !default;
+
+$button-opacity-disabled: 0.7 !default;
+$button-toolbar-opacity-disabled: 0.7 !default;
+$button-default-glyph-opacity: 1 !default;
+$button-toolbar-glyph-opacity: 1 !default;
+
+$button-icon-spacing: 12px !default;
+
+$button-small-font-family: $font-family-small !default;
+$button-small-font-size: $font-size-small !default;
+$button-small-font-weight: $font-weight-small !default;
+$button-small-border-width: 0 !default;
+$button-small-text-padding: 16px !default;
+$button-small-padding: 6px 0 !default;
+
+$button-medium-font-family: $font-family-medium !default;
+$button-medium-font-size: $font-size-medium !default;
+$button-medium-font-weight: $font-weight-medium !default;
+$button-medium-border-width: 0 !default;
+$button-medium-text-padding: 16px !default;
+
+$button-large-font-family: $font-family-large !default;
+$button-large-font-size: $font-size-large !default;
+$button-large-font-weight: $font-weight-large !default;
+$button-large-border-width: 0 !default;
+$button-large-text-padding: 16px !default;
+
+$button-toolbar-color: $button-default-color !default;
+$button-toolbar-background-color: $base-color !default;
+$button-toolbar-background-color-pressed: $base-color !default;
+$button-toolbar-background-color-over: $button-toolbar-background-color !default;
+$button-toolbar-border-color: null !default;
+$button-toolbar-inner-border-width-focus: 0 !default;
+
+
+/// disable styles
+$button-default-background-gradient: null !default;
+$button-default-background-gradient-over: null !default;
+$button-default-background-gradient-pressed: null !default;
+$button-default-background-gradient-disabled: null !default;
+$button-toolbar-background-gradient: null !default;
+$button-toolbar-background-gradient-over: null !default;
+$button-toolbar-background-gradient-pressed: null !default;
+$button-toolbar-background-gradient-disabled: null !default;
+
+$button-default-border-color: null !default;
+$button-toolbar-border-color: null !default;

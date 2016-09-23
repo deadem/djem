@@ -1,0 +1,9 @@
+IndentWidth: 4
+ReflowComments: false
+ColumnLimit: 120
+
+Language: JavaScript
+BasedOnStyle: Mozilla
+BreakBeforeBraces: Linux
+SpacesInContainerLiterals: false
+SpacesInCStyleCastParentheses: true

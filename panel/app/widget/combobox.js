@@ -1,7 +1,11 @@
+/* global Ext */
 Ext.define('djem.widget.combobox', {
     extend: 'Ext.form.field.ComboBox',
-    alias: [ 'djem.combobox', 'djem.combo', 'djem.select', 'widget.combobox', 'widget.combo', 'widget.select' ],
+    alias: [ 'widget.djem.combobox', 'widget.djem.combo', 'widget.djem.select' ],
 
+    labelSeparator: '',
+    labelPad: null,
+    labelAlign: 'top',
     pageSize: 100,
     queryParam: 'filter',
     minChars: 1,
@@ -14,14 +18,18 @@ Ext.define('djem.widget.combobox', {
     selectOnFocus: true,
     changingFilters: true,
 
+    requires: [
+        'djem.store.ComboBox'
+    ],
+
     afterRender: function() {
         var me = this;
-        me.getEl().on('click', function(evt) {
-            if (me.getStore().isLoaded()) {
+        me.getEl().on('click', function() {
+            if (me.queryMode !== 'remote' || me.getStore().isLoaded()) {
                 me.expand();
             } else {
                 me.getStore().load({
-                    callback: function(r, options, success) {
+                    callback: function() {
                         me.expand();
                     }
                 });
@@ -34,9 +42,8 @@ Ext.define('djem.widget.combobox', {
         var me = this;
         if (Ext.isObject(value) && !value.isModel && me.queryMode == 'remote') {
             me.store.clearFilter(true);
-            if (me.store.find(me.valueField, value[me.valueField]) == -1) {
-                me.store.insert(0, value);
-            }
+            me.store.loadData([ value ], false);
+            me.store.loadCount = 0;
             me.callParent([ value[me.valueField], doSelect ]);
         } else {
             me.callParent(arguments);
@@ -45,13 +52,14 @@ Ext.define('djem.widget.combobox', {
 
     initStore: function() {
         var me = this;
-        var store = me.getStore();
-        if (store && me.queryMode == 'remote') {
+        if (me.queryMode == 'remote') {
+            me.setStore(Ext.create('djem.store.ComboBox'));
+            var store = me.getStore();
             var view = me.up('main-content') || me.up('crosslink-editor');
             store.getProxy().setExtraParams({
-                '_doctype': view.config.data._doctype,
-                'id': view.config.data.id,
-                'field': me.name
+                _doctype: view.config.data._doctype,
+                id: view.config.data.id,
+                field: me.name
             });
         }
     },
@@ -62,6 +70,13 @@ Ext.define('djem.widget.combobox', {
         },
         initStore: function() {
             return this.initStore();
+        },
+        change: function(field, newValue) {
+            if (Ext.isEmpty(newValue)) {
+                field.removeCls('app-field-filled');
+            } else {
+                field.addCls('app-field-filled');
+            }
         }
     }
 });

@@ -18,3 +18,5 @@
 *.woff2         -text
 *.css linguist-vendored
 *.less linguist-vendored
+
+tests/ export-ignore

@@ -4,41 +4,47 @@ namespace DJEM;
 
 class GridHeader
 {
-    private function nameField($row)
+    protected function nameField($row)
     {
         $column = [];
         if (isset($row['text'])) {
             $column = [
                 'hideable' => false,
-                'dataIndex' => $row['name']
+                'dataIndex' => $row['name'],
             ];
         }
-        return [ 'field' => [ 'name' => $row['name'] ], 'column' => $column ];
+
+        return ['field' => ['name' => $row['name']], 'column' => $column];
     }
 
-    private function typeField($row)
+    protected function typeField($row)
     {
-        return [ 'field' => [ 'type' => $row['type'] ] ];
+        return ['field' => ['type' => $row['type']]];
     }
 
-    private function sortableField($row)
+    protected function xtypeField($row)
     {
-        return [ 'field' => [], 'column' => [ 'sortable' => $row['sortable'] ] ];
+        return ['column' => ['xtype' => $row['xtype']]];
     }
 
-    private function textField($row)
+    protected function sortableField($row)
     {
-        return [ 'column' => [ 'text' => $row['text'] ] ];
+        return ['field' => [], 'column' => ['sortable' => $row['sortable']]];
     }
 
-    private function flexField($row)
+    protected function textField($row)
     {
-        return [ 'column' => [ 'flex' => $row['flex'] ] ];
+        return ['column' => ['text' => $row['text']]];
     }
 
-    private function widthField($row)
+    protected function flexField($row)
     {
-        return [ 'column' => [ 'width' => $row['width'] ] ];
+        return ['column' => ['flex' => $row['flex']]];
+    }
+
+    protected function widthField($row)
+    {
+        return ['column' => ['width' => $row['width']]];
     }
 
     public function getFields($fieldsData)
@@ -58,7 +64,7 @@ class GridHeader
                 }
             }
 
-            if (!empty($row['name']) && !empty($row['title'])) {
+            if (! empty($row['name']) && ! empty($row['title'])) {
                 $options['title'] = $row['name'];
             }
 
@@ -67,6 +73,7 @@ class GridHeader
                 $columns[] = $column;
             }
         }
-        return [ 'fields' => $fields, 'columns' => $columns, 'options' => $options ];
+
+        return ['fields' => $fields, 'columns' => $columns, 'options' => $options];
     }
 }

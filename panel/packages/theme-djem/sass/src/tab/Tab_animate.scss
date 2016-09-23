@@ -1,0 +1,15 @@
+@mixin extjs-tab-animate-djem($tab-base-color, $tab-base-color-active, $custom-class) {
+    .x-tab.#{$custom-class} {
+        // пиксели внизу и анимация
+        background-color: $tab-base-color;
+        background: linear-gradient(to bottom, $tab-base-color 50%, $tab-base-color-active 50%);
+        background-size: 100% 176%;
+        background-position: top left;
+        transition: background-position 0.1s ease;
+    }
+    .x-tab.x-tab-active.#{$custom-class} {
+        background-color: $tab-base-color;
+        background-size: 100% 200%;
+        background-position: bottom left;
+    }
+}

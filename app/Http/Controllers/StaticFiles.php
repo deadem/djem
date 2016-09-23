@@ -3,7 +3,6 @@
 namespace DJEM\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class StaticFiles extends Controller
@@ -16,21 +15,22 @@ class StaticFiles extends Controller
         }
         $public = realpath(__DIR__.'/../../../'.$directory);
         $file = realpath($public.'/'.preg_replace('|[^-_0-9a-z/.]|i', '', $file));
-        if (substr($file, 0, strlen($public)) == $public && is_file($file)) {
-            $response = new Response(
-                file_get_contents($file),
-                200,
-                [ 'Content-type' => self::getContentType($file) ]
-            );
 
-            $response->setSharedMaxAge(3600);
-            $response->setMaxAge(3600);
-            $response->setExpires(new \DateTime('+1 hour'));
-
-            return $response;
-        } else {
+        if (! is_file($file) || substr($file, 0, strlen($public)) !== $public) {
             abort(404);
-        }
+        } // @codeCoverageIgnore
+
+        $response = new Response(
+            file_get_contents($file),
+            200,
+            ['Content-type' => self::getContentType($file)]
+        );
+
+        $response->setSharedMaxAge(3600);
+        $response->setMaxAge(3600);
+        $response->setExpires(new \DateTime('+1 hour'));
+
+        return $response;
     }
 
     public static function getContentType($file)
@@ -44,6 +44,7 @@ class StaticFiles extends Controller
         if (preg_match('/\.(html|htm)$/i', $file)) {
             return 'text/html';
         }
+
         return 'text/plain';
     }
 }

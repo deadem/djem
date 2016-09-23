@@ -1,0 +1,28 @@
+.main-searchToolbarField {
+    .x-form-text-wrap {
+        height: 30px;
+        &:before {
+            content: '\0E8B6';
+            font: normal 24px/24px Icons;
+            display: inline-block;
+            color: color('black');
+            right: 0;
+            top: 30px / 2 - 24px / 2;
+            position: absolute;
+            cursor: pointer;
+        }
+        .x-form-text {
+            padding: 0 28px 0 4px;
+            width: 100%;
+            float: right;
+        }
+    }
+    .x-form-trigger-wrap-default {
+        border-color: transparent;
+    }
+    &.x-field-focus, &.app-field-filled {
+        .x-form-trigger-wrap-default {
+            border-color: color('amber');
+        }
+    }
+}

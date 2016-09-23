@@ -1,7 +1,18 @@
-.#{$prefix}form-text {
-    display: inherit;
+.x-form-trigger-wrap {
+    .x-form-trigger {
+        border: none;
+    }
 }
 
-.#{$prefix}form-text-wrap {
-    display: block;
+.x-form-text-wrap-focus {
+    @if ($form-text-field-focus-border-width) {
+        border-width: $form-text-field-focus-border-width;
+    }
+}
+
+.x-form-trigger-wrap-focus {
+    @if ($form-trigger-focus-border-width) {
+        border-width: $form-trigger-focus-border-width;
+    }
+    transition: border-color .2s;
 }

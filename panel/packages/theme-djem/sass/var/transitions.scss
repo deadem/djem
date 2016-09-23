@@ -1,0 +1,6 @@
+@function transition($speed: 'default') {
+    @if ($speed == 'fast-slow') {
+        @return cubic-bezier(.2, .8, .78, .69);
+    }
+    @return cubic-bezier(.25, .8, .25, 1);
+}

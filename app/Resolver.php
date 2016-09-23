@@ -2,30 +2,29 @@
 
 namespace DJEM;
 
-use \Illuminate\Container\Container;
-
 class Resolver
 {
     protected $object;
     protected $container;
 
-    public function __construct()
+    public function __construct($object, $container)
     {
-        $this->container = new Container;
+        $this->object = $object;
+        $this->container = $container;
+    }
 
-        $parameters = func_get_args();
-        $this->object = array_shift($parameters);
+    public function __get($name)
+    {
+        return $this->object->$name;
+    }
 
-        $parameters = array_shift($parameters);
-        if ($parameters) {
-            foreach ($parameters as $key => $value) {
-                $this->container->bind($key, $value);
-            }
-        }
+    public function __set($name, $value)
+    {
+        $this->object->$name = $value;
     }
 
     public function __call($name, $arguments)
     {
-        return $this->container->call([ $this->object, $name ], $arguments);
+        return $this->container->call([$this->object, $name], $arguments);
     }
 }

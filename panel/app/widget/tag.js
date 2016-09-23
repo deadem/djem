@@ -1,7 +1,11 @@
+/* global Ext */
 Ext.define('djem.widget.tag', {
     extend: 'Ext.form.field.Tag',
-    alias: [ 'djem.tag', 'widget.tag' ],
+    alias: [ 'widget.djem.tag' ],
 
+    labelPad: null,
+    labelSeparator: '',
+    labelAlign: 'top',
     pageSize: 100,
     minChars: 1,
     filterPickList: true,
@@ -10,19 +14,33 @@ Ext.define('djem.widget.tag', {
     queryMode: 'remote',
     queryParam: 'filter',
 
+    requires: [
+        'djem.store.Tag'
+    ],
+
     setValue: function(value, doSelect) {
         var me = this;
         if (Ext.isArray(value)) {
             value = Ext.Array.unique(value);
         }
-        if (Ext.isArray(value) && value.length && Ext.isObject(value[0]) && !value.isModel && me.queryMode == 'remote') {
-            var values = [];
-            var store = me.store;
-            store.clearFilter();
-            for (var i = 0, len = value.length; i < len; i++) {
-                if (store.find(me.valueField, value[i][me.valueField]) == -1) {
-                    store.insert(i, value[i]);
+        if (Ext.isEmpty(value)) {
+            me.pickerSelectionModel.deselectAll();
+        }
+        if (Ext.isArray(value) && (!value.length || Ext.isObject(value[0])) && !value.isModel && me.queryMode == 'remote') {
+            var clearStore = function(store, value) {
+                if (store.isEmptyStore) {
+                    return;
                 }
+                store.clearFilter(true);
+                store.loadData(value || [], false);
+                store.loadCount = 0;
+            };
+            clearStore(me.store, value);
+            clearStore(me.valueStore);
+            me.lastQuery = undefined;
+
+            var values = [];
+            for (var i = 0, len = value.length; i < len; ++i) {
                 values.push(value[i][me.valueField]);
             }
             me.callParent([ values, doSelect ]);
@@ -32,19 +50,28 @@ Ext.define('djem.widget.tag', {
     },
 
     listeners: {
-        'change': function() {
-            this.completeEdit();
-        },
         added: function() {
             var me = this;
+            if (me.queryMode == 'remote') {
+                me.setStore(Ext.create('djem.store.Tag'));
+            }
+
             var store = me.getStore();
             if (store && me.queryMode == 'remote') {
                 var view = me.up('main-content') || me.up('crosslink-editor');
                 store.getProxy().setExtraParams({
-                    '_doctype': view.config.data._doctype,
-                    'id': view.config.data.id,
-                    'field': me.name
+                    _doctype: view.config.data._doctype,
+                    id: view.config.data.id,
+                    field: me.name
                 });
+            }
+        },
+        change: function(field, newValue) {
+            this.completeEdit();
+            if (Ext.isEmpty(newValue)) {
+                field.removeCls('app-field-filled');
+            } else {
+                field.addCls('app-field-filled');
             }
         }
     }

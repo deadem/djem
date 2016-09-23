@@ -3,6 +3,7 @@ Ext.define('djem.view.login.Login', {
     alias: 'widget.login',
 
     id: 'login',
+    cls: 'elevation-24',
 
     requires: [
         'djem.view.login.LoginController',
@@ -16,7 +17,7 @@ Ext.define('djem.view.login.Login', {
 
     controller: 'login',
     bodyPadding: 10,
-    title: 'Login',
+    title: 'Авторизация',
     closable: false,
     autoShow: true,
     modal: true,
@@ -25,34 +26,35 @@ Ext.define('djem.view.login.Login', {
     items: {
         xtype: 'form',
         flex: 1,
+        width: 440,
         layout: {
             type: 'vbox',
             align: 'stretch'
         },
-        items: [{
-            xtype: 'textfield',
-            fieldLabel: 'Username',
-            allowBlank: false,
-            reference: 'login',
-            tabIndex: 1
-        }, {
-            xtype: 'textfield',
-            inputType: 'password',
-            fieldLabel: 'Password',
-            allowBlank: false,
-            reference: 'password',
-            tabIndex: 2
-        }, {
-            xtype: 'label',
-            hideEmptyLabel: false,
-            value: 'Enter your credentials'
-        }],
-        buttons: [{
-            text: 'Login',
-            //formBind: true,
-            listeners: {
-                click: 'onLoginClick'
+        items: [
+            {
+                xtype: 'djem.text',
+                cls: 'medium-label',
+                fieldLabel: 'Имя пользователя',
+                reference: 'login',
+                tabIndex: 1
+            }, {
+                xtype: 'djem.text',
+                cls: 'medium-label',
+                inputType: 'password',
+                fieldLabel: 'Пароль',
+                reference: 'password',
+                tabIndex: 2
             }
-        }]
+        ],
+        buttons: [
+            {
+                text: 'Войти',
+                scale: 'medium',
+                listeners: {
+                    click: 'onLoginClick'
+                }
+            }
+        ]
     }
 });

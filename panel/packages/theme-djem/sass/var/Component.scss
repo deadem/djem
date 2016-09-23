@@ -1,0 +1,53 @@
+@import 'generate-colors';
+@import 'generate-elevation';
+@import 'transitions';
+
+.x-body, body {
+    @include generate-colors();
+}
+@include generate-elevation();
+
+//$include-ie: false;
+
+$color-top-toolbar: color('active');
+$color-top-toolbar-light: #29b7f6;
+
+$color: color('black') !default;
+
+$font-weight: normal !default;
+$font-weight-bold: bold !default;
+
+$font-size-small: 14px !default;
+$font-family-small: "Roboto", sans-serif !default;
+$font-weight-small: $font-weight !default;
+$line-height-small: $font-size-small + 4 !default;
+
+$font-size-medium: $font-size-small + 2 !default;
+$font-family-medium: "Roboto Medium", sans-serif !default;
+$font-weight-medium: $font-weight !default;
+$line-height-medium: $font-size-medium + 3 !default;
+
+$font-size-large: $font-size-medium + 4 !default;
+$font-family-large: "Roboto Medium", sans-serif !default;
+$font-weight-large: $font-weight !default;
+$line-height-large: $font-size-large + 4 !default;
+
+$font-family: $font-family-small !default;
+$font-size: $font-size-small !default;
+$line-height: $line-height-small !default;
+
+$base-color: color('white') !default;
+$base-light-color: $color-top-toolbar-light !default;
+$base-highlight-color: $color-top-toolbar-light !default;
+
+$base-dark-color: color('black') !default;
+
+$neutral-color: #eee !default;
+$neutral-light-color: $neutral-color !default;
+$neutral-medium-dark-color: $neutral-color !default;
+$neutral-dark-color: $neutral-color !default;
+
+$icon-spacing: 5px !default;
+
+$include-default-uis: true !default;
+$error-color: $neutral-color !default;
