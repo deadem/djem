@@ -13,7 +13,7 @@ class DoctypeResolver extends Resolver
             return $container;
         });
 
-        collect($bindings)->each(function ($closure, $name) {
+        collect($bindings)->each(function ($closure, $name) use ($container) {
             $container->bind($name, $closure);
         });
 
