@@ -8,6 +8,8 @@ class Control extends Item
 {
     private $validation = false;
     private $userValue = null;
+    private $store = null;
+
     protected $saveHandler = null;
     protected $associate = null;
 
@@ -53,14 +55,19 @@ class Control extends Item
 
     public function store($value)
     {
-        $this->setProperty('store', $value);
+        $this->store = $value;
+
+        $this->setProperty('store', [
+            'fields' => [['name' => 'value'], ['name' => 'text']],
+            'data' => $value,
+        ]);
 
         return $this;
     }
 
     public function getStore()
     {
-        return $this->getProperty('store');
+        return $this->store;
     }
 
     public function validate($value)

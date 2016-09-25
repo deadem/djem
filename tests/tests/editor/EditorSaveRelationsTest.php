@@ -12,7 +12,7 @@ class LinkedValue extends Model
     public $table = 'linked_values';
 
     public $timestamps = false;
-    public $fillable = ['value'];
+    public $fillable = ['name'];
 
     public function __construct($value = [])
     {
@@ -20,7 +20,7 @@ class LinkedValue extends Model
             return parent::__construct($value);
         }
 
-        $this->value = $value;
+        $this->name = $value;
     }
 }
 

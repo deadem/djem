@@ -16,7 +16,7 @@ class CreateLinkedValuesTable extends Migration
             $table->increments('id');
 
             $table->integer('reference');
-            $table->string('value');
+            $table->string('name');
         });
     }
 

@@ -94,7 +94,17 @@ class EditorTest extends TestCase
             'xtype' => 'djem.tag',
             'name' => 'tagsList',
             'filterPickList' => true,
-            'store' => ['one', 'two', 'three'],
+            'store' => [
+                'fields' => [
+                    ['name' => 'value'],
+                    ['name' => 'text'],
+                ],
+                'data' => [
+                    ['value' => 'one', 'text' => 'one'],
+                    ['value' => 'two',  'text' => 'two'],
+                    ['value' => 'three', 'text' => 'three'],
+                ],
+            ],
             'fieldLabel' => 'tag name',
             'queryMode' => 'local',
             'bind' => '{tagsList}',

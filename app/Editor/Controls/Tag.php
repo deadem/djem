@@ -16,12 +16,21 @@ class Tag extends Select
     public function loadRelation($model)
     {
         if ($this->isLocalMode()) {
-            $store = $this->getStore();
-            $indexed = array_keys($store) === range(0, count($store) - 1);
+            $store = collect($this->getStore());
 
-            $data = collect($store)->map(function ($text, $value) use ($indexed) {
+            $data = $this->getRelation($model)->get()->map(function (Model $value) use ($store) {
+                $text = $value->name;
+
+                $storeKey = $store->search(function ($item) use ($value) {
+                    return $item['value'] == $value->name;
+                });
+
+                if ($storeKey !== false) {
+                    $text = $store->get($storeKey)['text'];
+                }
+
                 return [
-                    'value' => $indexed ? $text : $value,
+                    'value' => $value->name,
                     'text' => $text,
                 ];
             });
@@ -42,18 +51,13 @@ class Tag extends Select
         $data = null;
         if (! empty($values)) {
             if ($this->isLocalMode()) {
-                $store = $this->getStore();
-                $indexed = array_keys($store) === range(0, count($store) - 1);
+                $store = collect($this->getStore());
 
-                $data = collect($values)->map(function ($value) use ($indexed, $store) {
-                    if ($indexed) {
-                        if (in_array($value, $store)) {
-                            return $value;
-                        }
-                    } else {
-                        if (isset($store[$value])) {
-                            return $value;
-                        }
+                $data = collect($values)->map(function ($value) use ($store) {
+                    if ($store->search(function ($item) use ($value) {
+                        return $item['value'] == $value;
+                    }) !== false) {
+                        return $value;
                     }
                 })->filter(function ($value) {
                     return $value;
