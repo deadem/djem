@@ -30,9 +30,17 @@ class Select extends Control
         return $this->getProperty('queryMode') === 'local';
     }
 
-    public function store($value)
+    public function store($store)
     {
-        parent::store($value);
+        $indexed = array_keys($store) === range(0, count($store) - 1);
+        $store = collect($store)->map(function ($text, $value) use ($indexed) {
+            return [
+                'value' => ($indexed) ? $text : $value,
+                'text' => $text,
+            ];
+        });
+
+        parent::store(array_values($store->all()));
         $this->queryMode('local');
 
         return $this;

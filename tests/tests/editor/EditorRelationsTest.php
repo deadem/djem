@@ -34,7 +34,7 @@ class EditorRelationsTest extends TestCase
 
         $editor->loadModel($model);
 
-        $value = new Models\LinkedValue(['value' => 'four']);
+        $value = new Models\LinkedValue(['name' => 'two']);
         $model->tags()->save($value);
 
         $editor->createTag('tags')->filterPickList(true)->store(['one', 'two', 'three'])->label('tag name');
@@ -42,16 +42,62 @@ class EditorRelationsTest extends TestCase
             'xtype' => 'djem.tag',
             'name' => 'tags',
             'filterPickList' => true,
-            'store' => ['one', 'two', 'three'],
+            'store' => [
+                'fields' => [
+                    ['name' => 'value'],
+                    ['name' => 'text'],
+                ],
+                'data' => [
+                    ['value' => 'one', 'text' => 'one'],
+                    ['value' => 'two', 'text' => 'two'],
+                    ['value' => 'three', 'text' => 'three'],
+                ],
+            ],
             'fieldLabel' => 'tag name',
             'queryMode' => 'local',
             'bind' => '{tags}',
         ], $editor->getView());
 
         $this->assertEquals(collect([
-            ['value' => 'one', 'text' => 'one'],
             ['value' => 'two', 'text' => 'two'],
-            ['value' => 'three', 'text' => 'three'],
+        ]), $editor->getData()->tags);
+    }
+
+    public function testNamedTags()
+    {
+        $editor = (new Doctype())->editor();
+
+        $model = News::first();
+        $model->tags()->delete();
+
+        $editor->loadModel($model);
+
+        $value = new Models\LinkedValue(['name' => 'two']);
+        $model->tags()->save($value);
+
+        $editor->createTag('tags')->filterPickList(true)->store(['one' => '1st', 'two' => '2nd', 'three' => '3rd'])->label('tag name');
+        $this->assertEquals((object) [
+            'xtype' => 'djem.tag',
+            'name' => 'tags',
+            'filterPickList' => true,
+            'store' => [
+                'fields' => [
+                    ['name' => 'value'],
+                    ['name' => 'text'],
+                ],
+                'data' => [
+                    ['value' => 'one', 'text' => '1st'],
+                    ['value' => 'two', 'text' => '2nd'],
+                    ['value' => 'three', 'text' => '3rd'],
+                ],
+            ],
+            'fieldLabel' => 'tag name',
+            'queryMode' => 'local',
+            'bind' => '{tags}',
+        ], $editor->getView());
+
+        $this->assertEquals(collect([
+            ['value' => 'two', 'text' => '2nd'],
         ]), $editor->getData()->tags);
     }
 }

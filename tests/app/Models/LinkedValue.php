@@ -9,5 +9,5 @@ class LinkedValue extends Model
     public $table = 'linked_values';
 
     public $timestamps = false;
-    public $fillable = ['value'];
+    public $fillable = ['name'];
 }

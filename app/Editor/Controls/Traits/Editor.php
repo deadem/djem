@@ -178,9 +178,13 @@ trait Editor
                         $this->addReversedSingleRelation($item, $field);
                         break;
 
+                    case Relations\BelongsTo::class:
+                        // это уже обработано
+                        break;
+
                     default:
                         // неизвестный relation
-                        throw new \Exception('Unknown relation');
+                        throw new \Exception('Field: '.$field." \n".'Unknown relation: '.get_class($this->getRelation($field)));
                         break;
                 }
             }
