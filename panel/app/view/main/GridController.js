@@ -63,6 +63,11 @@ Ext.define('djem.view.main.GridController', {
             params = params || {};
             me.openDocument(view, { data: { _doctype: params._doctype } });
         });
+        view.on('update.data', function() {
+          var store = view.getStore(),
+              current = store.currentPage;
+          store.loadPage(current);
+        });
     },
 
     initViewModel: function() {
