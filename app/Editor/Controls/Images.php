@@ -69,7 +69,6 @@ class Images extends Control
     public function prepareUserValue($values, $getValue = null)
     {
         $data = [];
-        $ids = [];
         foreach ($values as $value) {
             $relation = call_user_func($getValue->relation, $this->getName());
 
@@ -87,14 +86,6 @@ class Images extends Control
             }
             $model->fill($value);
             $data[] = $model;
-
-            if (isset($value['id'])) {
-                $ids[] = $value['id'];
-            }
-        }
-        foreach ($this->images as $image) {
-            $relation = call_user_func($getValue->relation, $this->getName());
-            $relation->whereNotIn('id', $ids)->delete();
         }
 
         return $this->setUserValue($data);

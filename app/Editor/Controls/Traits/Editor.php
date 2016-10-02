@@ -222,15 +222,15 @@ trait Editor
 
     private function addReversedSingleRelation(Controls\Item $item, $field)
     {
-        $values = $item->getUserValue();
+        $values = collect($item->getUserValue());
         $relation = $this->getRelation($field);
-        $relation->delete();
 
-        if (! empty($values)) {
-            foreach ($values as $value) {
-                $relation->save($value);
-            }
-        }
+        $ids = $values->pluck('id');
+        $relation->whereNotIn('id', $ids->all())->delete();
+
+        $values->each(function ($value) use (&$relation) {
+            $relation->save($value);
+        });
     }
 
     public function putData($model)
