@@ -86,12 +86,6 @@ class Images extends Control
                 $model = $relation->find($value['id']);
             }
             $model->fill($value);
-
-            if ($this->editor) {
-                $model = (new Editor\SaveOverride($model))->saveHandler(function () use ($model, $value) {
-                    $this->editor->putData($model, $value);
-                });
-            }
             $data[] = $model;
 
             if (isset($value['id'])) {
