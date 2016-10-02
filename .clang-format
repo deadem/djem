@@ -1,6 +1,7 @@
 IndentWidth: 4
 ReflowComments: false
 ColumnLimit: 120
+DisableFormat:   true
 
 Language: JavaScript
 BasedOnStyle: Mozilla
