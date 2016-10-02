@@ -43,7 +43,10 @@ Ext.define('djem.view.main.MainController', {
                     tab.setTitle(data.title);
                 }
             }
+        }).on('update.grid', function() {
+            me.lookupReference('grid').fireEvent('update.data');
         });
+        
         tabs.on('tabchange', function(_this, newTab) {
             tabChange(newTab);
         }).fireEvent('tabchange');
