@@ -1,26 +1,26 @@
 /* global Ext, djem, SharedData*/
-Ext.data.Connection.override({
+Ext.data.request.Ajax.override({
     onComplete: function(request) {
-        var me = this, options = request.options || {};
+        var me = this, options = me.options || {};
         try {
-            if (request.xhr && request.xhr) {
-                djem.app.fireEvent('token', request.xhr.getResponseHeader('x-csrf-token'));
+            if (me.xhr && me.xhr) {
+                djem.app.fireEvent('token', me.xhr.getResponseHeader('x-csrf-token'));
             }
-            if (request.xhr && request.xhr.status != 200 &&
-                (Math.floor(request.xhr.status / 100) != 4 || request.xhr.status == 400)) {
+            if (me.xhr && me.xhr.status != 200 &&
+                (Math.floor(me.xhr.status / 100) != 4 || me.xhr.status == 400)) {
                 if (!options.suppressErrors && (!options.proxy || !options.proxy.suppressErrors)) {
                     throw '';
                 }
             }
 
-            if (request.xhr && request.xhr.status == 401) {
+            if (me.xhr && me.xhr.status == 401) {
                 if (options.whisper !== true) {
                     if (!options.proxy || options.proxy.retry !== false) {
                         djem.app.on('authorized', function() {
                             if (SharedData.token && typeof options == 'object' && typeof options.params == 'object') {
                                 options.params._token = SharedData.token;
                             }
-                            me.request(options);
+                            me.start(options);
                         }, this, { single: true });
                     }
                     djem.app.fireEvent('authorize');
@@ -31,7 +31,7 @@ Ext.data.Connection.override({
             Ext.MessageBox.show({
                 title: 'Error',
                 closable: false,
-                msg: (e && e.message || '') + request.xhr.response,
+                msg: (e && e.message || '') + me.xhr.response,
                 buttons: Ext.MessageBox.OK,
                 fn: function() {}
             });

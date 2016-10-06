@@ -1,5 +1,10 @@
 {
     /**
+     * The toolkit to use. Select either "classic" or "modern".
+     */
+    "toolkit": "classic",
+
+    /**
      * The application's namespace.
      */
     "name": "djem",
@@ -33,7 +38,7 @@
      * The name of the theme for this application.
      */
     
-    "theme": "theme-djem",
+    "theme": "theme-neptune",
     
     /**
      * The list of required packages (with optional versions; default is "latest").
@@ -105,7 +110,7 @@
      */
     "js": [
         {
-            "path": "${framework.dir}/build/ext-all-rtl-debug.js"
+            "path": "${framework.dir}/build/ext-all-debug.js"
         },
         {
             "path": "app.js",
