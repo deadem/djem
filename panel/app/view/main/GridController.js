@@ -215,11 +215,14 @@ Ext.define('djem.view.main.GridController', {
     },
 
     openDocument: function(_this, record, options) {
-        var me = this;
-        var data = record.data || {};
+        var me = this,
+            data = record.data || {},
+            view = me.getView(),
+            store = view.getStore();
         options = options || {};
-        me.getView().fireEvent('openDocument', _this, {
+        view.fireEvent('openDocument', _this, {
             id: options.clone ? undefined : record.id,
+            tree: store.getProxy().getExtraParams().tree,
             title: data[me.titleField],
             _doctype: data._doctype,
             clone: options.clone ? record.id : undefined,

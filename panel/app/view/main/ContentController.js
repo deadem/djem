@@ -54,7 +54,7 @@ Ext.define('djem.view.main.ContentController', {
                 if (me.loadingMask) {
                     me.loadingMask.hide();
                 }
-                djem.app.fireEvent('update.grid');
+                djem.app.fireEvent('update.grid', { tree: me.getView().config.data.tree });
             },
             failure: function(response) {
                 Ext.each(response.exceptions, function(exception) {
@@ -117,17 +117,21 @@ Ext.define('djem.view.main.ContentController', {
         view.getForm().on('dataReady', function() { me.onSyncData(); });
 
         view.on('reload', function(params) {
-            me.reload(params);
+            me.reload(Ext.Object.merge(params || {}, { refreshTree: true }));
         });
     },
 
-    initValues: function() {
+    initValues: function(params) {
         var me = this;
         Ext.each(me.getView().getForm().getFields().items, function(obj) {
             obj.resetOriginalValue();
         });
         me.getView().getForm().checkDirty();
         me.updateButtons();
+        
+        if (params && refreshTree.refreshTree) {
+          djem.app.fireEvent('update.grid', { tree: me.getView().config.data.tree });
+        }
     },
 
     initViewModel: function() {
@@ -149,17 +153,18 @@ Ext.define('djem.view.main.ContentController', {
     },
 
     reload: function(ext) {
-        var me = this;
-        var data = me.getView().config.data;
-        var params = { _doctype: data._doctype, id: data.id, clone: data.clone };
+        var me = this,
+            data = me.getView().config.data,
+            params = { _doctype: data._doctype, id: data.id, clone: data.clone };
+
         me.store.load({
             params:  Ext.Object.merge(params, ext || {})
         });
     },
 
-    onLoadContent: function() {
+    onLoadContent: function(params) {
         var me = this;
-        me.initValues();
+        me.initValues(params);
     },
 
     onWriteContent: function() {

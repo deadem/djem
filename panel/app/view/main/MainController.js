@@ -43,8 +43,14 @@ Ext.define('djem.view.main.MainController', {
                     tab.setTitle(data.title);
                 }
             }
-        }).on('update.grid', function() {
-            me.lookupReference('grid').fireEvent('update.data');
+        }).on('update.grid', function(data) {
+            var activeGrid = me.lookupReference('grid'),
+                gridView = activeGrid.getView(),
+                store = gridView.getStore(),
+                params = store.getProxy().getExtraParams();
+            if (data.tree == params.tree) {
+              activeGrid.fireEvent('update.data');
+            }
         });
         
         tabs.on('tabchange', function(_this, newTab) {
