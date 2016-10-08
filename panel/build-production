@@ -1,3 +1,4 @@
 rm -r ../panel-compiled/*
-sencha app build production ../panel-compiled
+sencha app build production
+rm -r ../panel-compiled/resources/ext/ext-watermark
 ./build-development
