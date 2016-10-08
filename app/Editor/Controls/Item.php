@@ -40,6 +40,10 @@ class Item
         foreach ($this->saveCallbacks as $closure) {
             $closure();
         }
+
+        if ($this->editor) {
+            $this->editor->fireSaveEvent();
+        }
     }
 
     protected function setProperty($name, $value)
