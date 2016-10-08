@@ -12,6 +12,7 @@ trait Editor
 {
     private $root = null;
     protected $model = null;
+    private $input;
 
     public function create(Controls\Item $item = null)
     {
@@ -23,6 +24,13 @@ trait Editor
     public function loadModel($model = null)
     {
         $this->model = $model;
+
+        return $this;
+    }
+
+    public function setInput($input)
+    {
+        $this->input = collect($input);
 
         return $this;
     }
@@ -175,6 +183,7 @@ trait Editor
                         break;
 
                     case Relations\HasMany::class:
+                    case Relations\HasOne::class:
                         $this->addReversedSingleRelation($item, $field);
                         break;
 
@@ -233,9 +242,11 @@ trait Editor
         });
     }
 
-    public function putData($model)
+    public function putData($model, $values)
     {
         $this->loadModel($model);
+        $this->setInput($values);
+
         $controls = $this->getControls();
 
         $this->prepareValues($controls)

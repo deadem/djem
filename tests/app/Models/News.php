@@ -9,4 +9,9 @@ class News extends Model
     public $table = 'news';
 
     public $fillable = ['name', 'text', 'tagsList'];
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 }

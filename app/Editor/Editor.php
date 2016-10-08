@@ -11,20 +11,12 @@ class Editor
     }
 
     private $modelClass = null;
-    private $input;
 
     public function __construct($model, Controls\Item $item = null)
     {
         $this->modelClass = $model;
         $this->create($item);
         $this->input = collect([]);
-    }
-
-    public function setInput($input)
-    {
-        $this->input = collect($input);
-
-        return $this;
     }
 
     public function loadModelClass($model)
@@ -111,6 +103,10 @@ class Editor
 
             $this->model()->save();
             $this->putRelatedData($controls);
+
+            foreach ($controls as $field => $item) {
+                $item->fireSaveEvent();
+            }
         });
 
         return $this;

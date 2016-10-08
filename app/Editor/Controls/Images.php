@@ -86,6 +86,12 @@ class Images extends Control
             }
             $model->fill($value);
             $data[] = $model;
+
+            if ($this->editor) {
+                $this->onSave(function () use ($model, $value) {
+                    $this->editor->putData($model, $value);
+                });
+            }
         }
 
         return $this->setUserValue($data);

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLinkedValuesTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateLinkedValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('linked_values', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('reference')->nullable();
-            $table->string('name');
+            $table->integer('linked_news');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateLinkedValuesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('linked_values');
+        Schema::drop('images');
     }
 }
