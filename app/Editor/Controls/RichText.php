@@ -4,6 +4,8 @@ namespace DJEM\Editor\Controls;
 
 class RichText extends Control
 {
+    use Traits\File;
+
     private $images = null;
     private $relatedData = [];
     private $imageSaveHandler = null;
@@ -32,7 +34,9 @@ class RichText extends Control
         $value = preg_replace_callback('/(<img.*?src=\s*([\'"]))(.*?)(\\2)/is', function ($matches) use ($getValue) {
             if (preg_match('/^blob:http.*?#(.+)$/i', $matches[3], $urls)) {
                 $relation = call_user_func($getValue->relation, $this->images);
-                $value = call_user_func($this->imageSaveHandler, ['file' => $urls[1]], $relation->getRelated(), $getValue);
+                $file = $this->getFilePath($urls[1]);
+
+                $value = call_user_func($this->imageSaveHandler, ['file' => $file], $relation->getRelated(), $getValue);
 
                 if ($value) {
                     $this->relatedData[] = [

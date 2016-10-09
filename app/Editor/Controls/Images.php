@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Images extends Control
 {
+    use Traits\File;
+
     private $images = [];
 
     public function __construct($name = null)
@@ -74,13 +76,7 @@ class Images extends Control
 
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
-
-                $value['file'] = realpath(sys_get_temp_dir().'/'.$value['file']);
-
-                if (substr($value['file'], 0, strlen(sys_get_temp_dir())) !== sys_get_temp_dir()) {
-                    // какой-то неправильный файл, игнорируем
-                    continue;
-                }
+                $value['file'] = $this->getFilePath($value['file']);
 
                 if (empty($this->images)) {
                     $model = call_user_func($getValue->model, $this->getName());

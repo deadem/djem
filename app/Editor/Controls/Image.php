@@ -4,6 +4,8 @@ namespace DJEM\Editor\Controls;
 
 class Image extends Control
 {
+    use Traits\File;
+
     private $copy = [];
     private $images = [];
 
@@ -99,6 +101,8 @@ class Image extends Control
         if (! empty($value)) {
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
+                $value['file'] = $this->getFilePath($value['file']);
+
                 foreach ($this->images as $image) {
                     $image->setUserValue($this->prepareUserSaveValue($value, $image->getName(), $getValue));
                 }
