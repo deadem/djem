@@ -31,7 +31,7 @@ class Images extends Control
     {
         $relation = $this->getRelation($model);
         $image = false;
-        if (is_array($this->images)) {
+        if (is_array($this->images) && ! empty($this->images)) {
             $image = array_values($this->images)[0];
             $relation->with($image);
         }
@@ -74,17 +74,37 @@ class Images extends Control
 
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
-                $model = $relation->getRelated();
-                $model = new $model();
 
-                foreach ($this->images as $image) {
-                    $this->createImage($value, $model, $image, $getValue);
+                $value['file'] = realpath(sys_get_temp_dir().'/'.$value['file']);
+
+                if (substr($value['file'], 0, strlen(sys_get_temp_dir())) !== sys_get_temp_dir()) {
+                    // какой-то неправильный файл, игнорируем
+                    continue;
+                }
+
+                if (empty($this->images)) {
+                    $model = call_user_func($getValue->model, $this->getName());
+                    $model = $this->createImage($value, $model, $this->getName(), $getValue);
+                } else {
+                    $model = $relation->getRelated();
+                    $model = new $model();
+                    foreach ($this->images as $image) {
+                        $this->createImage($value, $model, $image, $getValue);
+                    }
                 }
             } else {
                 // если файл не указан, значит нужно обновить данные уже подцепленной картинки
                 $model = $relation->find($value['id']);
             }
-            $model->fill($value);
+
+            if (! empty($this->images)) {
+                foreach ($value as $key => $var) {
+                    if ($model->isFillable($key)) {
+                        $model->fill([$key => $var]);
+                    }
+                }
+            }
+
             $data[] = $model;
 
             if ($this->editor) {
@@ -105,6 +125,9 @@ class Images extends Control
 
             $image = $relation->getRelated();
             $image = call_user_func($this->saveHandler, $value, $image, $getter);
+            if ($image) {
+                $image->save();
+            }
             $this->attachToRelation($relation, $image);
         }
 

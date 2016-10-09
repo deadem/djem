@@ -10,8 +10,8 @@ class News extends Model
 
     public $fillable = ['name', 'text', 'tagsList'];
 
-    public function image()
+    public function images()
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsToMany(Image::class);
     }
 }

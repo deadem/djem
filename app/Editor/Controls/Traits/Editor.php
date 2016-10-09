@@ -158,14 +158,13 @@ trait Editor
 
     public function putFillableData(Collection $controls)
     {
-        $fillable = $this->model()->getFillable();
-        $controls->each(function (Controls\Control $item, $field) use ($fillable) {
+        $controls->each(function (Controls\Control $item, $field) {
             if ($this->isRelation($field)) {
                 if (get_class($this->getRelation($field)) == Relations\BelongsTo::class) {
                     $this->addSingleRelation($item, $field);
                 }
-            } elseif (in_array($field, $fillable)) {
-                $this->model()->{$field} = $item->getUserValue();
+            } elseif ($this->model->isFillable($field)) {
+                $this->model()->fill([$field => $item->getUserValue()]);
             }
         });
 

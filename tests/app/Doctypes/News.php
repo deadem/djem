@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class News extends \DJEM\Doctype
 {
+    use Traits\UploadImage;
+
     public $model = Models\News::class;
 
     private $request;
@@ -32,10 +34,13 @@ class News extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout(['type' => 'vbox', 'align' => 'stretch'])->flex(1)->items(function ($items) {
-            $items->addText('name')->label('Name')->validate('required|max:255');
-            $items->addTag('tagsList')->label('Field Tags')->filterPickList(true)->store(['one', 'two', 'three']);
-            $items->addRichText('text')->label('Text')->flex(1);
+        $editor->createLayout('hbox')->flex(1)->items(function ($items) {
+            $items->addLayout(['type' => 'vbox', 'align' => 'stretch'])->flex(1)->items(function ($items) {
+                $items->addText('name')->label('Name')->validate('required|max:255');
+                $items->addTag('tagsList')->label('Field Tags')->filterPickList(true)->store(['one', 'two', 'three']);
+                $items->addRichText('text')->label('Text')->flex(1);
+            });
+            $items->addImages('images')->height('100%')->width('20%')->save($this->uploadImage());
         });
 
         return $editor;
