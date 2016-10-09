@@ -234,7 +234,7 @@ trait Editor
         $values = collect($item->getUserValue());
         $relation = $this->getRelation($field);
 
-        $ids = $values->pluck('id');
+        $ids = $values->pluck('id')->filter(null);
         $relation->whereNotIn('id', $ids->all())->delete();
 
         $values->each(function ($value) use (&$relation) {

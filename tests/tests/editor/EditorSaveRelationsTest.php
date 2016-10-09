@@ -40,12 +40,13 @@ class NewsDoctype extends Doctype
     public $model = News::class;
 }
 
-class EditorSaveTest extends TestCase
+class EditorSaveRelations extends TestCase
 {
     use CheckModel;
 
     public function testModelTagsLocalStore()
     {
+        // проверяем добавление связи
         $data = ['name' => 'test', 'text' => 'textfield', 'tags' => ['first', 'second', 'third', 'fourth']];
 
         $editor = (new NewsDoctype())->editor()->setInput($data);
@@ -65,6 +66,17 @@ class EditorSaveTest extends TestCase
 
         $this->assertEquals($data['name'], $editor->model()->name);
         $this->assertEquals($data['text'], $editor->model()->text);
+
+        // проверим удаление связи
+        $data = ['name' => 'test', 'text' => 'textfield', 'tags' => ['second', 'third', 'fourth']];
+        $editor->setInput($data);
+        $editor->putData();
+
+        $this->checkData($editor);
+        $this->assertEquals(collect([
+            ['value' => 'second', 'text' => 'second'],
+            ['value' => 'third', 'text' => 'third'],
+        ]), $editor->getData()->tags);
 
         $editor->model()->delete();
     }
