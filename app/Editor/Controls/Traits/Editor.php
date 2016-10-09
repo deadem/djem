@@ -12,6 +12,7 @@ trait Editor
 {
     private $root = null;
     protected $model = null;
+    private $input;
 
     public function create(Controls\Item $item = null)
     {
@@ -23,6 +24,13 @@ trait Editor
     public function loadModel($model = null)
     {
         $this->model = $model;
+
+        return $this;
+    }
+
+    public function setInput($input)
+    {
+        $this->input = collect($input);
 
         return $this;
     }
@@ -150,14 +158,13 @@ trait Editor
 
     public function putFillableData(Collection $controls)
     {
-        $fillable = $this->model()->getFillable();
-        $controls->each(function (Controls\Control $item, $field) use ($fillable) {
+        $controls->each(function (Controls\Control $item, $field) {
             if ($this->isRelation($field)) {
                 if (get_class($this->getRelation($field)) == Relations\BelongsTo::class) {
                     $this->addSingleRelation($item, $field);
                 }
-            } elseif (in_array($field, $fillable)) {
-                $this->model()->{$field} = $item->getUserValue();
+            } elseif ($this->model->isFillable($field)) {
+                $this->model()->fill([$field => $item->getUserValue()]);
             }
         });
 
@@ -175,6 +182,7 @@ trait Editor
                         break;
 
                     case Relations\HasMany::class:
+                    case Relations\HasOne::class:
                         $this->addReversedSingleRelation($item, $field);
                         break;
 
@@ -225,7 +233,7 @@ trait Editor
         $values = collect($item->getUserValue());
         $relation = $this->getRelation($field);
 
-        $ids = $values->pluck('id');
+        $ids = $values->pluck('id')->filter(null);
         $relation->whereNotIn('id', $ids->all())->delete();
 
         $values->each(function ($value) use (&$relation) {
@@ -233,9 +241,11 @@ trait Editor
         });
     }
 
-    public function putData($model)
+    public function putData($model, $values)
     {
         $this->loadModel($model);
+        $this->setInput($values);
+
         $controls = $this->getControls();
 
         $this->prepareValues($controls)

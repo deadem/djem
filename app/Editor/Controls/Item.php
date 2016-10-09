@@ -11,6 +11,7 @@ class Item
     protected $properties = [];
     protected $customValue = null;
     protected $editor = null;
+    private $saveCallbacks = [];
 
     public function __construct($value = null)
     {
@@ -27,6 +28,22 @@ class Item
         }
 
         throw new BadMethodCallException('Can\'t create class '.$name);
+    }
+
+    protected function onSave($closure)
+    {
+        $this->saveCallbacks[] = $closure;
+    }
+
+    public function fireSaveEvent()
+    {
+        foreach ($this->saveCallbacks as $closure) {
+            $closure();
+        }
+
+        if ($this->editor) {
+            $this->editor->fireSaveEvent();
+        }
     }
 
     protected function setProperty($name, $value)

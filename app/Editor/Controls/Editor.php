@@ -28,6 +28,12 @@ class Editor extends Item
     {
         $this->root = $item;
 
+        $this->onSave(function () {
+            foreach ($this->getControls() as $field => $item) {
+                $item->fireSaveEvent();
+            }
+        });
+
         return $this;
     }
 }

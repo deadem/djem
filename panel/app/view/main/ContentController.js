@@ -178,8 +178,11 @@ Ext.define('djem.view.main.ContentController', {
     },
 
     onViewChange: function(_this, meta) {
-        var me = this;
-        me.getView().add(meta.view);
+        var me = this,
+            view = me.getView();
+        view.removeAll();
+        view.update('');
+        view.add(meta.view);
     },
 
     onDataChange: function(_this, meta) {
