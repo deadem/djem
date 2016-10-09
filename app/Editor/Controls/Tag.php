@@ -65,8 +65,8 @@ class Tag extends Select
 
                 if ($relation) {
                     $related = $relation->getRelated();
-                    $data = $data->map(function ($value) use ($related) {
-                        $model = $related->where('name', '=', $value)->first();
+                    $data = $data->map(function ($value) use ($related, $relation) {
+                        $model = $relation->where('name', '=', $value)->first();
                         if ($model) {
                             return $model;
                         }
