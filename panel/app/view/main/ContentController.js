@@ -100,7 +100,15 @@ Ext.define('djem.view.main.ContentController', {
         view.on('click.toolbar', function(ref) {
             var actions = {
                 'save': function() { view.fireEvent('validate'); },
-                'close': function() { me.onClose(); }
+                'close': function() {
+                    var view = me.getView(),
+                        data = view.config.data || {};
+                    if (typeof data != 'object') {
+                        data = {};
+                    }
+                    data.id = view.id;
+                    djem.app.fireEvent('remove.tab', data);
+                }
             };
             (actions[ref] || function() {})();
         }).on('show.toolbar', function(result) {
