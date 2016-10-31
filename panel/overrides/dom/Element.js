@@ -8,16 +8,12 @@ Ext.define('djem.overrides.LoadMask', {
         Ext.baseCSSPrefix,
         'mask-msg-inner {childElCls}">',
 
-        '<div class="app-mask-wrapper">',
-        '<div class="app-mask-spinner">',
-        '<div class="app-mask-clip-left">',
-        '<div></div>',
+        '<svg class="circular" viewBox="25 25 50 50">',
+        '<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="4" stroke-miterlimit="0"/>',
+        '</svg>',
+
         '</div>',
-        '<div class="app-mask-clip-right">',
-        '<div></div>',
-        '</div>',
-        '</div>',
-        '</div>',
+
         '<div id="{id}-msgTextEl" data-ref="msgTextEl" class="',
         Ext.baseCSSPrefix,
         'mask-msg-text',
