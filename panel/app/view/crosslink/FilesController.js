@@ -40,12 +40,6 @@ Ext.define('djem.view.crosslink.FilesController', {
         }
     },
 
-    onDestroy: function() {
-        var me = this;
-        me.getLoadingMask().destroy();
-        me.uploader.destroy();
-    },
-
     startDrag: function(e) {
         var me = this;
         me.dragState.setExisting(true);
@@ -188,6 +182,8 @@ Ext.define('djem.view.crosslink.FilesController', {
     onBeforeDestroy: function() {
         var me = this;
         me.processDropZone(true);
+        me.getLoadingMask().destroy();
+        me.uploader.destroy();
     },
 
     setDirty: function(isDirty) {

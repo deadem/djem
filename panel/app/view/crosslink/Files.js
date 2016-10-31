@@ -15,7 +15,6 @@ Ext.define('djem.view.crosslink.Files', {
 
     listeners: {
         afterrender: { fn: 'initAfterRender', options: { single: true } },
-        destroy: 'onDestroy',
         beforedestroy: 'onBeforeDestroy',
         itemdblclick: 'onItemDblClick'
     },
