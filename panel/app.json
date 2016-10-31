@@ -38,7 +38,7 @@
      * The name of the theme for this application.
      */
     
-    "theme": "theme-neptune",
+    "theme": "theme-djem",
     
     /**
      * The list of required packages (with optional versions; default is "latest").
