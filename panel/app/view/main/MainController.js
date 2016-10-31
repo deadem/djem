@@ -43,6 +43,12 @@ Ext.define('djem.view.main.MainController', {
                     tab.setTitle(data.title);
                 }
             }
+        }).on('remove.tab', function(data) {
+            var tabId = data.id;
+            var tab = tabs.query('#' + tabId)[0];
+            if (tab) {
+                tabs.remove(tab, true);
+            }
         }).on('update.grid', function() {
             me.lookupReference('grid').fireEvent('update.data');
         });
