@@ -11,7 +11,13 @@ trait File
         $url = parse_url($fileName);
         if (isset($url['scheme']) && isset($url['path'])) {
             $newFileName = uniqid().'.'.basename($url['path']);
-            $file = @file_get_contents($fileName, false, stream_context_create(['ssl' => ['verify_peer' => false]]));
+
+            $file = file_get_contents($fileName, false, stream_context_create(
+                [
+                    'http' => ['ignore_errors' => true],
+                    'ssl' => ['verify_peer' => false],
+                ]
+            ));
             if (empty($file)) {
                 return false;
             }
