@@ -2,6 +2,7 @@
 @import 'generate-colors';
 @import 'generate-elevation';
 @import 'transitions';
+@import 'icons';
 
 .x-body, body {
     @include generate-colors();
@@ -22,6 +23,10 @@ $font-size-small: 14px !default;
 $font-family-small: "Roboto", sans-serif !default;
 $font-weight-small: $font-weight !default;
 $line-height-small: $font-size-small + 4 !default;
+
+// https://material.io/icons/
+$enable-font-icons: true;
+$font-icon-font-family: "Icons";
 
 $font-size-medium: $font-size-small + 2 !default;
 $font-family-medium: "Roboto Medium", sans-serif !default;

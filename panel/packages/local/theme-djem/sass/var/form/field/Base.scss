@@ -10,3 +10,15 @@ $form-field-invalid-border-color: color('red') !default;
 $form-field-invalid-border-width: 0 0 2px 0 !default;
 
 $form-error-msg-color: color('red');
+
+
+$spinner-trigger-up-glyph: dynamic($ext-var-spinner-up 16px $font-icon-font-family);
+$spinner-trigger-down-glyph: dynamic($ext-var-spinner-down 16px $font-icon-font-family);
+
+$form-checkbox-size: dynamic(16px);
+
+$form-checkbox-glyph: dynamic($ext-var-checkbox-unchecked $form-checkbox-size $font-icon-font-family);
+$form-checkbox-checked-glyph: dynamic($ext-var-checkbox-checked $form-checkbox-size $font-icon-font-family);
+
+$form-checkbox-glyph-color: #777;
+$form-trigger-glyph-color: #777;
