@@ -1,5 +1,10 @@
-.top-toolbar.x-toolbar {
-    background-color: $color-top-toolbar;
+.top-toolbar {
+    &.x-toolbar {
+        background-color: $color-top-toolbar;
+    }
+    input {
+        background-color: white;
+    }
 }
 
 .x-toolbar {

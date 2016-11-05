@@ -13,7 +13,7 @@
 }
 
 .top-panel {
-    > .x-tab-bar {
+    > .x-panel-bodyWrap > .x-tab-bar {
         background-color: $color-top-toolbar;
         z-index: 4;
 
