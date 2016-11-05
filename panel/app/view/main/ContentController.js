@@ -107,7 +107,11 @@ Ext.define('djem.view.main.ContentController', {
                         data = {};
                     }
                     data.id = view.id;
-                    djem.app.fireEvent('remove.tab', data);
+
+                    setTimeout(function() {
+                        // self close must be async
+                        djem.app.fireEvent('remove.tab', data);
+                    });
                 }
             };
             (actions[ref] || function() {})();
