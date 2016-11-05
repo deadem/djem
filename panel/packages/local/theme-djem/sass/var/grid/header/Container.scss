@@ -6,3 +6,7 @@ $grid-header-over-background-gradient: null !default;
 
 $grid-header-over-background-color: $base-color !default;
 $grid-header-background-color: $base-color !default;
+
+$grid-header-menu-sort-asc-glyph: dynamic($ext-var-sort-up $grid-header-menu-glyph-font-size $font-icon-font-family);
+$grid-header-menu-sort-desc-glyph: dynamic($ext-var-sort-down $grid-header-menu-glyph-font-size $font-icon-font-family);
+$grid-header-menu-columns-glyph: dynamic($ext-var-columns $grid-header-menu-glyph-font-size $font-icon-font-family);
