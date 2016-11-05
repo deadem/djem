@@ -54,7 +54,7 @@ Ext.define('djem.view.main.ContentController', {
                 if (me.loadingMask) {
                     me.loadingMask.hide();
                 }
-                djem.app.fireEvent('update.grid');
+                djem.app.fireEvent('update.grid', { tree: me.getView().config.data.tree });
             },
             failure: function(response) {
                 Ext.each(response.exceptions, function(exception) {
@@ -114,28 +114,32 @@ Ext.define('djem.view.main.ContentController', {
         }).on('show.toolbar', function(result) {
             result.value = me.store.toolbar || [];
         }).on('update.title', function(data) {
-            var _this = this;
+            var me = this;
             data = data || {};
             if (typeof data != 'object') {
                 data = {};
             }
-            data.id = _this.id;
-            djem.app.fireEvent('update.tab', _this, data);
+            data.id = me.id;
+            djem.app.fireEvent('update.tab', me, data);
         });
         view.getForm().on('dataReady', function() { me.onSyncData(); });
 
         view.on('reload', function(params) {
-            me.reload(params);
+            me.reload(Ext.Object.merge(params || {}, { refreshTree: true }));
         });
     },
 
-    initValues: function() {
+    initValues: function(params) {
         var me = this;
         Ext.each(me.getView().getForm().getFields().items, function(obj) {
             obj.resetOriginalValue();
         });
         me.getView().getForm().checkDirty();
         me.updateButtons();
+
+        if (params && params.refreshTree) {
+            djem.app.fireEvent('update.grid', { tree: me.getView().config.data.tree });
+        }
     },
 
     initViewModel: function() {
@@ -157,17 +161,18 @@ Ext.define('djem.view.main.ContentController', {
     },
 
     reload: function(ext) {
-        var me = this;
-        var data = me.getView().config.data;
-        var params = { _doctype: data._doctype, id: data.id, clone: data.clone };
+        var me = this,
+            data = me.getView().config.data,
+            params = { _doctype: data._doctype, id: data.id, clone: data.clone };
+
         me.store.load({
-            params:  Ext.Object.merge(params, ext || {})
+            params: Ext.Object.merge(params, ext || {})
         });
     },
 
-    onLoadContent: function() {
+    onLoadContent: function(params) {
         var me = this;
-        me.initValues();
+        me.initValues(params);
     },
 
     onWriteContent: function() {
@@ -177,12 +182,7 @@ Ext.define('djem.view.main.ContentController', {
 
     onCodeChange: function(_this, meta) {
         var me = this;
-        function evalContext() {
-            /* jshint -W061 */ // Разрешаем eval
-            eval(meta.code);
-            /* jshint +W061 */
-        }
-        evalContext.call(me.getView());
+        Function(meta.code).call(me.getView());
     },
 
     onViewChange: function(_this, meta) {

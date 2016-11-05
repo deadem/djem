@@ -50,8 +50,6 @@ Ext.define('djem.widget.tag', {
                 me.lastQuery = undefined;
             }
 
-            console.log(me.store);
-
             for (var i = 0, len = value.length; i < len; ++i) {
                 values.push(value[i][me.valueField]);
             }
