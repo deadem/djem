@@ -1,0 +1,55 @@
+.x-mask-msg {
+    .x-mask-msg-inner {
+        position: relative;
+        margin: -40px;
+        width: 80px;
+        height: 80px;
+        &:before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+
+        .circular {
+            animation: x-mask-msg-rotate 2s linear infinite;
+            height: 100%;
+            transform-origin: center center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .path {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            stroke: $loadmask-spinner-color;
+            animation: x-mask-msg-dash 1.5s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+    }
+}
+
+@keyframes x-mask-msg-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes x-mask-msg-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}

@@ -1,5 +1,10 @@
 {
     /**
+     * The toolkit to use. Select either "classic" or "modern".
+     */
+    "toolkit": "classic",
+
+    /**
      * The application's namespace.
      */
     "name": "djem",
@@ -248,8 +253,15 @@
      *      }
      *
      */
+
     "output": {
-        "base": "${workspace.build.dir}/${build.environment}/${app.name}"
+        "base": "${build.dir}"
+    },
+
+    "resource": {
+        "paths": [
+            "resources"
+        ]
     },
 
     /**

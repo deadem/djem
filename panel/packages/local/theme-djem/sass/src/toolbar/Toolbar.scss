@@ -1,0 +1,15 @@
+.top-toolbar {
+    &.x-toolbar {
+        background-color: $color-top-toolbar;
+    }
+    input {
+        background-color: white;
+    }
+}
+
+.x-toolbar {
+    padding-left: $toolbar-left-padding;
+    > .x-box-inner {
+        overflow: visible;
+    }
+}

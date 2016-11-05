@@ -1,0 +1,40 @@
+// отображение верхнего тулбара
+@mixin generate-top-toolbar-colors() {
+    $i: length($color-names);
+
+    @while ($i > 0) {
+        $name: nth($color-names, $i);
+        $color: nth($color-values, $i);
+
+        @include extjs-tab-animate-djem($color-top-toolbar-light, $color, #{ "tab-color-" + $name });
+
+        $i: $i - 1;
+    }
+}
+
+.top-panel {
+    > .x-panel-bodyWrap > .x-tab-bar {
+        background-color: $color-top-toolbar;
+        z-index: 4;
+
+        @include extjs-tab-animate-djem($color-top-toolbar-light, color('blue'), 'x-tab-default');
+        @include generate-top-toolbar-colors();
+
+        .x-tab {
+            .x-tab-inner-default, .x-tab-glyph {
+                color: #b4e6fc;
+            }
+            &.x-tab-active {
+                .x-tab-inner-default, .x-tab-glyph {
+                    color: color('white');
+                }
+            }
+        }
+
+        &.x-tab-bar-top {
+            > .x-tab-bar-body {
+                @include elevation(4);
+            }
+        }
+    }
+}

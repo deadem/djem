@@ -15,7 +15,6 @@ Ext.define('djem.view.crosslink.Files', {
 
     listeners: {
         afterrender: { fn: 'initAfterRender', options: { single: true } },
-        destroy: 'onDestroy',
         beforedestroy: 'onBeforeDestroy',
         itemdblclick: 'onItemDblClick'
     },
@@ -60,7 +59,7 @@ Ext.define('djem.view.crosslink.Files', {
     tpl: [
         '<tpl for=".">',
         '<div class="thumb-wrap {new}">',
-        '<a href="#" class="trash">&#xE5CD;</a>',
+        '<a href="#" class="trash">&#xF156;</a>',
         '<div class="thumb" style="background-repeat: no-repeat;background-image: url({url});background-position:{calcOffset};background-size:100%;background-size:{calcZoom}"></div>',
         '<span>{name}</span>',
         '</div>',

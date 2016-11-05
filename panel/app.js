@@ -17,8 +17,6 @@ Ext.application({
     // -------------------------------------------------------------------------
 
     requires: [
-        'fix.overrides.Store', 'fix.overrides.ViewBoundList', 'fix.overrides.Date',
-
         'djem.overrides.LoadMask', 'djem.overrides.viewAbstractView'
     ]
 });

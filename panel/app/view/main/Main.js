@@ -46,7 +46,7 @@ Ext.define('djem.view.main.Main', {
         reference: 'tabs',
         cls: 'top-panel',
         items: [ {
-            glyph: 'xE88A@Icons',
+            glyph: 'xF2DC@Icons',
             layout: 'border',
             reference: 'main',
             listeners: {

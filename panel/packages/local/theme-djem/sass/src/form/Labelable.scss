@@ -1,0 +1,48 @@
+.x-form-item-label-inner {
+    display: inline;
+}
+
+.x-form-type-text, .x-form-type-password {
+    &, &.medium-label {
+        .x-form-item-label-top span {
+            pointer-events: none;
+            transform: scale(1.5) translateY(6px);
+            transform-origin: top left 0px;
+            -webkit-font-smoothing: antialiased;
+            color: $form-label-empty-color;
+            transition: transform .4s transition();
+        }
+        &.x-field-focus {
+            .x-form-item-label-top span {
+                transform: scale(1) translateY(0px);
+            }
+        }
+        &.app-field-filled {
+            .x-form-item-label span {
+                color: $form-label-font-color;
+                transform: scale(1);
+                transition: none;
+            }
+        }
+    }
+}
+
+.x-form-type-text, .x-form-type-password {
+    &.medium-label {
+        .x-form-item-label-top span {
+            transform: scale(1.25) translateY(6px);
+        }
+    }
+}
+
+.x-field.x-field-focus, .x-field.x-field-focus.app-field-filled {
+    .x-form-item-label span {
+        color: $form-label-focus-color;
+    }
+}
+
+.x-field.app-form-invalid, .x-field.x-field-focus.app-field-filled.app-form-invalid {
+    .x-form-item-label span {
+        color: $form-error-msg-color;
+    }
+}

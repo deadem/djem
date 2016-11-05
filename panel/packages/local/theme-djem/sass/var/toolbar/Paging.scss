@@ -1,0 +1,4 @@
+$grid-paging-toolbar-first-glyph: dynamic($ext-var-double-chevron-left $grid-paging-toolbar-glyph-font-size $font-icon-font-family);
+$grid-paging-toolbar-prev-glyph: dynamic($ext-var-chevron-left $grid-paging-toolbar-glyph-font-size $font-icon-font-family);
+$grid-paging-toolbar-next-glyph: dynamic($ext-var-chevron-right $grid-paging-toolbar-glyph-font-size $font-icon-font-family);
+$grid-paging-toolbar-last-glyph: dynamic($ext-var-double-chevron-right $grid-paging-toolbar-glyph-font-size $font-icon-font-family);

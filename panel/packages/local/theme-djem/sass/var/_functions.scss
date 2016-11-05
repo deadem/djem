@@ -1,0 +1,10 @@
+@function index($list, $value) {
+    $i: length($list);
+
+    @while ($i > 0) {
+        @if nth($list, $i) == $value {
+            @return $i;
+        }
+        $i: $i - 1;
+    }
+}
