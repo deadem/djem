@@ -76,7 +76,7 @@ class Images extends Control
 
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
-                $value['file'] = $this->getFilePath($value['file']);
+                $value['file'] = $this->normalizeImageExtension($this->getFilePath($value['file']));
 
                 if (empty($this->images)) {
                     $model = call_user_func($getValue->model, $this->getName());

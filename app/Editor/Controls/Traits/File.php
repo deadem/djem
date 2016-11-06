@@ -35,4 +35,45 @@ trait File
 
         return $file;
     }
+
+    private static function normalizeImageExtension($filePath)
+    {
+        // проверим тип файла по mime:
+        $info = pathinfo($filePath);
+        $extension = false;
+        switch (mime_content_type($filePath)) {
+            case 'image/jpeg':
+                $extension = 'jpg';
+                break;
+
+            case 'image/gif':
+                $extension = 'gif';
+                break;
+
+            case 'image/png':
+                $extension = 'png';
+                break;
+
+            case 'image/x-icon':
+                $extension = 'ico';
+                break;
+
+            case 'image/bmp':
+                $extension = 'bmp';
+                break;
+
+            default:
+                // это не картинка!
+                throw new \InvalidArgumentException('Unsupported file: '.$filePath);
+        }
+        if ($extension) {
+            $newFile = substr($filePath, 0, -strlen(pathinfo($filePath, PATHINFO_EXTENSION))).$extension;
+            if ($newFile != $filePath) {
+                rename($filePath, $newFile);
+                $filePath = $newFile;
+            }
+        }
+
+        return $filePath;
+    }
 }

@@ -34,7 +34,7 @@ class RichText extends Control
         $value = preg_replace_callback('/(<img.*?src=\s*([\'"]))(.*?)(\\2)/is', function ($matches) use ($getValue) {
             if (preg_match('/^blob:http.*?#(.+)$/i', $matches[3], $urls)) {
                 $relation = call_user_func($getValue->relation, $this->images);
-                $file = $this->getFilePath($urls[1]);
+                $file = $this->normalizeImageExtension($this->getFilePath($urls[1]));
 
                 $value = call_user_func($this->imageSaveHandler, ['file' => $file], $relation->getRelated(), $getValue);
 

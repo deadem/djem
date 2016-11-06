@@ -101,7 +101,7 @@ class Image extends Control
         if (! empty($value)) {
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
-                $value['file'] = $this->getFilePath($value['file']);
+                $value['file'] = $this->normalizeImageExtension($this->getFilePath($value['file']));
 
                 foreach ($this->images as $image) {
                     $image->setUserValue($this->prepareUserSaveValue($value, $image->getName(), $getValue));
