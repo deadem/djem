@@ -17,6 +17,8 @@ Ext.application({
     // -------------------------------------------------------------------------
 
     requires: [
+        'fix.overrides.Event',
+
         'djem.overrides.LoadMask', 'djem.overrides.viewAbstractView'
     ]
 });
