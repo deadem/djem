@@ -2,9 +2,9 @@
 
 namespace DJEM\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use BadMethodCallException;
 use DJEM\DoctypeResolver;
+use BadMethodCallException;
+use Illuminate\Http\Request;
 
 class Main extends \Illuminate\Routing\Controller
 {

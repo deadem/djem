@@ -2,9 +2,9 @@
 
 namespace DJEM;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 
 class DJEMServiceProvider extends ServiceProvider
 {

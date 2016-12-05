@@ -2,8 +2,8 @@
 
 namespace DJEM\Editor\Controls;
 
-use BadMethodCallException;
 use ReflectionClass;
+use BadMethodCallException;
 
 class Item
 {

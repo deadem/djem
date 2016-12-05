@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use App\Models;
+use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 
 class NewsTableSeeder extends Seeder
 {

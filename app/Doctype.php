@@ -2,8 +2,8 @@
 
 namespace DJEM;
 
-use Illuminate\Support\Collection;
 use Request;
+use Illuminate\Support\Collection;
 
 /**
  * Базовый тип документа.

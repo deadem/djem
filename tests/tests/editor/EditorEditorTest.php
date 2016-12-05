@@ -4,8 +4,8 @@ namespace Tests\EditorEditor;
 
 use TestCase;
 use DJEM\Doctype;
-use Illuminate\Database\Eloquent\Model;
 use App\Tests\CheckModel;
+use Illuminate\Database\Eloquent\Model;
 
 class LinkedValue extends Model
 {

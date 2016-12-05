@@ -4,8 +4,8 @@ namespace Tests\EditorSave;
 
 use TestCase;
 use DJEM\Doctype;
-use Illuminate\Database\Eloquent\Model;
 use App\Tests\CheckModel;
+use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
