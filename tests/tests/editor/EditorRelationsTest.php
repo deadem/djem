@@ -2,8 +2,8 @@
 
 namespace Tests\EditorRelations;
 
-use App\Models;
 use TestCase;
+use App\Models;
 use DJEM\Doctype;
 use Illuminate\Database\Eloquent\Model;
 
