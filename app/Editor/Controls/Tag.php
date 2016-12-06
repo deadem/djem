@@ -35,7 +35,8 @@ class Tag extends Select
                 ];
             });
         } else {
-            $data = $this->getRelation($model)->select('id', 'name')->get()->map(function (Model $value) {
+            $related = $this->getRelation($model)->getRelated();
+            $data = $this->getRelation($model)->select($related->getTable().'.id', $related->getTable().'.name')->get()->map(function (Model $value) {
                 return [
                     'value' => $value->id,
                     'text' => $value->name,
