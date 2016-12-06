@@ -39,7 +39,6 @@ trait File
     private static function normalizeImageExtension($filePath)
     {
         // проверим тип файла по mime:
-        $info = pathinfo($filePath);
         $extension = false;
         switch (mime_content_type($filePath)) {
             case 'image/jpeg':
