@@ -63,12 +63,12 @@ trait File
 
             default:
                 // это не картинка!
-                throw new \InvalidArgumentException('Unsupported file: '.$filePath);
+                throw new \InvalidArgumentException('Invalid image: '.basename($filePath));
         }
         if ($extension) {
             $newFile = substr($filePath, 0, -strlen(pathinfo($filePath, PATHINFO_EXTENSION))).$extension;
             if ($newFile != $filePath) {
-                rename($filePath, $newFile);
+                copy($filePath, $newFile);
                 $filePath = $newFile;
             }
         }
