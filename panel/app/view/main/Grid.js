@@ -5,7 +5,8 @@ Ext.define('djem.view.main.Grid', {
 
     requires: [
         'djem.view.main.GridController',
-        'djem.view.main.GridModel'
+        'djem.view.main.GridModel',
+        'djem.widget.grid.icon'
     ],
 
     controller: 'main-grid',
