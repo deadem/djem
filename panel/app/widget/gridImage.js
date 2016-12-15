@@ -1,7 +1,7 @@
 /* global Ext */
-Ext.define('djem.widget.grid.image', {
+Ext.define('djem.widget.gridImage', {
     extend: 'Ext.grid.column.Column',
-    alias: ['widget.image'],
+    alias: ['djem.widget.image'],
 
     renderer: function (value) {
         return Ext.String.format(['<div class="image" style="background-image: url({0})"></div>'], value);
