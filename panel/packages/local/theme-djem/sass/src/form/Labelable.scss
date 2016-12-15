@@ -6,6 +6,7 @@
     &, &.medium-label {
         .x-form-item-label-top span.x-form-item-label-text {
             pointer-events: none;
+            display: inline-block;
             transform: scale(1.5) translateY(6px);
             transform-origin: top left 0px;
             -webkit-font-smoothing: antialiased;

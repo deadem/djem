@@ -34,7 +34,11 @@ class Content extends \Illuminate\Routing\Controller
 
     public function set()
     {
-        $this->doctype()->save();
+        try {
+            $this->doctype()->save();
+        } catch (\InvalidArgumentException $e) {
+            return response($e->getMessage(), 400);
+        }
 
         return $this->get();
     }
