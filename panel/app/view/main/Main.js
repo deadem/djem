@@ -24,7 +24,7 @@ Ext.define('djem.view.main.Main', {
         'djem.widget.combobox',
         'djem.widget.date',
         'djem.widget.time',
-        'djem.widget.grid',
+        'djem.widget.grid.panel',
         'djem.widget.searchToolbarField'
     ],
 

@@ -1,13 +1,13 @@
 /* global Ext */
-Ext.define('djem.widget.grid', {
+Ext.define('djem.widget.grid.panel', {
     extend: 'Ext.grid.Panel',
-    alias: [ 'widget.djem.grid' ],
+    alias: [ 'widget.djem.grid.panel' ],
 
     requires: [
-        'djem.widget.gridController'
+        'djem.widget.grid.controller'
     ],
 
-    controller: 'djem-grid',
+    controller: 'djem.grid',
 
     viewConfig: {
         plugins: {
