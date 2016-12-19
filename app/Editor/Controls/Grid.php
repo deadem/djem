@@ -8,7 +8,7 @@ class Grid extends Control
     {
         parent::__construct($name);
 
-        $this->xtype('djem.grid');
+        $this->xtype('djem.grid.panel');
     }
 
     public function queryMode($value)
