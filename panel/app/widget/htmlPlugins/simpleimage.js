@@ -1,139 +1,118 @@
 /* global CKEDITOR, Ext */
 Ext.define('djem.widget.htmlPlugins.simpleimage', {});
 (function() {
-    var pluginName = 'simpleimage';
+  var pluginName = 'simpleimage';
 
-    CKEDITOR.plugins.add(pluginName, {
-        requires: 'dialog',
-        icons: 'image',
-        hidpi: true,
-        init: function(editor) {
-            if (editor.plugins.image2) {
-                return;
-            }
+  CKEDITOR.plugins.add(pluginName, {
+    requires: 'dialog',
+    icons: 'image',
+    hidpi: true,
+    init: function(editor) {
+      if (editor.plugins.image2) {
+        return;
+      }
 
-            var allowed = 'img[alt,!src]{float}',
-                required = 'img[src]';
+      var allowed = 'img[alt,!src]{float}', required = 'img[src]';
 
-            // Register the command.
-            editor.addCommand(pluginName, new CKEDITOR.dialogCommand(pluginName, {
-                allowedContent: allowed,
-                requiredContent: required,
-                contentTransformations: [
-                ]
-            }));
+      // Register the command.
+      editor.addCommand(
+        pluginName, new CKEDITOR.dialogCommand(
+                      pluginName, { allowedContent: allowed, requiredContent: required, contentTransformations: [] }));
 
-            // Register the toolbar button.
-            if (editor.ui.addButton) {
-                editor.ui.addButton('image', {
-                    label: editor.lang.common.image,
-                    command: pluginName,
-                    toolbar: 'insert,0'
-                });
-            }
+      // Register the toolbar button.
+      if (editor.ui.addButton) {
+        editor.ui.addButton('image', { label: editor.lang.common.image, command: pluginName, toolbar: 'insert,0' });
+      }
 
-            editor.on('doubleclick', function(evt) {
-                var element = evt.data.element;
+      editor.on('doubleclick', function(evt) {
+        var element = evt.data.element;
 
-                if (element.is('img') && !element.data('cke-realelement') && !element.isReadOnly()) {
-                    evt.data.dialog = pluginName;
-                }
-            });
-
-            // If the "menu" plugin is loaded, register the menu items.
-            if (editor.addMenuItems) {
-                editor.addMenuItems({
-                    image: {
-                        label: editor.lang.image.menu,
-                        command: pluginName,
-                        group: 'image'
-                    }
-                });
-            }
-
-            // If the "contextmenu" plugin is loaded, register the listeners.
-            if (editor.contextMenu) {
-                editor.contextMenu.addListener(function(element) {
-                    if (getSelectedImage(editor, element)) {
-                        return { simpleimage: CKEDITOR.TRISTATE_OFF };
-                    }
-                });
-            }
+        if (element.is('img') && !element.data('cke-realelement') && !element.isReadOnly()) {
+          evt.data.dialog = pluginName;
         }
-    });
+      });
 
-    function getSelectedImage(editor, element) {
-        if (!element) {
-            var sel = editor.getSelection();
-            element = sel.getSelectedElement();
-        }
+      // If the "menu" plugin is loaded, register the menu items.
+      if (editor.addMenuItems) {
+        editor.addMenuItems({ image: { label: editor.lang.image.menu, command: pluginName, group: 'image' } });
+      }
 
-        if (element && element.is('img') && !element.data('cke-realelement') && !element.isReadOnly()) {
-            return element;
-        }
+      // If the "contextmenu" plugin is loaded, register the listeners.
+      if (editor.contextMenu) {
+        editor.contextMenu.addListener(function(element) {
+          if (getSelectedImage(editor, element)) {
+            return { simpleimage: CKEDITOR.TRISTATE_OFF };
+          }
+        });
+      }
+    }
+  });
+
+  function getSelectedImage(editor, element) {
+    if (!element) {
+      var sel = editor.getSelection();
+      element = sel.getSelectedElement();
     }
 
-    CKEDITOR.dialog.add(pluginName, function(editor) {
-        function onShow() {
-            var file = Ext.get('file_image_' + editor.element.getAttribute('id'));
-            if (file && (file = file.dom)) {
-                file.value = '';
-                file.setAttribute('uploadedfile', '');
-            }
+    if (element && element.is('img') && !element.data('cke-realelement') && !element.isReadOnly()) {
+      return element;
+    }
+  }
 
-            var sel = editor.getSelection(), element = sel && sel.getSelectedElement();
+  CKEDITOR.dialog.add(pluginName, function(editor) {
+    function onShow() {
+      var file = Ext.get('file_image_' + editor.element.getAttribute('id'));
+      if (file && (file = file.dom)) {
+        file.value = '';
+        file.setAttribute('uploadedfile', '');
+      }
 
-            if (element && element.getName() == 'img' && !element.data('cke-realelement')) {
-                this.imageElement = element;
-            }
-        }
+      var sel = editor.getSelection(), element = sel && sel.getSelectedElement();
 
-        function onOk() {
-            var imageElement = this.imageElement || editor.document.createElement('img');
+      if (element && element.getName() == 'img' && !element.data('cke-realelement')) {
+        this.imageElement = element;
+      }
+    }
 
-            var file = Ext.get('file_image_' + editor.element.getAttribute('id')).dom;
-            file = file.getAttribute('uploadedfile');
-            if (file) {
-                imageElement.setAttribute('src', file);
-            }
+    function onOk() {
+      var imageElement = this.imageElement || editor.document.createElement('img');
 
-            var alt = this.getContentElement('main', 'alt').getValue();
-            imageElement.setAttribute('alt', alt || '');
-            if (!this.imageElement) {
-                editor.insertElement(imageElement);
-            }
-        }
+      var file = Ext.get('file_image_' + editor.element.getAttribute('id')).dom;
+      file = file.getAttribute('uploadedfile');
+      if (file) {
+        imageElement.setAttribute('src', file);
+      }
 
-        return {
-            title: editor.lang.image.title,
-            minWidth: 420,
-            minHeight: 160,
-            contents: [
-                {
-                    id: 'main',
-                    elements: [
-                        {
-                            type: 'html',
-                            html: '<form>' +
-                                '<label>' +
-                                editor.lang.image.upload +
-                                '<input id="file_image_' + editor.element.getAttribute('id') + '" type="file" astyle="display:none;" onchange="' +
-                                    'Ext.get(\'' + editor.element.getAttribute('id') + '\')' +
-                                    '.up().up().up().up().fireEvent(\'filechange\', event, this);">' +
-                                '</label>' +
-                                '</form>',
-                            id: 'file'
-                        },
-                        {
-                            type: 'text',
-                            id: 'alt',
-                            label: editor.lang.image.alt
-                        }
-                    ]
-                }
-            ],
-            onOk: onOk,
-            onShow: onShow
-        };
-    });
+      var alt = this.getContentElement('main', 'alt').getValue();
+      imageElement.setAttribute('alt', alt || '');
+      if (!this.imageElement) {
+        editor.insertElement(imageElement);
+      }
+    }
+
+    return {
+      title: editor.lang.image.title,
+      minWidth: 420,
+      minHeight: 160,
+      contents: [{
+        id: 'main',
+        elements: [
+          {
+            type: 'html',
+            html: '<form>' +
+                    '<label>' + editor.lang.image.upload + '<input id="file_image_' +
+                    editor.element.getAttribute('id') + '" type="file" astyle="display:none;" onchange="' +
+                    'Ext.get(\'' + editor.element.getAttribute('id') + '\')' +
+                    '.up().up().up().up().fireEvent(\'filechange\', event, this);">' +
+                    '</label>' +
+                    '</form>',
+            id: 'file'
+          },
+          { type: 'text', id: 'alt', label: editor.lang.image.alt }
+        ]
+      }],
+      onOk: onOk,
+      onShow: onShow
+    };
+  });
 })();

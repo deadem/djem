@@ -1,18 +1,14 @@
+/* global Ext */
 Ext.define('djem.store.main.Grid', {
-    extend: 'Ext.data.Store',
+  extend: 'Ext.data.Store',
 
-    requires: [
-        'djem.store.proxy'
-    ],
+  requires: ['djem.store.proxy'],
 
-    model: 'Ext.data.Model',
-    autoLoad: false,
+  model: 'Ext.data.Model',
+  autoLoad: false,
 
-    pageSize: 300,
-    remoteSort: true,
+  pageSize: 300,
+  remoteSort: true,
 
-    proxy: {
-        type: 'djem',
-        url : 'api/grid'
-    }
+  proxy: { type: 'djem', url: 'api/grid' }
 });

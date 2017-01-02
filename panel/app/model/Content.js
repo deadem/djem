@@ -1,6 +1,6 @@
 Ext.define('djem.model.Content', {
-    extend: 'Ext.data.Model',
+  extend: 'Ext.data.Model',
 
-    fields: [],
-    idProperty: '_'
+  fields: [],
+  idProperty: '_'
 });

@@ -1,6 +1,7 @@
+/* global Ext */
 Ext.define('djem.model.Grid', {
-    extend: 'Ext.data.Model',
+  extend: 'Ext.data.Model',
 
-    fields: [ 'id', 'name' ],
-    idProperty: 'id'
+  fields: ['id', 'name'],
+  idProperty: 'id'
 });

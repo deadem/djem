@@ -1,20 +1,15 @@
+/* global Ext */
 Ext.define('djem.store.main.ContentLoader', {
-    extend: 'Ext.data.Store',
-    alias: 'store.content',
+  extend: 'Ext.data.Store',
+  alias: 'store.content',
 
-    requires: [
-        'djem.store.proxy',
-        'djem.model.Content'
-    ],
+  requires: ['djem.store.proxy', 'djem.model.Content'],
 
-    model: 'djem.model.Content',
-    autoLoad: false,
+  model: 'djem.model.Content',
+  autoLoad: false,
 
-    pageSize: 100,
-    remoteSort: true,
+  pageSize: 100,
+  remoteSort: true,
 
-    proxy: {
-        type: 'djem',
-        url : 'api/content/load'
-    }
+  proxy: { type: 'djem', url: 'api/content/load' }
 });

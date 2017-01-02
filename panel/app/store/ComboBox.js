@@ -1,16 +1,11 @@
 /* global Ext */
 Ext.define('djem.store.ComboBox', {
-    extend: 'Ext.data.Store',
+  extend: 'Ext.data.Store',
 
-    requires: [
-        'djem.store.proxy'
-    ],
+  requires: ['djem.store.proxy'],
 
-    model: 'djem.model.ComboBox',
-    autoLoad: false,
+  model: 'djem.model.ComboBox',
+  autoLoad: false,
 
-    proxy: {
-        type: 'djem',
-        url: 'api/content/load'
-    }
+  proxy: { type: 'djem', url: 'api/content/load' }
 });
