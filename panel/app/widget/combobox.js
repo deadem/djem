@@ -40,7 +40,9 @@ Ext.define('djem.widget.combobox', {
       me.store.loadCount = 0;
       me.callParent([value[me.valueField], doSelect]);
     } else {
+      ++me.store.loadCount;
       me.callParent(arguments);
+      --me.store.loadCount;
     }
   },
 
