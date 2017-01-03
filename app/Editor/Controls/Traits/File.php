@@ -12,6 +12,9 @@ trait File
         if (isset($url['scheme']) && isset($url['path'])) {
             $newFileName = uniqid().'.'.basename($url['path']);
 
+            $fileName = preg_replace_callback('/\s/', function ($match) {
+                return sprintf('%%%02x', ord($match[0]));
+            }, $fileName);
             $file = file_get_contents($fileName, false, stream_context_create(
                 [
                     'http' => ['ignore_errors' => true],
