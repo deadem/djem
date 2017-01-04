@@ -17,6 +17,11 @@ class GridHeader
         return ['field' => ['name' => $row['name']], 'column' => $column];
     }
 
+    protected function mappingField($row)
+    {
+        return ['field' => ['mapping' => $row['mapping']]];
+    }
+
     protected function typeField($row)
     {
         return ['field' => ['type' => $row['type']]];
