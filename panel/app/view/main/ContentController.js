@@ -54,7 +54,7 @@ Ext.define('djem.view.main.ContentController', {
         if (me.loadingMask) {
           me.loadingMask.hide();
         }
-        djem.app.fireEvent('update.grid', { tree: me.getView().config.data.tree });
+        // djem.app.fireEvent('update.grid', { tree: me.getView().config.data.tree });
       },
       failure: function(response) {
         Ext.each(response.exceptions, function(exception) {
