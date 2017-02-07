@@ -10,11 +10,13 @@ class DJEMServiceProvider extends ServiceProvider
 {
     private function routes(Router $router)
     {
-        if(method_exists($router, 'middleware')) {
+        // метод "middleware" переименовали в "aliasMiddleware" с версии laravel 5.4
+        if (method_exists($router, 'middleware')) {
             $router->middleware('djem.auth', \DJEM\Http\Middleware\Authenticate::class);
         } else {
             $router->aliasMiddleware('djem.auth', \DJEM\Http\Middleware\Authenticate::class);
         }
+
         $router->middlewareGroup('djem.web', [
             \Illuminate\Cookie\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
