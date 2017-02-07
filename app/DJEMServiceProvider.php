@@ -10,7 +10,11 @@ class DJEMServiceProvider extends ServiceProvider
 {
     private function routes(Router $router)
     {
-        $router->middleware('djem.auth', \DJEM\Http\Middleware\Authenticate::class);
+        if(method_exists($router, 'middleware')) {
+            $router->middleware('djem.auth', \DJEM\Http\Middleware\Authenticate::class);
+        } else {
+            $router->aliasMiddleware('djem.auth', \DJEM\Http\Middleware\Authenticate::class);
+        }
         $router->middlewareGroup('djem.web', [
             \Illuminate\Cookie\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
