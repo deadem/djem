@@ -35,6 +35,7 @@ Ext.define('djem.widget.html', {
     var me = this;
     var editor = me.editor;
     if (editor) {
+      editor.focusManager.blur(true);
       editor.destroy(true);
       me.editor = undefined;
     }
