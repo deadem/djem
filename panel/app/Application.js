@@ -29,6 +29,10 @@ Ext.define('djem.Application', {
     }
   },
 
+  init: function() {
+    Ext.getBody().el.setHtml('');
+  },
+
   launch: function() {
     function cancel(e) { e.preventDefault().stopPropagation(); }
     Ext.getBody().on({ dragenter: cancel, dragover: cancel, drop: cancel });

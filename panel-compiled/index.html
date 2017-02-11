@@ -8,9 +8,9 @@
     <title>djem</title>
     <script type="text/javascript" src="resources/js/ckeditor/ckeditor.js"></script>
     <script>
-        if (!location.href.match(/\/$/)) {
-            location.href = location.href + '/';
-        }
+      if (!location.href.match(/\/$/)) {
+        location.href += '/';
+      }
     </script>
 
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
@@ -68,7 +68,145 @@ else{c.updatedManifest=m;d=c.manifest.getAssets();b=m.getAssets();for(g in b)a=b
 c.updatedAssets.push(a)):a.uncache()}catch(h){l("Error parsing delta patch for "+a.assetConfig.path+" with hash "+d.assetConfig.hash+" . This asset will be uncached for future loading"),a.uncache()}if(0===c.remainingUpdatingAssets)c.onAllUpdatedAssetsReady()},onAllUpdatedAssetsReady:function(){var a;c.updatedAssetsReady=!0;if(c.updatedManifest){for(;0<c.removedAssets.length;)a=c.removedAssets.pop(),a.uncache();for(c.updatedManifest&&c.updatedManifest.cache();0<c.updatedAssets.length;)a=c.updatedAssets.pop(),
 a.cache()}c.notifyUpdateReady()},notifyUpdateReady:function(){"checking"!==c.appCacheState&&c.updatedAssetsReady&&("updated"===c.appCacheState||c.updatedManifest)&&(c.appUpdate={updated:!0,app:"updated"===c.appCacheState,manifest:c.updatedManifest&&c.updatedManifest.exportContent()},c.fireAppUpdate())},fireAppUpdate:function(){Ext.GlobalEvents&&Ext.defer(function(){Ext.GlobalEvents.fireEvent("appupdate",c.appUpdate)},1E3)},checksum:function(a,c){if(!a||!c)return!1;var b=!0,e=c.length,f=a.substring(0,
 1);"/"==f?a.substring(2,e+2)!==c&&(b=!1):"f"==f?a.substring(10,e+10)!==c&&(b=!1):"."==f&&a.substring(1,e+1)!==c&&(b=!1);return b},parseResult:function(a){var c={};!a.exception&&0!==a.status||f.env.phantom?200<=a.status&&300>a.status||304===a.status||f.env.phantom||0===a.status&&0<a.content.length?c.content=a.content:c.error=!0:c.error=!0;return c}};return c}();Ext.manifest=Ext.manifest||"bootstrap";Ext.Microloader.run();</script>
-
 </head>
-<body></body>
+<body>
+  
+<div class="container">
+  <style type="text/css">
+    html {
+      height: 100%;
+    }
+    body {
+      height: 100%;
+    }
+    .container {
+      top: 50%;
+      left: 50%;
+      margin: -120px 0 0 -120px;
+      width: 220px;
+      height: 220px;
+      position: absolute;
+    }
+    .arrow {
+      width: 100px;
+      height: 100px;
+      perspective: 800px;
+      border-radius: 5px;
+      background-color: black;
+      animation: djem-loading 4s infinite;
+      margin: 0;
+      position: absolute;
+    }
+
+    svg.circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -12px 0 0 -12px;
+    }
+
+    .arrow svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .arrow.e1 {
+      left: 0;
+      top: 0;
+      animation: djem-loading-e1 4s infinite;
+    }
+
+    .arrow.e2 {
+      right: 0;
+      top: 0;
+      animation: djem-loading-e2 4s infinite;
+    }
+
+    .arrow.e3 {
+      right: 0;
+      bottom: 0;
+      animation: djem-loading-e3 4s infinite;
+    }
+
+    .arrow.e4 {
+      left: 0;
+      bottom: 0;
+      animation: djem-loading-e4 4s infinite;
+    }
+
+    @keyframes djem-loading-e1 {
+      0%   { transform: translate3d(0, 0, 0) rotateZ(-90deg); background-color: #000000; }
+      25%  { transform: translate3d(120px, 0, 0) rotateZ(0deg); background-color: #E80000; }
+      50%  { transform: translate3d(0px, 120px, 0) rotateZ(180deg); background-color: #000000; }
+      75%  { transform: translate3d(120px, 120px, 0) rotateZ(90deg); }
+      100% { transform: translate3d(0, 0, 0) rotateZ(270deg); }
+    }
+
+    @keyframes djem-loading-e2 {
+      0%   { transform: translate3d(0, 0, 0) rotateZ(0deg); background-color: #E80000; }
+      25%  { transform: translate3d(-120px, 0, 0) rotateZ(-90deg); background-color: #000000; }
+      50%  { transform: translate3d(0, 120px, 0) rotateZ(-270deg); }
+      75%  { transform: translate3d(-120px, 120px, 0) rotateZ(-180deg); background-color: #000000; }
+      100% { transform: translate3d(0, 0, 0) rotateZ(-360deg); background-color: #E80000; }
+    }
+
+    @keyframes djem-loading-e3 {
+      0%   { transform: translate3d(0, 0, 0) rotateZ(90deg); }
+      25%  { transform: translate3d(-120px, 0, 0) rotateZ(180deg); }
+      50%  { transform: translate3d(-120px, -120px, 0) rotateZ(270deg); background-color: #000000; }
+      75%  { transform: translate3d(0, -120px, 0) rotateZ(360deg); background-color: #E80000; }
+      100% { transform: translate3d(0, 0, 0) rotateZ(450deg); background-color: #000000; }
+    }
+
+    @keyframes djem-loading-e4 {
+      0%   { transform: translate3d(0, 0, 0) rotateZ(180deg); }
+      25%  { transform: translate3d(120px, 0, 0) rotateZ(90deg); background-color: #000000; }
+      50%  { transform: translate3d(120px, -120px, 0) rotateZ(0deg); background-color: #E80000; }
+      75%  { transform: translate3d(0, -120px, 0) rotateZ(-90deg); background-color: #000000; }
+      100% { transform: translate3d(0, 0, 0) rotateZ(-180deg); }
+    }
+  </style>
+
+  <div class="arrow e1">
+  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <g>
+    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+  </g>
+  </svg>
+  </div>
+  
+  <div class="arrow e2">
+  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <g>
+    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+  </g>
+  </svg>
+  </div>
+
+  <div class="arrow e3">
+  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <g>
+    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+  </g>
+  </svg>
+  </div>
+
+  <div class="arrow e4">
+  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <g>
+    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
+  </g>
+  </svg>
+  </div>
+</div>
+
+ </body>
 </html>
