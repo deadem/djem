@@ -58,15 +58,15 @@ Ext.define('djem.view.main.ContentController', {
       },
       failure: function(response) {
         Ext.each(response.exceptions, function(exception) {
-          var messages = {};
           try {
-            messages = JSON.parse(exception.error.response.responseText);
+            var messages = JSON.parse(exception.error.response.responseText);
             Ext.each(me.getView().getForm().getFields().items, function(item) {
               if (messages[item.name]) {
                 item.markInvalid(messages[item.name].join(' '));
               }
             });
           } catch (ex) {
+            // suppress parse errors
           }
         });
       }

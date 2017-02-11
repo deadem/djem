@@ -35,7 +35,7 @@ Ext.data.request.Ajax.override({
         fn: function() {}
       });
     }
-    this.callParent(arguments);
+    return this.callParent(arguments);
   }
 });
 

@@ -26,12 +26,11 @@ Ext.define('djem.store.FileUpload', {
 
     xhr.open('POST', url, true);
     xhr.onreadystatechange = function() {
-      var data = false;
       if (xhr.readyState == 4) {
         if (xhr.status == 200) {
           try {
             djem.app.fireEvent('token', xhr.getResponseHeader('x-csrf-token'));
-            data = JSON.parse(xhr.responseText);
+            var data = JSON.parse(xhr.responseText);
             callback(data);
             return;
           } catch (ex) {
