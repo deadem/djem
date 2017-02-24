@@ -25,7 +25,7 @@ class MainTreeTest extends TestCase
         $config = config('djem.tree'); // конфигурация дерева в config/djem/tree
         $items = $config()['items'];
 
-        $this->assertGreaterThanOrEqual(4, count($items));
+        $this->assertGreaterThanOrEqual(3, count($items));
 
         $data = $response->getData();
         foreach ($data->items as $key => $value) {
