@@ -22,7 +22,7 @@ class Main extends \Illuminate\Routing\Controller
 
     protected function getTree($id = 0)
     {
-        return call_user_func(config('djem.tree'), $id);
+        return config('djem.tree');
     }
 
     protected function findLeaf($id, $tree = null)
