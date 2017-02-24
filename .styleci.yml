@@ -1,5 +1,7 @@
 preset: laravel
 
 finder:
-  exclude:
-    - "tests/public"
+  not-name:
+    - "*.eot"
+    - "*.ttf"
+
