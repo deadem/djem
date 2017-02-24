@@ -1,7 +1,1 @@
 preset: laravel
-
-finder:
-  not-name:
-    - "*.eot"
-    - "*.ttf"
-
