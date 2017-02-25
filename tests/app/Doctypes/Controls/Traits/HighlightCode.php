@@ -23,6 +23,14 @@ trait HighlightCode
     private function addHighlightedCode(&$items, $file)
     {
         $items->addLabel(' ');
-        $items->addStaticHtml(View::make('djem.highlight', ['code' => file_get_contents($file)])->render());
+
+        $code = file_get_contents($file);
+
+        // cleanup
+        $code = preg_replace('/\s*namespace App\\\\[^\n]+/', '', $code);
+        $code = preg_replace('/\s*use Traits\\\\HighlightCode[^\n]+/', '', $code);
+        $code = preg_replace('/\s*\\$this->addHighlightedCode[^\n]+/', '', $code);
+
+        $items->addStaticHtml(View::make('djem.highlight', ['code' => $code])->render());
     }
 }
