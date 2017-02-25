@@ -22,7 +22,7 @@ trait HighlightCode
 
     private function addHighlightedCode(&$items, $file)
     {
-        $items->addLabel(' ');
+        $items->addLabel()->height(32);
 
         $code = file_get_contents($file);
 
