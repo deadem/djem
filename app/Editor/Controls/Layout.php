@@ -11,6 +11,7 @@ class Layout extends Panel
         if ($value) {
             $this->setProperty('layout', $value);
         }
+        $this->align('stretch');
     }
 
     public function title($value)
@@ -22,6 +23,8 @@ class Layout extends Panel
 
     public function align($value)
     {
+        $this->removeProperty('align');
+
         $layout = $this->getProperty('layout');
         if (empty($layout)) {
             $layout = [];

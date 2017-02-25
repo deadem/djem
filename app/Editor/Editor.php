@@ -72,6 +72,10 @@ class Editor
         $controls = $this->getControls();
         $model = $this->model();
 
+        if (! $model) {
+            return;
+        }
+
         $data = (object) $model->getAttributes();
 
         foreach ($controls as $field => $item) {

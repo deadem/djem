@@ -76,7 +76,8 @@ class EditorSaveTest extends TestCase
                         'name' => 'images',
                         'xtype' => 'djem.images',
                         'editor' => (object) [
-                            'layout' => 'vbox',
+                            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+                            'autoScroll' => true,
                             'items' => [
                                 (object) [
                                     'name' => 'news',
@@ -88,6 +89,8 @@ class EditorSaveTest extends TestCase
                         'bind' => '{images}',
                     ],
                 ],
+                'autoScroll' => true,
+                'layout' => ['align' => 'stretch'],
             ],
             $editor->getView()
         );

@@ -69,7 +69,11 @@ class EditorTest extends TestCase
         $editor->loadModel($model);
 
         $editor->createTabPanel();
-        $this->assertEquals((object) ['xtype' => 'tabpanel'], $editor->getView());
+        $this->assertEquals((object) [
+            'xtype' => 'tabpanel',
+            'layout' => ['align' => 'stretch'],
+            'autoScroll' => true,
+        ], $editor->getView());
 
         $editor->createTabPanel()->region('center')->plain(true)->tabPosition('left');
         $this->assertEquals((object) [
@@ -77,6 +81,8 @@ class EditorTest extends TestCase
             'region' => 'center',
             'plain' => true,
             'tabPosition' => 'left',
+            'layout' => ['align' => 'stretch'],
+            'autoScroll' => true,
         ], $editor->getView());
 
         $this->checkData($editor);

@@ -68,6 +68,13 @@ class Item
         return $value;
     }
 
+    protected function removeProperty($name)
+    {
+        unset($this->properties[$name]);
+
+        return $this;
+    }
+
     public function getProperties($model)
     {
         $model; // unused variable

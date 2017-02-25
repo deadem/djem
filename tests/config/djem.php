@@ -8,7 +8,7 @@ return [
                 'text' => 'djem.example.com',
                 'description' => 'Стартовая страница',
                 'leaf' => true,
-                '_doctype' => DJEM\Doctype::class,
+                '_doctype' => App\Doctypes\StartPage::class,
                 'color' => 'red',
                 'icon' => '&#xf4cf;',
             ],
