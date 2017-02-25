@@ -2,8 +2,8 @@
 
 namespace App\Doctypes;
 
-use Illuminate\Http\Request;
 use View;
+use Illuminate\Http\Request;
 
 class Font extends \DJEM\Doctype
 {
@@ -18,6 +18,7 @@ class Font extends \DJEM\Doctype
             'metaData' => ['view' => 'custom', '_doctype' => self::class],
         ];
     }
+
     public function load()
     {
         $editor = $this->editor();
