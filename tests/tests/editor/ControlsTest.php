@@ -50,4 +50,23 @@ class ControlsTest extends TestCase
             ],
         ], $view);
     }
+
+    public function testStaticHtml()
+    {
+        $editor = (new Controls\StaticHtml())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'html' => '<b>Static html content</b><p>Text content</p>',
+                ],
+            ],
+        ], $view);
+    }
 }
