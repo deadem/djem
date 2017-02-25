@@ -52,6 +52,36 @@ class ControlsTest extends TestCase
         ], $view);
     }
 
+    public function testDate()
+    {
+        $editor = (new Controls\Date())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'layout' => [
+                        'align' => 'stretch',
+                    ],
+                    'autoScroll' => true,
+                    'items' => [
+                        (object) [
+                            'name' => 'name',
+                            'xtype' => 'djem.date',
+                            'fieldLabel' => 'Date',
+                            'bind' => '{name}',
+                        ],
+                    ],
+                ],
+            ],
+        ], $view);
+    }
+
     public function testSelect()
     {
         $editor = (new Controls\Select())->editor();
