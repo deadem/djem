@@ -51,6 +51,7 @@ class ControlsTest extends TestCase
             ],
         ], $view);
     }
+
     public function testStaticHtml()
     {
         $editor = (new Controls\StaticHtml())->editor();
