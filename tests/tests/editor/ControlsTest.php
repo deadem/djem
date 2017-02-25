@@ -52,6 +52,38 @@ class ControlsTest extends TestCase
         ], $view);
     }
 
+    public function testSelect()
+    {
+        $editor = (new Controls\Select())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'xtype' => 'djem.select',
+                    'name' => 'name',
+                    'fieldLabel' => 'Name',
+                    'forceSelection' => false,
+                    'queryMode' => 'local',
+                    'store' => [
+                        'fields' => [['name' => 'value'], ['name' => 'text']],
+                        'data' => [
+                            ['value' => 'One', 'text' => 'One'],
+                            ['value' => 'Two', 'text' => 'Two'],
+                            ['value' => 'Three', 'text' => 'Three'],
+                        ],
+                    ],
+                    'bind' => '{name}',
+                ],
+            ],
+        ], $view);
+    }
+
     public function testStaticHtml()
     {
         $editor = (new Controls\StaticHtml())->editor();
