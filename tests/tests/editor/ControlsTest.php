@@ -7,6 +7,48 @@ use App\Doctypes\Controls;
 
 class ControlsTest extends TestCase
 {
+    public function testButton()
+    {
+        $editor = (new Controls\Button())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'xtype' => 'button',
+                    'text' => 'Click me',
+                    'reference' => 'name',
+                    'height' => 64,
+                    'cls' => 'color-black bgcolor-light-green',
+                ],
+            ],
+        ], $view);
+    }
+
+    public function testStaticHtml()
+    {
+        $editor = (new Controls\StaticHtml())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'html' => '<b>Static html content</b><p>Text content</p>',
+                ],
+            ],
+        ], $view);
+    }
+
     public function testText()
     {
         $editor = (new Controls\Text())->editor();
@@ -46,25 +88,6 @@ class ControlsTest extends TestCase
                     'xtype' => 'djem.textarea',
                     'fieldLabel' => 'Name',
                     'bind' => '{name}',
-                ],
-            ],
-        ], $view);
-    }
-
-    public function testStaticHtml()
-    {
-        $editor = (new Controls\StaticHtml())->editor();
-
-        $view = $editor->getView();
-        unset($view->items[1]);
-        unset($view->items[2]);
-
-        $this->assertEquals((object) [
-            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
-            'autoScroll' => true,
-            'items' => [
-                (object) [
-                    'html' => '<b>Static html content</b><p>Text content</p>',
                 ],
             ],
         ], $view);
