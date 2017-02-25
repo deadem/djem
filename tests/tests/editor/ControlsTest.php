@@ -30,6 +30,27 @@ class ControlsTest extends TestCase
         ], $view);
     }
 
+    public function testCheckbox()
+    {
+        $editor = (new Controls\Checkbox())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'xtype' => 'djem.checkbox',
+                    'name' => 'name',
+                    'fieldLabel' => 'Switch control',
+                    'bind' => '{name}',
+                ],
+            ],
+        ], $view);
+    }
     public function testStaticHtml()
     {
         $editor = (new Controls\StaticHtml())->editor();
