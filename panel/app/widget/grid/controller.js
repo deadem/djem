@@ -8,6 +8,10 @@ Ext.define('djem.widget.grid.controller', {
   init: function() {
     var me = this, view = me.getView();
 
+    if (view.queryMode == 'local') {
+      return;
+    }
+
     me.initStore();
     view.getStore().load();
   },

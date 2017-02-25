@@ -82,6 +82,42 @@ class ControlsTest extends TestCase
         ], $view);
     }
 
+    public function testGrid()
+    {
+        $editor = (new Controls\GridLocal())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'xtype' => 'djem.grid.panel',
+                    'name' => 'name',
+                    'bind' => '{name}',
+                    'columns' => [
+                        ['text' => 'Name', 'dataIndex' => 'name'],
+                        ['text' => 'Email', 'dataIndex' => 'email', 'flex' => 1],
+                        ['text' => 'Phone', 'dataIndex' => 'phone', 'width' => 200],
+                    ],
+                    'store' => [
+                        'fields' => ['name', 'email', 'phone'],
+                        'data' => [
+                            ['name' => 'Lisa', 'email' => 'lisa@simpsons.com', 'phone' => '555-111-1224'],
+                            ['name' => 'Bart', 'email' => 'bart@simpsons.com', 'phone' => '555-222-1234'],
+                            ['name' => 'Homer', 'email' => 'homer@simpsons.com', 'phone' => '555-222-1244'],
+                            ['name' => 'Marge', 'email' => 'marge@simpsons.com', 'phone' => '555-222-1254'],
+                        ],
+                    ],
+                    'queryMode' => 'local',
+                ],
+            ],
+        ], $view);
+    }
+
     public function testSelect()
     {
         $editor = (new Controls\Select())->editor();

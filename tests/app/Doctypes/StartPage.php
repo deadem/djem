@@ -10,6 +10,8 @@ class StartPage extends \DJEM\Doctype
             ['name' => 'Button', '_doctype' => Controls\Button::class],
             ['name' => 'Checkbox', '_doctype' => Controls\Checkbox::class],
             ['name' => 'Date', '_doctype' => Controls\Date::class],
+            ['name' => 'Grid remote', '_doctype' => Controls\GridRemote::class],
+            ['name' => 'Grid local', '_doctype' => Controls\GridLocal::class],
             ['name' => 'Select', '_doctype' => Controls\Select::class],
             ['name' => 'StaticHtml', '_doctype' => Controls\StaticHtml::class],
             ['name' => 'Text', '_doctype' => Controls\Text::class],
