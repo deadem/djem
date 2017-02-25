@@ -33,7 +33,7 @@ class Font extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout(['type' => 'hbox', 'align' => 'stretch'])->items(function ($items) {
+        $editor->createLayout('hbox')->items(function ($items) {
             $items->addStaticHtml($this->font())->flex(1);
         });
 
