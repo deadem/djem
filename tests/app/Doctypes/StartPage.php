@@ -8,6 +8,7 @@ class StartPage extends \DJEM\Doctype
     {
         $items = collect([
             ['name' => 'Text', '_doctype' => Controls\Text::class],
+            ['name' => 'TextArea', '_doctype' => Controls\TextArea::class],
         ]);
 
         return $items;

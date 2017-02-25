@@ -28,4 +28,26 @@ class ControlsTest extends TestCase
             ],
         ], $view);
     }
+
+    public function testTextArea()
+    {
+        $editor = (new Controls\TextArea())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[1]);
+        unset($view->items[2]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'name' => 'name',
+                    'xtype' => 'djem.textarea',
+                    'fieldLabel' => 'Name',
+                    'bind' => '{name}',
+                ],
+            ],
+        ], $view);
+    }
 }
