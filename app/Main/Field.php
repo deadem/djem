@@ -65,7 +65,7 @@ class Field
         return $this->column('width', $value);
     }
 
-    public function title($value)
+    public function title($value = true)
     {
         return $this->field('title', $value);
     }

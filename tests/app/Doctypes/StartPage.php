@@ -11,7 +11,7 @@ class StartPage extends \DJEM\Doctype
         return Grid::fields(function ($fields) {
             $fields->field('id');
             $fields->field('_doctype');
-            $fields->field('name')->text('Name')->flex(1);
+            $fields->field('name')->text('Control name')->flex(1);
         })->items([
             ['name' => 'Button', '_doctype' => Controls\Button::class],
             ['name' => 'Checkbox', '_doctype' => Controls\Checkbox::class],
