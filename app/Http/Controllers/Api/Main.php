@@ -5,6 +5,7 @@ namespace DJEM\Http\Controllers\Api;
 use DJEM\DoctypeResolver;
 use BadMethodCallException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Main extends \Illuminate\Routing\Controller
 {
@@ -16,8 +17,38 @@ class Main extends \Illuminate\Routing\Controller
     public function grid(Request $request)
     {
         $id = $request->input('tree');
+        $doctype = $this->getDoctype($id);
 
-        return $this->getDoctype($id)->grid($id);
+        $grid = $doctype->grid($id);
+
+        $metaData = $grid->getMetaData();
+        if (! isset($metaData['options'])) {
+            $metaData['options'] = [];
+        }
+
+        $metaData['options'] += [
+            'subtypes' => $doctype->getSubtypes(),
+            '_doctype' => get_class($doctype->getResolverObject()),
+            'contextMenu' => $doctype->getContextMenu(),
+        ];
+
+        $items = $grid->getItems() ?: new Collection();
+        $total = $items->count();
+        if ($total && method_exists($items, 'total')) {
+            $total = $items->total();
+        }
+
+        if (empty($metaData['fields'])) {
+            // fields data required
+            $metaData['fields'] = [['name' => 'id']];
+            $metaData['columns'] = [];
+        }
+
+        return [
+            'metaData' => $metaData,
+            'items' => $items->all(),
+            'total' => $total,
+        ];
     }
 
     protected function getTree($id = 0)

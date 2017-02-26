@@ -7,6 +7,11 @@ class Resolver
     protected $object;
     protected $container;
 
+    public function getResolverObject()
+    {
+        return $this->object;
+    }
+
     public function __construct($object, $container)
     {
         $this->object = $object;

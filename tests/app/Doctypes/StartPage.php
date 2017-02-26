@@ -2,11 +2,17 @@
 
 namespace App\Doctypes;
 
+use DJEM\Main\Grid;
+
 class StartPage extends \DJEM\Doctype
 {
-    public function gridItems()
+    public function grid()
     {
-        $items = collect([
+        return Grid::fields(function ($fields) {
+            $fields->field('id');
+            $fields->field('_doctype');
+            $fields->field('name')->text('Name')->flex(1);
+        })->items([
             ['name' => 'Button', '_doctype' => Controls\Button::class],
             ['name' => 'Checkbox', '_doctype' => Controls\Checkbox::class],
             ['name' => 'Date', '_doctype' => Controls\Date::class],
@@ -17,7 +23,5 @@ class StartPage extends \DJEM\Doctype
             ['name' => 'Text', '_doctype' => Controls\Text::class],
             ['name' => 'TextArea', '_doctype' => Controls\TextArea::class],
         ]);
-
-        return $items;
     }
 }

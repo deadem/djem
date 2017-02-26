@@ -4,6 +4,7 @@ namespace App\Doctypes;
 
 use View;
 use Illuminate\Http\Request;
+use DJEM\Main\Grid;
 
 class Font extends \DJEM\Doctype
 {
@@ -14,9 +15,7 @@ class Font extends \DJEM\Doctype
 
     public function grid()
     {
-        return [
-            'metaData' => ['view' => 'custom', '_doctype' => self::class],
-        ];
+        return Grid::custom($this);
     }
 
     public function load()

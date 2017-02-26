@@ -3,7 +3,6 @@
 namespace DJEM;
 
 use Request;
-use Illuminate\Support\Collection;
 
 /**
  * Базовый тип документа.
@@ -93,33 +92,9 @@ class Doctype extends \Illuminate\Routing\Controller
      *
      * @return array список классов типов, которые можно создавать внутри этого типа.
      */
-    protected function getSubtypes()
+    public function getSubtypes()
     {
         return [];
-    }
-
-    /**
-     * Список полей грида для указанного mount-id.
-     *
-     * @return array массив с типами и именами полей.
-     */
-    protected function gridFields()
-    {
-        return [
-            ['name' => 'id', 'type' => 'string'],
-            ['name' => '_doctype', 'type' => 'string'],
-            ['name' => 'name', 'title' => true, 'text' => 'Name', 'type' => 'string', 'flex' => 1],
-        ];
-    }
-
-    /**
-     * Получить список документов для грида.
-     *
-     * @return Illuminate\Support\Collection список документов в гриде
-     */
-    protected function gridItems()
-    {
-        return new Collection();
     }
 
     /**
@@ -127,46 +102,19 @@ class Doctype extends \Illuminate\Routing\Controller
      *
      * @return array массив с указанием возможных действий
      */
-    protected function getContextMenu()
+    public function getContextMenu()
     {
         return [];
     }
 
     /**
-     * Получить заголовок грида со служебными данными для указанного mount-id.
-     *
-     * @return array объект со списком полей, их типами и описанием.
-     */
-    private function header()
-    {
-        $fields = (new GridHeader())->getFields($this->gridFields());
-        $fields['options'] += [
-            'subtypes' => $this->getSubtypes(),
-            '_doctype' => get_class($this),
-            'contextMenu' => $this->getContextMenu(),
-        ];
-
-        return $fields;
-    }
-
-    /**
      * Подготовить данные для грида в указанном mount-id.
      *
-     * @return array объект, содержащий заголовок грила и собственно данные
+     * @return array объект, содержащий заголовок грида и собственно данные
      */
     public function grid()
     {
-        $items = $this->gridItems();
-        $total = $items->count();
-        if ($total && method_exists($items, 'total')) {
-            $total = $items->total();
-        }
-
-        return [
-            'metaData' => $this->header(),
-            'items' => $items->all(),
-            'total' => $total,
-        ];
+        return new Main\GridBuilder();
     }
 
     /**

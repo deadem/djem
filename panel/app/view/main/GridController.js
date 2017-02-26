@@ -181,15 +181,16 @@ Ext.define('djem.view.main.GridController', {
       id: options.clone ? undefined : record.id,
       tree: store.getProxy().getExtraParams().tree,
       title: data[me.titleField],
-      _doctype: data._doctype,
+      _doctype: data._doctype || store.userOptions._doctype,
       clone: options.clone ? record.id : undefined,
       color: me.getColor()
     });
   },
 
   deleteDocument: function(_this, record) {
-    var me = this;
-    var data = record.data || {};
-    djem.app.fireEvent('deleteDocument', _this, { id: record.id, title: data[me.titleField], _doctype: data._doctype });
+    var me = this, data = record.data || {}, view = me.getView(), store = view.getStore();
+    djem.app.fireEvent(
+      'deleteDocument', _this,
+      { id: record.id, title: data[me.titleField], _doctype: data._doctype || store.userOptions._doctype });
   }
 });

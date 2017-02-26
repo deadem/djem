@@ -4,6 +4,7 @@ namespace App\Doctypes;
 
 use App\Models;
 use Illuminate\Http\Request;
+use DJEM\Main\Grid;
 
 class News extends \DJEM\Doctype
 {
@@ -18,16 +19,17 @@ class News extends \DJEM\Doctype
         $this->request = $request;
     }
 
-    public function gridItems()
+    public function grid()
     {
-        $items = (new $this->model())->orderBy('id');
-        $items = $items->paginate($this->request->input('limit'));
+        return Grid::fields(function ($fields) {
+            $fields->field('id');
+            $fields->field('name')->text('Name')->flex(1);
+        })->items(function () {
+            $items = (new $this->model())->orderBy('id');
+            $items = $items->paginate($this->request->input('limit'));
 
-        $items->each(function ($item, $key) {
-            $item->_doctype = get_class($this);
+            return $items;
         });
-
-        return $items;
     }
 
     public function editor()
