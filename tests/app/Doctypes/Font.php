@@ -3,8 +3,8 @@
 namespace App\Doctypes;
 
 use View;
-use Illuminate\Http\Request;
 use DJEM\Main\Grid;
+use Illuminate\Http\Request;
 
 class Font extends \DJEM\Doctype
 {
