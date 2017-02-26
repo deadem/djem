@@ -48,7 +48,7 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
             return [];
         }
 
-        return $this->fields->getFields()->reduce(function ($data, $field) {
+        return $this->fields->getFields()->reduce(function ($data, Field $field) {
             $data['fields'][] = $field->field;
             if (! empty($field->column)) {
                 $data['columns'][] = $field->column;
