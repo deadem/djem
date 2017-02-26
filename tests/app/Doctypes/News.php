@@ -3,8 +3,8 @@
 namespace App\Doctypes;
 
 use App\Models;
-use Illuminate\Http\Request;
 use DJEM\Main\Grid;
+use Illuminate\Http\Request;
 
 class News extends \DJEM\Doctype
 {
