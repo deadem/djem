@@ -3,5 +3,6 @@
 *.eot binary
 *.ttf binary
 *.woff binary
+*.woff2 binary
 
 /tests export-ignore
