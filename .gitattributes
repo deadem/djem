@@ -1,3 +1,7 @@
 * text=auto
 
+*.eot binary
+*.ttf binary
+*.woff binary
+
 /tests export-ignore
