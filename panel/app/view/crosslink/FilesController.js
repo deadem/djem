@@ -145,27 +145,70 @@ Ext.define('djem.view.crosslink.FilesController', {
       me.getView().addCls('x-form-crosslink-files-single');
     }
     me.setLoadingMask(new Ext.LoadMask({ target: me.getView() }));
-    me.getView().emptyText =
-      '' +
-      '<label>' +
-      '<svg style="position:absolute;cursor:pointer;" fill="#EEEEEE" height="100%" viewBox="0 0 24 24" width="100%"' +
-      'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
-      '<defs>' +
-      '<path d="M24 24H0V0h24v24z" id="a"/>' +
-      '</defs>' +
-      '<clipPath id="b">' +
-      '<use overflow="visible" xlink:href="#a"/>' +
-      '</clipPath>' +
-      '<path clip-path="url(#b)" d="M3 4V1h2v3h3v2H5v3H3V6H0V4h3zm3 6V7h3V4h7l1.83 2H21c1.1 0 2 .9 2 ' +
-      '2v12c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V10h3zm7 9c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 ' +
-      '5zm-3.2-5c0 1.77 1.43 3.2 3.2 3.2s3.2-1.43 3.2-3.2-1.43-3.2-3.2-3.2-3.2 1.43-3.2 3.2z"/>' +
-      '</svg>' +
-
-      '<input style="visibility:hidden;" type="file" ' + (me.getView().single ? '' : ' multiple="" ') +
-      ' onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">' +
-      '</label>';
-
+    // me.getView().emptyText = '' +
+    //     '<input style="visibility:hidden;" type="file" ' +
+    //     (me.getView().single ? '' : ' multiple="" ') +
+    //     ' onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">' +
     this.callParent(arguments);
+  },
+
+  initSortImages: function() {
+    var me = this, view = me.getView();
+    new Ext.view.DragZone({ view: view, ddGroup: 'imagesDrop', dragText: 'Move image' });
+
+    new Ext.view.DropZone({
+      view: view,
+      ddGroup: 'imagesDrop',
+      dragText: 'Move image',
+      getPosition: function(e, node) {
+        var x = e.getXY()[0], region = Ext.fly(node).getRegion();
+        if ((region.right - x) >= (region.right - region.left) / 2) {
+          return "before";
+        }
+        return "after";
+      },
+
+      positionIndicator: function(node, data, e) {
+        var me = this, view = me.view, pos = this.getPosition(e, node), nodeWidth = Ext.fly(node).getWidth(),
+            nodeHeight = Ext.fly(node).getHeight(), x, y;
+        me.getIndicator().setWidth(nodeHeight);
+        me.getIndicator().setHeight(1);
+        y = Ext.fly(node).getY() - nodeHeight - (nodeHeight / 2) - 7;
+        if (pos == 'before') {
+          x = Ext.fly(node).getX() - nodeWidth + 4;
+        } else {
+          x = Ext.fly(node).getX() + 4 + 7 + 1;
+        }
+        me.getIndicator().showAt(x, y);
+        me.valid = true;
+        me.overRecord = view.getRecord(node);
+        me.currentPosition = pos;
+      },
+
+      onNodeEnter: function(target, dd, e, data) {
+        this.positionIndicator(target, data, e);
+        this.callParent(arguments);
+      },
+
+      onNodeOut: function(target, dd, e, data) {
+        this.positionIndicator(target, data, e);
+        this.callParent(arguments);
+      },
+
+      onNodeOver: function(target, dd, e, data) {
+        this.positionIndicator(target, data, e);
+        return this.callParent(arguments);
+      },
+      handleNodeDrop: function(data, record, position) {
+        var store = view.getStore(), index;
+        store.remove(data.records, data.view === view);
+        index = store.indexOf(record);
+        if (position !== 'before') {
+          index++;
+        }
+        store.insert(index, data.records);
+      }
+    });
   },
 
   onBeforeDestroy: function() {
@@ -211,7 +254,7 @@ Ext.define('djem.view.crosslink.FilesController', {
     var me = this, view = me.getView(), el = view.getEl();
 
     me.processDropZone(false);
-
+    me.initSortImages();
     var form = view.up('form');
     if (form) {
       view.on('initValue', function() {
@@ -261,8 +304,8 @@ Ext.define('djem.view.crosslink.FilesController', {
       view.on('show', function() { me.recalcImageZoom(); });
       el.on('mousedown', function(evt) {
         if (view.getStore().getCount() == 1) {
-          var body = Ext.get(document.body), iframe = Ext.select('iframe'), rec = view.getStore().getAt(0);
-          var offset = rec.get('offset') || { x: 0, y: 0 }, zoom = me.getImageZoom();
+          var body = Ext.get(document.body), iframe = Ext.select('iframe'), rec = view.getStore().getAt(0),
+              offset = rec.get('offset') || { x: 0, y: 0 }, zoom = me.getImageZoom();
 
           body.addCls('x-unselectable');
           iframe.setStyle('pointer-events', 'none');
@@ -301,14 +344,16 @@ Ext.define('djem.view.crosslink.FilesController', {
 
   initViewModel: function() {
     var me = this;
-    me.getView().setStore(Ext.create('djem.store.CrossLink', { model: 'djem.model.Files' }));
+    var view = me.getView();
+    view.setStore(Ext.create('djem.store.CrossLink', { model: 'djem.model.Files' }));
+    view.getStore().on('endupdate', function() { me.setDirty(true); });
     me.dragState.reset();
 
-    if (me.getView().height === undefined) {
-      me.getView().addCls('height-scale');
+    if (view.height === undefined) {
+      view.addCls('height-scale');
     }
-    if (me.getView().width === undefined) {
-      me.getView().addCls('width-scale');
+    if (view.width === undefined) {
+      view.addCls('width-scale');
     }
     this.callParent(arguments);
   },
@@ -388,8 +433,8 @@ Ext.define('djem.view.crosslink.FilesController', {
   },
 
   moveSingleImage: function(offset) {
-    var me = this, image = me.getImage(), store = me.getView().getStore(), zoom = me.getImageZoom() || 1;
-    var width = image.width * zoom, height = image.height * zoom;
+    var me = this, image = me.getImage(), store = me.getView().getStore(), zoom = me.getImageZoom() || 1,
+        width = image.width * zoom, height = image.height * zoom;
 
     if (store.getCount() == 1) {
       var rec = store.getAt(0);
@@ -407,8 +452,8 @@ Ext.define('djem.view.crosslink.FilesController', {
 
   onMouseMove: function(evt) {
     var me = this;
-    var image = me.getImage(), zoom = me.getImageZoom(), el = me.getView().getEl();
-    var startOffset = me.getImageMoveOffset(), offset = {};
+    var image = me.getImage(), zoom = me.getImageZoom(), el = me.getView().getEl(),
+        startOffset = me.getImageMoveOffset(), offset = {};
 
     offset.x = -Math.min(0, Math.max(el.getWidth() - image.width * zoom, evt.screenX - startOffset.x));
     offset.y = -Math.min(0, Math.max(el.getHeight() - image.height * zoom, evt.screenY - startOffset.y));
