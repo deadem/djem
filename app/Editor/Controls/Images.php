@@ -10,6 +10,7 @@ class Images extends Control
     use Traits\File;
 
     private $images = [];
+    private $action = null;
 
     public function __construct($name = null)
     {
@@ -29,6 +30,15 @@ class Images extends Control
         return $this;
     }
 
+    public function onSaveImages(\Closure $callable)
+    {
+        if (is_callable($callable)) {
+            $this->action = $callable;
+        }
+
+        return $this;
+    }
+
     public function loadRelation($model)
     {
         $relation = $this->getRelation($model);
@@ -38,7 +48,6 @@ class Images extends Control
             $relation->with($image);
         }
         $models = $relation->get();
-
         $controls = false;
         if ($this->editor) {
             $this->editor->loadModel($relation->getRelated());
@@ -71,7 +80,10 @@ class Images extends Control
     public function prepareUserValue($values, $getValue = null)
     {
         $data = [];
-        foreach ($values as $value) {
+        if ($this->action) {
+            $values = call_user_func($this->action, $values);
+        }
+        foreach ($values as $i => $value) {
             $relation = call_user_func($getValue->relation, $this->getName());
 
             if (isset($value['file'])) {
