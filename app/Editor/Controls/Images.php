@@ -35,6 +35,7 @@ class Images extends Control
         if (is_callable($callable)) {
             $this->action = $callable;
         }
+
         return $this;
     }
 
@@ -68,6 +69,7 @@ class Images extends Control
                     $image = $model->{$image};
                     $data += $image->getAttributes();
                 }
+
                 return (object) $data;
             });
         }
