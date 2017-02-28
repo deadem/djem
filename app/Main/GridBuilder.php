@@ -2,6 +2,8 @@
 
 namespace DJEM\Main;
 
+use Illuminate\Support\Collection;
+
 class GridBuilder extends \Illuminate\Support\Facades\Facade
 {
     private $fields;
@@ -33,12 +35,12 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
         return $this;
     }
 
-    public function getItems()
+    private function getItems()
     {
         return $this->items;
     }
 
-    public function getMetaData()
+    private function getMetaData()
     {
         if ($this->custom) {
             return ['view' => 'custom', '_doctype' => $this->custom];
@@ -68,5 +70,36 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
             'columns' => [],
             'options' => [],
         ]);
+    }
+
+    public function getData()
+    {
+        $metaData = $this->getMetaData();
+        if (! isset($metaData['options'])) {
+            $metaData['options'] = [];
+        }
+
+        $items = $this->getItems() ?: new Collection();
+        $total = $items->count();
+        if ($total && method_exists($items, 'total')) {
+            $total = $items->total();
+        }
+
+        if (empty($metaData['fields'])) {
+            // fields data required
+            $metaData['fields'] = [['name' => 'id']];
+            $metaData['columns'] = [];
+        }
+
+        return [
+            'metaData' => $metaData,
+            'items' => $items->all(),
+            'total' => $total,
+        ];
+    }
+
+    public function __toString()
+    {
+        return json_encode($this->getData());
     }
 }
