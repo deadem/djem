@@ -27,4 +27,11 @@ class Fields
     {
         return collect($this->fields);
     }
+
+    public function merge(Fields $fields)
+    {
+        foreach ($fields->getFields() as $field) {
+            $this->field($field);
+        }
+    }
 }
