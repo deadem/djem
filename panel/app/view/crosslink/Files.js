@@ -31,7 +31,7 @@ Ext.define('djem.view.crosslink.Files', {
     afterrender: { fn: 'initAfterRender', options: { single: true } },
     beforedestroy: 'onBeforeDestroy',
     itemdblclick: 'onItemDblClick',
-    itemcontextmenu: function(view, record, item, index, e) {
+    zitemcontextmenu: function(view, record, item, index, e) {
       var me = this;
       var contextMenu = new Ext.menu.Menu({
         items: [
@@ -83,8 +83,9 @@ Ext.define('djem.view.crosslink.Files', {
   itemSelector: 'div.thumb-wrap',
   tpl: [
     '<tpl for=".">', '<div class="thumb-wrap {new}">', '<a href="#" class="trash">&#xF156;</a>',
-    '<div class="thumb" style="background-repeat: no-repeat;background-image: url({url});"></div>',
-    '<span>{name}</span>', '</div>', '</tpl>', '<label>',
+    '<div class="thumb" style="',
+    'background-repeat: no-repeat;background-image: url({url});background-position:{calcOffset};background-size:100%;background-size:{calcZoom}',
+    '"></div>', '<span>{name}</span>', '</div>', '</tpl>', '<label>',
     '<svg width="100%" height="100%" viewBox="0 0 64 64"><text x="0" y="58" fill="silver">&#xf100;</text></svg>',
     '<input type="file" multiple="" onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">',
     '</label>'

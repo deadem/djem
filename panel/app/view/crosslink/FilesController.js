@@ -150,17 +150,14 @@ Ext.define('djem.view.crosslink.FilesController', {
 
   initSortImages: function() {
     var me = this, view = me.getView();
+    if (view.single) {
+      return;
+    }
 
-    me.dragZone = new Ext.view.DragZone({
-      view: view,
-      ddGroup: 'imagesDrop',
-      dragText: 'Move image'
-      // containerScroll: true,
-      // scrollEl: view.getEl()
-    });
-
+    me.dragZone = new Ext.view.DragZone(
+            { view: Ext.apply({}, { ownerCt: view }, view), ddGroup: 'imagesDrop', dragText: 'Move image' });
     me.dropZone = new Ext.view.DropZone({
-      view: view,
+      view: Ext.apply({}, { ownerCt: view }, view),
       ddGroup: 'imagesDrop',
       dragText: 'Move image',
       getPosition: function(e, node) {
@@ -271,7 +268,7 @@ Ext.define('djem.view.crosslink.FilesController', {
   initAfterRender: function() {
     var me = this, view = me.getView(), el = view.getEl();
 
-    me.processDropZone(false);
+    // me.processDropZone(false);
     me.initSortImages();
     var form = view.up('form');
     if (form) {
