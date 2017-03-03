@@ -145,58 +145,76 @@ Ext.define('djem.view.crosslink.FilesController', {
       me.getView().addCls('x-form-crosslink-files-single');
     }
     me.setLoadingMask(new Ext.LoadMask({ target: me.getView() }));
-    // me.getView().emptyText = '' +
-    //     '<input style="visibility:hidden;" type="file" ' +
-    //     (me.getView().single ? '' : ' multiple="" ') +
-    //     ' onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">' +
     this.callParent(arguments);
   },
 
   initSortImages: function() {
     var me = this, view = me.getView();
-    new Ext.view.DragZone({ view: view, ddGroup: 'imagesDrop', dragText: 'Move image' });
 
-    new Ext.view.DropZone({
+    me.dragZone = new Ext.view.DragZone({
+      view: view,
+      ddGroup: 'imagesDrop',
+      dragText: 'Move image'
+      // containerScroll: true,
+      // scrollEl: view.getEl()
+    });
+
+    me.dropZone = new Ext.view.DropZone({
       view: view,
       ddGroup: 'imagesDrop',
       dragText: 'Move image',
       getPosition: function(e, node) {
+        if (!e) {
+          return false;
+        }
         var x = e.getXY()[0], region = Ext.fly(node).getRegion();
         if ((region.right - x) >= (region.right - region.left) / 2) {
-          return "before";
+          return 'before';
         }
-        return "after";
+        return 'after';
       },
 
-      positionIndicator: function(node, data, e) {
+      positionIndicator: function(node, data, e, dragZone) {
         var me = this, view = me.view, pos = this.getPosition(e, node), nodeWidth = Ext.fly(node).getWidth(),
-            nodeHeight = Ext.fly(node).getHeight(), x, y;
-        me.getIndicator().setWidth(nodeHeight);
-        me.getIndicator().setHeight(1);
-        y = Ext.fly(node).getY() - nodeHeight - (nodeHeight / 2) - 7;
-        if (pos == 'before') {
-          x = Ext.fly(node).getX() - nodeWidth + 4;
+            nodeHeight = Ext.fly(node).getHeight(), x, y, indicator = this.getIndicator();
+
+        me.valid = false;
+
+        indicator.setWidth(nodeHeight);
+        indicator.setHeight(1);
+
+        y = Ext.fly(node).getY() - Ext.fly(view.el).getY() + nodeHeight / 2;
+
+        if (pos === 'before') {
+          x = Ext.fly(node).getX() - Ext.fly(view.el).getX() - nodeHeight / 2;
+          indicator.showAt(x, y);
+        } else if (pos === 'after') {
+          x = Ext.fly(node).getX() - Ext.fly(view.el).getX() + nodeWidth - nodeHeight / 2;
+          indicator.showAt(x, y);
         } else {
-          x = Ext.fly(node).getX() + 4 + 7 + 1;
+          indicator.hide();
         }
-        me.getIndicator().showAt(x, y);
-        me.valid = true;
-        me.overRecord = view.getRecord(node);
-        me.currentPosition = pos;
+
+        if (dragZone) {
+          dragZone.proxy.show();
+          me.valid = true;
+          me.overRecord = view.getRecord(node);
+          me.currentPosition = pos;
+        }
       },
 
       onNodeEnter: function(target, dd, e, data) {
-        this.positionIndicator(target, data, e);
+        this.positionIndicator(target, data, e, dd);
         this.callParent(arguments);
       },
 
       onNodeOut: function(target, dd, e, data) {
-        this.positionIndicator(target, data, e);
+        this.positionIndicator(target, data, e, dd);
         this.callParent(arguments);
       },
 
       onNodeOver: function(target, dd, e, data) {
-        this.positionIndicator(target, data, e);
+        this.positionIndicator(target, data, e, dd);
         return this.callParent(arguments);
       },
       handleNodeDrop: function(data, record, position) {
@@ -362,8 +380,8 @@ Ext.define('djem.view.crosslink.FilesController', {
   onItemDblClick: function(element, record) {
     var me = this;
     var view = element.up('main-content');
-    var widget =
-      Ext.widget('crosslink.Editor', { title: (record.data && record.data.name) || 'Editor', data: view.config.data });
+    var widget = Ext.widget('crosslink.Editor',
+                            { title: (record.data && record.data.name) || 'Editor', data: view.config.data });
     widget.add(element.editor);
     widget.getViewModel().setData(record.data);
     widget.on('update', function() {

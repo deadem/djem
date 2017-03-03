@@ -27,7 +27,7 @@
 
     .thumb-wrap {
         float: left;
-        margin: 8px 0 0 8px;
+        padding: 4px;
 
        -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -37,8 +37,8 @@
         user-select: none;
         position: relative;
         word-wrap: break-word;
-        height:90px;
-        width: 64px;
+        height: 90px + 8px;
+        width: 64px + 8px;
         overflow: hidden;
 
         .trash {
@@ -66,12 +66,9 @@
             overflow: visible;
         }
 
-        img {
-             max-height: 64px;
-        }
-
         .thumb {
             height: 64px;
+            overflow: hidden;
         }
     }
 }

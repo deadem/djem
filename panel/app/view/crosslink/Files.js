@@ -3,7 +3,7 @@ Ext.define('djem.view.crosslink.Files', {
   extend: 'Ext.view.View',
   alias: 'widget.crosslink.Files',
 
-  config: { selectionModel: { mode: "MULTI" } },
+  config: { selectionModel: { mode: 'MULTI' } },
 
   cls: 'x-form-crosslink-files-wrap',
   requires: [
@@ -12,12 +12,12 @@ Ext.define('djem.view.crosslink.Files', {
   ],
 
   deleteImages: function(record) {
-    var view = this;
+    var me = this;
 
-    if (view.getSelection().length) {
-      Ext.each(view.getSelection(), function(selection) { selection.drop(); });
+    if (me.getSelection().length) {
+      Ext.each(me.getSelection(), function(selection) { selection.drop(); });
     } else {
-      view.getStore().remove(record);
+      me.getStore().remove(record);
     }
   },
 
@@ -35,10 +35,10 @@ Ext.define('djem.view.crosslink.Files', {
       var me = this;
       var contextMenu = new Ext.menu.Menu({
         items: [
-          { text: "Удалить выделенные", glyph: "xF1C0@Icons", handler: function() { return me.deleteImages(record); } },
+          { text: 'Удалить выделенные', glyph: 'xF1C0@Icons', handler: function() { return me.deleteImages(record); } },
           {
-            text: "Переместить в начало",
-            glyph: "xF05B@Icons",
+            text: 'Переместить в начало',
+            glyph: 'xF05B@Icons',
             handler: function() { return me.moveItemOnFirst(record); }
           }
         ]
@@ -84,8 +84,9 @@ Ext.define('djem.view.crosslink.Files', {
   tpl: [
     '<tpl for=".">', '<div class="thumb-wrap {new}">', '<a href="#" class="trash">&#xF156;</a>',
     '<div class="thumb" style="background-repeat: no-repeat;background-image: url({url});"></div>',
-    '<span>{name}</span>', '</div>', '</tpl>', '<label>', '<div class="icon"></div>', '<input type="file" ',
-    'multiple="" ', ' onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">',
+    '<span>{name}</span>', '</div>', '</tpl>', '<label>',
+    '<svg width="100%" height="100%" viewBox="0 0 64 64"><text x="0" y="58" fill="silver">&#xf100;</text></svg>',
+    '<input type="file" multiple="" onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">',
     '</label>'
   ]
 });
