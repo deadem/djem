@@ -157,6 +157,7 @@ Ext.define('djem.view.crosslink.FilesController', {
     me.dragZone = new Ext.view.DragZone(
             { view: Ext.apply({}, { ownerCt: view }, view), ddGroup: 'imagesDrop', dragText: 'Move image' });
     me.dropZone = new Ext.view.DropZone({
+      indicatorCls: Ext.baseCSSPrefix + 'grid-drop-indicator x-grid-drop-indicator-vertical',
       view: Ext.apply({}, { ownerCt: view }, view),
       ddGroup: 'imagesDrop',
       dragText: 'Move image',
@@ -244,9 +245,10 @@ Ext.define('djem.view.crosslink.FilesController', {
 
   onBeforeDestroy: function() {
     var me = this;
-    me.processDropZone(true);
+    me.processDropZone('remove');
     me.getLoadingMask().destroy();
     me.uploader.destroy();
+    me.dragZone = me.dropZone = Ext.destroy(me.dragZone, me.dropZone);
   },
 
   setDirty: function(isDirty) {
@@ -284,7 +286,7 @@ Ext.define('djem.view.crosslink.FilesController', {
   initAfterRender: function() {
     var me = this, view = me.getView(), el = view.getEl();
 
-    me.processDropZone(false);
+    me.processDropZone('add');
     me.initSortImages();
     var form = view.up('form');
     if (form) {
@@ -359,6 +361,7 @@ Ext.define('djem.view.crosslink.FilesController', {
 
   processDropZone: function(remove) {
     var me = this;
+    remove = remove == 'remove';
     Ext.each(['dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'], function(type) {
       Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler);
     });
