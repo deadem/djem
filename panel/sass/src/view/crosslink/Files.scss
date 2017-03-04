@@ -75,12 +75,12 @@
         .trash {
             position: absolute;
             font-family: Icons;
-            top: -0.05em;
-            right: 0;
+            top: 3px;
+            right: 2px;
             color: #C00000;
             font-size: 20px;
             line-height: 100%;
-            text-shadow: -1px 0px 0px white, 1px 0px 0px white;
+            text-shadow: -1px -1px 2px white, 0px 0px 4px white;
         }
         &.new::before {
             content: '\0F069';

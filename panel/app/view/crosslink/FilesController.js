@@ -322,7 +322,7 @@ Ext.define('djem.view.crosslink.FilesController', {
       e.preventDefault();
       e.stopPropagation();
     });
-    el.on('mouseup', function(e) {
+    el.on('click', function(e) {
       if (Ext.get(e.target).hasCls('trash')) {
         var dom = Ext.get(e.target).up('.thumb-wrap'), record = dom && view.getRecord(dom);
 
