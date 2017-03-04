@@ -1,40 +1,85 @@
-.x-tree-panel.main-tree .x-grid-cell-inner {
-    > div {
-        padding: 3px 4px;
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-
-        .icon {
-            display: table-cell;
-            color: white;
-            font-family: Icons;
-            font-size: 29px;
-            width: 40px;
-            height: 40px;
-            overflow: hidden;
-            text-align: center;
-            vertical-align: middle;
-            border-radius: 40px;
+.x-tree-panel.main-tree {
+    .x-grid-tree-node-leaf {
+        .x-grid-cell-inner > div .arrow {
+            display: none;
         }
-        .title {
-            display: table-cell;
+    }
+    .x-grid-item-selected {
+        .x-grid-cell-inner > div .arrow {
+            color: white;
+        }
+    }
+    .x-grid-cell-inner {
+        > div {
+            padding: 3px 4px;
+            display: table;
             width: 100%;
-            padding-left: 8px;
-            vertical-align: middle;
-            white-space: nowrap;
-            .name {
-                font-size: 16px;
-                color: #000;
-                overflow: hidden;
-                text-overflow: ellipsis;
+            table-layout: fixed;
+            &.first {
+                color: white;
             }
-            .desc {
-                font-size: 14px;
-                color: #999999;
+            .icon {
+                display: table-cell;
+                font-family: Icons;
+                font-size: 29px;
+                width: 40px;
+                height: 40px;
                 overflow: hidden;
-                text-overflow: ellipsis;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 40px;
+            }
+            .title {
+                display: table-cell;
+                width: 100%;
+                padding-left: 8px;
+                vertical-align: middle;
+                white-space: nowrap;
+                .name {
+                    font-size: 16px;
+                    color: #000;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .desc {
+                    font-size: 14px;
+                    color: #999999;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            .arrow {
+                display: table-cell;
+                font-family: Icons;
+                color: silver;
+                font-size: 24px;
+                width: 24px;
+                line-height: 40px;
+            }
+        }
+        > div.second {
+            .padding {
+                width: 48px;
+                display: table-cell;
+                + .padding {
+                    width: 30px;
+                }
+            }
+            .icon {
+                width: 24px;
+                height: 24px;
+                font-size: 16px;
+                background: none;
+            }
+            .title {
+                .name {
+                    font-size: 14px;
+                }
+            }
+            .arrow {
+                line-height: 24px;
             }
         }
     }
 }
+
