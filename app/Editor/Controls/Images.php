@@ -2,9 +2,9 @@
 
 namespace DJEM\Editor\Controls;
 
+use Closure;
 use DJEM\Editor;
 use Illuminate\Database\Eloquent\Model;
-use Closure;
 
 class Images extends Control
 {
