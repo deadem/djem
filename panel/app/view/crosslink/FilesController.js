@@ -150,7 +150,7 @@ Ext.define('djem.view.crosslink.FilesController', {
 
   initSortImages: function() {
     var me = this, view = me.getView();
-    if (view.single) {
+    if (view.single || !view.sortable) {
       return;
     }
 

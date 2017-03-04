@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class News extends \DJEM\Doctype
 {
     use Traits\UploadImage;
+    use Traits\Sortable;
 
     public $model = Models\News::class;
 
@@ -42,7 +43,7 @@ class News extends \DJEM\Doctype
                 $items->addTag('tagsList')->label('Field Tags')->filterPickList(true)->store(['one', 'two', 'three']);
                 $items->addRichText('text')->label('Text')->flex(1);
             });
-            $items->addImages('images')->height('100%')->width('20%')->save($this->uploadImage());
+            $items->addImages('images')->sortable($this->rearrange('sort'))->height('100%')->width('20%')->save($this->uploadImage());
         });
 
         return $editor;

@@ -212,4 +212,61 @@ class ControlsTest extends TestCase
             ],
         ], $view);
     }
+
+    public function testImagesGallery()
+    {
+        $editor = (new Controls\ImageGallery())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[2]);
+        unset($view->items[3]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'name' => 'name',
+                    'xtype' => 'djem.text',
+                    'fieldLabel' => 'Name',
+                    'bind' => '{name}',
+                ],
+                (object) [
+                    'name' => 'images',
+                    'xtype' => 'djem.images',
+                    'height' => 256,
+                    'bind' => '{images}',
+                ],
+            ],
+        ], $view);
+    }
+
+    public function testImagesGallerySortable()
+    {
+        $editor = (new Controls\ImageGallerySortable())->editor();
+
+        $view = $editor->getView();
+        unset($view->items[2]);
+        unset($view->items[3]);
+
+        $this->assertEquals((object) [
+            'layout' => ['type' => 'vbox', 'align' => 'stretch'],
+            'autoScroll' => true,
+            'items' => [
+                (object) [
+                    'name' => 'name',
+                    'xtype' => 'djem.text',
+                    'fieldLabel' => 'Name',
+                    'bind' => '{name}',
+                ],
+                (object) [
+                    'name' => 'images',
+                    'xtype' => 'djem.images',
+                    'height' => 256,
+                    'bind' => '{images}',
+                    'sortable' => true,
+                ],
+            ],
+        ], $view);
+    }
 }

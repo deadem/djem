@@ -1,22 +1,14 @@
 <?php
 
-namespace App\Doctypes\Traits;
+namespace App\Doctypes\Controls\Traits;
 
 trait UploadImage
 {
     public function uploadImage()
     {
         $copyToPublic = function ($file) {
-            $url = '/files/';
-            $path = public_path().'/files/';
-
-            if (! is_dir($path)) {
-                mkdir($path, 0777, true);
-            }
-
-            $path = $path.basename($file);
-            $url = $url.basename($file);
-
+            $url = '/files/'.basename($file);
+            $path = public_path().'/files/'.basename($file);
             copy($file, $path);
 
             return [$path, $url];
