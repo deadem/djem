@@ -8,6 +8,6 @@ class Image extends Model
 {
     public $table = 'images';
 
-    public $fillable = ['url'];
+    public $fillable = ['url', 'name'];
     public $hidden = ['path'];
 }

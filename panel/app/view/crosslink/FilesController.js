@@ -165,6 +165,9 @@ Ext.define('djem.view.crosslink.FilesController', {
           return false;
         }
         var x = e.getXY()[0], region = Ext.fly(node).getRegion();
+        if (x < region.left || x > region.right) {
+          return false;
+        }
         if ((region.right - x) >= (region.right - region.left) / 2) {
           return 'before';
         }
@@ -176,6 +179,8 @@ Ext.define('djem.view.crosslink.FilesController', {
             nodeHeight = Ext.fly(node).getHeight(), x, y, indicator = this.getIndicator();
 
         me.valid = false;
+        me.overRecord = null;
+        me.currentPosition = null;
 
         indicator.setWidth(nodeHeight);
         indicator.setHeight(1);
@@ -190,6 +195,7 @@ Ext.define('djem.view.crosslink.FilesController', {
           indicator.showAt(x, y);
         } else {
           indicator.hide();
+          return;
         }
 
         if (dragZone) {
@@ -268,7 +274,7 @@ Ext.define('djem.view.crosslink.FilesController', {
   initAfterRender: function() {
     var me = this, view = me.getView(), el = view.getEl();
 
-    // me.processDropZone(false);
+    me.processDropZone(false);
     me.initSortImages();
     var form = view.up('form');
     if (form) {

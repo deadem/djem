@@ -79,7 +79,7 @@ Ext.define('djem.view.crosslink.Files', {
     this.callParent(arguments);
   },
 
-  overItemCls: 'x-grid-item-over',
+  selectedItemCls: 'x-grid-item-selected',
   itemSelector: 'div.thumb-wrap',
   tpl: [
     '<tpl for=".">', '<div class="thumb-wrap {new}">', '<a href="#" class="trash">&#xF156;</a>',

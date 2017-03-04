@@ -43,7 +43,6 @@ class News extends \DJEM\Doctype
                 $items->addRichText('text')->label('Text')->flex(1);
             });
             $items->addImages('images')->height('100%')->width('20%')->save($this->uploadImage());
-            $items->addImages('imagez')->height('100%')->width('20%')->save($this->uploadImage());
         });
 
         return $editor;

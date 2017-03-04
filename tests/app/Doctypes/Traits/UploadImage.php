@@ -24,6 +24,7 @@ trait UploadImage
 
             $model = new $model;
 
+            $model->name = $fileData['name'];
             $model->path = $path;
             $model->url = $url;
 
