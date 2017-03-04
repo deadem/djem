@@ -30,22 +30,7 @@ Ext.define('djem.view.crosslink.Files', {
   listeners: {
     afterrender: { fn: 'initAfterRender', options: { single: true } },
     beforedestroy: 'onBeforeDestroy',
-    itemdblclick: 'onItemDblClick',
-    zitemcontextmenu: function(view, record, item, index, e) {
-      var me = this;
-      var contextMenu = new Ext.menu.Menu({
-        items: [
-          { text: 'Удалить выделенные', glyph: 'xF1C0@Icons', handler: function() { return me.deleteImages(record); } },
-          {
-            text: 'Переместить в начало',
-            glyph: 'xF05B@Icons',
-            handler: function() { return me.moveItemOnFirst(record); }
-          }
-        ]
-      });
-      contextMenu.showAt(e.getXY());
-      e.stopEvent();
-    }
+    itemdblclick: 'onItemDblClick'
   },
 
   controller: 'crosslink-files',
