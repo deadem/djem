@@ -208,12 +208,12 @@ Ext.define('djem.view.crosslink.FilesController', {
 
       onNodeEnter: function(target, dd, e, data) {
         this.positionIndicator(target, data, e, dd);
-        this.callParent(arguments);
+        return this.callParent(arguments);
       },
 
       onNodeOut: function(target, dd, e, data) {
         this.positionIndicator(target, data, e, dd);
-        this.callParent(arguments);
+        return this.callParent(arguments);
       },
 
       onNodeOver: function(target, dd, e, data) {
@@ -222,6 +222,16 @@ Ext.define('djem.view.crosslink.FilesController', {
       },
       handleNodeDrop: function(data, record, position) {
         var store = view.getStore(), index;
+        data.records.sort(function(a, b) {
+          var ai = store.indexOf(a), bi = store.indexOf(b);
+          if (ai < bi) {
+            return -1;
+          }
+          if (ai > bi) {
+            return 1;
+          }
+          return 0;
+        });
         store.remove(data.records, data.view === view);
         index = store.indexOf(record);
         if (position !== 'before') {
