@@ -10,6 +10,11 @@ class News extends Model
 
     public $fillable = ['name', 'text', 'tagsList', 'sort'];
 
+    public function smallImage()
+    {
+        return $this->belongsTo(SmallImage::class);
+    }
+
     public function images()
     {
         return $this->belongsToMany(Image::class)->orderBy('sort');

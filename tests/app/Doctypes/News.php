@@ -41,9 +41,15 @@ class News extends \DJEM\Doctype
             $items->addLayout(['type' => 'vbox', 'align' => 'stretch'])->flex(1)->items(function ($items) {
                 $items->addText('name')->label('Name')->validate('required|max:255');
                 $items->addTag('tagsList')->label('Field Tags')->filterPickList(true)->store(['one', 'two', 'three']);
+
                 $items->addRichText('text')->label('Text')->flex(1);
             });
-            $items->addImages('images')->sortable($this->rearrange('sort'))->height('100%')->width('20%')->save($this->uploadImage());
+            $items->addLayout('vbox')->width('20%')->items(function ($items) {
+                $items->addLayout()->items(function ($items) {
+                    $items->addImage('smallImage')->save($this->uploadImage());
+                });
+                $items->addImages('images')->sortable($this->rearrange('sort'))->flex(1)->save($this->uploadImage());
+            });
         });
 
         return $editor;

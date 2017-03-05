@@ -3,7 +3,13 @@ Ext.define('djem.view.crosslink.FilesController', {
   extend: 'Ext.app.ViewController',
   alias: 'controller.crosslink-files',
 
-  config: { image: undefined, imageZoom: 1, imageMoveOffset: { x: 0, y: 0 }, loadingMask: undefined },
+  config: {
+    image: undefined,
+    imageZoom: 1,
+    imageMoveOffset: { x: 0, y: 0 },
+    loadingMask: undefined,
+    minimalZoom: undefined
+  },
 
   uploader: Ext.create('djem.store.FileUpload'),
 
@@ -331,6 +337,17 @@ Ext.define('djem.view.crosslink.FilesController', {
 
         me.setDirty(true);
       }
+
+      var zoomFactor = 1.1;
+      if (Ext.get(e.target).hasCls('plus')) {
+        me.zoomSingleImage(me.getImageZoom() * zoomFactor);
+        return false;
+      }
+      if (Ext.get(e.target).hasCls('minus')) {
+        me.zoomSingleImage(me.getImageZoom() / zoomFactor);
+        return false;
+      }
+
     });
     if (view.single) {
       view.on('resize', function() { me.recalcImageZoom(); });
@@ -454,44 +471,72 @@ Ext.define('djem.view.crosslink.FilesController', {
     }
 
     if (image.width - view.getWidth() > 0 && image.height - view.getHeight() > 0) {
+      view.addCls('zoomable');
       var zoomV = view.getHeight() / image.height;
       var zoomH = view.getWidth() / image.width;
-      if (zoomV > zoomH) {
-        view.setStyle('cursor', 'ew-resize');
-      } else if (zoomH > zoomV) {
-        view.setStyle('cursor', 'ns-resize');
-      }
-      me.setImageZoom(Math.max(zoomV, zoomH));
+      me.setMinimalZoom(Math.max(zoomV, zoomH));
+      me.setImageZoom(me.getMinimalZoom());
       me.moveSingleImage(me.getImageMoveOffset());
+    } else {
+      view.removeCls('zoomable');
     }
   },
 
-  moveSingleImage: function(offset) {
-    var me = this, image = me.getImage(), store = me.getView().getStore(), zoom = me.getImageZoom() || 1,
-        width = image.width * zoom, height = image.height * zoom;
+  zoomSingleImage: function(zoom) {
+    var me = this;
+    var old = me.getImageZoom(), store = me.getView().getStore(), view = me.getView(), el = view.getEl(),
+        image = me.getImage();
 
-    if (store.getCount() == 1) {
-      var rec = store.getAt(0);
-      rec.set({
-        offset: { x: offset.x / zoom, y: offset.y / zoom },
-        url: image.src,
-        width: width,
-        height: height,
-        calcOffset: -offset.x + 'px ' + -offset.y + 'px',
-        calcZoom: width + 'px ' + height + 'px'
-      });
-      me.setDirty(true);
+    if (store.getCount() != 1 || !image) {
+      return;
     }
+
+    zoom = Math.max(zoom, me.getMinimalZoom());
+    zoom = Math.min(1, zoom); // prevent upscale
+
+    var rec = store.getAt(0), offset = rec.get('offset'), width = el.getWidth() / 2, height = el.getHeight() / 2;
+    offset = { x: offset.x * zoom - (width - width / old * zoom), y: offset.y * zoom - (height - height / old * zoom) };
+
+    me.setImageZoom(Math.max(0.0001, zoom));
+    me.moveSingleImage(offset);
+  },
+
+  moveSingleImage: function(offset) {
+    var me = this, image = me.getImage(), view = me.getView(), store = view.getStore(), zoom = me.getImageZoom() || 1,
+        width = image.width * zoom, height = image.height * zoom, el = view.getEl();
+
+    if (store.getCount() != 1) {
+      return;
+    }
+
+    offset.x = Math.max(0, Math.min(width - el.getWidth(), offset.x));
+    offset.y = Math.max(0, Math.min(height - el.getHeight(), offset.y));
+
+    var horizontal = 0, vertical = 0;
+    if (el.getHeight() / zoom < image.height) {
+      vertical = 1;
+    }
+    if (el.getWidth() / zoom < image.width) {
+      horizontal = 1;
+    }
+    var moveArrow = { 0: { 0: '', 1: 'ew-resize' }, 1: { 0: 'ns-resize', 1: 'move' } };
+    view.setStyle('cursor', moveArrow[vertical][horizontal]);
+
+    var rec = store.getAt(0);
+    rec.set({
+      offset: { x: offset.x / zoom, y: offset.y / zoom },
+      url: image.src,
+      width: width,
+      height: height,
+      calcOffset: -offset.x + 'px ' + -offset.y + 'px',
+      calcZoom: width + 'px ' + height + 'px'
+    });
+    me.setDirty(true);
   },
 
   onMouseMove: function(evt) {
     var me = this;
-    var image = me.getImage(), zoom = me.getImageZoom(), el = me.getView().getEl(),
-        startOffset = me.getImageMoveOffset(), offset = {};
-
-    offset.x = -Math.min(0, Math.max(el.getWidth() - image.width * zoom, evt.screenX - startOffset.x));
-    offset.y = -Math.min(0, Math.max(el.getHeight() - image.height * zoom, evt.screenY - startOffset.y));
-
-    me.moveSingleImage(offset);
+    var startOffset = me.getImageMoveOffset();
+    me.moveSingleImage({ x: startOffset.x - evt.screenX, y: startOffset.y - evt.screenY });
   }
 });

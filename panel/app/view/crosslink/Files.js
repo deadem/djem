@@ -67,7 +67,8 @@ Ext.define('djem.view.crosslink.Files', {
   selectedItemCls: 'x-grid-item-selected',
   itemSelector: 'div.thumb-wrap',
   tpl: [
-    '<tpl for=".">', '<div class="thumb-wrap {new}">', '<a href="#" class="trash">&#xF156;</a>',
+    '<tpl for=".">', '<div class="thumb-wrap {new}">',
+    '<a href="#" class="plus"></a><a href="#" class="minus"></a><a href="#" class="trash">&#xF156;</a>',
     '<div class="thumb" style="',
     'background-repeat: no-repeat;background-image: url({url});background-position:{calcOffset};background-size:100%;background-size:{calcZoom}',
     '"></div>', '<span>{name}</span>', '</div>', '</tpl>', '<label>',

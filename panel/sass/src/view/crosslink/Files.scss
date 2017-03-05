@@ -8,6 +8,36 @@
     box-shadow: 0px 0px 0px 1px gray;
     overflow: auto;
 
+    // zoom controls
+    .minus, .plus {
+        display: none;
+        position: absolute;
+        font-family: Icons;
+        top: 50%;
+        text-shadow: -1px 1px 2px white, 1px 1px 2px white, 1px -1px 2px white, -1px -1px 2px white;
+        font-size: 20px;
+        color: black;
+        margin: -1em 0 0 4px;
+        opacity: 0.6;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .plus:before {
+        content: "\f34b";
+    }
+    .minus {
+      margin-top: 0.5em;
+      &:before {
+          content: "\f34a";
+      }
+    }
+    &.zoomable {
+        .minus, .plus {
+            display: block;
+        }
+    }
+
     .thumb-wrap ~ label {
         position: relative;
         display: inline-block;
