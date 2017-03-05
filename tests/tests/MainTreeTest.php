@@ -14,6 +14,22 @@ class MainTreeTest extends TestCase
         $this->assertEquals('unauthorized', $data->state);
     }
 
+    private function checkItems($items, $data)
+    {
+        if (! is_array($items) && ! is_object($items)) {
+            return $this->assertEquals($items, $data);
+        }
+        foreach ($items as $key => $value) {
+            if (is_array($data)) {
+                $this->checkItems($value, $data[$key]);
+            } elseif (is_object($data)) {
+                $this->checkItems($value, $data->$key);
+            } else {
+                $this->assertEquals($value, $data->$key);
+            }
+        }
+    }
+
     public function testRootTree()
     {
         $user = new App\User(['name' => 'deadem']);
@@ -28,11 +44,8 @@ class MainTreeTest extends TestCase
         $this->assertGreaterThanOrEqual(3, count($items));
 
         $data = $response->getData();
-        foreach ($data->items as $key => $value) {
-            $this->assertEquals((object) $items[$key], $value);
-        }
-        foreach ($items as $key => $value) {
-            $this->assertEquals((object) $value, $data->items[$key]);
-        }
+
+        $this->checkItems($items, $data->items);
+        $this->checkItems($data->items, $items);
     }
 }
