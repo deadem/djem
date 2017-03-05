@@ -97,6 +97,9 @@ Ext.define('djem.view.main.GridController', {
       var gridView = parent.lookupReference('grid-view');
 
       me.destroyFilterListeners();
+      if (gridView.down()) {
+        gridView.down().destroy();
+      }
 
       if (meta.view) {
         // замена вьювера
@@ -107,9 +110,6 @@ Ext.define('djem.view.main.GridController', {
       }
       gridView.hide();
       parent.lookupReference('grid').show();
-      if (gridView.down()) {
-        gridView.down().destroy();
-      }
 
       var listeners = me.getFilter().on({ change: me.changeFilter, scope: me, destroyable: true });
 
@@ -190,7 +190,7 @@ Ext.define('djem.view.main.GridController', {
   deleteDocument: function(_this, record) {
     var me = this, data = record.data || {}, view = me.getView(), store = view.getStore();
     djem.app.fireEvent(
-      'deleteDocument', _this,
-      { id: record.id, title: data[me.titleField], _doctype: data._doctype || store.userOptions._doctype });
+            'deleteDocument', _this,
+            { id: record.id, title: data[me.titleField], _doctype: data._doctype || store.userOptions._doctype });
   }
 });

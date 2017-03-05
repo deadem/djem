@@ -31,11 +31,20 @@ return [
         ],
         [
             'id' => 4,
+            'text' => 'Colors',
+            'description' => 'Material colors',
+            'leaf' => true,
+            '_doctype' => App\Doctypes\Colors::class,
+            'color' => 'green',
+            'icon' => '&#xf3d8;',
+        ],
+        [
+            'id' => 1000,
             'text' => 'Submenu',
             'description' => 'Submenu example',
             'leaf' => false,
             '_doctype' => DJEM\Doctype::class,
-            'color' => 'red',
+            'color' => 'deep-orange-200',
             'icon' => '&#xf257;',
 
             'items' => [
