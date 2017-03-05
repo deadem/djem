@@ -107,7 +107,10 @@ class Image extends Control
                     $image->setUserValue($this->prepareUserSaveValue($value, $image->getName(), $getValue));
                 }
 
-                return parent::prepareUserValue($value, $getValue);
+                $model = parent::prepareUserValue($value, $getValue);
+                $model->save();
+
+                return $model;
             }
             // если файл не указан, значит нужно обновить данные уже подцепленной картинки
             foreach ($this->images as $image) {
