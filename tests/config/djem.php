@@ -32,7 +32,7 @@ return [
         [
             'id' => 4,
             'text' => 'Submenu',
-            'description' => 'Submenu',
+            'description' => 'Submenu example',
             'leaf' => false,
             '_doctype' => DJEM\Doctype::class,
             'color' => 'red',
@@ -41,7 +41,7 @@ return [
             'items' => [
                 [
                     'id' => 5,
-                    'text' => 'sub.djem.example.com',
+                    'text' => 'Sub menu',
                     'description' => 'Submenu',
                     'leaf' => true,
                     '_doctype' => DJEM\Doctype::class,

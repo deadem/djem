@@ -11,28 +11,29 @@
     }
     .x-grid-cell-inner {
         > div {
-            padding: 3px 4px;
+            $size: 40px;
+            $padding: 8px;
+
+            padding: $padding / 2;
             display: table;
             width: 100%;
             table-layout: fixed;
-            &.first {
-                color: white;
-            }
+
             .icon {
                 display: table-cell;
                 font-family: Icons;
-                font-size: 29px;
-                width: 40px;
-                height: 40px;
+                font-size: $size * 2/3;
+                width: $size;
+                height: $size;
                 overflow: hidden;
                 text-align: center;
                 vertical-align: middle;
-                border-radius: 40px;
+                border-radius: $size;
             }
             .title {
                 display: table-cell;
                 width: 100%;
-                padding-left: 8px;
+                padding-left: $padding;
                 vertical-align: middle;
                 white-space: nowrap;
                 .name {
@@ -51,33 +52,43 @@
             .arrow {
                 display: table-cell;
                 font-family: Icons;
-                color: silver;
+                color: black;
                 font-size: 24px;
                 width: 24px;
-                line-height: 40px;
+                line-height: $size;
             }
-        }
-        > div.second {
-            .padding {
-                width: 48px;
-                display: table-cell;
-                + .padding {
-                    width: 30px;
+
+            &.first {
+                color: white;
+            }
+            &.second {
+                $subsize: $size * 2 / 3;
+                .padding {
+                    width: $size + $padding;
+                    display: table-cell;
+                    + .padding {
+                        width: 30px;
+                    }
                 }
-            }
-            .icon {
-                width: 24px;
-                height: 24px;
-                font-size: 16px;
-                background: none;
-            }
-            .title {
-                .name {
-                    font-size: 14px;
+                .icon {
+                    width: $subsize;
+                    height: $subsize;
+                    font-size: $subsize * 2 / 3;
+                    background: none;
+                    border-radius: 0;
                 }
-            }
-            .arrow {
-                line-height: 24px;
+                .title {
+                    padding-left: $padding / 2;
+                    .name {
+                        font-size: $subsize / 2;
+                    }
+                    .desc {
+                        display: none;
+                    }
+                }
+                .arrow {
+                    line-height: $subsize;
+                }
             }
         }
     }
