@@ -25,6 +25,8 @@ class Image extends Control
             $dimensions = [
                 'height' => $related->height,
                 'width' => $related->width,
+                'modelHeight' => $related->height,
+                'modelWidth' => $related->width,
             ];
         }
 

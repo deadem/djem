@@ -529,7 +529,9 @@ Ext.define('djem.view.crosslink.FilesController', {
       width: width,
       height: height,
       calcOffset: -offset.x + 'px ' + -offset.y + 'px',
-      calcZoom: width + 'px ' + height + 'px'
+      calcZoom: width + 'px ' + height + 'px',
+      modelWidth: view.modelWidth,
+      modelHeight: view.modelHeight
     });
     me.setDirty(true);
   },
