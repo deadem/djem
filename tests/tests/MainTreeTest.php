@@ -39,13 +39,13 @@ class MainTreeTest extends TestCase
         $this->assertNotEmpty($response->headers->get('x-csrf-token'));
 
         $config = config('djem.tree'); // конфигурация дерева в config/djem/tree
-        $items = $config['items'];
+        $items = $config;
 
         $this->assertGreaterThanOrEqual(3, count($items));
 
         $data = $response->getData();
 
-        $this->checkItems($items, $data->items);
-        $this->checkItems($data->items, $items);
+        $this->checkItems($items, $data);
+        $this->checkItems($data, $items);
     }
 }

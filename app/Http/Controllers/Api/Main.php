@@ -28,7 +28,7 @@ class Main extends \Illuminate\Routing\Controller
             'contextMenu' => $doctypeObject->getContextMenu(),
         ];
 
-        return $data;
+        return response()->json($data);
     }
 
     protected function getTree($id = 0)
@@ -45,8 +45,8 @@ class Main extends \Illuminate\Routing\Controller
             if (isset($leaf['id']) && $leaf['id'] == $id) {
                 return $leaf;
             }
-            if ($key == 'items') {
-                $found = $this->findLeaf($id, $leaf);
+            if (isset($leaf['items'])) {
+                $found = $this->findLeaf($id, $leaf['items']);
                 if ($found) {
                     return $found;
                 }
