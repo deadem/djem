@@ -71,7 +71,7 @@ Ext.define('djem.view.crosslink.Files', {
     '<div class="thumb" style="',
     'background-repeat: no-repeat;background-image: url({url});background-position:{calcOffset};background-size:100%;background-size:{calcZoom}',
     '"></div>', '<span>{name}</span>', '</div>', '</tpl>', '<label>',
-    '<svg width="100%" height="100%" viewBox="0 0 64 64"><text x="0" y="58" fill="silver">&#xf100;</text></svg>',
+    '<svg width="100%" height="100%" viewBox="0 0 64 64"><text x="0" y="58" fill="#eee">&#xf100;</text></svg>',
     '<input type="file" multiple="" onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">',
     '</label>'
   ]

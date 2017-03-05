@@ -12,15 +12,6 @@ return [
             'icon' => '&#xf4cf;',
         ],
         [
-            'id' => 3,
-            'text' => 'News',
-            'description' => 'Events and news',
-            'leaf' => true,
-            '_doctype' => App\Doctypes\News::class,
-            'color' => 'orange',
-            'icon' => '&#xf17a;',
-        ],
-        [
             'id' => 2,
             'text' => 'Font',
             'description' => 'Icons',
@@ -48,6 +39,15 @@ return [
             'icon' => '&#xf257;',
 
             'items' => [
+                [
+                    'id' => 3,
+                    'text' => 'News',
+                    'description' => 'Events and news',
+                    'leaf' => true,
+                    '_doctype' => App\Doctypes\News::class,
+                    'color' => 'orange',
+                    'icon' => '&#xf17a;',
+                ],
                 [
                     'id' => 5,
                     'text' => 'Sub menu',
