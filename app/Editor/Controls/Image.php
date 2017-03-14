@@ -30,7 +30,7 @@ class Image extends Control
             ], $properties);
 
             if ($related->height && $related->width) {
-                $properties = ['layout' => 'hbox', 'items' => [$properties]];
+                $properties = ['items' => [ $properties ]];
             }
         }
 
