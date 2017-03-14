@@ -79,11 +79,6 @@ trait Editor
                 $viewItem->{$key} = $value;
             }
 
-            $bind = $item->getBind();
-            if ($bind) {
-                $viewItem->bind = $bind;
-            }
-
             if ($item->getItems()) {
                 $viewItem->items = [];
                 foreach ($item->getItems() as $item) {

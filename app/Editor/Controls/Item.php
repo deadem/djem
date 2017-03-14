@@ -84,6 +84,11 @@ class Item
             $properties[$key] = $this->getProperty($key, $model);
         }
 
+        $bind = $this->getBind();
+        if ($bind) {
+            $properties['bind'] = $bind;
+        }
+
         return $properties;
     }
 
