@@ -30,7 +30,7 @@ class Image extends Control
             ], $properties);
 
             if ($related->height && $related->width) {
-                $properties = ['items' => [ $properties ]];
+                $properties = ['items' => [$properties]];
             }
         }
 
