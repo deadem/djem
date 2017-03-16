@@ -118,4 +118,23 @@ class EditorTest extends TestCase
 
         $this->checkData($editor);
     }
+
+    public function testLabel()
+    {
+        $editor = (new Doctype())->editor();
+
+        $model = News::first();
+        $editor->loadModel($model);
+
+        $editor->createtext('testLabel')->label("<tag>;&_+'`\"!@#$%^&*()?/\\");
+        $this->assertEquals((object) [
+            'xtype' => 'djem.text',
+            'name' => 'testLabel',
+            'fieldLabel' => "&lt;tag&gt;;&amp;_+'`&quot;!@#$%^&amp;*()?/\\",
+            'bind' => '{testLabel}'
+        ], $editor->getView());
+
+        $this->checkData($editor);
+    }
+
 }

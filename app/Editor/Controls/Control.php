@@ -45,7 +45,7 @@ class Control extends Item
 
     public function label($value, $align = null)
     {
-        $this->setProperty('fieldLabel', $value);
+        $this->setProperty('fieldLabel', htmlspecialchars($value));
         if ($align) {
             $this->setProperty('labelAlign', $align);
         }
