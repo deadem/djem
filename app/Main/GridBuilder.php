@@ -60,7 +60,7 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
                 }
             }
 
-            if (isset($field->title) && $field->title) {
+            if (isset($field->field['title']) && $field->field['title']) {
                 $data['options']['title'] = $field->field['name'];
             }
 
