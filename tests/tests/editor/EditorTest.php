@@ -131,10 +131,9 @@ class EditorTest extends TestCase
             'xtype' => 'djem.text',
             'name' => 'testLabel',
             'fieldLabel' => "&lt;tag&gt;;&amp;_+'`&quot;!@#$%^&amp;*()?/\\",
-            'bind' => '{testLabel}'
+            'bind' => '{testLabel}',
         ], $editor->getView());
 
         $this->checkData($editor);
     }
-
 }
