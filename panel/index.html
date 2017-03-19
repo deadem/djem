@@ -11,13 +11,23 @@
       if (!location.href.match(/\/$/)) {
         location.href += '/';
       }
+      window.onerror = function(msg, url, line, col, error) {
+        var err = document.getElementById('error');
+        if (err) {
+          err.innerText = msg;
+          err.style.display = 'block';
+
+          var container = document.getElementById('container');
+          container.parentNode.removeChild(container);
+        }
+      }
     </script>
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
     <script id="microloader" type="text/javascript" src="bootstrap.js"></script>
 </head>
 <body>
   
-<div class="container">
+<div id="container">
   <style type="text/css">
     html {
       height: 100%;
@@ -25,7 +35,7 @@
     body {
       height: 100%;
     }
-    .container {
+    #container {
       top: 50%;
       left: 50%;
       margin: -120px 0 0 -120px;
@@ -153,6 +163,14 @@
   </svg>
   </div>
 </div>
+
+<style type="text/css">
+  #error {
+    display: none;
+    font-size: 24px;
+  }
+</style>
+<pre id="error"></pre>
 
  </body>
 </html>

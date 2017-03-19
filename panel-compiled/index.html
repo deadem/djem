@@ -11,6 +11,16 @@
       if (!location.href.match(/\/$/)) {
         location.href += '/';
       }
+      window.onerror = function(msg, url, line, col, error) {
+        var err = document.getElementById('error');
+        if (err) {
+          err.innerText = msg;
+          err.style.display = 'block';
+
+          var container = document.getElementById('container');
+          container.parentNode.removeChild(container);
+        }
+      }
     </script>
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
     <script id="microloader" data-app="94867f92-9fd1-4959-8dd9-2cd7dc21e32e" type="text/javascript">var Ext=Ext||{};Ext.manifest=Ext.manifest||"app.json";Ext=Ext||{};
@@ -70,7 +80,7 @@ a.cache()}c.notifyUpdateReady()},notifyUpdateReady:function(){"checking"!==c.app
 </head>
 <body>
   
-<div class="container">
+<div id="container">
   <style type="text/css">
     html {
       height: 100%;
@@ -78,7 +88,7 @@ a.cache()}c.notifyUpdateReady()},notifyUpdateReady:function(){"checking"!==c.app
     body {
       height: 100%;
     }
-    .container {
+    #container {
       top: 50%;
       left: 50%;
       margin: -120px 0 0 -120px;
@@ -206,6 +216,14 @@ a.cache()}c.notifyUpdateReady()},notifyUpdateReady:function(){"checking"!==c.app
   </svg>
   </div>
 </div>
+
+<style type="text/css">
+  #error {
+    display: none;
+    font-size: 24px;
+  }
+</style>
+<pre id="error"></pre>
 
  </body>
 </html>
