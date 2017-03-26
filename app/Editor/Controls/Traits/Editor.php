@@ -80,7 +80,9 @@ trait Editor
             }
 
             if ($item->getItems()) {
-                $viewItem->items = [];
+                if (! isset($viewItem->items)) {
+                    $viewItem->items = [];
+                }
                 foreach ($item->getItems() as $item) {
                     $viewItem->items[] = $this->getView($item);
                 }
