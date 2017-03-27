@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 
 class DemoData extends Command
 {
@@ -18,7 +17,7 @@ class DemoData extends Command
      */
     public function handle()
     {
-        if (!env('APP_KEY', false)) {
+        if (! env('APP_KEY', false)) {
             $this->call('key:generate');
         }
         $this->call('migrate:refresh');

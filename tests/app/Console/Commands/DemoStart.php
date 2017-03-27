@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 
 class DemoStart extends Command
 {
@@ -20,7 +19,7 @@ class DemoStart extends Command
     {
         $this->call('demo');
         $this->call('serve', [
-            '--host' => env('DEMO_HOST', 'localhost')
+            '--host' => env('DEMO_HOST', 'localhost'),
         ]);
     }
 }
