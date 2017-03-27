@@ -4,11 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class DemoStart extends Command
+class DemoServe extends Command
 {
     protected $signature = 'demo:serve';
-
-    protected $description = 'Start web server for demo project DJEM 3';
+    protected $description = 'Serve demo project. Use DEMO_HOST env for host address (localhost by default)';
 
     /**
      * Execute the console command.

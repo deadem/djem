@@ -1,4 +1,3 @@
 #!/bin/sh
-SERVE_HOST=$(hostname -I | awk '{print $1}')
-
-./init.sh && php artisan serve --host=$SERVE_HOST
+export DEMO_HOST=$(hostname -I | awk '{print $1}')
+php artisan demo:serve

@@ -13,7 +13,7 @@ class CreateNewsSmallImage extends Migration
     public function up()
     {
         Schema::table('news', function (Blueprint $table) {
-            $table->integer('small_image_id')->nullable();
+            $table->integer('small_image_id')->unsigned()->nullable();
             $table->foreign('small_image_id')->references('id')->on('images')->onDelete('set null');
         });
     }
@@ -26,6 +26,7 @@ class CreateNewsSmallImage extends Migration
     public function down()
     {
         Schema::table('news', function (Blueprint $table) {
+            $table->dropForeign('news_small_image_id_foreign');
             $table->dropColumn('small_image_id');
         });
     }

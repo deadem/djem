@@ -13,8 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\DemoData::class,
-        \App\Console\Commands\DemoStart::class,
+        Commands\DemoInit::class,
+        Commands\DemoServe::class,
+        Commands\Inspire::class,
     ];
 
     /**

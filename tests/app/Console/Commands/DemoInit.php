@@ -4,11 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class DemoData extends Command
+class DemoInit extends Command
 {
     protected $signature = 'demo';
-
-    protected $description = 'Migrates for demo project DJEM 3';
+    protected $description = 'Demo project initialization';
 
     /**
      * Execute the console command.
@@ -17,9 +16,6 @@ class DemoData extends Command
      */
     public function handle()
     {
-        if (! env('APP_KEY', false)) {
-            $this->call('key:generate');
-        }
         $this->call('migrate:refresh');
         $this->call('db:seed');
     }
