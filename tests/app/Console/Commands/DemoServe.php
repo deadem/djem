@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 class DemoServe extends Command
 {
     protected $signature = 'demo:serve';
-    protected $description = 'Serve demo project. Use DEMO_HOST env for host address (localhost by default)';
+    protected $description = 'Shortcut for demo, then serve. Use DEMO_HOST env for host address (localhost by default)';
 
     /**
      * Execute the console command.
