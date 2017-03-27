@@ -19,7 +19,11 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
 
     public function fields(\Closure $callback)
     {
-        $this->fields = new Fields($callback);
+        if (! $this->fields) {
+            $this->fields = new Fields($callback);
+        } else {
+            $this->fields->merge(new Fields($callback));
+        }
 
         return $this;
     }
