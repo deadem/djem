@@ -6,14 +6,27 @@ Ext.define('djem.view.main.Main', {
   requires: [
     'Ext.form.Label',
 
-    'djem.view.main.MainController', 'djem.view.main.Grid', 'djem.view.main.Content', 'djem.view.main.Toolbar',
+    'djem.view.main.MainController',
+    'djem.view.main.Grid',
+    'djem.view.main.Content',
+    'djem.view.main.Toolbar',
     'djem.view.main.Tree',
 
     'widget.image',
 
-    'djem.widget.html', 'djem.widget.image', 'djem.widget.images', 'djem.widget.tag', 'djem.widget.text',
-    'djem.widget.textarea', 'djem.widget.checkbox', 'djem.widget.combobox', 'djem.widget.date', 'djem.widget.time',
-    'djem.widget.grid.panel', 'djem.widget.searchToolbarField'
+    'djem.widget.html',
+    'djem.widget.image',
+    'djem.widget.images',
+    'djem.widget.tag',
+    'djem.widget.text',
+    'djem.widget.textarea',
+    'djem.widget.checkbox',
+    'djem.widget.combobox',
+    'djem.widget.date',
+    'djem.widget.time',
+    'djem.widget.grid.panel',
+    'djem.widget.searchToolbarField',
+    'djem.widget.contentor'
   ],
 
   getToolbar: function() { return this.lookupReference('toolbar'); },
