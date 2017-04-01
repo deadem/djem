@@ -22,19 +22,6 @@ class EditorSaveTest extends TestCase
 {
     use CheckModel;
 
-    public function testEmptyModel()
-    {
-        $count = count(News::all());
-        try {
-            $editor = (new NewsDoctype())->editor([]);
-            $editor->putData();
-        } catch (\Exception $e) {
-            // не должно сохранить модель без схемы и данных
-            $this->assertTrue(true);
-        }
-        $this->assertEquals($count, count(News::all()));
-    }
-
     public function testModelFields()
     {
         $data = ['name' => 'test', 'text' => 'textfield'];

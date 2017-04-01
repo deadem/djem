@@ -45,7 +45,9 @@ class ControlsTest extends TestCase
                 (object) [
                     'xtype' => 'djem.checkbox',
                     'name' => 'name',
-                    'fieldLabel' => 'Switch control',
+                    'boxLabel' => 'Switch control',
+                    'hideLabel' => true,
+                    'boxLabelAlign' => 'after',
                     'bind' => '{name}',
                 ],
             ],

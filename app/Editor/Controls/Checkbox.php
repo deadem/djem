@@ -10,4 +10,17 @@ class Checkbox extends Control
 
         $this->xtype('djem.checkbox');
     }
+
+    public function label($value, $align = null)
+    {
+        if ($align !== null && $align !== 'left' && 'align' !== 'right') {
+            return parent::label($value, $align);
+        }
+
+        $this->setProperty('hideLabel', true);
+        $this->setProperty('boxLabel', htmlspecialchars($value));
+        $this->setProperty('boxLabelAlign', $align === 'left' ? 'before' : 'after');
+
+        return $this;
+    }
 }
