@@ -64,6 +64,11 @@ class Image extends Control
         return $this->images;
     }
 
+    public function getViewItems()
+    {
+        return false;
+    }
+
     public function initControl($controls)
     {
         $this->copy = $this->getCopyFields($controls);

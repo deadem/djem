@@ -79,11 +79,13 @@ trait Editor
                 $viewItem->{$key} = $value;
             }
 
-            if ($item->getItems()) {
+            $viewItems = $item->getViewItems();
+
+            if ($viewItems) {
                 if (! isset($viewItem->items)) {
                     $viewItem->items = [];
                 }
-                foreach ($item->getItems() as $item) {
+                foreach ($viewItems as $item) {
                     $viewItem->items[] = $this->getView($item);
                 }
             }
@@ -104,8 +106,8 @@ trait Editor
             $controls->put($item->getName(), $item);
         }
 
-        if ($item && $item->getItems()) {
-            foreach ($item->getItems() as $item) {
+        if ($item && $items = $item->getItems()) {
+            foreach ($items as $item) {
                 $controls = $controls->merge($this->getControls($item));
             }
         }

@@ -121,6 +121,11 @@ class Item
         return false;
     }
 
+    public function getViewItems()
+    {
+        return $this->getItems();
+    }
+
     public function __call($name, $values)
     {
         $methods = ['xtype', 'style', 'height', 'width', 'flex', 'title', 'reference', 'cls'];
