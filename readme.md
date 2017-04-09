@@ -9,7 +9,7 @@
 # cd tests
 # composer install
 ```
-Edit .env, add APP_KEY (php artisan key:generate --show)
+Edit .env, add APP_KEY (php artisan key:generate)
 ```
 # php artisan demo
 # php artisan serve
