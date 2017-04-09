@@ -2,6 +2,8 @@
 
 namespace DJEM\Editor;
 
+use BadMethodCallException;
+
 class Control
 {
     public static function __callStatic($name, $args)
