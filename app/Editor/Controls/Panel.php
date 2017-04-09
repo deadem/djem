@@ -16,9 +16,22 @@ class Panel extends Item
         $this->setProperty('autoScroll', true);
     }
 
-    public function items(\Closure $callback)
+    public function items($items)
     {
-        $this->items = new Items($callback);
+        $this->items = new Items();
+
+        $addItems = function ($items) use (&$addItems) {
+            if (is_array($items)) {
+                foreach ($items as $item) {
+                    $addItems($item);
+                }
+
+                return;
+            }
+            $this->items->add($items);
+        };
+
+        $addItems($items);
 
         return $this;
     }

@@ -154,6 +154,8 @@ class Item
     public function value($value)
     {
         $this->customValue = $value;
+
+        return $this;
     }
 
     public function color($value)
