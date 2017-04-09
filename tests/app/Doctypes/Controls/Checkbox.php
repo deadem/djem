@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class Checkbox extends \DJEM\Doctype
 {
     use Traits\HighlightCode;
@@ -10,11 +12,11 @@ class Checkbox extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addCheckbox('name')->label('Switch control');
+        $editor->create(Control::vlayout()->items([
+            Control::checkbox('name')->label('Switch control'),
 
-            $this->addHighlightedCode($items, __FILE__);
-        });
+            $this->addHighlightedCode(__FILE__),
+        ]));
 
         return $editor;
     }

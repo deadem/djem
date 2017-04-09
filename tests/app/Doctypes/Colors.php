@@ -5,6 +5,7 @@ namespace App\Doctypes;
 use View;
 use DJEM\Main\Grid;
 use Illuminate\Http\Request;
+use DJEM\Editor\Control;
 
 class Colors extends \DJEM\Doctype
 {
@@ -33,9 +34,9 @@ class Colors extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('hbox')->items(function ($items) {
-            $items->addStaticHtml($this->colors())->flex(1);
-        });
+        $editor->create(Control::hlayout()->items([
+            Control::staticHtml($this->colors())->flex(1),
+        ]));
 
         return $editor;
     }

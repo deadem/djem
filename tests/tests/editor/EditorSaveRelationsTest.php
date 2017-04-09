@@ -2,10 +2,11 @@
 
 namespace Tests\EditorSaveRelations;
 
-use TestCase;
-use DJEM\Doctype;
 use App\Tests\CheckModel;
+use DJEM\Doctype;
+use DJEM\Editor\Control;
 use Illuminate\Database\Eloquent\Model;
+use TestCase;
 
 class LinkedValue extends Model
 {
@@ -50,11 +51,11 @@ class EditorSaveRelations extends TestCase
         $data = ['name' => 'test', 'text' => 'textfield', 'tags' => ['first', 'second', 'third', 'fourth']];
 
         $editor = (new NewsDoctype())->editor()->setInput($data);
-        $editor->createLayout()->items(function ($items) {
-            $items->addText('name');
-            $items->addText('text');
-            $items->addTag('tags')->store(['first', 'second', 'third']);
-        });
+        $editor->create(Control::layout()->items([
+            Control::text('name'),
+            Control::text('text'),
+            Control::tag('tags')->store(['first', 'second', 'third']),
+        ]));
         $editor->putData();
 
         $this->checkData($editor);
@@ -86,11 +87,11 @@ class EditorSaveRelations extends TestCase
         $data = ['name' => 'test', 'text' => 'textfield', 'tags' => ['first', 'second', 'third', 'fourth']];
 
         $editor = (new NewsDoctype())->editor()->setInput($data);
-        $editor->createLayout()->items(function ($items) {
-            $items->addText('name');
-            $items->addText('text');
-            $items->addTag('tags')->store(['first' => '1', 'second' => '2', 'third' => '3']);
-        });
+        $editor->create(Control::layout()->items([
+            Control::text('name'),
+            Control::text('text'),
+            Control::tag('tags')->store(['first' => '1', 'second' => '2', 'third' => '3']),
+        ]));
         $editor->putData();
 
         $this->checkData($editor);

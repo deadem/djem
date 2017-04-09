@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class Text extends \DJEM\Doctype
 {
     use Traits\HighlightCode;
@@ -10,11 +12,11 @@ class Text extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addText('name')->label('Name')->validate('required|max:255');
+        $editor->create(Control::vlayout()->items([
+            Control::text('name')->label('Name')->validate('required|max:255'),
 
-            $this->addHighlightedCode($items, __FILE__);
-        });
+            $this->addHighlightedCode(__FILE__),
+        ]));
 
         return $editor;
     }

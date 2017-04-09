@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class GridRemote extends \DJEM\Doctype
 {
     use Traits\HighlightCode;
@@ -10,15 +12,15 @@ class GridRemote extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addGrid('gridField')->columns([
+        $editor->create(Control::vlayout()->items([
+            Control::grid('gridField')->columns([
                 ['text' => 'Name', 'dataIndex' => 'name'],
                 ['text' => 'Email', 'dataIndex' => 'email', 'flex' => 1],
                 ['text' => 'Phone', 'dataIndex' => 'phone', 'width' => 200],
-            ])->fields(['name', 'email', 'phone']);
+            ])->fields(['name', 'email', 'phone']),
 
-            $this->addHighlightedCode($items, __FILE__);
-        });
+            $this->addHighlightedCode(__FILE__),
+        ]));
 
         return $editor;
     }

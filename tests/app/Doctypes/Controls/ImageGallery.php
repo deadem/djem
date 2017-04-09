@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class ImageGallery extends \DJEM\Doctype
 {
     use Traits\UploadImage;
@@ -11,12 +13,12 @@ class ImageGallery extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addText('name')->label('Name')->validate('required|max:255');
-            $items->addImages('images')->height(256)->save($this->uploadImage());
+        $editor->create(Control::vlayout()->items([
+            Control::text('name')->label('Name')->validate('required|max:255'),
+            Control::images('images')->height(256)->save($this->uploadImage()),
 
-            $this->addHighlightedCode($items, __FILE__, ['Traits\UploadImage' => 'Traits/UploadImage.php']);
-        });
+            $this->addHighlightedCode(__FILE__, ['Traits\UploadImage' => 'Traits/UploadImage.php']),
+        ]));
 
         return $editor;
     }

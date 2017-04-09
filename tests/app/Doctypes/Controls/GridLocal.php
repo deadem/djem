@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class GridLocal extends \DJEM\Doctype
 {
     use Traits\HighlightCode;
@@ -10,8 +12,8 @@ class GridLocal extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addGrid('name')->columns([
+        $editor->create(Control::vlayout()->items([
+            Control::grid('name')->columns([
                 ['text' => 'Name', 'dataIndex' => 'name'],
                 ['text' => 'Email', 'dataIndex' => 'email', 'flex' => 1],
                 ['text' => 'Phone', 'dataIndex' => 'phone', 'width' => 200],
@@ -22,10 +24,10 @@ class GridLocal extends \DJEM\Doctype
                 ['name' => 'Bart', 'email' => 'bart@simpsons.com', 'phone' => '555-222-1234'],
                 ['name' => 'Homer', 'email' => 'homer@simpsons.com', 'phone' => '555-222-1244'],
                 ['name' => 'Marge', 'email' => 'marge@simpsons.com', 'phone' => '555-222-1254'],
-            ]);
+            ]),
 
-            $this->addHighlightedCode($items, __FILE__);
-        });
+            $this->addHighlightedCode(__FILE__),
+        ]));
 
         return $editor;
     }

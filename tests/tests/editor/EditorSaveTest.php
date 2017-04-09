@@ -2,10 +2,11 @@
 
 namespace Tests\EditorSave;
 
-use TestCase;
-use DJEM\Doctype;
 use App\Tests\CheckModel;
+use DJEM\Doctype;
+use DJEM\Editor\Control;
 use Illuminate\Database\Eloquent\Model;
+use TestCase;
 
 class News extends Model
 {
@@ -27,10 +28,11 @@ class EditorSaveTest extends TestCase
         $data = ['name' => 'test', 'text' => 'textfield'];
 
         $editor = (new NewsDoctype())->editor()->setInput($data);
-        $editor->createLayout()->items(function ($items) {
-            $items->addText('name');
-            $items->addText('text');
-        });
+        $editor->create(Control::layout()->items([
+            Control::text('name'),
+            Control::text('text'),
+        ]));
+
         $editor->putData();
         $this->checkData($editor);
 
@@ -45,11 +47,12 @@ class EditorSaveTest extends TestCase
         $data = ['name' => 'test', 'text' => 'textfield', 'tagsList' => ['first', 'second', 'third', 'fourth']];
 
         $editor = (new NewsDoctype())->editor()->setInput($data);
-        $editor->createLayout()->items(function ($items) {
-            $items->addText('name');
-            $items->addText('text');
-            $items->addTag('tagsList')->store(['first', 'second', 'third']);
-        });
+        $editor->create(Control::layout()->items([
+            Control::text('name'),
+            Control::text('text'),
+            Control::tag('tagsList')->store(['first', 'second', 'third']),
+        ]));
+
         $editor->putData();
 
         $this->checkData($editor);

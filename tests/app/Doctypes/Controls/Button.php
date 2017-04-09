@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class Button extends \DJEM\Doctype
 {
     use Traits\HighlightCode;
@@ -10,11 +12,11 @@ class Button extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addButton('Click me')->reference('name')->height(64)->color('black')->bgcolor('light-green');
+        $editor->create(Control::vlayout()->items([
+            Control::button('Click me')->reference('name')->height(64)->color('black')->bgcolor('light-green'),
 
-            $this->addHighlightedCode($items, __FILE__);
-        });
+            $this->addHighlightedCode(__FILE__),
+        ]));
 
         return $editor;
     }
@@ -26,7 +28,7 @@ class Button extends \DJEM\Doctype
         $code = <<<'EOF'
         var me = this;
         me.lookupReference('name').on('click', function() {
-            alert('click!');
+            Ext.Msg.alert('Click', 'Button clicked');
         });
 EOF;
         $code .= $this->highlightCode();

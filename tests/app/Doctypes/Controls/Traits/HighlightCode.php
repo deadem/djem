@@ -3,6 +3,7 @@
 namespace App\Doctypes\Controls\Traits;
 
 use View;
+use DJEM\Editor\Control;
 
 trait HighlightCode
 {
@@ -29,7 +30,7 @@ trait HighlightCode
         ];
     }
 
-    private function addSourceCode(&$items, $file)
+    private function addSourceCode($file)
     {
         $code = file_get_contents($file);
 
@@ -40,28 +41,32 @@ trait HighlightCode
 
         $code = preg_replace('/[^\n]+\\$this->highlightCode()[^\n]+\n/', '', $code);
 
-        $items->addStaticHtml(View::make('djem.highlight', ['code' => $code])->render());
+        return Control::staticHtml(View::make('djem.highlight', ['code' => $code])->render());
     }
 
-    private function addHighlightedCode(&$items, $file, $tabs = [])
+    private function addHighlightedCode($file, $tabs = [])
     {
-        $items->addLabel()->height(32);
+        $items = [];
+        $items[] = Control::label()->height(32);
 
         if (! empty($tabs)) {
-            $items->addTabPanel()->reference('highlightCode')->flex(1)->items(function ($items) use ($tabs, $file) {
-                $items->addLayout()->title('Control')->items(function ($items) use ($file) {
-                    $this->addSourceCode($items, $file);
-                });
-                collect($tabs)->each(function ($path, $name) use (&$items, $file) {
-                    $items->addLayout()->title($name)->items(function ($items) use ($file, $path) {
-                        $this->addSourceCode($items, dirname($file).'/'.$path);
-                    });
-                });
-            });
+            $items[] = Control::tabPanel()->reference('highlightCode')->flex(1)->items([
+                Control::layout()->title('Control')->items([
+                    $this->addSourceCode($file),
+                ]),
 
-            return;
+                collect($tabs)->map(function ($path, $name) use (&$items, $file) {
+                    return Control::layout()->title($name)->items([
+                        $this->addSourceCode(dirname($file).'/'.$path),
+                    ]);
+                })->toArray(),
+            ]);
+
+            return $items;
         }
 
-        $this->addSourceCode($items, $file);
+        $items[] = $this->addSourceCode($file);
+
+        return $items;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class ImageGallerySortable extends \DJEM\Doctype
 {
     use Traits\UploadImage;
@@ -12,12 +14,12 @@ class ImageGallerySortable extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addText('name')->label('Name')->validate('required|max:255');
-            $items->addImages('images')->sortable($this->rearrange('sort'))->height(256)->save($this->uploadImage());
+        $editor->create(Control::vlayout()->items([
+            Control::text('name')->label('Name')->validate('required|max:255'),
+            Control::images('images')->sortable($this->rearrange('sort'))->height(256)->save($this->uploadImage()),
 
-            $this->addHighlightedCode($items, __FILE__, ['Traits\UploadImage' => 'Traits/UploadImage.php', 'Traits\Sortable' => 'Traits/Sortable.php']);
-        });
+            $this->addHighlightedCode(__FILE__, ['Traits\UploadImage' => 'Traits/UploadImage.php', 'Traits\Sortable' => 'Traits/Sortable.php']),
+        ]));
 
         return $editor;
     }

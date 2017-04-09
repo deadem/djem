@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class Date extends \DJEM\Doctype
 {
     use Traits\HighlightCode;
@@ -10,13 +12,13 @@ class Date extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addLayout()->items(function ($items) {
-                $items->addDate('name')->label('Date')->validate('required');
-            });
+        $editor->create(Control::vlayout()->items([
+            Control::layout()->items([
+                Control::date('name')->label('Date')->validate('required'),
+            ]),
 
-            $this->addHighlightedCode($items, __FILE__);
-        });
+            $this->addHighlightedCode(__FILE__),
+        ]));
 
         return $editor;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Doctypes\Controls;
 
+use DJEM\Editor\Control;
+
 class StaticHtml extends \DJEM\Doctype
 {
     use Traits\HighlightCode;
@@ -10,11 +12,11 @@ class StaticHtml extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('vbox')->items(function ($items) {
-            $items->addStaticHtml('<b>Static html content</b><p>Text content</p>');
+        $editor->create(Control::vlayout()->items([
+            Control::staticHtml('<b>Static html content</b><p>Text content</p>'),
 
-            $this->addHighlightedCode($items, __FILE__);
-        });
+            $this->addHighlightedCode(__FILE__),
+        ]));
 
         return $editor;
     }

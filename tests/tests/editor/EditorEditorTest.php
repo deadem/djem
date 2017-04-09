@@ -2,10 +2,11 @@
 
 namespace Tests\EditorEditor;
 
-use TestCase;
-use DJEM\Doctype;
 use App\Tests\CheckModel;
+use DJEM\Doctype;
+use DJEM\Editor\Control;
 use Illuminate\Database\Eloquent\Model;
+use TestCase;
 
 class LinkedValue extends Model
 {
@@ -61,13 +62,13 @@ class EditorSaveTest extends TestCase
         ];
 
         $editor = (new NewsDoctype())->editor()->setInput($data);
-        $editor->createLayout()->items(function ($items) {
-            $items->addImages('images')->images('images')->editor(function ($editor) {
-                $editor->createLayout('vbox')->items(function ($items) {
-                    $items->addSelect('news');
-                });
-            });
-        });
+        $editor->create(Control::layout()->items([
+            Control::images('images')->images('images')->editor(function ($editor) {
+                $editor->create(Control::vlayout()->items([
+                    Control::select('news'),
+                ]));
+            }),
+        ]));
 
         $this->assertEquals(
             (object) [
