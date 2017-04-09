@@ -10,7 +10,7 @@ Ext.select('table.colors', true).on('click', function(e, target) {
     document.execCommand('copy');
     var copied = document.createElement('div');
     copied.setAttribute('class', 'copied');
-    copied.appendChild(document.createTextNode('Copied to Clipboard'));
+    copied.appendChild(document.createTextNode('CSS class copied to clipboard'));
     document.body.appendChild(copied);
     setTimeout(function() {
       document.body.removeChild(copyFrom);

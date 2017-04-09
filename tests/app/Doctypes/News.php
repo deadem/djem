@@ -22,10 +22,10 @@ class News extends \DJEM\Doctype
 
     public function grid()
     {
-        return Grid::fields(function ($fields) {
-            $fields->field('id');
-            $fields->field('name')->text('Name')->flex(1);
-        })->items(function () {
+        return Grid::fields([
+            Grid::field('id'),
+            Grid::field('name')->text('Name')->flex(1),
+        ])->items(function () {
             $items = (new $this->model())->orderBy('id');
             $items = $items->paginate($this->request->input('limit'));
 

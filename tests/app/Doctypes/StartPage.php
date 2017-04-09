@@ -8,11 +8,11 @@ class StartPage extends \DJEM\Doctype
 {
     public function grid()
     {
-        return Grid::fields(function ($fields) {
-            $fields->field('id');
-            $fields->field('_doctype');
-            $fields->field('name')->text('Control name')->flex(1);
-        })->items([
+        return Grid::fields([
+            Grid::field('id'),
+            Grid::field('_doctype'),
+            Grid::field('name')->text('Control name')->flex(1),
+        ])->items([
             ['name' => 'Button', '_doctype' => Controls\Button::class],
             ['name' => 'Checkbox', '_doctype' => Controls\Checkbox::class],
             ['name' => 'Date', '_doctype' => Controls\Date::class],

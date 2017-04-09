@@ -10,5 +10,5 @@ Ext.define('djem.view.main.Grid', {
 
   viewConfig: { getRowClass: function(record) { return record.get('djem-grid-color') || ''; } },
 
-  listeners: { rowdblclick: 'rowdblclick', itemkeydown: 'itemkeydown', cellcontextmenu: 'cellcontextmenu' }
+  listeners: { rowdblclick: 'rowdblclick', itemkeydown: 'itemkeydown', cellcontextmenu: 'cellcontextmenu', afterlayout: 'showFilter' }
 });

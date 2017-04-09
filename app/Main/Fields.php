@@ -6,21 +6,11 @@ class Fields
 {
     private $fields = [];
 
-    public function __construct(\Closure $callback)
-    {
-        $callback($this);
-    }
-
-    private function addField(Field $field)
+    public function addField(Field $field)
     {
         $this->fields[] = $field;
 
         return $field;
-    }
-
-    public function field($name)
-    {
-        return $this->addField(new Field($name));
     }
 
     public function getFields()

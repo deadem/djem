@@ -9,6 +9,7 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
     private $fields;
     private $items;
     private $custom;
+    private $searchable = false;
 
     public function custom($class)
     {
@@ -17,9 +18,26 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
         return $this;
     }
 
-    public function fields(\Closure $callback)
+    public static function field($name)
     {
-        $this->fields = new Fields($callback);
+        return new Field($name);
+    }
+
+    public function fields($fields)
+    {
+        $this->fields = new Fields();
+
+        $addFields = function ($fields) use (&$addFields) {
+            if (is_array($fields)) {
+                foreach ($fields as $field) {
+                    $addFields($field);
+                }
+
+                return;
+            }
+            $this->fields->addField($fields);
+        };
+        $addFields($fields);
 
         return $this;
     }
@@ -72,12 +90,21 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
         ]);
     }
 
+    public function searchable($searchable = true)
+    {
+        $this->searchable = $searchable;
+
+        return $this;
+    }
+
     public function getData()
     {
         $metaData = $this->getMetaData();
         if (! isset($metaData['options'])) {
             $metaData['options'] = [];
         }
+
+        $metaData['options']['searchable'] = $this->searchable;
 
         $items = $this->getItems() ?: new Collection();
         $total = $items->count();

@@ -11,31 +11,29 @@ Ext.define('djem.view.main.ToolbarController', {
         var obj = refs[ref];
         buttons.push({ ref: ref, obj: obj });
       }
-    }
+      }
     return buttons;
   },
 
   init: function() {
     var me = this;
     var view = me.getView();
+
     view
       .on('change.toolbar',
           function(_this, name) {
-            var toolbars = { 'panel': ['add', 'search', 'searchIcon'], 'main-content': ['save', 'close'] };
+            var toolbars = { 'panel': ['add'], 'main-content': ['save', 'close'] };
             var user = me.lookupReference('user');
             while (user.nextSibling() && user.nextSibling().getReference() != 'system') {
               user.nextSibling().destroy();
             }
-            Ext.each(me.getButtons(),
-                     function(data) { data.obj[toolbars[name].indexOf(data.ref) < 0 ? 'hide' : 'show'](); });
+            Ext.each(me.getButtons(), function(data) { data.obj[toolbars[name].indexOf(data.ref) < 0 ? 'hide' : 'show'](); });
 
             var index = me.getView().items.indexOf(user);
             var buttons = {};
             djem.app.fireEvent('show.toolbar', buttons);
             Ext.each(buttons.value || [], function(button, pos) {
-              view.insert(index + pos + 1, button).on('click', function() {
-                djem.app.fireEvent('click.toolbar', button.ref);
-              });
+              view.insert(index + pos + 1, button).on('click', function() { djem.app.fireEvent('click.toolbar', button.ref); });
             });
           })
       .on('update.toolbar', function(ref, data) {
@@ -59,8 +57,7 @@ Ext.define('djem.view.main.ToolbarController', {
         }
       });
 
-    Ext.each(me.getButtons(), function(data) {
-      data.obj.on('click', function() { djem.app.fireEvent('click.toolbar', data.ref, data.obj.params); });
-    });
+    Ext.each(me.getButtons(),
+             function(data) { data.obj.on('click', function() { djem.app.fireEvent('click.toolbar', data.ref, data.obj.params); }); });
   }
 });

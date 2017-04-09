@@ -7,6 +7,11 @@ class Field
     public $field = [];
     public $column = [];
 
+    public function __construct($name)
+    {
+        $this->field('name', $name);
+    }
+
     private function field($name, $value)
     {
         $this->field[$name] = $value;
@@ -19,11 +24,6 @@ class Field
         $this->column[$name] = $value;
 
         return $this;
-    }
-
-    public function __construct($name)
-    {
-        $this->field('name', $name);
     }
 
     public function text($text)

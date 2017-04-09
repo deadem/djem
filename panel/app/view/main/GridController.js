@@ -7,6 +7,11 @@ Ext.define('djem.view.main.GridController', {
 
   config: { color: null, filter: null, filterListeners: null, filterTimeout: null },
 
+  showFilter: function() {
+    var me = this, store = me.getView().getStore();
+    djem.app.fireEvent('update.toolbar', 'search', { action: (store.userOptions || {}).searchable ? 'show' : 'hide' });
+  },
+
   destroyFilterListeners: function() {
     var me = this, listeners = me.getFilterListeners();
 
@@ -92,6 +97,7 @@ Ext.define('djem.view.main.GridController', {
         djem.app.fireEvent('update.toolbar', 'add', menu);
         djem.app.fireEvent('update.toolbar', 'add', { action: 'enable' });
       }
+      me.showFilter();
 
       var parent = view.lookupReferenceHolder();
       var gridView = parent.lookupReference('grid-view');
@@ -99,7 +105,7 @@ Ext.define('djem.view.main.GridController', {
       me.destroyFilterListeners();
       if (gridView.down()) {
         gridView.down().destroy();
-      }
+        }
 
       if (meta.view) {
         // замена вьювера
@@ -137,13 +143,12 @@ Ext.define('djem.view.main.GridController', {
       };
     }
     menu.push({ text: 'Редактировать', glyph: 'xf3eb@Icons', handler: 'openDocument' });
-    Ext.each((me.getView().getStore().userOptions || {}).contextMenu || [],
-             function(v) { menu.push(Ext.apply({}, v)); });
+    Ext.each((me.getView().getStore().userOptions || {}).contextMenu || [], function(v) { menu.push(Ext.apply({}, v)); });
     Ext.each(menu, function(v) {
       var command = v.handler;
       if (v['function']) {
         v.handler = command = function() { eval(v['function']); };
-      }
+        }
       if (command && typeof command != 'function') {
         v.handler = handler(command);
       }
@@ -189,8 +194,6 @@ Ext.define('djem.view.main.GridController', {
 
   deleteDocument: function(_this, record) {
     var me = this, data = record.data || {}, view = me.getView(), store = view.getStore();
-    djem.app.fireEvent(
-            'deleteDocument', _this,
-            { id: record.id, title: data[me.titleField], _doctype: data._doctype || store.userOptions._doctype });
+    djem.app.fireEvent('deleteDocument', _this, { id: record.id, title: data[me.titleField], _doctype: data._doctype || store.userOptions._doctype });
   }
 });

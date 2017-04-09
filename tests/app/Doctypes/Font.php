@@ -2,9 +2,10 @@
 
 namespace App\Doctypes;
 
-use View;
+use DJEM\Editor\Control;
 use DJEM\Main\Grid;
 use Illuminate\Http\Request;
+use View;
 
 class Font extends \DJEM\Doctype
 {
@@ -32,9 +33,9 @@ class Font extends \DJEM\Doctype
     {
         $editor = parent::editor();
 
-        $editor->createLayout('hbox')->items(function ($items) {
-            $items->addStaticHtml($this->font())->flex(1);
-        });
+        $editor->create(Control::hlayout()->items([
+            Control::staticHtml($this->font())->flex(1),
+        ]));
 
         return $editor;
     }
