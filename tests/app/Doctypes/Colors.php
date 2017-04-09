@@ -4,8 +4,8 @@ namespace App\Doctypes;
 
 use View;
 use DJEM\Main\Grid;
-use Illuminate\Http\Request;
 use DJEM\Editor\Control;
+use Illuminate\Http\Request;
 
 class Colors extends \DJEM\Doctype
 {
