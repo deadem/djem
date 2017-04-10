@@ -3,7 +3,10 @@ Ext.data.request.Ajax.override({
   onComplete: function() {
     var me = this, options = me.options || {};
     try {
-      if (me.xhr && me.xhr) {
+      if (me.xhr && (Math.floor(me.xhr.status / 100) == 5)) {
+        throw new Error();
+      }
+      if (me.xhr) {
         djem.app.fireEvent('token', me.xhr.getResponseHeader('x-csrf-token'));
       }
       if (me.xhr && me.xhr.status != 200 && (Math.floor(me.xhr.status / 100) != 4 || me.xhr.status == 400)) {
@@ -29,6 +32,7 @@ Ext.data.request.Ajax.override({
     } catch (e) {
       Ext.MessageBox.show({
         title: 'Error',
+        maxWidth: '80%',
         closable: false,
         msg: (e && e.message || '') + me.xhr.response,
         buttons: Ext.MessageBox.OK,
