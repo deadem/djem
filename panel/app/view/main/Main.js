@@ -26,8 +26,17 @@ Ext.define('djem.view.main.Main', {
     'djem.widget.time',
     'djem.widget.grid.panel',
     'djem.widget.searchToolbarField',
-    'djem.widget.contentor'
+    'djem.model.formBuilder.Component',
+    'djem.model.formBuilder.Property',
+    'djem.model.formBuilder.Item',
+    'djem.view.formBuilder.Component',
+    'djem.view.formBuilder.Property',
+    'djem.view.formBuilder.Item',
+    'djem.view.formBuilder.FormBuilder'
   ],
+  // 'djem.store.formBuilder.Component',
+  // 'djem.store.formBuilder.Property',
+  // 'djem.store.formBuilder.Item',
 
   getToolbar: function() { return this.lookupReference('toolbar'); },
 
