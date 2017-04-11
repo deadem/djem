@@ -1,9 +1,15 @@
 <?php
 
 return [
-    'tree' => function () {
-        return [
-            ['id' => 1, 'text' => 'djem.example.com', 'description' => 'Стартовая страница', 'leaf' => true, '_doctype' => DJEM\Doctype::class, 'color' => 'red', 'icon' => '&#xE838;'],
-        ];
-    },
+    'tree' => [
+        [
+            'id' => 1,
+            'text' => 'djem.example.com',
+            'description' => 'Start page',
+            'leaf' => true,
+            '_doctype' => DJEM\Doctype::class,
+            'color' => 'red',
+            'icon' => '&#xf4cf;',
+        ],
+    ],
 ];
