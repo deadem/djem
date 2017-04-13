@@ -9,6 +9,7 @@ Ext.define('djem.view.formBuilder.Item', {
   cls: 'canvas',
   layout: { type: 'vbox', align: 'stretch' },
   flex: 6
+  // listeners: { click: { element: 'el', fn: 'selectItem' } }
   // tpl: ['<div>', '</div>'],
   // itemSelector: 'li'
   // getItemSelector: function() {

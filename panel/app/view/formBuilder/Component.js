@@ -23,7 +23,7 @@ Ext.define('djem.view.formBuilder.Component', {
       html: 'Button',
       flex: 1,
       cls: 'component',
-      props: { width: 'auto', text: 'Новая кнопка' }
+      props: { width: 'auto', text: 'Новая кнопка', allows: ['width', 'height', 'text'] },
     },
     {
       name: 'Text',
@@ -31,7 +31,7 @@ Ext.define('djem.view.formBuilder.Component', {
       html: 'Text',
       flex: 1,
       cls: 'component',
-      props: { width: 'auto', fieldLabel: 'Новое текстовое поле' }
+      props: { width: 'auto', fieldLabel: 'Новое текстовое поле', allows: ['width', 'text'] },
     },
     {
       name: 'Layout',
@@ -44,8 +44,8 @@ Ext.define('djem.view.formBuilder.Component', {
         height: 'auto',
         layout: { type: 'hbox', align: 'stretch' },
         style: { 'outline': 'black solid 2px', 'min-height': '100px' },
-        listeners: { click: function() { console.log('...'); } }
-      }
+        allows: ['width', 'text']
+      },
     } // { name: 'Date', t: 'djem.date', html: 'Date', flex: 1 },
     // { name: 'Grid', t: 'widget.djem.grid.panel', html: 'Grid', flex: 1 },
     // { name: 'Image', t: 'djem.image', html: 'Image', flex: 1 },

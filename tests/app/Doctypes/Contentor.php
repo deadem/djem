@@ -39,6 +39,9 @@ class Contentor extends \DJEM\Doctype
                 .x-panel.component .x-autocontainer-innerCt {
                     background-color: silver;
                 }
+                .selected {
+                    border: black solid 5px;
+                }
             </style>
         ';
     }

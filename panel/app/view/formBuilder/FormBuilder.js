@@ -15,5 +15,15 @@ Ext.define('djem.view.formBuilder.FormBuilder', {
       },
       { xtype: 'formBuilder.item' }
     ]
-  }]
+  }],
+  listeners: { click: { element: 'el', fn: 'clickItem' } }
+  // listeners: { click: function(e) { console.log('SELECTUNG'); } }
+
+  // listeners: { 'selected': { element: 'el', fn: function() { console.log('SELECTUNG'); } } }
+
+  // init: function() {
+  //   var me = this;
+
+  // }
+
 });

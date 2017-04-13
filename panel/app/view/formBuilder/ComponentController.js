@@ -16,10 +16,6 @@ Ext.define('djem.view.formBuilder.ComponentController', {
         // Ext.get(id).appendChild(component.el);
 
         dd = new Ext.dd.DDTarget(component.el.dom, 'componentsDD', { ignoreSelf: false });
-
-        console.log(component);
-        console.log(dd);
-
       },
       onDragOver: function(e, id) { Ext.getCmp(id).setStyle({ 'background': 'blue' }); },
       onDragOut: function(e, id) { Ext.getCmp(id).setStyle({ 'background': 'none' }); },
