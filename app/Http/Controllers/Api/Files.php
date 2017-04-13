@@ -21,25 +21,23 @@ class Files extends \Illuminate\Routing\Controller
     public function upload(Request $request)
     {
         $files = $request->file('data');
-        $isValid = true;
         $result = [];
 
-        foreach ($files as $file) {
-            if ($file->isValid()) {
-                $tempFileName = uniqid().'.'.$file->getClientOriginalName();
-                $file->move(sys_get_temp_dir(), $tempFileName);
-                $result[] = [
-                    'name' => $file->getClientOriginalName(),
-                    'file' => $tempFileName,
-                ];
-            } else {
-                $isValid = false;
-            }
+        if (! is_array($files)) {
+            abort(413, 'Upload error');
         }
 
-        if ($isValid) {
-            return $result;
-        }
-        abort(413, 'Upload error');
+        return collect($files)->map(function ($file) {
+            if (! $file->isValid()) {
+                abort(413, 'Upload error');
+            }
+            $tempFileName = uniqid().'.'.$file->getClientOriginalName();
+            $file->move(sys_get_temp_dir(), $tempFileName);
+
+            return [
+                'name' => $file->getClientOriginalName(),
+                'file' => $tempFileName,
+            ];
+        })->toArray();
     }
 }
