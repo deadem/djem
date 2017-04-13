@@ -3,6 +3,7 @@
 namespace DJEM\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class Files extends \Illuminate\Routing\Controller
 {
@@ -21,13 +22,11 @@ class Files extends \Illuminate\Routing\Controller
     public function upload(Request $request)
     {
         $files = $request->file('data');
-        $result = [];
-
         if (! is_array($files)) {
             abort(413, 'Upload error');
         }
 
-        return collect($files)->map(function ($file) {
+        return collect($files)->map(function (UploadedFile $file) {
             if (! $file->isValid()) {
                 abort(413, 'Upload error');
             }
