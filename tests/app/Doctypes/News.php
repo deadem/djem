@@ -44,10 +44,8 @@ class News extends \DJEM\Doctype
 
                     Control::richText('text')->label('Text')->flex(1),
                 ]),
-                Control::layout('vbox')->width('20%')->items([
-                    Control::layout()->items([
-                        Control::image('smallImage')->save($this->uploadImage()),
-                    ]),
+                Control::vlayout()->width('20%')->items([
+                    Control::image('smallImage')->save($this->uploadImage()),
                     Control::images('images')->sortable($this->rearrange('sort'))->flex(1)->save($this->uploadImage()),
                 ]),
             ])
