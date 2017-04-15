@@ -21,9 +21,11 @@ class VerifyCsrfToken extends BaseVerifier
     public function handle($request, \Closure $next)
     {
         try {
-            return parent::handle($request, $next);
+            $response = parent::handle($request, $next);
         } catch (TokenMismatchException $e) {
-            return $this->unauthorizedResponse();
+            $response = $this->unauthorizedResponse();
         }
+
+        return $response->header('x-csrf-token', $request->session()->token());
     }
 }

@@ -29,6 +29,6 @@ class Authenticate
             }
         }
 
-        return $next($request)->header('x-csrf-token', $request->session()->token());
+        return $next($request);
     }
 }
