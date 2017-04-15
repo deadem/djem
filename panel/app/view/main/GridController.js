@@ -51,13 +51,15 @@ Ext.define('djem.view.main.GridController', {
       store.getProxy().setExtraParam('filter', null);
       store.loadPage(1);
     });
+
     view.on('click.toolbar', function(ref, params) {
       params = params || {};
       me.openDocument(view, { data: { _doctype: params._doctype } });
     });
+
     view.on('update.data', function() {
-      var store = view.getStore(), current = store.currentPage;
-      store.loadPage(current);
+      view.viewConfig.config.lastScrollPosition = { x: view.getScrollX(), y: view.getScrollY() };
+      view.getStore().reload();
     });
   },
 
@@ -105,7 +107,7 @@ Ext.define('djem.view.main.GridController', {
       me.destroyFilterListeners();
       if (gridView.down()) {
         gridView.down().destroy();
-        }
+      }
 
       if (meta.view) {
         // замена вьювера
@@ -148,7 +150,7 @@ Ext.define('djem.view.main.GridController', {
       var command = v.handler;
       if (v['function']) {
         v.handler = command = function() { eval(v['function']); };
-        }
+      }
       if (command && typeof command != 'function') {
         v.handler = handler(command);
       }
