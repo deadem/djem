@@ -10,19 +10,17 @@ class GridRemote extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::vlayout()->items([
+                Control::grid('gridField')->columns([
+                    ['text' => 'Name', 'dataIndex' => 'name'],
+                    ['text' => 'Email', 'dataIndex' => 'email', 'flex' => 1],
+                    ['text' => 'Phone', 'dataIndex' => 'phone', 'width' => 200],
+                ])->fields(['name', 'email', 'phone']),
 
-        $editor->create(Control::vlayout()->items([
-            Control::grid('gridField')->columns([
-                ['text' => 'Name', 'dataIndex' => 'name'],
-                ['text' => 'Email', 'dataIndex' => 'email', 'flex' => 1],
-                ['text' => 'Phone', 'dataIndex' => 'phone', 'width' => 200],
-            ])->fields(['name', 'email', 'phone']),
-
-            $this->addHighlightedCode(__FILE__),
-        ]));
-
-        return $editor;
+                $this->addHighlightedCode(__FILE__),
+            ])
+        );
     }
 
     public function loadRelation($relation)

@@ -4,6 +4,7 @@ namespace App\Doctypes;
 
 use App\Models;
 use DJEM\Main\Grid;
+use DJEM\Editor\Control;
 use Illuminate\Http\Request;
 
 class News extends \DJEM\Doctype
@@ -35,23 +36,21 @@ class News extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::hlayout()->flex(1)->items([
+                Control::vlayout()->flex(1)->items([
+                    Control::text('name')->label('Name')->validate('required|max:255'),
+                    Control::tag('tagsList')->label('Field Tags')->filterPickList(true)->store(['one', 'two', 'three']),
 
-        $editor->createLayout('hbox')->flex(1)->items(function ($items) {
-            $items->addLayout(['type' => 'vbox', 'align' => 'stretch'])->flex(1)->items(function ($items) {
-                $items->addText('name')->label('Name')->validate('required|max:255');
-                $items->addTag('tagsList')->label('Field Tags')->filterPickList(true)->store(['one', 'two', 'three']);
-
-                $items->addRichText('text')->label('Text')->flex(1);
-            });
-            $items->addLayout('vbox')->width('20%')->items(function ($items) {
-                $items->addLayout()->items(function ($items) {
-                    $items->addImage('smallImage')->save($this->uploadImage());
-                });
-                $items->addImages('images')->sortable($this->rearrange('sort'))->flex(1)->save($this->uploadImage());
-            });
-        });
-
-        return $editor;
+                    Control::richText('text')->label('Text')->flex(1),
+                ]),
+                Control::layout('vbox')->width('20%')->items([
+                    Control::layout()->items([
+                        Control::image('smallImage')->save($this->uploadImage()),
+                    ]),
+                    Control::images('images')->sortable($this->rearrange('sort'))->flex(1)->save($this->uploadImage()),
+                ]),
+            ])
+        );
     }
 }

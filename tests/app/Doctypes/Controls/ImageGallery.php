@@ -11,15 +11,13 @@ class ImageGallery extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::vlayout()->items([
+                Control::text('name')->label('Name')->validate('required|max:255'),
+                Control::images('images')->height(256)->save($this->uploadImage()),
 
-        $editor->create(Control::vlayout()->items([
-            Control::text('name')->label('Name')->validate('required|max:255'),
-            Control::images('images')->height(256)->save($this->uploadImage()),
-
-            $this->addHighlightedCode(__FILE__, ['Traits\UploadImage' => 'Traits/UploadImage.php']),
-        ]));
-
-        return $editor;
+                $this->addHighlightedCode(__FILE__, ['Traits\UploadImage' => 'Traits/UploadImage.php']),
+            ])
+        );
     }
 }

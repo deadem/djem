@@ -10,14 +10,12 @@ class Checkbox extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::vlayout()->items([
+                Control::checkbox('name')->label('Switch control'),
 
-        $editor->create(Control::vlayout()->items([
-            Control::checkbox('name')->label('Switch control'),
-
-            $this->addHighlightedCode(__FILE__),
-        ]));
-
-        return $editor;
+                $this->addHighlightedCode(__FILE__),
+            ])
+        );
     }
 }

@@ -10,15 +10,13 @@ class Button extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::vlayout()->items([
+                Control::button('Click me')->reference('name')->height(64)->color('black')->bgcolor('light-green'),
 
-        $editor->create(Control::vlayout()->items([
-            Control::button('Click me')->reference('name')->height(64)->color('black')->bgcolor('light-green'),
-
-            $this->addHighlightedCode(__FILE__),
-        ]));
-
-        return $editor;
+                $this->addHighlightedCode(__FILE__),
+            ])
+        );
     }
 
     public function load()

@@ -10,16 +10,14 @@ class Date extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::vlayout()->items([
+                Control::layout()->items([
+                    Control::date('name')->label('Date')->validate('required'),
+                ]),
 
-        $editor->create(Control::vlayout()->items([
-            Control::layout()->items([
-                Control::date('name')->label('Date')->validate('required'),
-            ]),
-
-            $this->addHighlightedCode(__FILE__),
-        ]));
-
-        return $editor;
+                $this->addHighlightedCode(__FILE__),
+            ])
+        );
     }
 }

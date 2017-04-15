@@ -10,14 +10,12 @@ class Text extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::vlayout()->items([
+                Control::text('name')->label('Name')->validate('required|max:255'),
 
-        $editor->create(Control::vlayout()->items([
-            Control::text('name')->label('Name')->validate('required|max:255'),
-
-            $this->addHighlightedCode(__FILE__),
-        ]));
-
-        return $editor;
+                $this->addHighlightedCode(__FILE__),
+            ])
+        );
     }
 }

@@ -10,14 +10,12 @@ class StaticHtml extends \DJEM\Doctype
 
     public function editor()
     {
-        $editor = parent::editor();
+        return parent::editor()->create(
+            Control::vlayout()->items([
+                Control::staticHtml('<b>Static html content</b><p>Text content</p>'),
 
-        $editor->create(Control::vlayout()->items([
-            Control::staticHtml('<b>Static html content</b><p>Text content</p>'),
-
-            $this->addHighlightedCode(__FILE__),
-        ]));
-
-        return $editor;
+                $this->addHighlightedCode(__FILE__),
+            ])
+        );
     }
 }
