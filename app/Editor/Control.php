@@ -33,7 +33,7 @@ class Control
         ];
 
         if (! in_array($name, $methods)) {
-            throw new BadMethodCallException('Call to undefined method '.get_class($this).'::'.$name);
+            throw new BadMethodCallException('Call to undefined method '.self::class.'::'.$name);
         }
 
         return Controls\Item::createControl(ucfirst($name), $args);
