@@ -3,8 +3,11 @@ Ext.define('djem.view.formBuilder.FormBuilder', {
   alias: ['widget.djem.formBuilder'],
   requires: ['djem.view.formBuilder.FormBuilderController'],
   controller: 'FormBuilderController',
+  // store: Ext.create('Ext.data.Store', {
+  //   model: ''
+  // });
+  layout: { type: 'hbox', align: 'stretch' },
   items: [{
-
     layout: { type: 'hbox', align: 'stretch' },
     flex: 1,
     items: [
@@ -17,13 +20,5 @@ Ext.define('djem.view.formBuilder.FormBuilder', {
     ]
   }],
   listeners: { click: { element: 'el', fn: 'clickItem' } }
-  // listeners: { click: function(e) { console.log('SELECTUNG'); } }
-
-  // listeners: { 'selected': { element: 'el', fn: function() { console.log('SELECTUNG'); } } }
-
-  // init: function() {
-  //   var me = this;
-
-  // }
 
 });

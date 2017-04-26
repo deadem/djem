@@ -2,58 +2,72 @@ Ext.define('djem.view.formBuilder.Component', {
   extend: 'Ext.panel.Panel',
   alias: ['view.formBuilder.component', 'widget.formBuilder.component'],
   requires: ['djem.view.formBuilder.ComponentController'],
-  // store: Ext.create('Ext.data.Store', {
-  //   model: 'djem.model.formBuilder.Component',
-  //   data: [
-  //     { name: 'Button', t: 'button', allowedProperties: ['text', 'reference', 'height', 'width', 'color', 'bgcolor'] },
-  //     { name: 'Checkbox', t: 'djem.checkbox', allowedProperties: ['label', 'name', 'reference'] },
-  //     { name: 'Date', t: 'djem.date', allowedProperties: ['label', 'name', 'reference', 'validate'] },
-  //     { name: 'Grid', t: 'djem.grid.panel', allowedProperties: ['name', 'label', 'reference', 'store'] },
-  //     { name: 'Image', t: 'djem.image', allowedProperties: ['name', 'label', 'reference', 'fields'] },
-  //     { name: 'Select', t: 'djem.select', allowedProperties: ['name', 'label', 'reference', 'store'] },
-  //     { name: 'StaticHtml', t: 'djem.html', allowedProperties: ['name', 'label', 'reference'] },
-  //     { name: 'Text', t: 'djem.text', allowedProperties: ['name', 'label', 'reference', 'width', 'height'] },
-  //     { name: 'TextArea', t: 'djem.textarea', allowedProperties: ['name', 'label', 'reference'] }
-  //   ]
-  // }),
   items: [
     {
-      name: 'Button',
-      type: 'Ext.Button',
-      html: 'Button',
-      flex: 1,
-      cls: 'component',
-      props: { width: 'auto', text: 'Новая кнопка', allows: ['width', 'height', 'text'] },
+      name: 'Layout',
+      type: 'Ext.panel.Panel',
+      picture: 'f614',
+      props: {
+        width: 'auto',
+        height: 'auto',
+        cls: 'layout',
+        layout: { type: 'hbox', align: 'stretch' },
+        // style: {  },
+        allows: ['width', 'height', 'layout.align', 'layout.direction']
+      },
     },
     {
       name: 'Text',
       type: 'widget.djem.text',
-      html: 'Text',
-      flex: 1,
-      cls: 'component',
-      props: { width: 'auto', fieldLabel: 'Новое текстовое поле', allows: ['width', 'text'] },
+      picture: 'f261',
+      props: { width: 'auto', fieldLabel: 'Новое текстовое поле', allows: ['width', 'fieldLabel'] },
     },
     {
-      name: 'Layout',
-      type: 'Ext.panel.Panel',
-      html: 'Layout',
-      flex: 1,
-      cls: 'component',
+      name: 'Textarea',
+      type: 'widget.djem.textarea',
+      picture: 'f571',
+      props: { width: 'auto', fieldLabel: 'Новый текстэри', allows: ['width', 'height', 'fieldLabel'] },
+    },
+    {
+      name: 'Button',
+      type: 'Ext.Button',
+      picture: 'f1b7',
+      props: { width: 'auto', text: 'Новая кнопка', allows: ['width', 'height', 'text', 'textAlign'] },
+    },
+    {
+      name: 'Checkbox',
+      type: 'widget.djem.checkbox',
+      picture: 'f134',
+      props: { width: 'auto', boxLabel: 'Новенький чекбокс', allows: ['width', 'height', 'boxLabel'] },
+    },
+    {
+      name: 'Date',
+      type: 'widget.djem.date',
+      picture: 'f0ed',
+      props: { width: 'auto', fieldLabel: 'Новая дата', allows: ['width', 'height', 'fieldLabel'] },
+    },
+    {
+      name: 'Image gallery',
+      type: 'widget.djem.images',
+      picture: 'f254',
       props: {
+        style: { 'outline': 'black dotted 1px', 'outline-offset': '-1px', 'min-height': '100px' },
         width: 'auto',
-        height: 'auto',
-        layout: { type: 'hbox', align: 'stretch' },
-        style: { 'outline': 'black solid 2px', 'min-height': '100px' },
-        allows: ['width', 'text']
+        allows: ['width', 'height']
       },
-    } // { name: 'Date', t: 'djem.date', html: 'Date', flex: 1 },
-    // { name: 'Grid', t: 'widget.djem.grid.panel', html: 'Grid', flex: 1 },
-    // { name: 'Image', t: 'djem.image', html: 'Image', flex: 1 },
-    // { name: 'Select', t: 'djem.select', html: 'Select', flex: 1 }
+    },
+    {
+      name: 'Select',
+      type: 'widget.djem.select',
+      picture: 'f04a',
+      props: { width: 'auto', fieldLabel: 'Новый селект', allows: ['width', 'height', 'fieldLabel'] },
+    },
+    {
+      name: 'Static html',
+      type: 'widget.djem.html',
+      picture: 'f626',
+      props: { width: 'auto', fieldLabel: 'Новый статический хтмл', allows: ['width', 'height', 'fieldLabel'] },
+    }
   ],
-  controller: 'formBuilder.component',
-  // columns: [{ text: 'Component', flex: 1, dataIndex: 'name', editor: { allowBlank: false } }],
-  flex: 1
-  // draggable: { delegate: 'button' }
-  // viewConfig: { plugins: { ptype: 'gridviewdragdrop', dragGroup: 'widgetDD' } }
+  controller: 'formBuilder.component'
 });
