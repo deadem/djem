@@ -2,10 +2,28 @@
 
 namespace DJEM;
 
+use Illuminate\Container\Container;
+
 class Resolver
 {
     protected $object;
     protected $container;
+
+    public static function createInstance($type, $bindings = [])
+    {
+        $container = Container::getInstance();
+        $container->bind(Container::class, function () use ($container) {
+            return $container;
+        });
+
+        collect($bindings)->each(function ($closure, $name) use ($container) {
+            $container->bind($name, $closure);
+        });
+
+        $class = get_called_class();
+
+        return new $class($container->build($type), $container);
+    }
 
     public function __construct($object, $container)
     {

@@ -2,7 +2,6 @@
 
 namespace DJEM\Http\Controllers\Api;
 
-use DJEM\DoctypeResolver;
 use BadMethodCallException;
 use Illuminate\Http\Request;
 
@@ -18,12 +17,12 @@ class Main extends \Illuminate\Routing\Controller
         $id = $request->input('tree');
 
         $doctype = $this->getDoctype($id);
-        $doctypeObject = DoctypeResolver::createDoctype($doctype);
+        $doctypeObject = new $doctype;
         $grid = $doctypeObject->grid($id);
 
         $data = $grid->getData();
         $data['metaData']['options'] += [
-            'subtypes' => $doctypeObject->getSubtypes(),
+            'doctypes' => $doctypeObject->getDoctypes(),
             '_doctype' => $doctype,
             'contextMenu' => $doctypeObject->getContextMenu(),
         ];

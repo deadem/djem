@@ -84,14 +84,14 @@ Ext.define('djem.view.main.GridController', {
     store.on('metachange', function(_store, meta) {
       _store.userOptions = meta.options || {};
       me.titleField = _store.userOptions.title;
-      var subtypes = _store.userOptions.subtypes;
-      if (!subtypes || subtypes.length === 0) {
+      var doctypes = _store.userOptions.doctypes;
+      if (!doctypes || doctypes.length === 0) {
         djem.app.fireEvent('update.toolbar', 'add', { action: 'replace' });
         djem.app.fireEvent('update.toolbar', 'add', { action: 'disable' });
       } else {
         var menu = {};
-        if (subtypes.length == 1) {
-          menu = subtypes[0];
+        if (doctypes.length == 1) {
+          menu = doctypes[0];
           menu.text = menu.name;
           menu.menu = false;
         }

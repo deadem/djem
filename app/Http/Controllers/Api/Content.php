@@ -2,7 +2,6 @@
 
 namespace DJEM\Http\Controllers\Api;
 
-use DJEM\DoctypeResolver;
 use Illuminate\Http\Request;
 
 class Content extends \Illuminate\Routing\Controller
@@ -16,7 +15,9 @@ class Content extends \Illuminate\Routing\Controller
 
     private function doctype()
     {
-        return DoctypeResolver::createDoctype($this->request->input('_doctype'));
+        $doctype = $this->request->input('_doctype');
+
+        return new $doctype;
     }
 
     public function get()

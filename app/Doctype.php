@@ -5,82 +5,36 @@ namespace DJEM;
 use Request;
 
 /**
- * Базовый тип документа.
+ * Base doctype.
  */
 class Doctype extends \Illuminate\Routing\Controller
 {
     /**
-     * Модель, отображением и изменением которой занимается тип
+     * Editable model.
      *
      * @var class
      */
     public $model;
 
     /**
-     * Контроллер, которому должно быть передано управление при обработке http-запроса к этому типу.
+     * Grid view.
      *
-     * @return class | null
-     */
-    public function controller()
-    {
-        return '';
-    }
-
-    /**
-     * Поиск данных для отображения по URL.
-     *
-     * @param string $url      URL.
-     * @param string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
-     *
-     * @return object класс с полями doctype, refid для отображения соответствующим
-     *                типом модели, найденной по идентификатору.
-     */
-    public function findUrl($url, $urlModel)
-    {
-        $address = $urlModel::where('url', '=', $url)->first();
-        if (! $address) {
-            abort(404);
-        }
-
-        return $address;
-    }
-
-    /**
-     * Поиск и создание прокси-объекта для вызова методов типа документа.
-     *
-     * @param string $url      URL.
-     * @param string $urlModel Модель, которая обрабатывает URL и хранит данные о них.
-     *
-     * @return DoctypeResolver прокси-объект для вызова типа документа.
-     */
-    public function find($url, $urlModel)
-    {
-        $address = $this->findUrl($url, $urlModel);
-
-        return DoctypeResolver::createDoctype($address->doctype, [$urlModel => function () use ($address) {
-            return $address;
-        }]);
-    }
-
-    /**
-     * Переопределение вью для грида.
-     *
-     * @return array описание вьювера и данных для просмотра
+     * @return array
      */
     public function gridView()
     {
         return [];
     }
 
-    public function getModelView()
-    {
-        return [];
-    }
-
+    /**
+     * Load relation by request from admin panel.
+     * @var string relation name
+     * @return array related data
+     */
     public function loadRelation($relation)
     {
         $relation;
-        abort(400, 'Override Doctype::loadRelation()');
+        abort(400, 'You must override Doctype::loadRelation()');
     }
 
     public function delete()
@@ -88,19 +42,19 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Получить список моделей, доступных для создания.
+     * Creatable Doctypes list.
      *
-     * @return array список классов типов, которые можно создавать внутри этого типа.
+     * @return array
      */
-    public function getSubtypes()
+    public function getDoctypes()
     {
         return [];
     }
 
     /**
-     * Получить контекстное меню для текущего раздела.
+     * Extend context menu.
      *
-     * @return array массив с указанием возможных действий
+     * @return array
      */
     public function getContextMenu()
     {
@@ -108,9 +62,9 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Подготовить данные для грида в указанном mount-id.
+     * Grid for curent Doctype.
      *
-     * @return array объект, содержащий заголовок грида и собственно данные
+     * @return array
      */
     public function grid()
     {
@@ -118,15 +72,18 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Загрузить связанные с моделью данные для редактирования.
+     * Instantiate editor.
      *
-     * @return Editor класс для подгрузки полей в нужном формате
+     * @return Editor
      */
     public function editor()
     {
         return (new Editor\Editor($this->model))->setInput(Request::all());
     }
 
+    /**
+     * Save model handler.
+     */
     public function save()
     {
         $editor = $this->editor()->putData();
@@ -137,6 +94,9 @@ class Doctype extends \Illuminate\Routing\Controller
         return $editor;
     }
 
+    /**
+     * Load model handler.
+     */
     public function load()
     {
         $editor = $this->editor();
