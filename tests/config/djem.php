@@ -30,6 +30,15 @@ return [
             'icon' => '&#xf3d8;',
         ],
         [
+            'id' => 6,
+            'text' => 'Contentor',
+            'description' => 'Editor',
+            'leaf' => true,
+            '_doctype' => App\Doctypes\Contentor::class,
+            'color' => 'blue-600',
+            'icon' => '&#xf46d;',
+        ],
+        [
             'id' => 1000,
             'text' => 'Submenu',
             'description' => 'Submenu example',

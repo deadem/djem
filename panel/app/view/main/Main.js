@@ -6,15 +6,37 @@ Ext.define('djem.view.main.Main', {
   requires: [
     'Ext.form.Label',
 
-    'djem.view.main.MainController', 'djem.view.main.Grid', 'djem.view.main.Content', 'djem.view.main.Toolbar',
+    'djem.view.main.MainController',
+    'djem.view.main.Grid',
+    'djem.view.main.Content',
+    'djem.view.main.Toolbar',
     'djem.view.main.Tree',
 
     'widget.image',
 
-    'djem.widget.html', 'djem.widget.image', 'djem.widget.images', 'djem.widget.tag', 'djem.widget.text',
-    'djem.widget.textarea', 'djem.widget.checkbox', 'djem.widget.combobox', 'djem.widget.date', 'djem.widget.time',
-    'djem.widget.grid.panel', 'djem.widget.searchToolbarField'
+    'djem.widget.html',
+    'djem.widget.image',
+    'djem.widget.images',
+    'djem.widget.tag',
+    'djem.widget.text',
+    'djem.widget.textarea',
+    'djem.widget.checkbox',
+    'djem.widget.combobox',
+    'djem.widget.date',
+    'djem.widget.time',
+    'djem.widget.grid.panel',
+    'djem.widget.searchToolbarField',
+    'djem.model.formBuilder.Component',
+    'djem.model.formBuilder.Property',
+    'djem.model.formBuilder.Item',
+    'djem.view.formBuilder.Component',
+    'djem.view.formBuilder.Property',
+    'djem.view.formBuilder.Item',
+    'djem.view.formBuilder.FormBuilder'
   ],
+  // 'djem.store.formBuilder.Component',
+  // 'djem.store.formBuilder.Property',
+  // 'djem.store.formBuilder.Item',
 
   getToolbar: function() { return this.lookupReference('toolbar'); },
 

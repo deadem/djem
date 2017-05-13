@@ -4,21 +4,19 @@
  * Sencha Cmd when upgrading.
  */
 Ext.application({
-    name: 'djem',
+  name: 'djem',
 
-    extend: 'djem.Application',
+  extend: 'djem.Application',
 
-    autoCreateViewport: 'djem.view.main.Main',
+  autoCreateViewport: 'djem.view.main.Main',
 
-    // -------------------------------------------------------------------------
-    // Most customizations should be made to djem.Application. If you need to
-    // customize this file, doing so below this section reduces the likelihood
-    // of merge conflicts when upgrading to new versions of Sencha Cmd.
-    // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  // Most customizations should be made to djem.Application. If you need to
+  // customize this file, doing so below this section reduces the likelihood
+  // of merge conflicts when upgrading to new versions of Sencha Cmd.
+  // -------------------------------------------------------------------------
 
-    requires: [
-        'fix.overrides.Event',
-
-        'djem.overrides.LoadMask', 'djem.overrides.viewAbstractView'
-    ]
+  requires: [
+    'fix.overrides.Event', 'fix.overrides.Table', 'djem.overrides.LoadMask', 'djem.overrides.viewAbstractView'
+  ]
 });
