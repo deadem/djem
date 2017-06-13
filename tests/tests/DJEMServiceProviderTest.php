@@ -1,6 +1,6 @@
 <?php
 
-class DJEMServiceTest extends \DJEM\DJEMServiceProvider
+class DJEMServiceTest extends \DJEM\ServiceProvider
 {
 }
 
