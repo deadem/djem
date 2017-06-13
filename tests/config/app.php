@@ -156,7 +156,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        DJEM\DJEMServiceProvider::class,
+        DJEM\ServiceProvider::class,
 
     ],
 

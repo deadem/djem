@@ -18,5 +18,13 @@
             "name": "Vladimir Soshkin",
             "email": "deadem@gmail.com"
         }
-    ]
+    ],
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DJEM\\ServiceProvider"
+            ],
+        }
+    }
 }

@@ -16,7 +16,7 @@ Add service provider into providers section of ```config/app.php```
  * Application Service Providers...
  */
 
-DJEM\DJEMServiceProvider::class,
+DJEM\ServiceProvider::class,
 ```
 
 ```
