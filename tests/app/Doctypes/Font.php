@@ -5,15 +5,9 @@ namespace App\Doctypes;
 use View;
 use DJEM\Main\Grid;
 use DJEM\Editor\Control;
-use Illuminate\Http\Request;
 
 class Font extends \DJEM\Doctype
 {
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function grid()
     {
         return Grid::custom($this);

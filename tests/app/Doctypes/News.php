@@ -2,10 +2,10 @@
 
 namespace App\Doctypes;
 
+use Request;
 use App\Models;
 use DJEM\Main\Grid;
 use DJEM\Editor\Control;
-use Illuminate\Http\Request;
 
 class News extends \DJEM\Doctype
 {
@@ -16,9 +16,9 @@ class News extends \DJEM\Doctype
 
     private $request;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->request = $request;
+        $this->request = Request();
     }
 
     public function grid()
