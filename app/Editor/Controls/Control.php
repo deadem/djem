@@ -2,8 +2,6 @@
 
 namespace DJEM\Editor\Controls;
 
-use Illuminate\Database\Eloquent\Relations;
-
 class Control extends Item
 {
     private $validation = false;
@@ -92,30 +90,6 @@ class Control extends Item
         $field = $this->getName();
 
         return $model->{$field}();
-    }
-
-    protected function detachRelation($relation, $field)
-    {
-    }
-
-    protected function attachToRelation($relation, $value)
-    {
-        switch (get_class($relation)) {
-            case Relations\BelongsToMany::class:
-            case Relations\MorphToMany::class:
-                $relation->attach($value);
-                break;
-
-            case Relations\BelongsTo::class:
-                $relation->associate($value);
-                break;
-
-            default:
-                throw \Exception('Unknown relation');
-                break;
-        }
-
-        return $this;
     }
 
     public function prepareUserValue($value, $getter = null)

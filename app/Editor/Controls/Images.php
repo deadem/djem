@@ -135,7 +135,6 @@ class Images extends Control
             if ($image) {
                 $image->save();
             }
-            $this->attachToRelation($relation, $image);
         }
 
         return $image;
