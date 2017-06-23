@@ -2,6 +2,7 @@
 
 namespace DJEM\Editor;
 
+use Request;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class Validator
@@ -10,8 +11,11 @@ class Validator
         validate as validateRequest;
     }
 
-    public function validate($rules)
+    public function validate($input, $rules)
     {
-        $this->validateRequest(\Request::instance(), $rules);
+        $validator = $this->getValidationFactory()->make($input, $rules);
+        if ($validator->fails()) {
+            $this->throwValidationException(Request::instance(), $validator);
+        }
     }
 }

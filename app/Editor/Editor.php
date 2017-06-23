@@ -127,6 +127,6 @@ class Editor
                 }
             }
         }
-        (new Validator())->validate($rules);
+        (new Validator())->validate($this->input->all(), $rules);
     }
 }
