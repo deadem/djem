@@ -3,13 +3,7 @@ Ext.define('djem.view.crosslink.FilesController', {
   extend: 'Ext.app.ViewController',
   alias: 'controller.crosslink-files',
 
-  config: {
-    image: undefined,
-    imageZoom: 1,
-    imageMoveOffset: { x: 0, y: 0 },
-    loadingMask: undefined,
-    minimalZoom: undefined
-  },
+  config: { image: undefined, imageZoom: 1, imageMoveOffset: { x: 0, y: 0 }, loadingMask: undefined, minimalZoom: undefined },
 
   uploader: Ext.create('djem.store.FileUpload'),
 
@@ -160,8 +154,7 @@ Ext.define('djem.view.crosslink.FilesController', {
       return;
     }
 
-    me.dragZone = new Ext.view.DragZone(
-            { view: Ext.apply({}, { ownerCt: view }, view), ddGroup: 'imagesDrop', dragText: 'Move image' });
+    me.dragZone = new Ext.view.DragZone({ view: Ext.apply({}, { ownerCt: view }, view), ddGroup: 'imagesDrop', dragText: 'Move image' });
     me.dropZone = new Ext.view.DropZone({
       indicatorCls: Ext.baseCSSPrefix + 'grid-drop-indicator x-grid-drop-indicator-vertical',
       view: Ext.apply({}, { ownerCt: view }, view),
@@ -182,8 +175,8 @@ Ext.define('djem.view.crosslink.FilesController', {
       },
 
       positionIndicator: function(node, data, e, dragZone) {
-        var me = this, view = me.view, pos = this.getPosition(e, node), nodeWidth = Ext.fly(node).getWidth(),
-            nodeHeight = Ext.fly(node).getHeight(), x, y, indicator = this.getIndicator();
+        var me = this, view = me.view, pos = this.getPosition(e, node), nodeWidth = Ext.fly(node).getWidth(), nodeHeight = Ext.fly(node).getHeight(),
+            x, y, indicator = this.getIndicator();
 
         me.valid = false;
         me.overRecord = null;
@@ -379,9 +372,8 @@ Ext.define('djem.view.crosslink.FilesController', {
   processDropZone: function(remove) {
     var me = this;
     remove = remove == 'remove';
-    Ext.each(['dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'], function(type) {
-      Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler);
-    });
+    Ext.each(['dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'],
+             function(type) { Ext.getBody().dom[remove === true ? 'removeEventListener' : 'addEventListener'](type, me.showDropZoneHandler); });
     var view = me.getView().getEl();
     Ext.each(['dragstart', 'drag'], function(type) {
       if (view) {
@@ -412,11 +404,14 @@ Ext.define('djem.view.crosslink.FilesController', {
   // редактор
   onItemDblClick: function(element, record) {
     var me = this;
+    if (!element.editor) {
+      return;
+    }
     var view = element.up('main-content');
-    var widget = Ext.widget('crosslink.Editor',
-                            { title: (record.data && record.data.name) || 'Editor', data: view.config.data });
+    var data = record.data || {};
+    var widget = Ext.widget('crosslink.Editor', { title: data.name || 'Editor', data: view.config.data });
     widget.add(element.editor);
-    widget.getViewModel().setData(record.data);
+    widget.getViewModel().setData(data);
     widget.on('update', function() {
       record.set(widget.getViewModel().getData());
       record.commit();
@@ -484,8 +479,7 @@ Ext.define('djem.view.crosslink.FilesController', {
 
   zoomSingleImage: function(zoom) {
     var me = this;
-    var old = me.getImageZoom(), store = me.getView().getStore(), view = me.getView(), el = view.getEl(),
-        image = me.getImage();
+    var old = me.getImageZoom(), store = me.getView().getStore(), view = me.getView(), el = view.getEl(), image = me.getImage();
 
     if (store.getCount() != 1 || !image) {
       return;
@@ -502,8 +496,8 @@ Ext.define('djem.view.crosslink.FilesController', {
   },
 
   moveSingleImage: function(offset) {
-    var me = this, image = me.getImage(), view = me.getView(), store = view.getStore(), zoom = me.getImageZoom() || 1,
-        width = image.width * zoom, height = image.height * zoom, el = view.getEl();
+    var me = this, image = me.getImage(), view = me.getView(), store = view.getStore(), zoom = me.getImageZoom() || 1, width = image.width * zoom,
+        height = image.height * zoom, el = view.getEl();
 
     if (store.getCount() != 1) {
       return;

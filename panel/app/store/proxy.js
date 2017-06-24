@@ -30,13 +30,16 @@ Ext.data.request.Ajax.override({
         return false;
       }
     } catch (e) {
-      Ext.MessageBox.show({
+      var mbox = Ext.MessageBox.show({
         title: 'Error',
         maxWidth: '80%',
         closable: false,
         msg: (e && e.message || '') + me.xhr.response,
         buttons: Ext.MessageBox.OK,
-        fn: function() {}
+        fn: function() {
+          mbox.setHtml('');
+          mbox = null;
+        }
       });
     }
     return this.callParent(arguments);

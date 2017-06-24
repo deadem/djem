@@ -173,6 +173,8 @@ trait Editor
     private function putRelatedData(Collection $controls)
     {
         $controls->each(function (Controls\Control $item, $field) {
+            $item->putValueRelatedData($this->model());
+
             if ($this->isRelation($field)) {
                 switch (get_class($this->getRelation($field))) {
                     case Relations\BelongsToMany::class:
@@ -195,7 +197,6 @@ trait Editor
                         break;
                 }
             }
-            $item->putRelatedData($this->model());
         });
 
         return $this;

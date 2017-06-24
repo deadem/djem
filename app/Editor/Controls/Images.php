@@ -47,14 +47,17 @@ class Images extends Control
             $relation->with($image);
         }
         $models = $relation->get();
+
         $controls = false;
         if ($this->editor) {
             $this->editor->loadModel($relation->getRelated());
             $controls = $this->editor->getControls();
+        }
 
-            $models->transform(function (Model $model) use ($image, $controls) {
-                $data = $model->getAttributes();
+        $models->transform(function (Model $model) use ($image, $controls) {
+            $data = $model->getAttributes();
 
+            if ($this->editor) {
                 foreach ($controls as $field => $control) {
                     if ($this->editor->isRelation($field)) {
                         $data[$field] = $control->loadRelation($model);
@@ -62,16 +65,16 @@ class Images extends Control
                         $data[$field] = $control->getCustomValue($model);
                     }
                 }
+            }
 
-                if ($image && $model->{$image}) {
-                    // если есть картинка, добавим её неперекрывающиеся свойства в контроль
-                    $image = $model->{$image};
-                    $data += $image->getAttributes();
-                }
+            if ($image && $model->{$image}) {
+                // если есть картинка, добавим её неперекрывающиеся свойства в контроль
+                $image = $model->{$image};
+                $data += $image->getAttributes();
+            }
 
-                return (object) $data;
-            });
-        }
+            return (object) $data;
+        });
 
         return $models;
     }
@@ -135,12 +138,13 @@ class Images extends Control
             if ($image) {
                 $image->save();
             }
+            $this->attachToRelation($relation, $image);
         }
 
         return $image;
     }
 
-    public function putRelatedData($model)
+    public function putValueRelatedData($model)
     {
         foreach ($this->getUserValue() as $value) {
             if ($this->associate) {
