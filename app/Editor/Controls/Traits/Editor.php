@@ -117,7 +117,16 @@ trait Editor
 
     public function isRelation($field)
     {
-        return method_exists($this->model(), $field);
+        if (! method_exists($this->model(), $field)) {
+            return false;
+        }
+
+        $relation = $this->getRelation($field);
+        if (! is_object($relation)) {
+            return false;
+        }
+
+        return is_subclass_of($relation, Relations\Relation::class);
     }
 
     public function getRelation($field)
