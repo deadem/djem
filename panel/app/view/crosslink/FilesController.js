@@ -321,14 +321,19 @@ Ext.define('djem.view.crosslink.FilesController', {
       e.preventDefault();
       e.stopPropagation();
     });
-    el.on('click', function(e) {
+
+    el.on('click', click);
+    el.on('touchend', click); // chrome fix.
+    function click(e) {
       if (Ext.get(e.target).hasCls('trash')) {
         var dom = Ext.get(e.target).up('.thumb-wrap'), record = dom && view.getRecord(dom);
 
-        window.URL.revokeObjectURL(record.data.url);
-        view.getStore().remove(record);
+        if (record) {
+          window.URL.revokeObjectURL(record.data.url);
+          view.getStore().remove(record);
 
-        me.setDirty(true);
+          me.setDirty(true);
+        }
       }
 
       var zoomFactor = 1.1;
@@ -340,8 +345,7 @@ Ext.define('djem.view.crosslink.FilesController', {
         me.zoomSingleImage(me.getImageZoom() / zoomFactor);
         return false;
       }
-
-    });
+    }
     if (view.single) {
       view.on('resize', function() { me.recalcImageZoom(); });
       view.on('show', function() { me.recalcImageZoom(); });

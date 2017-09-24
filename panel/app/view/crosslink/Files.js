@@ -7,8 +7,12 @@ Ext.define('djem.view.crosslink.Files', {
 
   cls: 'x-form-crosslink-files-wrap',
   requires: [
-    'djem.view.crosslink.FilesController', 'djem.view.crosslink.FilesModel', 'djem.view.crosslink.FileField',
-    'djem.store.CrossLink', 'djem.model.Files', 'djem.view.crosslink.Editor'
+    'djem.view.crosslink.FilesController',
+    'djem.view.crosslink.FilesModel',
+    'djem.view.crosslink.FileField',
+    'djem.store.CrossLink',
+    'djem.model.Files',
+    'djem.view.crosslink.Editor'
   ],
 
   deleteImages: function(record) {
@@ -27,11 +31,7 @@ Ext.define('djem.view.crosslink.Files', {
     store.insert(0, record);
   },
 
-  listeners: {
-    afterrender: { fn: 'initAfterRender', options: { single: true } },
-    beforedestroy: 'onBeforeDestroy',
-    itemdblclick: 'onItemDblClick'
-  },
+  listeners: { afterrender: { fn: 'initAfterRender', options: { single: true } }, beforedestroy: 'onBeforeDestroy', itemdblclick: 'onItemDblClick' },
 
   controller: 'crosslink-files',
   viewModel: { type: 'crosslink-files' },
@@ -67,11 +67,16 @@ Ext.define('djem.view.crosslink.Files', {
   selectedItemCls: 'x-grid-item-selected',
   itemSelector: 'div.thumb-wrap',
   tpl: [
-    '<tpl for=".">', '<div class="thumb-wrap {new}">',
-    '<a href="#" class="plus"></a><a href="#" class="minus"></a><a href="#" class="trash">&#xF156;</a>',
+    '<tpl for=".">',
+    '<div class="thumb-wrap {new}">',
+    '<a href="javascript:void(0)" class="plus"></a><a href="javascript:void(0)" class="minus"></a><a href="javascript:void(0)" class="trash">&#xF156;</a>',
     '<div class="thumb" style="',
     'background-repeat: no-repeat;background-image: url({url});background-position:{calcOffset};background-size:100%;background-size:{calcZoom}',
-    '"></div>', '<span>{name}</span>', '</div>', '</tpl>', '<label>',
+    '"></div>',
+    '<span>{name}</span>',
+    '</div>',
+    '</tpl>',
+    '<label>',
     '<svg width="100%" height="100%" viewBox="0 0 64 64"><text x="0" y="58" fill="#eee">&#xf100;</text></svg>',
     '<input type="file" multiple="" onchange="Ext.get(this.parentNode.parentNode).fireEvent(\'filechange\', event, this);">',
     '</label>'
