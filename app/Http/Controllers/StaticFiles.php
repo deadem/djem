@@ -9,7 +9,7 @@ class StaticFiles extends Controller
 {
     public static function get($file = null)
     {
-        $directory = env('DJEM_DEBUG', false) ? 'panel' : 'panel-compiled';
+        $directory = env('DJEM_DEBUG', false) ? 'panel' : 'panel'; // panel-compiled в релизе пока выключена;
         if (empty($file)) {
             $file = 'index.html';
         }

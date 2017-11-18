@@ -1,6 +1,0 @@
-rm -r ../panel-compiled/*
-sencha app build production
-rm -r ../panel-compiled/resources/ext
-#/ext-watermark
-rm -r ../panel-compiled/resources/images
-./build-development

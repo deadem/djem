@@ -1,2 +1,0 @@
-# theme-djem - Read Me
-

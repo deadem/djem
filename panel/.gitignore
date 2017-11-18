@@ -1,9 +1,0 @@
-ext
-ext-*
-build
-bootstrap.*
-saas/example
-.sass-cache/
-.sencha/app/codegen.json
-.sass-cache/
-packages/theme-djem/docs

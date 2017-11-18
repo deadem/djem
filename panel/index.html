@@ -1,11 +1,10 @@
-<!DOCTYPE HTML>
-<html manifest="">
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+<!doctype html>
+<html>
+  <head>
     <title>djem</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <script>
       if (!location.href.match(/\/$/)) {
         location.href += '/';
@@ -21,156 +20,154 @@
         }
       }
     </script>
+      <style type="text/css">
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        #error {
+          display: none;
+          font-size: 24px;
+        }
+
+        #container {
+          top: 50%;
+          left: 50%;
+          margin: -120px 0 0 -120px;
+          width: 220px;
+          height: 220px;
+          position: absolute;
+        }
+        .arrow {
+          width: 100px;
+          height: 100px;
+          perspective: 800px;
+          border-radius: 5px;
+          background-color: black;
+          animation: djem-loading 4s infinite;
+          margin: 0;
+          position: absolute;
+        }
+
+        svg.circle {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin: -12px 0 0 -12px;
+        }
+
+        .arrow svg {
+          width: 100%;
+          height: 100%;
+        }
+
+        .arrow.e1 {
+          left: 0;
+          top: 0;
+          animation: djem-loading-e1 4s infinite;
+        }
+
+        .arrow.e2 {
+          right: 0;
+          top: 0;
+          animation: djem-loading-e2 4s infinite;
+        }
+
+        .arrow.e3 {
+          right: 0;
+          bottom: 0;
+          animation: djem-loading-e3 4s infinite;
+        }
+
+        .arrow.e4 {
+          left: 0;
+          bottom: 0;
+          animation: djem-loading-e4 4s infinite;
+        }
+
+        @keyframes djem-loading-e1 {
+          0%   { transform: translate3d(0, 0, 0) rotateZ(-90deg); background-color: #000000; }
+          25%  { transform: translate3d(120px, 0, 0) rotateZ(0deg); background-color: #E80000; }
+          50%  { transform: translate3d(0px, 120px, 0) rotateZ(180deg); background-color: #000000; }
+          75%  { transform: translate3d(120px, 120px, 0) rotateZ(90deg); }
+          100% { transform: translate3d(0, 0, 0) rotateZ(270deg); }
+        }
+
+        @keyframes djem-loading-e2 {
+          0%   { transform: translate3d(0, 0, 0) rotateZ(0deg); background-color: #E80000; }
+          25%  { transform: translate3d(-120px, 0, 0) rotateZ(-90deg); background-color: #000000; }
+          50%  { transform: translate3d(0, 120px, 0) rotateZ(-270deg); }
+          75%  { transform: translate3d(-120px, 120px, 0) rotateZ(-180deg); background-color: #000000; }
+          100% { transform: translate3d(0, 0, 0) rotateZ(-360deg); background-color: #E80000; }
+        }
+
+        @keyframes djem-loading-e3 {
+          0%   { transform: translate3d(0, 0, 0) rotateZ(90deg); }
+          25%  { transform: translate3d(-120px, 0, 0) rotateZ(180deg); }
+          50%  { transform: translate3d(-120px, -120px, 0) rotateZ(270deg); background-color: #000000; }
+          75%  { transform: translate3d(0, -120px, 0) rotateZ(360deg); background-color: #E80000; }
+          100% { transform: translate3d(0, 0, 0) rotateZ(450deg); background-color: #000000; }
+        }
+
+        @keyframes djem-loading-e4 {
+          0%   { transform: translate3d(0, 0, 0) rotateZ(180deg); }
+          25%  { transform: translate3d(120px, 0, 0) rotateZ(90deg); background-color: #000000; }
+          50%  { transform: translate3d(120px, -120px, 0) rotateZ(0deg); background-color: #E80000; }
+          75%  { transform: translate3d(0, -120px, 0) rotateZ(-90deg); background-color: #000000; }
+          100% { transform: translate3d(0, 0, 0) rotateZ(-180deg); }
+        }
+      </style>
+  </head>
+  <body>
+    <pre id="error"></pre>
+
+    <div id="container">
+      <div class="arrow e1">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+      <g>
+        <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF"></line>
+      </g>
+      </svg>
+      </div>
+
+      <div class="arrow e2">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+      <g>
+        <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF"></line>
+      </g>
+      </svg>
+      </div>
+
+      <div class="arrow e3">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+      <g>
+        <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF"></line>
+      </g>
+      </svg>
+      </div>
+
+      <div class="arrow e4">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+      <g>
+        <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF"></line>
+        <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF"></line>
+      </g>
+      </svg>
+      </div>
+    </div>
+
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="resources/css/bootstrap.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb">
     <script type="text/javascript" src="resources/js/ckeditor/ckeditor.js"></script>
-    <!-- The line below must be kept intact for Sencha Cmd to build your application -->
-    <script id="microloader" type="text/javascript" src="bootstrap.js"></script>
-</head>
-<body>
-  
-<div id="container">
-  <style type="text/css">
-    html {
-      height: 100%;
-    }
-    body {
-      height: 100%;
-    }
-    #container {
-      top: 50%;
-      left: 50%;
-      margin: -120px 0 0 -120px;
-      width: 220px;
-      height: 220px;
-      position: absolute;
-    }
-    .arrow {
-      width: 100px;
-      height: 100px;
-      perspective: 800px;
-      border-radius: 5px;
-      background-color: black;
-      animation: djem-loading 4s infinite;
-      margin: 0;
-      position: absolute;
-    }
-
-    svg.circle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin: -12px 0 0 -12px;
-    }
-
-    .arrow svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .arrow.e1 {
-      left: 0;
-      top: 0;
-      animation: djem-loading-e1 4s infinite;
-    }
-
-    .arrow.e2 {
-      right: 0;
-      top: 0;
-      animation: djem-loading-e2 4s infinite;
-    }
-
-    .arrow.e3 {
-      right: 0;
-      bottom: 0;
-      animation: djem-loading-e3 4s infinite;
-    }
-
-    .arrow.e4 {
-      left: 0;
-      bottom: 0;
-      animation: djem-loading-e4 4s infinite;
-    }
-
-    @keyframes djem-loading-e1 {
-      0%   { transform: translate3d(0, 0, 0) rotateZ(-90deg); background-color: #000000; }
-      25%  { transform: translate3d(120px, 0, 0) rotateZ(0deg); background-color: #E80000; }
-      50%  { transform: translate3d(0px, 120px, 0) rotateZ(180deg); background-color: #000000; }
-      75%  { transform: translate3d(120px, 120px, 0) rotateZ(90deg); }
-      100% { transform: translate3d(0, 0, 0) rotateZ(270deg); }
-    }
-
-    @keyframes djem-loading-e2 {
-      0%   { transform: translate3d(0, 0, 0) rotateZ(0deg); background-color: #E80000; }
-      25%  { transform: translate3d(-120px, 0, 0) rotateZ(-90deg); background-color: #000000; }
-      50%  { transform: translate3d(0, 120px, 0) rotateZ(-270deg); }
-      75%  { transform: translate3d(-120px, 120px, 0) rotateZ(-180deg); background-color: #000000; }
-      100% { transform: translate3d(0, 0, 0) rotateZ(-360deg); background-color: #E80000; }
-    }
-
-    @keyframes djem-loading-e3 {
-      0%   { transform: translate3d(0, 0, 0) rotateZ(90deg); }
-      25%  { transform: translate3d(-120px, 0, 0) rotateZ(180deg); }
-      50%  { transform: translate3d(-120px, -120px, 0) rotateZ(270deg); background-color: #000000; }
-      75%  { transform: translate3d(0, -120px, 0) rotateZ(360deg); background-color: #E80000; }
-      100% { transform: translate3d(0, 0, 0) rotateZ(450deg); background-color: #000000; }
-    }
-
-    @keyframes djem-loading-e4 {
-      0%   { transform: translate3d(0, 0, 0) rotateZ(180deg); }
-      25%  { transform: translate3d(120px, 0, 0) rotateZ(90deg); background-color: #000000; }
-      50%  { transform: translate3d(120px, -120px, 0) rotateZ(0deg); background-color: #E80000; }
-      75%  { transform: translate3d(0, -120px, 0) rotateZ(-90deg); background-color: #000000; }
-      100% { transform: translate3d(0, 0, 0) rotateZ(-180deg); }
-    }
-  </style>
-
-  <div class="arrow e1">
-  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-  <g>
-    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-  </g>
-  </svg>
-  </div>
-  
-  <div class="arrow e2">
-  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-  <g>
-    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-  </g>
-  </svg>
-  </div>
-
-  <div class="arrow e3">
-  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-  <g>
-    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-  </g>
-  </svg>
-  </div>
-
-  <div class="arrow e4">
-  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-  <g>
-    <line y2="16" x2="32" y1="16" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="68" x1="84" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-    <line y2="16" x2="84" y1="76" x1="24" stroke-width="2" stroke="#FFFFFF" fill="none"></line>
-  </g>
-  </svg>
-  </div>
-</div>
-
-<style type="text/css">
-  #error {
-    display: none;
-    font-size: 24px;
-  }
-</style>
-<pre id="error"></pre>
-
- </body>
+  </body>
 </html>
