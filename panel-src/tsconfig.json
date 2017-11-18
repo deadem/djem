@@ -2,7 +2,8 @@
     "compilerOptions": {
         "strict": true,
         "noImplicitReturns": true,
-        "target": "es5"
+        "target": "es5",
+        "experimentalDecorators": true
     },
     "include": [
         "./src/**/*"
