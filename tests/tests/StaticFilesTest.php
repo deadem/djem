@@ -9,19 +9,19 @@ class StaticFilesTest extends TestCase
 
     public function testJS()
     {
-        $response = $this->call('GET', '/djem/app.js');
+        $response = $this->call('GET', '/djem/index.js');
         $this->assertEquals(200, $response->status());
     }
 
     public function testCSS()
     {
-        $response = $this->call('GET', '/djem/resources/djem-all.css');
+        $response = $this->call('GET', '/djem/css/bootstrap.css');
         $this->assertEquals(200, $response->status());
     }
 
     public function testText()
     {
-        $response = $this->call('GET', '/djem/app.json');
+        $response = $this->call('GET', '/djem/index.html');
         $this->assertEquals(200, $response->status());
     }
 
