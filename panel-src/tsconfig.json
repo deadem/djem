@@ -3,7 +3,8 @@
         "strict": true,
         "noImplicitReturns": true,
         "target": "es5",
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true
     },
     "include": [
         "./src/**/*"
