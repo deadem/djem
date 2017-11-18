@@ -1,2 +1,4 @@
 panel/node_modules/
 panel-src/node_modules/
+panel/ext/
+panel/build/
