@@ -69,19 +69,20 @@ module.exports = [
     entry: { vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css') },
     output: {
       path: targetPath,
-      filename: '._',
+      filename: '[name].css',
     },
     module: {
       rules: [{
         test: /./,
         use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          }
+          loader: 'extract-raw-output-loader',
         }
       }]
-    }
+    },
+    resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
+    plugins: [
+      new Plugins.raw(),
+    ]
   }
 ];
 
