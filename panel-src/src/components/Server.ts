@@ -1,20 +1,21 @@
 import axios from 'axios';
 
-namespace Server {
+type AuthChangeStateCallback = (state: boolean) => void;
+
+export namespace Server {
   const http = axios.create({
     baseURL: 'api',
   });
-  let notify = [];
+  let notify: Array<AuthChangeStateCallback> = [];
 
-  export function attach(callback: (state: boolean) => void) {
+  export function attach(callback: AuthChangeStateCallback) {
+    notify.push(callback);
   }
-
 
   export function login(login: string, password: string) {
   }
 
   export function tree() {
+    return http.get('tree');
   }
 }
-
-export default Server;

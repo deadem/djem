@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <login-component />
+    <login-component :authorized="authorized" />
 
     <v-navigation-drawer
       fixed
@@ -53,14 +53,16 @@
 
 <script lang="ts">
 import LoginComponent from './Login.vue';
+import Server from './Server';
 
 export default {
   data: () => ({
-    drawer: true
+    drawer: true,
+    authorized: true,
   }),
-  props: {
-    source: String
-  },
+  props: [
+    'source',
+  ],
   components: {
     LoginComponent
   }

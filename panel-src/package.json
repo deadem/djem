@@ -10,10 +10,8 @@
   "author": "deadem",
   "license": "MIT",
   "dependencies": {
-    "@types/lodash": "^4.14.85",
     "axios": "^0.17.1",
     "css-loader": "^0.28.7",
-    "lodash": "^4.17.4",
     "node-sass": "^4.7.1",
     "sass-loader": "^6.0.6",
     "ts-loader": "^3.1.1",

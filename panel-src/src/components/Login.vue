@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="450">
+  <v-dialog v-model="show" persistent max-width="450">
     <v-card>
       <v-card-title class="headline">Login</v-card-title>
 
@@ -22,15 +22,31 @@
 </template>
 
 <script lang="ts">
-export default Vue.extend({
-  data: () => ({
-    dialog: true
-  }),
+import { Server } from './Server';
+
+Server.attach((state) => {
+  alert(state);
+});
+
+setTimeout(() => {
+  Server.tree();
+}, 100);
+
+let component = Vue.extend({
+  props: [
+    'authorized'
+  ],
+  computed: {
+    show(): boolean {
+      return !this.authorized;
+    }
+  },
   methods: {
     login() {
-      this.dialog = false;
+      // this.authorized = true;
     }
   }
 });
 
+export default component;
 </script>
