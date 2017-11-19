@@ -8,9 +8,9 @@ loader.remove();
 
 import MainComponent from "./components/Main.vue";
 
-let v = new Vue({
-    el: "#app",
-    components: {
-        MainComponent
-    }
+new Vue({
+  el: "#app",
+  components: {
+    MainComponent
+  }
 });
