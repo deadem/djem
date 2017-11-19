@@ -15,8 +15,8 @@
           err.innerText = msg;
           err.style.display = 'block';
 
-          var container = document.getElementById('container');
-          container.parentNode.removeChild(container);
+          var container = document.getElementById('container-loader');
+          container && container.parentNode.removeChild(container);
         }
       }
     </script>
