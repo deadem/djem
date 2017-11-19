@@ -1,13 +1,9 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const extractSass = new ExtractTextPlugin({
-    filename: "[name].css",
-    disable: process.env.NODE_ENV === "development"
-});
-
 var path = require('path');
 var webpack = require('webpack');
 const targetPath = path.resolve(__dirname, '../panel');
+const Plugins = {
+  raw: require(path.join(__dirname, 'plugins', 'extract-raw-output.js')),
+};
 
 module.exports = [
   {
@@ -58,38 +54,33 @@ module.exports = [
     module: {
       rules: [{
         test: /\.scss$/,
-        use: extractSass.extract({
-          use: [
-            { loader: "css-loader" },
-            { loader: "sass-loader" },
-          ]
-        })
+        use: [
+          { loader: 'extract-raw-output-loader' },
+          { loader: 'sass-loader' },
+        ],
       }]
     },
+    resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
     plugins: [
-      extractSass
+      new Plugins.raw(),
     ]
   },
   {
-    entry: {
-      vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css')
-    },
+    entry: { vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css') },
     output: {
       path: targetPath,
       filename: '._',
     },
     module: {
-      rules: [
-        {
-          test: /./,
-          use: {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-            }
+      rules: [{
+        test: /./,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
           }
         }
-      ]
+      }]
     }
   }
 ];
