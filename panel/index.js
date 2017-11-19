@@ -28603,7 +28603,7 @@ var render = function() {
   return _c(
     "v-dialog",
     {
-      attrs: { persistent: "", "max-width": "290" },
+      attrs: { persistent: "", "max-width": "450" },
       model: {
         value: _vm.dialog,
         callback: function($$v) {
@@ -28618,7 +28618,29 @@ var render = function() {
         [
           _c("v-card-title", { staticClass: "headline" }, [_vm._v("Login")]),
           _vm._v(" "),
-          _c("v-card-text", [_vm._v("Please, enter your credentials")]),
+          _c(
+            "v-card-text",
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [_c("v-text-field", { attrs: { label: "Email" } })],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Password", type: "password" }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "v-card-actions",
@@ -28629,11 +28651,7 @@ var render = function() {
                 "v-btn",
                 {
                   attrs: { color: "indigo", flat: "" },
-                  nativeOn: {
-                    click: function($event) {
-                      _vm.dialog = false
-                    }
-                  }
+                  on: { click: _vm.login }
                 },
                 [_vm._v("Login")]
               )
@@ -28665,11 +28683,17 @@ if (false) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
+var vue_1 = __webpack_require__(4);
+exports.default = vue_1.default.extend({
     data: function () { return ({
         dialog: true
-    }); }
-};
+    }); },
+    methods: {
+        login: function () {
+            this.dialog = false;
+        }
+    }
+});
 
 
 /***/ })
