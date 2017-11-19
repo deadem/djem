@@ -1,5 +1,7 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
+    <login-component />
+
     <v-navigation-drawer
       fixed
       v-model="drawer"
@@ -50,12 +52,17 @@
 </template>
 
 <script lang="ts">
+import LoginComponent from './Login.vue';
+
 export default {
   data: () => ({
     drawer: true
   }),
   props: {
     source: String
+  },
+  components: {
+    LoginComponent
   }
 }
 </script>
