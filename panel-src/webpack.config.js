@@ -7,11 +7,13 @@ const Plugins = {
 
 module.exports = [
   {
-    entry: './src/index.ts',
+    entry: {
+      'index': './src/index.ts',
+    },
     output: {
       path: targetPath,
       // publicPath: '/dist/',
-      filename: 'index.js'
+      filename: '[name].js'
     },
     module: {
       rules: [
@@ -38,12 +40,19 @@ module.exports = [
           }
         },
         { test: /\.(png|jpg|gif|svg)$/, loader: 'file-loader', options: { name: '[name].[ext]?[hash]' } }
-      ]
+      ],
     },
     resolve: { extensions: ['.ts', '.js', '.vue', '.json'], alias: { 'vue$': 'vue/dist/vue.esm.js' } },
     devServer: { historyApiFallback: true, noInfo: true },
     performance: { hints: false },
     // devtool: '#eval-source-map'
+    externals: { 'vue': 'Vue', 'vuetify': 'Vuetify' },
+    // plugins: [
+    //   new webpack.ProvidePlugin({
+    //     // 'Vue': 'Vue',
+    //     // 'window.Vue': 'Vue',
+    //   }),
+    // ]
   },
   {
     entry: './src/css/index.scss',
@@ -77,7 +86,31 @@ module.exports = [
         use: {
           loader: 'extract-raw-output-loader',
         }
-      }]
+      }],
+      noParse: [/./],
+    },
+    resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
+    plugins: [
+      new Plugins.raw(),
+    ]
+  },
+  {
+    entry: {
+      vue: path.resolve(__dirname, './node_modules/vue/dist/vue.min.js'),
+      vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.js')
+    },
+    output: {
+      path: targetPath,
+      filename: '[name].js',
+    },
+    module: {
+      rules: [{
+        test: /./,
+        use: {
+          loader: 'extract-raw-output-loader',
+        }
+      }],
+      noParse: [/./],
     },
     resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
     plugins: [

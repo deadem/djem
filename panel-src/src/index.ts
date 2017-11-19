@@ -1,6 +1,3 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify'
-
 Vue.use(Vuetify);
 
 let loader: HTMLElement = document.getElementById('container-loader') as HTMLElement;
