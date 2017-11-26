@@ -1,16 +1,26 @@
-let store = new Vuex.Store({
+export let Store = new Vuex.Store({
   state: {
-    initialized: false,
-    authorized: false
+    authorized: true,
+    login: undefined,
+    password: undefined,
+    token: '',
   },
   getters: {
-    isAuthorized: state => {
-      return state.authorized;
+    isAuthorized: state => state.authorized,
+    login: state => state.login,
+    password: state => state.password,
+    token: state => state.token,
+  },
+  mutations: {
+    authorize: (state, value) => {
+      state.authorized = value;
     },
-    isInitialized: state => {
-      return state.initialized;
+    login: (state, data) => {
+      state.login = data.login;
+      state.password = data.password;
+    },
+    token: (state, token) => {
+      state.token = token;
     }
   }
 });
-
-export default store;

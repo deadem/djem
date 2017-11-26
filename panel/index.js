@@ -1063,7 +1063,9 @@ new Vue({
 });
 var Proxy_1 = __webpack_require__(16);
 setTimeout(function () {
-    new Proxy_1.Proxy().instance().get('tree');
+    new Proxy_1.Proxy().instance().post('tree').then(function (data) {
+        console.log(data);
+    });
 }, 100);
 
 
@@ -1353,15 +1355,20 @@ if (false) {(function () {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Auth_1 = __webpack_require__(37);
+var Proxy_1 = __webpack_require__(16);
 var component = Vue.extend({
+    data: function () { return ({
+        login: Auth_1.Store.getters.login,
+        password: Auth_1.Store.getters.password,
+    }); },
     computed: {
         show: function () {
-            return Auth_1.default.getters.isInitialized && !Auth_1.default.getters.isAuthorized;
+            return !Auth_1.Store.getters.isAuthorized;
         },
     },
     methods: {
-        login: function () {
-            // this.authorized = true;
+        doLogin: function () {
+            new Proxy_1.ProxyAuth().login(this.login, this.password);
         }
     }
 });
@@ -1401,7 +1408,18 @@ var render = function() {
               _c(
                 "v-flex",
                 { attrs: { xs12: "" } },
-                [_c("v-text-field", { attrs: { label: "Email" } })],
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Login" },
+                    model: {
+                      value: _vm.login,
+                      callback: function($$v) {
+                        _vm.login = $$v
+                      },
+                      expression: "login"
+                    }
+                  })
+                ],
                 1
               ),
               _vm._v(" "),
@@ -1410,7 +1428,14 @@ var render = function() {
                 { attrs: { xs12: "" } },
                 [
                   _c("v-text-field", {
-                    attrs: { label: "Password", type: "password" }
+                    attrs: { label: "Password", type: "password" },
+                    model: {
+                      value: _vm.password,
+                      callback: function($$v) {
+                        _vm.password = $$v
+                      },
+                      expression: "password"
+                    }
                   })
                 ],
                 1
@@ -1428,7 +1453,7 @@ var render = function() {
                 "v-btn",
                 {
                   attrs: { color: "indigo", flat: "" },
-                  on: { click: _vm.login }
+                  on: { click: _vm.doLogin }
                 },
                 [_vm._v("Login")]
               )
@@ -1471,44 +1496,77 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(17);
-var ProxyAuth = /** @class */ (function () {
-    function ProxyAuth() {
+var Auth_1 = __webpack_require__(37);
+var ProxyCore = /** @class */ (function () {
+    function ProxyCore() {
+        var _this = this;
         this._http = axios_1.default.create({
             baseURL: 'api',
         });
+        this._http.interceptors.response.use(function (success) { return (_this.updateToken(success), success); }, function (error) { return (_this.updateToken(error.response), Promise.reject(error)); });
     }
-    return ProxyAuth;
+    ProxyCore.prototype.updateToken = function (response) {
+        Auth_1.Store.commit('token', response.headers['x-csrf-token']);
+    };
+    return ProxyCore;
 }());
+exports.ProxyCore = ProxyCore;
+var ProxyAuth = /** @class */ (function (_super) {
+    __extends(ProxyAuth, _super);
+    function ProxyAuth() {
+        var _this = _super.call(this) || this;
+        _this._http.interceptors.request.use(function (config) {
+            var token = Auth_1.Store.getters.token;
+            if (config.method == 'post' && token) {
+                config.data = config.data || {};
+                config.data._token = token;
+            }
+            return config;
+        });
+        return _this;
+    }
+    ProxyAuth.prototype.login = function (login, password) {
+        Auth_1.Store.commit('login', { login: login, password: password });
+        this._http.post('', { login: login, password: password }).then(function (success) {
+            Auth_1.Store.commit('authorize', true);
+        }, function (error) {
+            // bad auth does nothing
+            return error;
+        });
+    };
+    return ProxyAuth;
+}(ProxyCore));
 exports.ProxyAuth = ProxyAuth;
 var Proxy = /** @class */ (function (_super) {
     __extends(Proxy, _super);
     function Proxy() {
         var _this = _super.call(this) || this;
-        _this._http.interceptors.response.use(function (response) {
-            return response;
-        }, function (error) {
-            var originalRequest = error.config;
-            if (error.response.status === 401 && !originalRequest._retry) {
-                originalRequest._retry = true;
-                var refreshToken = window.localStorage.getItem('refreshToken');
-                // return new Promise();
-                // return http.post('', { login, password }).then(({data}) => {
-                //     window.localStorage.setItem('token', data.token);
-                //     window.localStorage.setItem('refreshToken', data.refreshToken);
-                //     http.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
-                //     originalRequest.headers['Authorization'] = 'Bearer ' + data.token;
-                //     return axios(originalRequest);
-                //   });
-            }
-            return error;
-        });
+        _this._http.interceptors.response.use(function (response) { return response; }, function (error) { return _this.retry(error); });
         return _this;
     }
+    Proxy.prototype.retry = function (error) {
+        var _this = this;
+        if (error.response.status === 401) {
+            Auth_1.Store.commit('authorize', false);
+            var originalRequest_1 = error.config;
+            return new Promise(function (resolve, reject) {
+                var stopWatch = Auth_1.Store.watch(function (state) { return state.authorized; }, function (value) {
+                    if (value) {
+                        stopWatch();
+                        originalRequest_1.baseURL = '';
+                        return _this._http.request(originalRequest_1).then(function (success) { return resolve(success); }, function (error) { return reject(error); });
+                    }
+                    return;
+                });
+            });
+        }
+        return Promise.reject(error);
+    };
     Proxy.prototype.instance = function () {
         return this._http;
     };
     return Proxy;
-}(ProxyAuth));
+}(ProxyCore));
 exports.Proxy = Proxy;
 
 
@@ -2410,21 +2468,32 @@ module.exports = function spread(callback) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var store = new Vuex.Store({
+exports.Store = new Vuex.Store({
     state: {
-        initialized: false,
-        authorized: false
+        authorized: true,
+        login: undefined,
+        password: undefined,
+        token: '',
     },
     getters: {
-        isAuthorized: function (state) {
-            return state.authorized;
+        isAuthorized: function (state) { return state.authorized; },
+        login: function (state) { return state.login; },
+        password: function (state) { return state.password; },
+        token: function (state) { return state.token; },
+    },
+    mutations: {
+        authorize: function (state, value) {
+            state.authorized = value;
         },
-        isInitialized: function (state) {
-            return state.initialized;
+        login: function (state, data) {
+            state.login = data.login;
+            state.password = data.password;
+        },
+        token: function (state, token) {
+            state.token = token;
         }
     }
 });
-exports.default = store;
 
 
 /***/ })

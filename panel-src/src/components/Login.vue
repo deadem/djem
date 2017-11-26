@@ -5,16 +5,16 @@
 
       <v-card-text>
         <v-flex xs12>
-          <v-text-field label="Email"></v-text-field>
+          <v-text-field label="Login" v-model="login"></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-text-field label="Password" type="password"></v-text-field>
+          <v-text-field label="Password" type="password" v-model="password"></v-text-field>
         </v-flex>
       </v-card-text>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="indigo" flat @click="login">Login</v-btn>
+        <v-btn color="indigo" flat @click="doLogin">Login</v-btn>
         <!-- <v-btn color="green darken-1" flat @click.native="dialog = false">Agree</v-btn> -->
       </v-card-actions>
     </v-card>
@@ -22,17 +22,22 @@
 </template>
 
 <script lang="ts">
-import Store from '../store/Auth';
+import { Store } from '../store/Auth';
+import { ProxyAuth as Auth } from '../store/Proxy';
 
 let component = Vue.extend({
+  data: () => ({
+    login: Store.getters.login,
+    password: Store.getters.password,
+  }),
   computed: {
     show() {
-      return Store.getters.isInitialized && !Store.getters.isAuthorized
+      return !Store.getters.isAuthorized
     },
   },
   methods: {
-    login() {
-      // this.authorized = true;
+    doLogin() {
+      new Auth().login(this.login, this.password);
     }
   }
 });

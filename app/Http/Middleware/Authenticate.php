@@ -22,6 +22,7 @@ class Authenticate
     public function handle(Request $request, Closure $next, $usertype = null)
     {
         $auth = Auth::guard($usertype);
+        // $auth->logout();
         if ($auth->guest()) {
             $credentials = ['email' => $request->input('login'), 'password' => $request->input('password')];
             if (! $auth->attempt($credentials)) {
