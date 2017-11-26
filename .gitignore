@@ -1,5 +1,6 @@
 panel/node_modules/
 panel-src/node_modules/
+panel-src/package-lock.json
 panel/ext/
 panel/build/
 panel/._

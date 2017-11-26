@@ -96,8 +96,9 @@ module.exports = [
   },
   {
     entry: {
-      vue: path.resolve(__dirname, './node_modules/vue/dist/vue.min.js'),
-      vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.js')
+      vue: path.resolve(__dirname, './node_modules/vue/dist/vue.js'),
+      vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.js'),
+      'es6-promise': path.resolve(__dirname, './node_modules/es6-promise/dist/es6-promise.auto.min.js'),
     },
     output: {
       path: targetPath,
