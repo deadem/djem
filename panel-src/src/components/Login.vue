@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Store } from '../store/Auth';
-import { ProxyAuth as Auth } from '../store/Proxy';
+import { Auth } from '../store/Proxy';
 
 let component = Vue.extend({
   data: () => ({

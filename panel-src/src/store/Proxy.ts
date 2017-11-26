@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Store as Auth } from './Auth';
+import { Store } from './Auth';
 
-export class ProxyCore {
+export class Core {
   protected _http = axios.create({
     baseURL: 'api',
   });
@@ -20,20 +20,20 @@ export class ProxyCore {
   }
 
   private updateToken(response: any) {
-    Auth.commit('token', response.headers['x-csrf-token']);
+    Store.commit('token', response.headers['x-csrf-token']);
   }
 
   private getToken() {
-    return Auth.getters.token;
+    return Store.getters.token;
   }
 }
 
-export class ProxyAuth extends ProxyCore {
+export class Auth extends Core {
   public login(login: string, password: string) {
-    Auth.commit('login', { login, password });
+    Store.commit('login', { login, password });
 
     this._http.post('', { login, password }).then(success => {
-      Auth.commit('authorize', true);
+      Store.commit('authorize', true);
     }, error => {
       // bad auth does nothing
       return error;
@@ -41,7 +41,7 @@ export class ProxyAuth extends ProxyCore {
   }
 }
 
-export class Proxy extends ProxyCore {
+export class Proxy extends Core {
   constructor() {
     super();
 
@@ -50,11 +50,11 @@ export class Proxy extends ProxyCore {
 
   private retry(error: any) {
     if (error.response.status === 401) {
-      Auth.commit('authorize', false);
+      Store.commit('authorize', false);
 
       let originalRequest = error.config;
       return new Promise((resolve, reject) => {
-        let stopWatch = Auth.watch(state => state.authorized, value => {
+        let stopWatch = Store.watch(state => state.authorized, value => {
           if (value) {
             stopWatch();
             originalRequest.baseURL = '';

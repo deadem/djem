@@ -1368,7 +1368,7 @@ var component = Vue.extend({
     },
     methods: {
         doLogin: function () {
-            new Proxy_1.ProxyAuth().login(this.login, this.password);
+            new Proxy_1.Auth().login(this.login, this.password);
         }
     }
 });
@@ -1497,8 +1497,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(17);
 var Auth_1 = __webpack_require__(37);
-var ProxyCore = /** @class */ (function () {
-    function ProxyCore() {
+var Core = /** @class */ (function () {
+    function Core() {
         var _this = this;
         this._http = axios_1.default.create({
             baseURL: 'api',
@@ -1513,21 +1513,21 @@ var ProxyCore = /** @class */ (function () {
             return config;
         });
     }
-    ProxyCore.prototype.updateToken = function (response) {
+    Core.prototype.updateToken = function (response) {
         Auth_1.Store.commit('token', response.headers['x-csrf-token']);
     };
-    ProxyCore.prototype.getToken = function () {
+    Core.prototype.getToken = function () {
         return Auth_1.Store.getters.token;
     };
-    return ProxyCore;
+    return Core;
 }());
-exports.ProxyCore = ProxyCore;
-var ProxyAuth = /** @class */ (function (_super) {
-    __extends(ProxyAuth, _super);
-    function ProxyAuth() {
+exports.Core = Core;
+var Auth = /** @class */ (function (_super) {
+    __extends(Auth, _super);
+    function Auth() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    ProxyAuth.prototype.login = function (login, password) {
+    Auth.prototype.login = function (login, password) {
         Auth_1.Store.commit('login', { login: login, password: password });
         this._http.post('', { login: login, password: password }).then(function (success) {
             Auth_1.Store.commit('authorize', true);
@@ -1536,9 +1536,9 @@ var ProxyAuth = /** @class */ (function (_super) {
             return error;
         });
     };
-    return ProxyAuth;
-}(ProxyCore));
-exports.ProxyAuth = ProxyAuth;
+    return Auth;
+}(Core));
+exports.Auth = Auth;
 var Proxy = /** @class */ (function (_super) {
     __extends(Proxy, _super);
     function Proxy() {
@@ -1568,7 +1568,7 @@ var Proxy = /** @class */ (function (_super) {
         return this._http;
     };
     return Proxy;
-}(ProxyCore));
+}(Core));
 exports.Proxy = Proxy;
 
 
