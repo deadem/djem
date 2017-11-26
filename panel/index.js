@@ -1504,9 +1504,20 @@ var ProxyCore = /** @class */ (function () {
             baseURL: 'api',
         });
         this._http.interceptors.response.use(function (success) { return (_this.updateToken(success), success); }, function (error) { return (_this.updateToken(error.response), Promise.reject(error)); });
+        this._http.interceptors.request.use(function (config) {
+            var token = _this.getToken();
+            if (config.method == 'post' && token) {
+                config.data = config.data || {};
+                config.data._token = token;
+            }
+            return config;
+        });
     }
     ProxyCore.prototype.updateToken = function (response) {
         Auth_1.Store.commit('token', response.headers['x-csrf-token']);
+    };
+    ProxyCore.prototype.getToken = function () {
+        return Auth_1.Store.getters.token;
     };
     return ProxyCore;
 }());
@@ -1514,16 +1525,7 @@ exports.ProxyCore = ProxyCore;
 var ProxyAuth = /** @class */ (function (_super) {
     __extends(ProxyAuth, _super);
     function ProxyAuth() {
-        var _this = _super.call(this) || this;
-        _this._http.interceptors.request.use(function (config) {
-            var token = Auth_1.Store.getters.token;
-            if (config.method == 'post' && token) {
-                config.data = config.data || {};
-                config.data._token = token;
-            }
-            return config;
-        });
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     ProxyAuth.prototype.login = function (login, password) {
         Auth_1.Store.commit('login', { login: login, password: password });

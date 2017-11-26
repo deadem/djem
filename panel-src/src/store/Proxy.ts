@@ -8,19 +8,9 @@ export class ProxyCore {
 
   constructor() {
     this._http.interceptors.response.use(success => (this.updateToken(success), success), error => (this.updateToken(error.response), Promise.reject(error)));
-  }
-
-  private updateToken(response: any) {
-    Auth.commit('token', response.headers['x-csrf-token']);
-  }
-}
-
-export class ProxyAuth extends ProxyCore {
-  constructor() {
-    super();
 
     this._http.interceptors.request.use(config => {
-      let token = Auth.getters.token;
+      let token = this.getToken();
       if (config.method == 'post' && token) {
         config.data = config.data || {};
         config.data._token = token;
@@ -29,6 +19,16 @@ export class ProxyAuth extends ProxyCore {
     });
   }
 
+  private updateToken(response: any) {
+    Auth.commit('token', response.headers['x-csrf-token']);
+  }
+
+  private getToken() {
+    return Auth.getters.token;
+  }
+}
+
+export class ProxyAuth extends ProxyCore {
   public login(login: string, password: string) {
     Auth.commit('login', { login, password });
 
