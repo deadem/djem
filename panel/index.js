@@ -1354,16 +1354,15 @@ if (false) {(function () {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Auth_1 = __webpack_require__(37);
 var Proxy_1 = __webpack_require__(16);
 var component = Vue.extend({
     data: function () { return ({
-        login: Auth_1.Store.getters.login,
-        password: Auth_1.Store.getters.password,
+        login: Proxy_1.Auth.getLogin(),
+        password: Proxy_1.Auth.getPassword(),
     }); },
     computed: {
         show: function () {
-            return !Auth_1.Store.getters.isAuthorized;
+            return !Proxy_1.Auth.isAuthorized();
         },
     },
     methods: {
@@ -1505,11 +1504,7 @@ var Core = /** @class */ (function () {
         });
         this._http.interceptors.response.use(function (success) { return (_this.updateToken(success), success); }, function (error) { return (_this.updateToken(error.response), Promise.reject(error)); });
         this._http.interceptors.request.use(function (config) {
-            var token = _this.getToken();
-            if (config.method == 'post' && token) {
-                config.data = config.data || {};
-                config.data._token = token;
-            }
+            config.headers['X-CSRF-TOKEN'] = _this.getToken();
             return config;
         });
     }
@@ -1519,6 +1514,9 @@ var Core = /** @class */ (function () {
     Core.prototype.getToken = function () {
         return Auth_1.Store.getters.token;
     };
+    Core.prototype.setAuthorized = function (state) {
+        Auth_1.Store.commit('authorize', state);
+    };
     return Core;
 }());
 var Auth = /** @class */ (function (_super) {
@@ -1526,10 +1524,20 @@ var Auth = /** @class */ (function (_super) {
     function Auth() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    Auth.getLogin = function () {
+        return Auth_1.Store.getters.login;
+    };
+    Auth.getPassword = function () {
+        return Auth_1.Store.getters.password;
+    };
+    Auth.isAuthorized = function () {
+        return Auth_1.Store.getters.isAuthorized;
+    };
     Auth.prototype.login = function (login, password) {
+        var _this = this;
         Auth_1.Store.commit('login', { login: login, password: password });
         this._http.post('', { login: login, password: password }).then(function (success) {
-            Auth_1.Store.commit('authorize', true);
+            _this.setAuthorized(true);
         }, function (error) {
             // bad auth does nothing
             return error;
@@ -1547,8 +1555,8 @@ var Proxy = /** @class */ (function (_super) {
     }
     Proxy.prototype.retry = function (error) {
         var _this = this;
-        if (error.response.status === 401) {
-            Auth_1.Store.commit('authorize', false);
+        if ((error.response || {}).status === 401) {
+            this.setAuthorized(false);
             var originalRequest_1 = error.config;
             return new Promise(function (resolve, reject) {
                 var stopWatch = Auth_1.Store.watch(function (state) { return state.authorized; }, function (value) {

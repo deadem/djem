@@ -10,11 +10,7 @@ class Core {
     this._http.interceptors.response.use(success => (this.updateToken(success), success), error => (this.updateToken(error.response), Promise.reject(error)));
 
     this._http.interceptors.request.use(config => {
-      let token = this.getToken();
-      if (config.method == 'post' && token) {
-        config.data = config.data || {};
-        config.data._token = token;
-      }
+      config.headers['X-CSRF-TOKEN'] = this.getToken();
       return config;
     });
   }
@@ -26,14 +22,31 @@ class Core {
   private getToken() {
     return Store.getters.token;
   }
+
+  protected setAuthorized(state: boolean) {
+    Store.commit('authorize', state);
+  }
+
 }
 
 export class Auth extends Core {
+  public static getLogin() {
+    return Store.getters.login;
+  }
+
+  public static getPassword() {
+    return Store.getters.password;
+  }
+
+  public static isAuthorized() {
+    return Store.getters.isAuthorized;
+  }
+
   public login(login: string, password: string) {
     Store.commit('login', { login, password });
 
     this._http.post('', { login, password }).then(success => {
-      Store.commit('authorize', true);
+      this.setAuthorized(true);
     }, error => {
       // bad auth does nothing
       return error;
@@ -49,8 +62,8 @@ export class Proxy extends Core {
   }
 
   private retry(error: any) {
-    if (error.response.status === 401) {
-      Store.commit('authorize', false);
+    if ((error.response || {}).status === 401) {
+      this.setAuthorized(false);
 
       let originalRequest = error.config;
       return new Promise((resolve, reject) => {

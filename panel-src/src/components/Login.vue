@@ -22,17 +22,16 @@
 </template>
 
 <script lang="ts">
-import { Store } from '../store/Auth';
 import { Auth } from '../store/Proxy';
 
 let component = Vue.extend({
   data: () => ({
-    login: Store.getters.login,
-    password: Store.getters.password,
+    login: Auth.getLogin(),
+    password: Auth.getPassword(),
   }),
   computed: {
     show() {
-      return !Store.getters.isAuthorized
+      return !Auth.isAuthorized()
     },
   },
   methods: {
