@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Store } from './Auth';
 
-export class Core {
+class Core {
   protected _http = axios.create({
     baseURL: 'api',
   });

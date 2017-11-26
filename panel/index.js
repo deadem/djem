@@ -1521,7 +1521,6 @@ var Core = /** @class */ (function () {
     };
     return Core;
 }());
-exports.Core = Core;
 var Auth = /** @class */ (function (_super) {
     __extends(Auth, _super);
     function Auth() {
