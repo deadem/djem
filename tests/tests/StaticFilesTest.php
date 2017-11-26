@@ -15,7 +15,7 @@ class StaticFilesTest extends TestCase
 
     public function testCSS()
     {
-        $response = $this->call('GET', '/djem/css/bootstrap.css');
+        $response = $this->call('GET', '/djem/index.css');
         $this->assertEquals(200, $response->status());
     }
 
