@@ -22,24 +22,13 @@
 </template>
 
 <script lang="ts">
-import { Server } from './Server';
-
-Server.attach((state) => {
-  alert(state);
-});
-
-setTimeout(() => {
-  Server.tree();
-}, 100);
+import Store from '../store/Auth';
 
 let component = Vue.extend({
-  props: [
-    'authorized'
-  ],
   computed: {
-    show(): boolean {
-      return !this.authorized;
-    }
+    show() {
+      return Store.getters.isInitialized && !Store.getters.isAuthorized
+    },
   },
   methods: {
     login() {

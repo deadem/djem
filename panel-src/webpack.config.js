@@ -46,7 +46,7 @@ module.exports = [
     devServer: { historyApiFallback: true, noInfo: true },
     performance: { hints: false },
     // devtool: '#eval-source-map'
-    externals: { 'vue': 'Vue', 'vuetify': 'Vuetify' },
+    externals: { 'vue': 'Vue', 'vuetify': 'Vuetify', 'vuex': 'Vuex' },
     // plugins: [
     //   new webpack.ProvidePlugin({
     //     // 'Vue': 'Vue',
@@ -97,6 +97,7 @@ module.exports = [
   {
     entry: {
       vue: path.resolve(__dirname, './node_modules/vue/dist/vue.js'),
+      vuex: path.resolve(__dirname, './node_modules/vuex/dist/vuex.js'),
       vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.js'),
       'es6-promise': path.resolve(__dirname, './node_modules/es6-promise/dist/es6-promise.auto.min.js'),
     },
