@@ -1,12 +1,8 @@
 <template>
   <ul>
     <li v-for="item in tree">
-        {{ item.text }}
-
-<!--         <div v-if="item.leaf">on</div>
-        <div v-else>off</div>
- -->
-        <tree-row v-if="item.leaf == false" :tree="item.items"></tree-row>
+      {{ item.text }}
+      <tree-row v-if="item.leaf == false" :tree="item.items"></tree-row>
     </li>
   </ul>
 </template>
@@ -24,5 +20,4 @@ export default {
   ul {
     padding-left: 16px;
   }
-
 </style>

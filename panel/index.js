@@ -2553,41 +2553,15 @@ if (false) {(function () {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Proxy_1 = __webpack_require__(3);
+var Store_1 = __webpack_require__(49);
 var TreeRow_vue_1 = __webpack_require__(41);
 exports.default = Vue.component('tree', {
-    created: function () {
-        this.$store.dispatch('load');
-    },
     computed: {
         tree: function () {
             return this.$store.getters.items;
         }
     },
-    store: new Vuex.Store({
-        state: {
-            loaded: false,
-            items: [
-                { text: '123' },
-            ],
-        },
-        getters: {
-            items: function (state) { return state.items; },
-        },
-        mutations: {
-            load: function (state, data) {
-                state.items = data;
-                state.loaded = true;
-            }
-        },
-        actions: {
-            load: function (context) {
-                new Proxy_1.Proxy().instance().post('tree').then(function (response) {
-                    context.commit('load', response.data);
-                });
-            }
-        }
-    }),
+    mixins: [Store_1.ListStore('tree')],
     components: {
         TreeRow: TreeRow_vue_1.default
     }
@@ -2705,8 +2679,7 @@ var render = function() {
       return _c(
         "li",
         [
-          _vm._v("\n        " + _vm._s(item.text) + "\n\n"),
-          _vm._v(" "),
+          _vm._v("\n    " + _vm._s(item.text) + "\n    "),
           item.leaf == false
             ? _c("tree-row", { attrs: { tree: item.items } })
             : _vm._e()
@@ -2762,7 +2735,7 @@ exports = module.exports = __webpack_require__(46)(undefined);
 
 
 // module
-exports.push([module.i, "\nul {\n  padding-left: 16px;\n}\n\n", ""]);
+exports.push([module.i, "\nul {\n  padding-left: 16px;\n}\n", ""]);
 
 // exports
 
@@ -3101,6 +3074,48 @@ module.exports = function listToStyles (parentId, list) {
   }
   return styles
 }
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Proxy_1 = __webpack_require__(3);
+exports.ListStore = function (request) { return ({
+    created: function () {
+        this.$store.dispatch('load');
+    },
+    computed: {
+        tree: function () {
+            return this.$store.getters.items;
+        }
+    },
+    store: new Vuex.Store({
+        state: {
+            loaded: false,
+            items: [],
+        },
+        getters: {
+            items: function (state) { return state.items; },
+        },
+        mutations: {
+            load: function (state, data) {
+                state.items = data;
+                state.loaded = true;
+            }
+        },
+        actions: {
+            load: function (context) {
+                new Proxy_1.Proxy().instance().post(request).then(function (response) {
+                    context.commit('load', response.data);
+                });
+            }
+        }
+    }),
+}); };
 
 
 /***/ })
