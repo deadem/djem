@@ -14,11 +14,3 @@ new Vue({
     LoginComponent,
   }
 });
-
-import { Proxy } from './store/Proxy';
-
-setTimeout(() => {
-  new Proxy().instance().post('tree').then((data) => {
-    console.log(data);
-  });
-}, 100);

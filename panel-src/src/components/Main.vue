@@ -5,6 +5,7 @@
       v-model="drawer"
       app
     >
+      <tree-component></tree-component>
       <v-list dense>
         <v-list-tile @click="">
           <v-list-tile-action>
@@ -51,6 +52,7 @@
 
 <script lang="ts">
 import Server from './Server';
+import TreeComponent from './Tree.vue';
 
 export default {
   data: () => ({
@@ -60,6 +62,7 @@ export default {
     'source',
   ],
   components: {
+    TreeComponent,
   }
 }
 </script>
