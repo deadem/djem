@@ -1,28 +1,46 @@
 <template>
-  <ul>
-    <li class="recursive-item" v-for="item in tree">
-        {{ item.text }}
-
-        <div v-if="item.leaf">on</div>
-        <div v-else>off</div>
-
-        <ul v-if="item.leaf == false">
-            <recursive-item :tree="item.items"></recursive-item>
-        </ul>
-    </li>
-  </ul>
+  <tree-row :tree="tree"></tree-row>
 </template>
 
 <script lang="ts">
-import Store from '../store/Tree';
+import { Proxy } from '../store/Proxy';
+import TreeRow from './TreeRow.vue';
 
-let tree = new Store();
-tree.load();
-
-export default {
+export default Vue.component('tree', {
+  created() {
+    this.$store.dispatch('load');
+  },
   computed: {
-    tree: () => tree.store.getters.items,
+    tree(): any {
+      return this.$store.getters.items;
+    }
+  },
+  store: new Vuex.Store({
+    state: {
+      loaded: false,
+      items: [
+        { text: '123' },
+      ],
+    },
+    getters: {
+      items: (state) => state.items,
+    },
+    mutations: {
+      load(state, data) {
+        state.items = data;
+        state.loaded = true;
+      }
+    },
+    actions: {
+      load(context) {
+        new Proxy().instance().post('tree').then((response) => {
+            context.commit('load', response.data);
+        });
+      }
+    }
+  }),
+  components: {
+    TreeRow
   }
-}
+});
 </script>
-
