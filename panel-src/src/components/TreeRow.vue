@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
   ul {
     padding-left: 16px;
   }
