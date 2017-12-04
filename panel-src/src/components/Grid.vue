@@ -1,6 +1,6 @@
 <template>
   <div class="grid" :tree="tree">
-
+    {{ tree }}
   </div>
 </template>
 

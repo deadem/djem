@@ -8,17 +8,17 @@
 import { ListStore } from '../store/Store';
 import TreeRow from './TreeRow.vue';
 
-export default {
+export default Vue.extend({
   mixins: [ ListStore('tree') ],
   components: {
     TreeRow
   },
   methods: {
-    changerow: (id: string) => {
-      debugger;
+    changerow(id: string) {
+      this.$emit('changerow', id);
     }
   }
-}
+})
 </script>
 
 <style scoped>

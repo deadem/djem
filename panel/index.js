@@ -1256,18 +1256,24 @@ if (false) {(function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Tree_vue_1 = __webpack_require__(13);
 var Grid_vue_1 = __webpack_require__(54);
-exports.default = {
+exports.default = Vue.extend({
     data: function () { return ({
         drawer: true,
+        tree: '',
     }); },
     props: [
         'source',
     ],
+    methods: {
+        treechange: function (id) {
+            this.tree = id;
+        }
+    },
     components: {
         TreeComponent: Tree_vue_1.default,
         GridComponent: Grid_vue_1.default,
     }
-};
+});
 
 
 /***/ }),
@@ -1336,17 +1342,17 @@ if (false) {(function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Store_1 = __webpack_require__(15);
 var TreeRow_vue_1 = __webpack_require__(35);
-exports.default = {
+exports.default = Vue.extend({
     mixins: [Store_1.ListStore('tree')],
     components: {
         TreeRow: TreeRow_vue_1.default
     },
     methods: {
         changerow: function (id) {
-            debugger;
+            this.$emit('changerow', id);
         }
     }
-};
+});
 
 
 /***/ }),
@@ -3021,7 +3027,11 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "main" },
-    [_c("tree-component"), _vm._v(" "), _c("grid-component")],
+    [
+      _c("tree-component", { on: { changerow: _vm.treechange } }),
+      _vm._v(" "),
+      _c("grid-component", { attrs: { tree: _vm.tree } })
+    ],
     1
   )
 }
@@ -3231,7 +3241,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "grid", attrs: { tree: _vm.tree } })
+  return _c("div", { staticClass: "grid", attrs: { tree: _vm.tree } }, [
+    _vm._v("\n  " + _vm._s(_vm.tree) + "\n")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
