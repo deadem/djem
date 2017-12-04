@@ -9,6 +9,9 @@ import { ListStore } from '../store/Store';
 
 export default Vue.component('tree', {
   mixins: [ ListStore('grid') ],
+  props: [
+    'tree'
+  ],
   components: {
   }
 });

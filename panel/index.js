@@ -1336,12 +1336,17 @@ if (false) {(function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Store_1 = __webpack_require__(15);
 var TreeRow_vue_1 = __webpack_require__(35);
-exports.default = Vue.component('tree', {
+exports.default = {
     mixins: [Store_1.ListStore('tree')],
     components: {
         TreeRow: TreeRow_vue_1.default
+    },
+    methods: {
+        changerow: function (id) {
+            debugger;
+        }
     }
-});
+};
 
 
 /***/ }),
@@ -1352,7 +1357,7 @@ exports.default = Vue.component('tree', {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(3);
-exports.ListStore = function (request) { return ({
+exports.ListStore = function (request) { return Vue.extend({
     created: function () {
         this.$store.dispatch('load');
     },
@@ -2716,12 +2721,15 @@ module.exports = function listToStyles (parentId, list) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
+exports.default = Vue.extend({
     name: 'tree-row',
-    props: [
-        'tree'
-    ],
-};
+    props: ['tree'],
+    methods: {
+        changerow: function (id) {
+            this.$emit('changerow', id);
+        }
+    }
+});
 
 
 /***/ }),
@@ -2739,9 +2747,25 @@ var render = function() {
       return _c(
         "li",
         [
-          _vm._v("\n    " + _vm._s(item.text) + "\n    "),
+          _c(
+            "a",
+            {
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.changerow(item.id)
+                }
+              }
+            },
+            [_vm._v(_vm._s(item.text))]
+          ),
+          _vm._v(" "),
           item.leaf == false
-            ? _c("tree-row", { attrs: { tree: item.items } })
+            ? _c("tree-row", {
+                attrs: { tree: item.items },
+                on: { changerow: _vm.changerow }
+              })
             : _vm._e()
         ],
         1
@@ -3064,7 +3088,12 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "tree" },
-    [_c("tree-row", { attrs: { tree: _vm.items } })],
+    [
+      _c("tree-row", {
+        attrs: { tree: _vm.items },
+        on: { changerow: _vm.changerow }
+      })
+    ],
     1
   )
 }
@@ -3186,6 +3215,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Store_1 = __webpack_require__(15);
 exports.default = Vue.component('tree', {
     mixins: [Store_1.ListStore('grid')],
+    props: [
+        'tree'
+    ],
     components: {}
 });
 

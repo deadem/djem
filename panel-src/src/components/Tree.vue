@@ -1,6 +1,6 @@
 <template>
   <div class="tree">
-    <tree-row :tree="items"></tree-row>
+    <tree-row :tree="items" @changerow="changerow"></tree-row>
   </div>
 </template>
 
@@ -8,12 +8,17 @@
 import { ListStore } from '../store/Store';
 import TreeRow from './TreeRow.vue';
 
-export default Vue.component('tree', {
+export default {
   mixins: [ ListStore('tree') ],
   components: {
     TreeRow
+  },
+  methods: {
+    changerow: (id: string) => {
+      debugger;
+    }
   }
-});
+}
 </script>
 
 <style scoped>

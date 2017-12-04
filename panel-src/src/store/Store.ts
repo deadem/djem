@@ -1,18 +1,17 @@
 import { Proxy } from '../store/Proxy';
-import Vue from 'vue';
 
 export interface Item {
   id: string,
   text: string,
 }
 
-export let ListStore = (request: string) => ({
+export let ListStore = (request: string) => Vue.extend({
   created() {
-    (this as any as Vue).$store.dispatch('load');
+    this.$store.dispatch('load');
   },
   computed: {
     items(): Array<Item> {
-      return (this as any as Vue).$store.getters.items;
+      return this.$store.getters.items;
     }
   },
   store: new Vuex.Store({

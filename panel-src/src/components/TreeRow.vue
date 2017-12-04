@@ -1,19 +1,23 @@
 <template>
   <ul>
     <li v-for="item in tree">
-      {{ item.text }}
-      <tree-row v-if="item.leaf == false" :tree="item.items"></tree-row>
+      <a href="#" @click.prevent="changerow(item.id)">{{ item.text }}</a>
+      <tree-row v-if="item.leaf == false" :tree="item.items" @changerow="changerow"></tree-row>
     </li>
   </ul>
 </template>
 
 <script lang="ts">
-export default {
+export default Vue.extend({
   name: 'tree-row',
-  props: [
-    'tree'
-  ],
-}
+  props: [ 'tree' ],
+
+  methods: {
+    changerow(id: string) {
+      this.$emit('changerow', id);
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
