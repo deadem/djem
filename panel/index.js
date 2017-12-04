@@ -1387,8 +1387,9 @@ exports.ListStore = function (request) { return Vue.extend({
             }
         },
         actions: {
-            load: function (context) {
-                new Proxy_1.Proxy().instance().post(request).then(function (response) {
+            load: function (context, data) {
+                if (data === void 0) { data = {}; }
+                new Proxy_1.Proxy().instance().post(request, data).then(function (response) {
                     context.commit('load', response.data);
                 });
             }
@@ -3228,7 +3229,12 @@ exports.default = Vue.component('tree', {
     props: [
         'tree'
     ],
-    components: {}
+    components: {},
+    watch: {
+        tree: function (id) {
+            this.$store.dispatch('load', { tree: id });
+        }
+    }
 });
 
 

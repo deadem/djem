@@ -13,6 +13,11 @@ export default Vue.component('tree', {
     'tree'
   ],
   components: {
+  },
+  watch: {
+    tree(id) {
+      this.$store.dispatch('load', { tree: id });
+    }
   }
 });
 

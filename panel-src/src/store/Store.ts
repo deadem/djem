@@ -29,8 +29,8 @@ export let ListStore = (request: string) => Vue.extend({
       }
     },
     actions: {
-      load(context) {
-        new Proxy().instance().post(request).then((response) => {
+      load(context, data = {}) {
+        new Proxy().instance().post(request, data).then((response) => {
           context.commit('load', response.data);
         });
       }
