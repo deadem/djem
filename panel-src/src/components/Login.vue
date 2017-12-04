@@ -1,23 +1,21 @@
 <template>
-  <v-dialog v-model="show" persistent max-width="450">
-    <v-card>
-      <v-card-title class="headline">Login</v-card-title>
+  <div v-if="show" class="modal-mask">
+    <div class="modal-wrapper">
+      <div class="modal-container">
 
-      <v-card-text>
-        <v-flex xs12>
-          <v-text-field label="Login" v-model="login"></v-text-field>
-        </v-flex>
-        <v-flex xs12>
-          <v-text-field label="Password" type="password" v-model="password"></v-text-field>
-        </v-flex>
-      </v-card-text>
+        <div class="modal-header">Login</div>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="indigo" flat @click="doLogin">Login</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+        <div class="modal-body">
+          <input v-model="login" placeholder="login">
+          <input v-model="password" type="password" placeholder="password">
+        </div>
+
+        <div class="modal-footer">
+          <button class="modal-default-button" @click="doLogin">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
