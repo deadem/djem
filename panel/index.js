@@ -1363,39 +1363,43 @@ exports.default = Vue.extend({
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(3);
-exports.ListStore = function (request) { return Vue.extend({
-    created: function () {
-        this.$store.dispatch('load');
-    },
-    computed: {
-        items: function () {
-            return this.$store.getters.items;
-        }
-    },
-    store: new Vuex.Store({
-        state: {
-            loaded: false,
-            items: [],
+function Store() {
+    return function (request) { return Vue.extend({
+        created: function () {
+            this.$store.dispatch('load');
         },
-        getters: {
-            items: function (state) { return state.items; },
-        },
-        mutations: {
-            load: function (state, data) {
-                state.items = data;
-                state.loaded = true;
+        computed: {
+            items: function () {
+                return this.$store.getters.items;
             }
         },
-        actions: {
-            load: function (context, data) {
-                if (data === void 0) { data = {}; }
-                new Proxy_1.Proxy().instance().post(request, data).then(function (response) {
-                    context.commit('load', response.data);
-                });
+        store: new Vuex.Store({
+            state: {
+                loaded: false,
+                items: undefined,
+            },
+            getters: {
+                items: function (state) { return state.items; },
+            },
+            mutations: {
+                load: function (state, data) {
+                    state.items = data;
+                    state.loaded = true;
+                }
+            },
+            actions: {
+                load: function (context, data) {
+                    if (data === void 0) { data = {}; }
+                    new Proxy_1.Proxy().instance().post(request, data).then(function (response) {
+                        context.commit('load', response.data);
+                    });
+                }
             }
-        }
-    }),
-}); };
+        }),
+    }); };
+}
+exports.ListStore = Store();
+exports.DataStore = Store();
 
 
 /***/ }),
@@ -3225,7 +3229,7 @@ exports.push([module.i, "\n.grid[data-v-9ef35354] {\n  flex-grow: 1;\n}\n\n", ""
 Object.defineProperty(exports, "__esModule", { value: true });
 var Store_1 = __webpack_require__(15);
 exports.default = Vue.component('tree', {
-    mixins: [Store_1.ListStore('grid')],
+    mixins: [Store_1.DataStore('grid')],
     props: [
         'tree'
     ],

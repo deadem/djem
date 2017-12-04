@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import { ListStore } from '../store/Store';
+import { DataStore } from '../store/Store';
 
 export default Vue.component('tree', {
-  mixins: [ ListStore('grid') ],
+  mixins: [ DataStore('grid') ],
   props: [
     'tree'
   ],
