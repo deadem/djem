@@ -1,4 +1,3 @@
-Vue.use(Vuetify);
 Vue.use(Vuex);
 
 let loader: HTMLElement = document.getElementById('container-loader') as HTMLElement;
