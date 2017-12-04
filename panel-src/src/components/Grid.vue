@@ -25,11 +25,11 @@ export default Vue.component('tree', {
   components: {
   },
   computed: {
-    columns() {
+    columns(): Array<{}> {
       let items = this.$store.getters.items;
-      return ((items|| {}).metaData || {}).columns || [];
+      return ((items || {}).metaData || {}).columns || [];
     },
-    items() {
+    items(): Array<{}> {
       let items = this.$store.getters.items;
       return (items || {}).items;
     }
