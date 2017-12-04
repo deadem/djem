@@ -1,12 +1,17 @@
 import { Proxy } from '../store/Proxy';
 import Vue from 'vue';
 
+export interface Item {
+  id: string,
+  text: string,
+}
+
 export let ListStore = (request: string) => ({
   created() {
     (this as any as Vue).$store.dispatch('load');
   },
   computed: {
-    tree(): any {
+    items(): Array<Item> {
       return (this as any as Vue).$store.getters.items;
     }
   },
@@ -16,7 +21,7 @@ export let ListStore = (request: string) => ({
       items: [],
     },
     getters: {
-      items: (state) => state.items,
+      items: (state): Array<Item> => state.items,
     },
     mutations: {
       load(state, data) {

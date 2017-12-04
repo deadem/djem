@@ -15,7 +15,6 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="indigo" flat @click="doLogin">Login</v-btn>
-        <!-- <v-btn color="green darken-1" flat @click.native="dialog = false">Agree</v-btn> -->
       </v-card-actions>
     </v-card>
   </v-dialog>

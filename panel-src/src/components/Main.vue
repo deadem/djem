@@ -51,7 +51,6 @@
 </template>
 
 <script lang="ts">
-import Server from './Server';
 import TreeComponent from './Tree.vue';
 
 export default {
