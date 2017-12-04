@@ -3234,6 +3234,16 @@ exports.default = Vue.component('tree', {
         'tree'
     ],
     components: {},
+    computed: {
+        columns: function () {
+            var items = this.$store.getters.items;
+            return ((items || {}).metaData || {}).columns || [];
+        },
+        items: function () {
+            var items = this.$store.getters.items;
+            return (items || {}).items;
+        }
+    },
     watch: {
         tree: function (id) {
             this.$store.dispatch('load', { tree: id });
@@ -3252,6 +3262,31 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "grid", attrs: { tree: _vm.tree } }, [
+    _c(
+      "table",
+      [
+        _c(
+          "tr",
+          _vm._l(_vm.columns, function(column) {
+            return _c("th", [_vm._v(_vm._s(column.text))])
+          })
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.items, function(item) {
+          return _c(
+            "tr",
+            _vm._l(_vm.columns, function(column) {
+              return _c("td", [
+                _vm._v(
+                  "\n        " + _vm._s(item[column.dataIndex]) + "\n      "
+                )
+              ])
+            })
+          )
+        })
+      ],
+      2
+    ),
     _vm._v("\n  " + _vm._s(_vm.tree) + "\n")
   ])
 }

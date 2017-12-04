@@ -1,5 +1,15 @@
 <template>
   <div class="grid" :tree="tree">
+    <table>
+      <tr>
+        <th v-for="column in columns">{{ column.text }}</th>
+      </tr>
+      <tr v-for="item in items">
+        <td v-for="column in columns">
+          {{ item[column.dataIndex] }}
+        </td>
+      </tr>
+    </table>
     {{ tree }}
   </div>
 </template>
@@ -13,6 +23,16 @@ export default Vue.component('tree', {
     'tree'
   ],
   components: {
+  },
+  computed: {
+    columns() {
+      let items = this.$store.getters.items;
+      return ((items|| {}).metaData || {}).columns || [];
+    },
+    items() {
+      let items = this.$store.getters.items;
+      return (items || {}).items;
+    }
   },
   watch: {
     tree(id) {
