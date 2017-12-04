@@ -1,5 +1,7 @@
 <template>
-  <tree-row :tree="items"></tree-row>
+  <div class="tree">
+    <tree-row :tree="items"></tree-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,3 +15,9 @@ export default Vue.component('tree', {
   }
 });
 </script>
+
+<style scoped>
+  .tree {
+    width: 200px;
+  }
+</style>
