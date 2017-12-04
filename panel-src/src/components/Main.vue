@@ -1,11 +1,13 @@
 <template>
   <div class="main">
     <tree-component></tree-component>
+    <grid-component></grid-component>
   </div>
 </template>
 
 <script lang="ts">
 import TreeComponent from './Tree.vue';
+import GridComponent from './Grid.vue';
 
 export default {
   data: () => ({
@@ -16,6 +18,7 @@ export default {
   ],
   components: {
     TreeComponent,
+    GridComponent,
   }
 }
 </script>
@@ -24,5 +27,6 @@ export default {
   .main {
     height: 100%;
     width: 100%;
+    display: flex;
   }
 </style>
