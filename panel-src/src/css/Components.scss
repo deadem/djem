@@ -1,0 +1,21 @@
+.djem-title {
+  background-color: color($theme-color);
+  color: color($theme-font-color);
+
+  padding: 0 16px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 64px;
+  vertical-align: baseline;
+}
+
+.djem-input {
+  padding-top: 16px;
+  border-bottom: 1px solid #ccc;
+  input {
+    font-size: 14px;
+    line-height: 23px;
+    border: none;
+    width: 100%;
+  }
+}
