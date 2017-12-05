@@ -2686,8 +2686,7 @@ exports.default = Vue.extend({
     props: ['items'],
     methods: {
         update: function (item) {
-            item.model = !item.model;
-            this.$forceUpdate();
+            Vue.set(item, 'model', !item.model);
         },
         changerow: function (id) {
             this.$emit('changerow', id);
