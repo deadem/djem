@@ -11,7 +11,7 @@
           <!-- <input v-model="login" placeholder="login"> -->
           <!-- <input v-model="password" type="password" placeholder="password"> -->
 
-          <button class="modal-default-button" @click="doLogin">OK</button>
+          <djem-button @click="doLogin">OK</djem-button>
         </div>
       </div>
     </div>
@@ -22,6 +22,7 @@
 import { Auth } from '../store/Proxy';
 import DjemTitle from '../widgets/Title.vue';
 import DjemInput from '../widgets/Input.vue';
+import DjemButton from '../widgets/Button.vue';
 
 let component = Vue.extend({
   data: () => ({
@@ -41,13 +42,14 @@ let component = Vue.extend({
   components: {
     DjemTitle,
     DjemInput,
+    DjemButton,
   }
 });
 
 export default component;
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .mask {
   position: fixed;
   z-index: 9998;
@@ -78,9 +80,5 @@ export default component;
 
 .body {
   margin: 0 20px;
-}
-
-.modal-default-button {
-  // float: right;
 }
 </style>
