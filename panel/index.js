@@ -1527,7 +1527,8 @@ module.exports = Cancel;
 Object.defineProperty(exports, "__esModule", { value: true });
 Vue.use(Vuex);
 var loader = document.getElementById('container-loader');
-loader.remove();
+var parent = loader.parentNode;
+parent && parent.removeChild(loader);
 var Main_vue_1 = __webpack_require__(14);
 var Login_vue_1 = __webpack_require__(54);
 new Vue({
