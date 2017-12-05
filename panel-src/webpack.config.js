@@ -46,7 +46,7 @@ module.exports = [
     devServer: { historyApiFallback: true, noInfo: true },
     performance: { hints: false },
     // devtool: '#eval-source-map'
-    externals: { 'vue': 'Vue', 'vuex': 'Vuex' },
+    externals: { 'vue': 'Vue', 'vuetify': 'Vuetify', 'vuex': 'Vuex' },
     // plugins: [
     //   new webpack.ProvidePlugin({
     //     // 'Vue': 'Vue',
@@ -75,9 +75,30 @@ module.exports = [
     ]
   },
   {
+    entry: { vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css') },
+    output: {
+      path: targetPath,
+      filename: '[name].css',
+    },
+    module: {
+      rules: [{
+        test: /./,
+        use: {
+          loader: 'extract-raw-output-loader',
+        }
+      }],
+      noParse: [/./],
+    },
+    resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
+    plugins: [
+      new Plugins.raw(),
+    ]
+  },
+  {
     entry: {
       vue: path.resolve(__dirname, './node_modules/vue/dist/vue.js'),
       vuex: path.resolve(__dirname, './node_modules/vuex/dist/vuex.js'),
+      vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.js'),
       'es6-promise': path.resolve(__dirname, './node_modules/es6-promise/dist/es6-promise.auto.min.js'),
     },
     output: {

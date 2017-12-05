@@ -1,28 +1,27 @@
 <template>
-  <div v-if="show" class="mask">
-    <div class="wrapper">
-      <div class="modal-container elevation-12">
+  <v-dialog v-model="show" persistent max-width="450" transition="false">
+    <v-card>
+      <v-card-title class="headline">Login</v-card-title>
 
-        <djem-title>Login</djem-title>
+      <v-card-text>
+        <v-flex xs12>
+          <v-text-field label="Login" v-model="login"></v-text-field>
+        </v-flex>
+        <v-flex xs12>
+          <v-text-field label="Password" type="password" v-model="password"></v-text-field>
+        </v-flex>
+      </v-card-text>
 
-        <div class="body">
-          <djem-input v-model="login"></djem-input>
-          <djem-input v-model="password" type="password"></djem-input>
-          <!-- <input v-model="login" placeholder="login"> -->
-          <!-- <input v-model="password" type="password" placeholder="password"> -->
-
-          <djem-button @click="doLogin">OK</djem-button>
-        </div>
-      </div>
-    </div>
-  </div>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="indigo" flat @click="doLogin">Login</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
 import { Auth } from '../store/Proxy';
-import DjemTitle from '../widgets/Title.vue';
-import DjemInput from '../widgets/Input.vue';
-import DjemButton from '../widgets/Button.vue';
 
 let component = Vue.extend({
   data: () => ({
@@ -38,47 +37,8 @@ let component = Vue.extend({
     doLogin() {
       new Auth().login(this.login, this.password);
     }
-  },
-  components: {
-    DjemTitle,
-    DjemInput,
-    DjemButton,
   }
 });
 
 export default component;
 </script>
-
-<style lang="scss">
-.mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .25);
-  display: table;
-  // transition: opacity .3s ease;
-}
-
-.wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.modal-container {
-  width: 300px;
-  margin: 0px auto;
-  // padding: 20px 30px;
-  background-color: #fff;
-  // border-radius: 2px;
-  // box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  // transition: all .3s ease;
-  // font-family: Helvetica, Arial, sans-serif;
-}
-
-.body {
-  margin: 0 20px;
-}
-</style>
