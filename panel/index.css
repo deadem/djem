@@ -1,15 +1,3 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font: 14px Roboto, Sans-Serif; }
-
-ul {
-  margin: 0; }
-
-input:focus {
-  outline: none; }
-
 .color-white {
   color: #FFFFFF; }
 
@@ -1744,6 +1732,23 @@ input:focus {
 .elevation-1 {
   box-shadow: 0 2px 1px -1px  rgba(0, 0, 0, 0.2), 0 1px 1px 0px  rgba(0, 0, 0, 0.14), 0 1px 3px 0px  rgba(0, 0, 0, 0.12); }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font: 14px Roboto, Sans-Serif;
+  background-color: white;
+  color: black;
+  caret-color: #03a9f4; }
+
+ul {
+  margin: 0; }
+
+input {
+  padding: 0; }
+  input:focus {
+    outline: none; }
+
 #app {
   height: 100%;
   width: 100%; }
@@ -1762,10 +1767,35 @@ input:focus {
   vertical-align: baseline; }
 
 .djem-input {
-  padding-top: 16px;
-  border-bottom: 1px solid #ccc; }
+  margin-top: 16px;
+  position: relative; }
   .djem-input input {
+    margin-top: 16px;
     font-size: 14px;
     line-height: 23px;
     border: none;
     width: 100%; }
+  .djem-input__label {
+    pointer-events: none;
+    width: 0;
+    overflow: visible;
+    position: absolute;
+    top: 16px;
+    left: 0;
+    line-height: 23px;
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .djem-input--filled .djem-input__label, .djem-input--focused .djem-input__label {
+      transform: translateY(-16px) scale(0.75); }
+  .djem-input__line {
+    border-bottom: 1px solid #ccc; }
+    .djem-input__line:after {
+      content: "";
+      margin-top: -1px;
+      display: block;
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .djem-input--focused .djem-input__line:after {
+      border-bottom: 2px solid #03a9f4;
+      transform: scaleX(1); }

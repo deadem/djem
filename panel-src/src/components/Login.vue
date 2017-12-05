@@ -77,7 +77,7 @@ export default component;
 }
 
 .body {
-  margin: 20px;
+  margin: 0 20px;
 }
 
 .modal-default-button {

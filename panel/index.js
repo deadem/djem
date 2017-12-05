@@ -3207,7 +3207,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.mask[data-v-9fcfedee] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.25);\n  display: table;\n}\n.wrapper[data-v-9fcfedee] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-9fcfedee] {\n  width: 300px;\n  margin: 0px auto;\n  background-color: #fff;\n}\n.body[data-v-9fcfedee] {\n  margin: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.mask[data-v-9fcfedee] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.25);\n  display: table;\n}\n.wrapper[data-v-9fcfedee] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-9fcfedee] {\n  width: 300px;\n  margin: 0px auto;\n  background-color: #fff;\n}\n.body[data-v-9fcfedee] {\n  margin: 0 20px;\n}\n", ""]);
 
 // exports
 
@@ -3470,7 +3470,12 @@ if (false) {(function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Vue.extend({
     name: 'djem-input',
-    props: ['type', 'value']
+    props: ['type', 'value'],
+    data: function () {
+        return {
+            focused: false,
+        };
+    },
 });
 
 
@@ -3483,17 +3488,37 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "djem-input" }, [
-    _c("input", {
-      attrs: { type: _vm.type },
-      domProps: { value: _vm.value },
-      on: {
-        input: function($event) {
-          _vm.$emit("input", $event.target.value)
-        }
+  return _c(
+    "div",
+    {
+      staticClass: "djem-input",
+      class: {
+        "djem-input--focused": _vm.focused,
+        "djem-input--filled": this.value
       }
-    })
-  ])
+    },
+    [
+      _c("label", { staticClass: "djem-input__label" }, [_vm._v("Login")]),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: _vm.type },
+        domProps: { value: _vm.value },
+        on: {
+          input: function($event) {
+            _vm.$emit("input", $event.target.value)
+          },
+          focus: function($event) {
+            _vm.focused = true
+          },
+          blur: function($event) {
+            _vm.focused = false
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "djem-input__line" })
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

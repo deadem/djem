@@ -1,3 +1,5 @@
+$text-height: $font-size;
+
 .djem-title {
   background-color: color($theme-color);
   color: color($theme-font-color);
@@ -10,12 +12,47 @@
 }
 
 .djem-input {
-  padding-top: 16px;
-  border-bottom: 1px solid #ccc;
+  $v-padding: 16px;
+  margin-top: $v-padding;
+  position: relative;
   input {
-    font-size: 14px;
+    margin-top: $v-padding;
+    font-size: $text-height;
     line-height: 23px;
     border: none;
     width: 100%;
+  }
+
+  &__label {
+    pointer-events: none;
+    width: 0;
+    overflow: visible;
+    position: absolute;
+    top: $v-padding;
+    left: 0;
+    line-height: 23px;
+    @include transition();
+
+    .djem-input--filled &, .djem-input--focused & {
+      transform: translateY(-$v-padding) scale(.75);
+    }
+  }
+
+  &__line {
+    border-bottom: 1px solid #ccc;
+    &:after {
+      content: "";
+      margin-top: -1px;
+      display: block;
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      @include transition();
+    }
+
+    .djem-input--focused &:after {
+      border-bottom: 2px solid color('active');
+      transform: scaleX(1);
+    }
   }
 }
