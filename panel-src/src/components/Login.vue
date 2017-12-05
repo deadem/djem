@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" persistent max-width="450" transition="false">
+  <v-dialog v-if="show" v-model="always" persistent max-width="450">
     <v-card>
       <v-card-title class="headline">Login</v-card-title>
 
@@ -27,6 +27,7 @@ let component = Vue.extend({
   data: () => ({
     login: Auth.getLogin(),
     password: Auth.getPassword(),
+    always: true,
   }),
   computed: {
     show() {

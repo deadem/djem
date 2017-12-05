@@ -1,15 +1,35 @@
 <template>
-  <div class="main">
-    <v-toolbar dark color="primary">
-      <v-toolbar-title class="white--text">DJEM</v-toolbar-title>
+  <v-app>
+
+    <v-navigation-drawer fixed clipped app>
+     <tree-component @changerow="treechange"></tree-component>
+    </v-navigation-drawer>
+
+    <v-toolbar
+      color="blue darken-3"
+      dark
+      app
+      clipped-left
+      fixed
+    >
+      <v-toolbar-title>DJEM</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>search</v-icon>
-      </v-btn>
+      <v-text-field
+        light
+        solo
+        prepend-icon="search"
+        placeholder="Search"
+        style="max-width: 500px; min-width: 128px"
+      ></v-text-field>
     </v-toolbar>
-    <tree-component @changerow="treechange"></tree-component>
-    <grid-component :tree="tree"></grid-component>
-  </div>
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout justify-center align-center>
+          <grid-component :tree="tree"></grid-component>
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -18,12 +38,8 @@ import GridComponent from './Grid.vue';
 
 export default Vue.extend({
   data: () => ({
-    drawer: true,
     tree: '',
   }),
-  props: [
-    'source',
-  ],
   methods: {
     treechange(id: string) {
       this.tree = id;

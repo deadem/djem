@@ -1,7 +1,7 @@
 <template>
-  <div class="tree">
-    <tree-row :tree="items" @changerow="changerow"></tree-row>
-  </div>
+  <v-list dense>
+    <tree-row :items="items" @changerow="changerow"></tree-row>
+  </v-list>
 </template>
 
 <script lang="ts">
@@ -20,9 +20,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style scoped>
-  .tree {
-    width: 200px;
-  }
-</style>

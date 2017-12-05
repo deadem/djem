@@ -1,27 +1,47 @@
 <template>
-  <ul>
-    <li v-for="item in tree">
-      <a href="#" @click.prevent="changerow(item.id)">{{ item.text }}</a>
-      <tree-row v-if="item.leaf == false" :tree="item.items" @changerow="changerow"></tree-row>
-    </li>
-  </ul>
+  <div>
+  <template v-for="(item, i) in items">
+    <v-list-group v-if="item.items" v-model="item.model" no-action>
+      <v-list-tile slot="item" @click="update(item)">
+        <v-list-tile-action>
+          <v-icon>{{ item.model ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>
+            {{ item.text }}
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
+      <tree-row :items="item.items" @changerow="changerow"></tree-row>
+    </v-list-group>
+
+    <v-list-tile v-else @click="changerow(item.id)">
+      <v-list-tile-action>
+        <v-icon>{{ 'code' || item.icon }}</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content>
+        <v-list-tile-title>
+          {{ item.text }}
+        </v-list-tile-title>
+      </v-list-tile-content>
+    </v-list-tile>
+  </template>
+</div>
 </template>
 
 <script lang="ts">
 export default Vue.extend({
   name: 'tree-row',
-  props: [ 'tree' ],
-
+  props: [ 'items' ],
   methods: {
+    update(item: any): void {
+      item.model = !item.model;
+      this.$forceUpdate();
+    },
     changerow(id: string) {
       this.$emit('changerow', id);
     }
   }
 })
 </script>
-
-<style lang="scss" scoped>
-  ul {
-    padding-left: 16px;
-  }
-</style>
