@@ -7,6 +7,6 @@
 <script lang="ts">
 export default Vue.extend({
   name: 'djem-input',
-  props: [ 'type' ]
+  props: [ 'type', 'value' ]
 })
 </script>

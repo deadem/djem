@@ -32,4 +32,4 @@ $theme-font-color: 'white';
   color: color($theme-font-color);
 }
 
-@import 'Components';
+@import '../widgets/css/widgets';

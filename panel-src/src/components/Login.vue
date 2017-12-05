@@ -20,8 +20,8 @@
 
 <script lang="ts">
 import { Auth } from '../store/Proxy';
-import DjemTitle from './primitives/Title.vue';
-import DjemInput from './primitives/Input.vue';
+import DjemTitle from '../widgets/Title.vue';
+import DjemInput from '../widgets/Input.vue';
 
 let component = Vue.extend({
   data: () => ({
