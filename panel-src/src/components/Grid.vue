@@ -1,17 +1,11 @@
 <template>
-  <div class="grid" :tree="tree">
-    <table>
-      <tr>
-        <th v-for="column in columns">{{ column.text }}</th>
-      </tr>
-      <tr v-for="item in items">
-        <td v-for="column in columns">
-          {{ item[column.dataIndex] }}
-        </td>
-      </tr>
-    </table>
-    {{ tree }}
-  </div>
+  <v-data-table :tree="tree" :headers="columns" :items="items" hide-actions class="elevation-1">
+
+    <template slot="items" slot-scope="props" v-for="column in columns">
+      <td>{{ props.item[column.dataIndex] }}</td>
+    </template>
+
+  </v-data-table>
 </template>
 
 <script lang="ts">
@@ -42,10 +36,3 @@ export default Vue.component('tree', {
 });
 
 </script>
-
-<style scoped>
-  .grid {
-    flex-grow: 1;
-  }
-
-</style>

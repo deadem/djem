@@ -23,11 +23,9 @@
       ></v-text-field>
     </v-toolbar>
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          <grid-component :tree="tree"></grid-component>
-        </v-layout>
-      </v-container>
+      <v-layout justify-start align-start>
+        <grid-component :tree="tree"></grid-component>
+      </v-layout>
     </v-content>
   </v-app>
 </template>
