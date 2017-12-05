@@ -11,6 +11,7 @@
       app
       clipped-left
       fixed
+      dense
     >
       <v-toolbar-title>DJEM</v-toolbar-title>
       <v-spacer></v-spacer>
