@@ -2683,7 +2683,7 @@ if (false) {(function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Vue.extend({
     name: 'tree-row',
-    props: ['items'],
+    props: ['item'],
     methods: {
         update: function (item) {
             Vue.set(item, 'model', !item.model);
@@ -3158,13 +3158,13 @@ var render = function() {
   return _c(
     "v-list",
     { attrs: { dense: "" } },
-    [
-      _c("tree-row", {
-        attrs: { items: _vm.items },
+    _vm._l(_vm.items, function(item, i) {
+      return _c("tree-row", {
+        key: item.id,
+        attrs: { item: item },
         on: { changerow: _vm.changerow }
       })
-    ],
-    1
+    })
   )
 }
 var staticRenderFns = []
@@ -3187,112 +3187,99 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._l(_vm.items, function(item, i) {
-        return [
-          item.items
-            ? _c(
-                "v-list-group",
-                {
-                  attrs: { "no-action": "" },
-                  model: {
-                    value: item.model,
-                    callback: function($$v) {
-                      _vm.$set(item, "model", $$v)
-                    },
-                    expression: "item.model"
-                  }
-                },
+  return _vm.item.items
+    ? _c(
+        "v-list-group",
+        {
+          attrs: { "no-action": "" },
+          model: {
+            value: _vm.item.model,
+            callback: function($$v) {
+              _vm.$set(_vm.item, "model", $$v)
+            },
+            expression: "item.model"
+          }
+        },
+        [
+          _c(
+            "v-list-tile",
+            {
+              attrs: { slot: "item" },
+              on: {
+                click: function($event) {
+                  _vm.update(_vm.item)
+                }
+              },
+              slot: "item"
+            },
+            [
+              _c(
+                "v-list-tile-action",
                 [
-                  _c(
-                    "v-list-tile",
-                    {
-                      attrs: { slot: "item" },
-                      on: {
-                        click: function($event) {
-                          _vm.update(item)
-                        }
-                      },
-                      slot: "item"
-                    },
-                    [
-                      _c(
-                        "v-list-tile-action",
-                        [
-                          _c("v-icon", [
-                            _vm._v(
-                              _vm._s(
-                                item.model
-                                  ? "keyboard_arrow_up"
-                                  : "keyboard_arrow_down"
-                              )
-                            )
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-tile-content",
-                        [
-                          _c("v-list-tile-title", [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(item.text) +
-                                "\n          "
-                            )
-                          ])
-                        ],
-                        1
+                  _c("v-icon", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.item.model
+                          ? "keyboard_arrow_up"
+                          : "keyboard_arrow_down"
                       )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("tree-row", {
-                    attrs: { items: item.items },
-                    on: { changerow: _vm.changerow }
-                  })
+                    )
+                  ])
                 ],
                 1
-              )
-            : _c(
-                "v-list-tile",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.changerow(item.id)
-                    }
-                  }
-                },
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-tile-content",
                 [
-                  _c(
-                    "v-list-tile-action",
-                    [_c("v-icon", [_vm._v(_vm._s("code" || item.icon))])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-tile-content",
-                    [
-                      _c("v-list-tile-title", [
-                        _vm._v(
-                          "\n          " + _vm._s(item.text) + "\n        "
-                        )
-                      ])
-                    ],
-                    1
-                  )
+                  _c("v-list-tile-title", [
+                    _vm._v("\n        " + _vm._s(_vm.item.text) + "\n      ")
+                  ])
                 ],
                 1
               )
-        ]
-      })
-    ],
-    2
-  )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.item.items, function(item, i) {
+            return _c("tree-row", {
+              key: item.id,
+              attrs: { item: item },
+              on: { changerow: _vm.changerow }
+            })
+          })
+        ],
+        2
+      )
+    : _c(
+        "v-list-tile",
+        {
+          on: {
+            click: function($event) {
+              _vm.changerow(_vm.item.id)
+            }
+          }
+        },
+        [
+          _c(
+            "v-list-tile-action",
+            [_c("v-icon", [_vm._v(_vm._s("code" || _vm.item.icon))])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list-tile-content",
+            [
+              _c("v-list-tile-title", [
+                _vm._v("\n      " + _vm._s(_vm.item.text) + "\n    ")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
 }
 var staticRenderFns = []
 render._withStripped = true

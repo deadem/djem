@@ -1,6 +1,6 @@
 <template>
   <v-list dense>
-    <tree-row :items="items" @changerow="changerow"></tree-row>
+    <tree-row v-for="(item, i) in items" :item="item" :key="item.id" @changerow="changerow"></tree-row>
   </v-list>
 </template>
 
