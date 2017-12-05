@@ -1,22 +1,9 @@
-@import 'colors';
-@import 'elevation';
-
-@include generate-colors();
-@include generate-elevation();
-
-$theme-color: 'active';
-$theme-font-color: 'white';
-
-$font-size: 14px;
-
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font: $font-size Roboto, Sans-Serif;
   background-color: white;
   color: black;
-  caret-color: color($theme-color);
 }
 
 ul {
@@ -34,14 +21,3 @@ input {
   height: 100%;
   width: 100%;
 }
-
-.theme-color {
-  background-color: color($theme-color);
-  color: color($theme-font-color);
-}
-
-@mixin transition() {
-  transition: .3s cubic-bezier(.25,.8,.25,1);
-}
-
-@import '../widgets/css/widgets';

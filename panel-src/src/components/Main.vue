@@ -1,5 +1,12 @@
 <template>
   <div class="main">
+    <v-toolbar dark color="primary">
+      <v-toolbar-title class="white--text">DJEM</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>search</v-icon>
+      </v-btn>
+    </v-toolbar>
     <tree-component @changerow="treechange"></tree-component>
     <grid-component :tree="tree"></grid-component>
   </div>
@@ -28,11 +35,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style scoped>
-  .main {
-    height: 100%;
-    width: 100%;
-    display: flex;
-  }
-</style>
