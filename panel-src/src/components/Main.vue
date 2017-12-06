@@ -1,12 +1,29 @@
 <template>
   <v-app>
-    <v-tabs dark fixed>
+
+    <v-layout fill-height="true">
+
+      <v-flex main__navigation>
+        <v-navigation-drawer  clipped app>
+          <tree-component @changerow="treechange"></tree-component>
+        </v-navigation-drawer>
+      </v-flex>
+
+      <v-flex main__content>
+        <v-layout justify-start align-start>
+         <grid-component :tree="tree"></grid-component>
+        </v-layout>
+      </v-flex>
+
+  </v-layout>
+<!--
+    <v-tabs dark >
       <v-toolbar
         color="blue darken-3"
         dark
         app
         clipped-left
-        fixed
+
         dense
       >
         <v-toolbar-title>DJEM</v-toolbar-title>
@@ -31,22 +48,15 @@
           </v-tabs-item>
         </v-tabs-bar>
       </v-toolbar>
-
-      <v-tabs-items>
-        <v-tabs-content id="home">
-          <v-navigation-drawer fixed clipped app>
-            <tree-component @changerow="treechange"></tree-component>
-          </v-navigation-drawer>
+    </v-tabs>
 
           <v-content>
             <v-layout justify-start align-start>
               <grid-component :tree="tree"></grid-component>
             </v-layout>
           </v-content>
-        </v-tabs-content>
-      </v-tabs-items>
+ -->
 
-    </v-tabs>
   </v-app>
 </template>
 
@@ -69,3 +79,12 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style lang="scss">
+ body .main__navigation {
+    flex: none;
+ }
+ body .main__content {
+    overflow: auto;
+ }
+</style>
