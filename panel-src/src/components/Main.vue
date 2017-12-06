@@ -3,64 +3,54 @@
     <v-tabs dark class="main--height">
       <v-layout column class="main--height">
 
-        <v-flex>
-          <v-toolbar
-            color="blue darken-3"
-            dark
-            app
-            clipped-left
+        <v-toolbar
+          color="blue darken-3"
+          dark
+          app
+          clipped-left
 
-            dense
-          >
-            <v-toolbar-title>DJEM</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-text-field
-              light
-              solo
-              prepend-icon="search"
-              placeholder="Search"
-              style="max-width: 500px; min-width: 128px"
-            ></v-text-field>
+          dense
+        >
+          <v-toolbar-title>DJEM</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-text-field
+            light
+            solo
+            prepend-icon="search"
+            placeholder="Search"
+            style="max-width: 500px; min-width: 128px"
+          ></v-text-field>
 
 
-            <v-tabs-bar slot="extension">
-              <v-tabs-slider color="yellow"></v-tabs-slider>
-              <v-tabs-item :key="1" :href="'#home'">
-                <v-icon>home</v-icon>
-              </v-tabs-item>
+          <v-tabs-bar slot="extension">
+            <v-tabs-slider color="yellow"></v-tabs-slider>
+            <v-tabs-item :key="1" :href="'#home'">
+              <v-icon>home</v-icon>
+            </v-tabs-item>
 
-              <v-tabs-item :href="'#tab-2'">
-                Item 1
-              </v-tabs-item>
-            </v-tabs-bar>
-          </v-toolbar>
-        </v-flex>
+            <v-tabs-item :href="'#tab-2'">
+              Item 1
+            </v-tabs-item>
+          </v-tabs-bar>
+        </v-toolbar>
 
-        <v-layout fill-height="true">
-          <v-flex main__navigation>
-            <v-navigation-drawer  clipped app>
-              <tree-component @changerow="treechange"></tree-component>
-            </v-navigation-drawer>
-          </v-flex>
+        <v-tabs-items class="layout">
+          <v-tabs-content id="home" class="flex">
+            <v-layout fill-height="true">
+              <v-navigation-drawer  clipped app>
+                <tree-component @changerow="treechange"></tree-component>
+              </v-navigation-drawer>
 
-          <v-flex main__content>
-            <v-layout justify-start align-start>
-             <grid-component :tree="tree"></grid-component>
+              <v-flex main__content>
+                <v-layout justify-start align-start>
+                 <grid-component :tree="tree"></grid-component>
+                </v-layout>
+              </v-flex>
             </v-layout>
-          </v-flex>
-        </v-layout>
+          </v-tabs-content>
+        </v-tabs-items>
       </v-layout>
     </v-tabs>
-<!--
-    </v-tabs>
-
-          <v-content>
-            <v-layout justify-start align-start>
-              <grid-component :tree="tree"></grid-component>
-            </v-layout>
-          </v-content>
- -->
-
   </v-app>
 </template>
 
@@ -86,12 +76,9 @@ export default Vue.extend({
 
 <style lang="scss">
  body {
-  .main__navigation {
-      flex: none;
-    }
   .main__content {
-      overflow: auto;
-   }
+    overflow: auto;
+  }
    .main--height {
     height: 100%;
   }

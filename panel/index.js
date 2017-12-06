@@ -2650,56 +2650,47 @@ var render = function() {
             { staticClass: "main--height", attrs: { column: "" } },
             [
               _c(
-                "v-flex",
+                "v-toolbar",
+                {
+                  attrs: {
+                    color: "blue darken-3",
+                    dark: "",
+                    app: "",
+                    "clipped-left": "",
+                    dense: ""
+                  }
+                },
                 [
+                  _c("v-toolbar-title", [_vm._v("DJEM")]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    staticStyle: { "max-width": "500px", "min-width": "128px" },
+                    attrs: {
+                      light: "",
+                      solo: "",
+                      "prepend-icon": "search",
+                      placeholder: "Search"
+                    }
+                  }),
+                  _vm._v(" "),
                   _c(
-                    "v-toolbar",
-                    {
-                      attrs: {
-                        color: "blue darken-3",
-                        dark: "",
-                        app: "",
-                        "clipped-left": "",
-                        dense: ""
-                      }
-                    },
+                    "v-tabs-bar",
+                    { attrs: { slot: "extension" }, slot: "extension" },
                     [
-                      _c("v-toolbar-title", [_vm._v("DJEM")]),
-                      _vm._v(" "),
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c("v-text-field", {
-                        staticStyle: {
-                          "max-width": "500px",
-                          "min-width": "128px"
-                        },
-                        attrs: {
-                          light: "",
-                          solo: "",
-                          "prepend-icon": "search",
-                          placeholder: "Search"
-                        }
-                      }),
+                      _c("v-tabs-slider", { attrs: { color: "yellow" } }),
                       _vm._v(" "),
                       _c(
-                        "v-tabs-bar",
-                        { attrs: { slot: "extension" }, slot: "extension" },
-                        [
-                          _c("v-tabs-slider", { attrs: { color: "yellow" } }),
-                          _vm._v(" "),
-                          _c(
-                            "v-tabs-item",
-                            { key: 1, attrs: { href: "#home" } },
-                            [_c("v-icon", [_vm._v("home")])],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-tabs-item", { attrs: { href: "#tab-2" } }, [
-                            _vm._v("\n                Item 1\n              ")
-                          ])
-                        ],
+                        "v-tabs-item",
+                        { key: 1, attrs: { href: "#home" } },
+                        [_c("v-icon", [_vm._v("home")])],
                         1
-                      )
+                      ),
+                      _vm._v(" "),
+                      _c("v-tabs-item", { attrs: { href: "#tab-2" } }, [
+                        _vm._v("\n            Item 1\n          ")
+                      ])
                     ],
                     1
                   )
@@ -2708,35 +2699,51 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "v-layout",
-                { attrs: { "fill-height": "true" } },
+                "v-tabs-items",
+                { staticClass: "layout" },
                 [
                   _c(
-                    "v-flex",
-                    { attrs: { main__navigation: "" } },
-                    [
-                      _c(
-                        "v-navigation-drawer",
-                        { attrs: { clipped: "", app: "" } },
-                        [
-                          _c("tree-component", {
-                            on: { changerow: _vm.treechange }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { main__content: "" } },
+                    "v-tabs-content",
+                    { staticClass: "flex", attrs: { id: "home" } },
                     [
                       _c(
                         "v-layout",
-                        { attrs: { "justify-start": "", "align-start": "" } },
-                        [_c("grid-component", { attrs: { tree: _vm.tree } })],
+                        { attrs: { "fill-height": "true" } },
+                        [
+                          _c(
+                            "v-navigation-drawer",
+                            { attrs: { clipped: "", app: "" } },
+                            [
+                              _c("tree-component", {
+                                on: { changerow: _vm.treechange }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { main__content: "" } },
+                            [
+                              _c(
+                                "v-layout",
+                                {
+                                  attrs: {
+                                    "justify-start": "",
+                                    "align-start": ""
+                                  }
+                                },
+                                [
+                                  _c("grid-component", {
+                                    attrs: { tree: _vm.tree }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
                         1
                       )
                     ],
@@ -3327,7 +3334,7 @@ exports = module.exports = __webpack_require__(48)(undefined);
 
 
 // module
-exports.push([module.i, "\nbody .main__navigation {\n  flex: none;\n}\nbody .main__content {\n  overflow: auto;\n}\nbody .main--height {\n  height: 100%;\n}\n", ""]);
+exports.push([module.i, "\nbody .main__content {\n  overflow: auto;\n}\nbody .main--height {\n  height: 100%;\n}\n", ""]);
 
 // exports
 
