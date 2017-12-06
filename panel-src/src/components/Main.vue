@@ -1,10 +1,5 @@
 <template>
   <v-app>
-
-    <v-navigation-drawer fixed clipped app>
-     <tree-component @changerow="treechange"></tree-component>
-    </v-navigation-drawer>
-
     <v-tabs dark fixed>
       <v-toolbar
         color="blue darken-3"
@@ -27,25 +22,29 @@
 
         <v-tabs-bar slot="extension">
           <v-tabs-slider color="yellow"></v-tabs-slider>
-          <v-tabs-item
-          v-for="i in 3"
-          :key="i"
-          :href="'#tab-' + i"
-        >
-          Item {{ i }}
-        </v-tabs-item>
+          <v-tabs-item :key="1" :href="'#home'">
+            <v-icon>home</v-icon>
+          </v-tabs-item>
+
+          <v-tabs-item :href="'#tab-2'">
+            Item 1
+          </v-tabs-item>
         </v-tabs-bar>
       </v-toolbar>
 
-          <v-tabs-items>
-            <v-tabs-content id="tab-1">
-      <v-content>
-        <v-layout justify-start align-start>
+      <v-tabs-items>
+        <v-tabs-content id="home">
+          <v-navigation-drawer fixed clipped app>
+            <tree-component @changerow="treechange"></tree-component>
+          </v-navigation-drawer>
+
+          <v-content>
+            <v-layout justify-start align-start>
               <grid-component :tree="tree"></grid-component>
-        </v-layout>
-      </v-content>
-            </v-tabs-content>
-          </v-tabs-items>
+            </v-layout>
+          </v-content>
+        </v-tabs-content>
+      </v-tabs-items>
 
     </v-tabs>
   </v-app>

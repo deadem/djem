@@ -2638,13 +2638,6 @@ var render = function() {
     "v-app",
     [
       _c(
-        "v-navigation-drawer",
-        { attrs: { fixed: "", clipped: "", app: "" } },
-        [_c("tree-component", { on: { changerow: _vm.treechange } })],
-        1
-      ),
-      _vm._v(" "),
-      _c(
         "v-tabs",
         { attrs: { dark: "", fixed: "" } },
         [
@@ -2681,15 +2674,18 @@ var render = function() {
                 [
                   _c("v-tabs-slider", { attrs: { color: "yellow" } }),
                   _vm._v(" "),
-                  _vm._l(3, function(i) {
-                    return _c(
-                      "v-tabs-item",
-                      { key: i, attrs: { href: "#tab-" + i } },
-                      [_vm._v("\n        Item " + _vm._s(i) + "\n      ")]
-                    )
-                  })
+                  _c(
+                    "v-tabs-item",
+                    { key: 1, attrs: { href: "#home" } },
+                    [_c("v-icon", [_vm._v("home")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-tabs-item", { attrs: { href: "#tab-2" } }, [
+                    _vm._v("\n          Item 1\n        ")
+                  ])
                 ],
-                2
+                1
               )
             ],
             1
@@ -2700,8 +2696,19 @@ var render = function() {
             [
               _c(
                 "v-tabs-content",
-                { attrs: { id: "tab-1" } },
+                { attrs: { id: "home" } },
                 [
+                  _c(
+                    "v-navigation-drawer",
+                    { attrs: { fixed: "", clipped: "", app: "" } },
+                    [
+                      _c("tree-component", {
+                        on: { changerow: _vm.treechange }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
                     "v-content",
                     [
