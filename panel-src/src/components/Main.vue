@@ -1,53 +1,57 @@
 <template>
   <v-app>
+    <v-tabs dark class="main--height">
+      <v-layout column class="main--height">
 
-    <v-layout fill-height="true">
+        <v-flex>
+          <v-toolbar
+            color="blue darken-3"
+            dark
+            app
+            clipped-left
 
-      <v-flex main__navigation>
-        <v-navigation-drawer  clipped app>
-          <tree-component @changerow="treechange"></tree-component>
-        </v-navigation-drawer>
-      </v-flex>
+            dense
+          >
+            <v-toolbar-title>DJEM</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-text-field
+              light
+              solo
+              prepend-icon="search"
+              placeholder="Search"
+              style="max-width: 500px; min-width: 128px"
+            ></v-text-field>
 
-      <v-flex main__content>
-        <v-layout justify-start align-start>
-         <grid-component :tree="tree"></grid-component>
+
+            <v-tabs-bar slot="extension">
+              <v-tabs-slider color="yellow"></v-tabs-slider>
+              <v-tabs-item :key="1" :href="'#home'">
+                <v-icon>home</v-icon>
+              </v-tabs-item>
+
+              <v-tabs-item :href="'#tab-2'">
+                Item 1
+              </v-tabs-item>
+            </v-tabs-bar>
+          </v-toolbar>
+        </v-flex>
+
+        <v-layout fill-height="true">
+          <v-flex main__navigation>
+            <v-navigation-drawer  clipped app>
+              <tree-component @changerow="treechange"></tree-component>
+            </v-navigation-drawer>
+          </v-flex>
+
+          <v-flex main__content>
+            <v-layout justify-start align-start>
+             <grid-component :tree="tree"></grid-component>
+            </v-layout>
+          </v-flex>
         </v-layout>
-      </v-flex>
-
-  </v-layout>
+      </v-layout>
+    </v-tabs>
 <!--
-    <v-tabs dark >
-      <v-toolbar
-        color="blue darken-3"
-        dark
-        app
-        clipped-left
-
-        dense
-      >
-        <v-toolbar-title>DJEM</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-text-field
-          light
-          solo
-          prepend-icon="search"
-          placeholder="Search"
-          style="max-width: 500px; min-width: 128px"
-        ></v-text-field>
-
-
-        <v-tabs-bar slot="extension">
-          <v-tabs-slider color="yellow"></v-tabs-slider>
-          <v-tabs-item :key="1" :href="'#home'">
-            <v-icon>home</v-icon>
-          </v-tabs-item>
-
-          <v-tabs-item :href="'#tab-2'">
-            Item 1
-          </v-tabs-item>
-        </v-tabs-bar>
-      </v-toolbar>
     </v-tabs>
 
           <v-content>
@@ -81,10 +85,15 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
- body .main__navigation {
-    flex: none;
- }
- body .main__content {
-    overflow: auto;
- }
+ body {
+  .main__navigation {
+      flex: none;
+    }
+  .main__content {
+      overflow: auto;
+   }
+   .main--height {
+    height: 100%;
+  }
+}
 </style>
