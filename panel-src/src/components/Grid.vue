@@ -1,8 +1,8 @@
 <template>
   <v-data-table :tree="tree" :headers="columns" :items="items" hide-actions class="elevation-1">
 
-    <template slot="items" slot-scope="props" v-for="column in columns">
-      <td>{{ props.item[column.dataIndex] }}</td>
+    <template slot="items" slot-scope="props">
+      <td v-for="column in columns">{{ props.item[column.dataIndex] }}</td>
     </template>
 
   </v-data-table>
@@ -13,15 +13,15 @@ import { DataStore } from '../store/Store';
 
 export default Vue.component('tree', {
   mixins: [ DataStore('grid') ],
-  props: [
-    'tree'
-  ],
+  props: [ 'tree' ],
   components: {
   },
   computed: {
     columns(): Array<{}> {
       let items = this.$store.getters.items;
-      return ((items || {}).metaData || {}).columns || [];
+      let columns = ((items || {}).metaData || {}).columns || [];
+
+      return columns.map((item: any) => (item.align = item.align || 'left', item));
     },
     items(): Array<{}> {
       let items = this.$store.getters.items;

@@ -2564,14 +2564,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Store_1 = __webpack_require__(3);
 exports.default = Vue.component('tree', {
     mixins: [Store_1.DataStore('grid')],
-    props: [
-        'tree'
-    ],
+    props: ['tree'],
     components: {},
     computed: {
         columns: function () {
             var items = this.$store.getters.items;
-            return ((items || {}).metaData || {}).columns || [];
+            var columns = ((items || {}).metaData || {}).columns || [];
+            return columns.map(function (item) { return (item.align = item.align || 'left', item); });
         },
         items: function () {
             var items = this.$store.getters.items;
@@ -2604,14 +2603,14 @@ var render = function() {
       "hide-actions": ""
     },
     scopedSlots: _vm._u([
-      _vm._l(_vm.columns, function(column) {
-        return {
-          key: "items",
-          fn: function(props) {
-            return [_c("td", [_vm._v(_vm._s(props.item[column.dataIndex]))])]
-          }
+      {
+        key: "items",
+        fn: function(props) {
+          return _vm._l(_vm.columns, function(column) {
+            return _c("td", [_vm._v(_vm._s(props.item[column.dataIndex]))])
+          })
         }
-      })
+      }
     ])
   })
 }
