@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-tabs dark class="main--height">
+    <v-tabs :scrollable="false" class="main--height">
       <v-layout column class="main--height">
 
         <v-toolbar
@@ -21,14 +21,13 @@
             style="max-width: 500px; min-width: 128px"
           ></v-text-field>
 
-
           <v-tabs-bar slot="extension">
             <v-tabs-slider color="yellow"></v-tabs-slider>
-            <v-tabs-item :key="1" :href="'#home'">
+            <v-tabs-item :href="'#home'" ripple>
               <v-icon>home</v-icon>
             </v-tabs-item>
 
-            <v-tabs-item :href="'#tab-2'">
+            <v-tabs-item :href="'#tab-2'" ripple>
               Item 1
             </v-tabs-item>
           </v-tabs-bar>
@@ -48,6 +47,13 @@
               </v-flex>
             </v-layout>
           </v-tabs-content>
+
+          <v-tabs-content id="tab-2" class="flex">
+            <v-layout fill-height="true">
+              <div class="lime lighten-3" style="height: 100%;width:100%;"></div>
+            </v-layout>
+          </v-tabs-content>
+
         </v-tabs-items>
       </v-layout>
     </v-tabs>

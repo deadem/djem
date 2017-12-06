@@ -2643,7 +2643,7 @@ var render = function() {
     [
       _c(
         "v-tabs",
-        { staticClass: "main--height", attrs: { dark: "" } },
+        { staticClass: "main--height", attrs: { scrollable: false } },
         [
           _c(
             "v-layout",
@@ -2683,14 +2683,16 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-tabs-item",
-                        { key: 1, attrs: { href: "#home" } },
+                        { attrs: { href: "#home", ripple: "" } },
                         [_c("v-icon", [_vm._v("home")])],
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-tabs-item", { attrs: { href: "#tab-2" } }, [
-                        _vm._v("\n            Item 1\n          ")
-                      ])
+                      _c(
+                        "v-tabs-item",
+                        { attrs: { href: "#tab-2", ripple: "" } },
+                        [_vm._v("\n            Item 1\n          ")]
+                      )
                     ],
                     1
                   )
@@ -2746,6 +2748,20 @@ var render = function() {
                         ],
                         1
                       )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-tabs-content",
+                    { staticClass: "flex", attrs: { id: "tab-2" } },
+                    [
+                      _c("v-layout", { attrs: { "fill-height": "true" } }, [
+                        _c("div", {
+                          staticClass: "lime lighten-3",
+                          staticStyle: { height: "100%", width: "100%" }
+                        })
+                      ])
                     ],
                     1
                   )
