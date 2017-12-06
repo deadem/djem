@@ -2645,42 +2645,79 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-toolbar",
-        {
-          attrs: {
-            color: "blue darken-3",
-            dark: "",
-            app: "",
-            "clipped-left": "",
-            fixed: "",
-            dense: ""
-          }
-        },
-        [
-          _c("v-toolbar-title", [_vm._v("DJEM")]),
-          _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c("v-text-field", {
-            staticStyle: { "max-width": "500px", "min-width": "128px" },
-            attrs: {
-              light: "",
-              solo: "",
-              "prepend-icon": "search",
-              placeholder: "Search"
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-content",
+        "v-tabs",
+        { attrs: { dark: "", fixed: "" } },
         [
           _c(
-            "v-layout",
-            { attrs: { "justify-start": "", "align-start": "" } },
-            [_c("grid-component", { attrs: { tree: _vm.tree } })],
+            "v-toolbar",
+            {
+              attrs: {
+                color: "blue darken-3",
+                dark: "",
+                app: "",
+                "clipped-left": "",
+                fixed: "",
+                dense: ""
+              }
+            },
+            [
+              _c("v-toolbar-title", [_vm._v("DJEM")]),
+              _vm._v(" "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c("v-text-field", {
+                staticStyle: { "max-width": "500px", "min-width": "128px" },
+                attrs: {
+                  light: "",
+                  solo: "",
+                  "prepend-icon": "search",
+                  placeholder: "Search"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "v-tabs-bar",
+                { attrs: { slot: "extension" }, slot: "extension" },
+                [
+                  _c("v-tabs-slider", { attrs: { color: "yellow" } }),
+                  _vm._v(" "),
+                  _vm._l(3, function(i) {
+                    return _c(
+                      "v-tabs-item",
+                      { key: i, attrs: { href: "#tab-" + i } },
+                      [_vm._v("\n        Item " + _vm._s(i) + "\n      ")]
+                    )
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-tabs-items",
+            [
+              _c(
+                "v-tabs-content",
+                { attrs: { id: "tab-1" } },
+                [
+                  _c(
+                    "v-content",
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { "justify-start": "", "align-start": "" } },
+                        [_c("grid-component", { attrs: { tree: _vm.tree } })],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
             1
           )
         ],
