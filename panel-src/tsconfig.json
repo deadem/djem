@@ -3,8 +3,9 @@
         "strict": true,
         "noImplicitReturns": true,
         "target": "es5",
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true
+        "experimentalDecorators": false,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react"
     },
     "include": [
         "./src/**/*"

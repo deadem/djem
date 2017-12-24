@@ -8,7 +8,7 @@ const Plugins = {
 module.exports = [
   {
     entry: {
-      'index': './src/index.ts',
+      'index': './src/index.tsx',
     },
     output: {
       path: targetPath,
@@ -18,35 +18,18 @@ module.exports = [
     module: {
       rules: [
         {
-          test: /\.vue$/,
-          loader: 'vue-loader',
-          options: {
-            loaders: {
-              // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-              // the "scss" and "sass" values for the lang attribute to the right configs here.
-              // other preprocessors should work out of the box, no loader config like this necessary.
-              'scss': 'vue-style-loader!css-loader!sass-loader',
-              'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
-            }
-            // other vue-loader options go here
-          }
-        },
-        {
           test: /\.tsx?$/,
           loader: 'ts-loader',
           exclude: /node_modules/,
-          options: {
-            appendTsSuffixTo: [/\.vue$/],
-          }
         },
         { test: /\.(png|jpg|gif|svg)$/, loader: 'file-loader', options: { name: '[name].[ext]?[hash]' } }
       ],
     },
-    resolve: { extensions: ['.ts', '.js', '.vue', '.json'], alias: { 'vue$': 'vue/dist/vue.esm.js' } },
-    devServer: { historyApiFallback: true, noInfo: true },
-    performance: { hints: false },
+    resolve: { extensions: ['.ts', '.js', '.tsx', '.json'] },
+    externals: { 'react': 'React', 'react-dom': 'ReactDOM' },
+    // performance: { hints: false },
+    // devServer: { historyApiFallback: true, noInfo: true },
     // devtool: '#eval-source-map'
-    externals: { 'vue': 'Vue', 'vuetify': 'Vuetify', 'vuex': 'Vuex' },
     // plugins: [
     //   new webpack.ProvidePlugin({
     //     // 'Vue': 'Vue',
@@ -74,36 +57,35 @@ module.exports = [
       new Plugins.raw(),
     ]
   },
-  {
-    entry: { vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css') },
-    output: {
-      path: targetPath,
-      filename: '[name].css',
-    },
-    module: {
-      rules: [{
-        test: /./,
-        use: {
-          loader: 'extract-raw-output-loader',
-        }
-      }],
-      noParse: [/./],
-    },
-    resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
-    plugins: [
-      new Plugins.raw(),
-    ]
-  },
+  // {
+  //   entry: { vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css') },
+  //   output: {
+  //     path: targetPath,
+  //     filename: '[name].css',
+  //   },
+  //   module: {
+  //     rules: [{
+  //       test: /./,
+  //       use: {
+  //         loader: 'extract-raw-output-loader',
+  //       }
+  //     }],
+  //     noParse: [/./],
+  //   },
+  //   resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
+  //   plugins: [
+  //     new Plugins.raw(),
+  //   ]
+  // },
   {
     entry: {
-      vue: path.resolve(__dirname, './node_modules/vue/dist/vue.js'),
-      vuex: path.resolve(__dirname, './node_modules/vuex/dist/vuex.js'),
-      vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.js'),
-      'es6-promise': path.resolve(__dirname, './node_modules/es6-promise/dist/es6-promise.auto.min.js'),
+      'react.development.js': path.resolve(__dirname, './node_modules/react/umd/react.development.js'),
+      'react-dom.development.js': path.resolve(__dirname, './node_modules/react-dom/umd/react-dom.development.js'),
+      'es6-promise.js': path.resolve(__dirname, './node_modules/es6-promise/dist/es6-promise.auto.min.js'),
     },
     output: {
       path: targetPath,
-      filename: '[name].js',
+      filename: '[name]',
     },
     module: {
       rules: [{
