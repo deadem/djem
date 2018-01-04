@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+
 const targetPath = path.resolve(__dirname, '../panel');
 const Plugins = {
   raw: require(path.join(__dirname, 'plugins', 'extract-raw-output.js')),
@@ -9,6 +10,7 @@ module.exports = [
   {
     entry: {
       'index': './src/index.tsx',
+      'material-ui': 'material-ui',
     },
     output: {
       path: targetPath,
@@ -26,16 +28,19 @@ module.exports = [
       ],
     },
     resolve: { extensions: ['.ts', '.js', '.tsx', '.json'] },
-    externals: { 'react': 'React', 'react-dom': 'ReactDOM' },
+    externals: {
+      'react': 'React',
+      'react-dom': 'ReactDOM',
+    },
     // performance: { hints: false },
     // devServer: { historyApiFallback: true, noInfo: true },
     // devtool: '#eval-source-map'
-    // plugins: [
-    //   new webpack.ProvidePlugin({
-    //     // 'Vue': 'Vue',
-    //     // 'window.Vue': 'Vue',
-    //   }),
-    // ]
+    plugins: [
+      new webpack.optimize.CommonsChunkPlugin({
+        'name': 'material-ui',
+        minChunks: Infinity,
+      }),
+    ]
   },
   {
     entry: './src/css/index.scss',
@@ -57,30 +62,10 @@ module.exports = [
       new Plugins.raw(),
     ]
   },
-  // {
-  //   entry: { vuetify: path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css') },
-  //   output: {
-  //     path: targetPath,
-  //     filename: '[name].css',
-  //   },
-  //   module: {
-  //     rules: [{
-  //       test: /./,
-  //       use: {
-  //         loader: 'extract-raw-output-loader',
-  //       }
-  //     }],
-  //     noParse: [/./],
-  //   },
-  //   resolveLoader: { alias: { 'extract-raw-output-loader': path.join(__dirname, 'plugins/extract-raw-output-loader.js') } },
-  //   plugins: [
-  //     new Plugins.raw(),
-  //   ]
-  // },
   {
     entry: {
-      'react.development.js': path.resolve(__dirname, './node_modules/react/umd/react.development.js'),
-      'react-dom.development.js': path.resolve(__dirname, './node_modules/react-dom/umd/react-dom.development.js'),
+      'react.js': path.resolve(__dirname, './node_modules/react/umd/react.development.js'),
+      'react-dom.js': path.resolve(__dirname, './node_modules/react-dom/umd/react-dom.development.js'),
       'es6-promise.js': path.resolve(__dirname, './node_modules/es6-promise/dist/es6-promise.auto.min.js'),
     },
     output: {
@@ -105,7 +90,6 @@ module.exports = [
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } }),
     new webpack.optimize.UglifyJsPlugin({ sourceMap: true, compress: { warnings: false } }),

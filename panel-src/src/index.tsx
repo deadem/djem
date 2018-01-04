@@ -5,6 +5,6 @@ let parent = loader.parentNode;
 parent && parent.removeChild(loader);
 
 ReactDOM.render(
-    <Hello compiler='TypeScript' framework='React' />,
+    <Hello />,
     document.getElementById('app')
 );
