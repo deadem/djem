@@ -23,17 +23,18 @@ export class Hello extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>Open form dialog</Button>
+        <Button onClick={this.handleClickOpen} focusRipple={false}>Open form dialog</Button>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={() => {}}
           aria-labelledby="form-dialog-title"
+          disableBackdropClick={true}
+          disableEscapeKeyDown={true}
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Login</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occationally.
+              Please enter your credentials
             </DialogContentText>
             <TextField
               autoFocus
@@ -43,13 +44,17 @@ export class Hello extends React.Component {
               type="email"
               fullWidth
             />
+            <TextField
+              margin="dense"
+              id="password"
+              label="Password"
+              type="password"
+              fullWidth
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Subscribe
+              Login
             </Button>
           </DialogActions>
         </Dialog>

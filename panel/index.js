@@ -51,15 +51,15 @@ var Hello = /** @class */ (function (_super) {
     }
     Hello.prototype.render = function () {
         return (React.createElement("div", null,
-            React.createElement(Button_1.default, { onClick: this.handleClickOpen }, "Open form dialog"),
-            React.createElement(Dialog_1.default, { open: this.state.open, onClose: this.handleClose, "aria-labelledby": "form-dialog-title" },
-                React.createElement(Dialog_1.DialogTitle, { id: "form-dialog-title" }, "Subscribe"),
+            React.createElement(Button_1.default, { onClick: this.handleClickOpen, focusRipple: false }, "Open form dialog"),
+            React.createElement(Dialog_1.default, { open: this.state.open, onClose: function () { }, "aria-labelledby": "form-dialog-title", disableBackdropClick: true, disableEscapeKeyDown: true },
+                React.createElement(Dialog_1.DialogTitle, { id: "form-dialog-title" }, "Login"),
                 React.createElement(Dialog_1.DialogContent, null,
-                    React.createElement(Dialog_1.DialogContentText, null, "To subscribe to this website, please enter your email address here. We will send updates occationally."),
-                    React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: "Email Address", type: "email", fullWidth: true })),
+                    React.createElement(Dialog_1.DialogContentText, null, "Please enter your credentials"),
+                    React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: "Email Address", type: "email", fullWidth: true }),
+                    React.createElement(TextField_1.default, { margin: "dense", id: "password", label: "Password", type: "password", fullWidth: true })),
                 React.createElement(Dialog_1.DialogActions, null,
-                    React.createElement(Button_1.default, { onClick: this.handleClose, color: "primary" }, "Cancel"),
-                    React.createElement(Button_1.default, { onClick: this.handleClose, color: "primary" }, "Subscribe")))));
+                    React.createElement(Button_1.default, { onClick: this.handleClose, color: "primary" }, "Login")))));
     };
     return Hello;
 }(React.Component));
