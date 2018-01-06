@@ -1,10 +1,10 @@
-import { Hello } from "./components/Hello";
+import { Login } from "./components/Login";
 
 let loader: HTMLElement = document.getElementById('container-loader') as HTMLElement;
 let parent = loader.parentNode;
 parent && parent.removeChild(loader);
 
 ReactDOM.render(
-    <Hello />,
+    <Login />,
     document.getElementById('app')
 );

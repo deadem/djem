@@ -7,7 +7,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
-export class Hello extends React.Component {
+export class Login extends React.Component {
   state = {
     open: false,
   };
