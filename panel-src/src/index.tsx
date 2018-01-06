@@ -14,3 +14,7 @@ ReactDOM.render(
   ,
   document.getElementById('app')
 );
+
+import { Proxy } from './store/Proxy';
+
+new Proxy().instance().post('tree', {});

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { State } from '../store';
+import { Auth } from '../store/Proxy';
 
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
@@ -15,7 +16,26 @@ class Login extends React.Component {
     open: boolean;
   }
 
-  handleClose = () => {
+  state = {
+    name: '',
+    password: '',
+  };
+
+  catchReturn = (evt: any) => {
+    if (evt.charCode == 13) {
+      return this.handleLogin();
+    }
+  }
+
+  handleLogin = () => {
+    new Auth().login(this.state.name, this.state.password);
+  };
+
+  onChange = (evt: any) => {
+    let state: any = {};
+    let element = evt.currentTarget as HTMLInputElement;
+    state[element.id] = element.value;
+    this.setState(state);
   };
 
   render() {
@@ -40,6 +60,8 @@ class Login extends React.Component {
               label="Login"
               type="text"
               fullWidth
+              onChange={this.onChange}
+              onKeyPress={this.catchReturn}
             />
             <TextField
               margin="dense"
@@ -47,10 +69,12 @@ class Login extends React.Component {
               label="Password"
               type="password"
               fullWidth
+              onChange={this.onChange}
+              onKeyPress={this.catchReturn}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleLogin} color="primary">
               Login
             </Button>
           </DialogActions>

@@ -9,7 +9,7 @@ export interface State {
 
 let initialState: State = {
   login: {
-    authorized: false,
+    authorized: true,
   }
 };
 
