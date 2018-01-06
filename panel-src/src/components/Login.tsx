@@ -1,3 +1,5 @@
+import { connect } from 'react-redux';
+
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Dialog, {
@@ -7,25 +9,22 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
-export class Login extends React.Component {
-  state = {
-    open: false,
-  };
+import X from '../store/Auth';
+console.log(X);
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+class Login extends React.Component {
+  props: {
+    open: boolean;
+  }
 
   handleClose = () => {
-    this.setState({ open: false });
   };
 
   render() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen} focusRipple={false}>Open form dialog</Button>
         <Dialog
-          open={this.state.open}
+          open={this.props.open}
           onClose={() => {}}
           aria-labelledby="form-dialog-title"
           disableBackdropClick={true}
@@ -62,3 +61,15 @@ export class Login extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state: any, props: any) => {
+  return {
+    open: !state.login.authorized,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

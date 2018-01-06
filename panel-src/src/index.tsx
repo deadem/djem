@@ -1,10 +1,16 @@
-import { Login } from "./components/Login";
+import { Provider } from 'react-redux';
+import { store } from './store';
+
+import Login from "./components/Login";
 
 let loader: HTMLElement = document.getElementById('container-loader') as HTMLElement;
 let parent = loader.parentNode;
 parent && parent.removeChild(loader);
 
 ReactDOM.render(
-    <Login />,
-    document.getElementById('app')
+  <Provider store={store}>
+    <Login />
+  </Provider>
+  ,
+  document.getElementById('app')
 );
