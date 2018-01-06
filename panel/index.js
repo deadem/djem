@@ -41,27 +41,32 @@ var Proxy_1 = __webpack_require__(507);
 var Button_1 = __webpack_require__(70);
 var TextField_1 = __webpack_require__(143);
 var Dialog_1 = __webpack_require__(167);
+var authState = {
+    name: '',
+    password: '',
+};
 var Login = /** @class */ (function (_super) {
     __extends(Login, _super);
     function Login() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            name: '',
-            password: '',
-        };
+        _this.state = {};
         _this.catchReturn = function (evt) {
             if (evt.charCode == 13) {
                 return _this.handleLogin();
             }
         };
         _this.handleLogin = function () {
-            new Proxy_1.Auth().login(_this.state.name, _this.state.password);
+            var auth = new Proxy_1.Auth().login(authState.name, authState.password).then(function () {
+                authState.password = '';
+                _this.state.password.value = '';
+            }, function (error) { });
         };
         _this.onChange = function (evt) {
-            var state = {};
             var element = evt.currentTarget;
-            state[element.id] = element.value;
-            _this.setState(state);
+            authState[element.id] = element.value;
+        };
+        _this.passwordField = function (field) {
+            _this.state.password = field;
         };
         return _this;
     }
@@ -72,7 +77,7 @@ var Login = /** @class */ (function (_super) {
                 React.createElement(Dialog_1.DialogContent, null,
                     React.createElement(Dialog_1.DialogContentText, null, "Please enter your credentials"),
                     React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: "Login", type: "text", fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn }),
-                    React.createElement(TextField_1.default, { margin: "dense", id: "password", label: "Password", type: "password", fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn })),
+                    React.createElement(TextField_1.default, { margin: "dense", id: "password", label: "Password", type: "password", fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn, inputRef: this.passwordField })),
                 React.createElement(Dialog_1.DialogActions, null,
                     React.createElement(Button_1.default, { onClick: this.handleLogin, color: "primary" }, "Login")))));
     };
@@ -2953,12 +2958,9 @@ var Auth = /** @class */ (function (_super) {
     }
     Auth.prototype.login = function (login, password) {
         var _this = this;
-        this._http.post('', { login: login, password: password }).then(function (success) {
-            _this.setAuthorized(true);
-        }, function (error) {
-            // bad auth does nothing
-            return error;
-        });
+        var post = this._http.post('', { login: login, password: password });
+        post.then(function (success) { return _this.setAuthorized(true); }, function (error) { return error; }); // bad auth does nothing
+        return post;
     };
     return Auth;
 }(Core));

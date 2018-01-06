@@ -38,12 +38,10 @@ class Core {
 
 export class Auth extends Core {
   public login(login: string, password: string) {
-    this._http.post('', { login, password }).then(success => {
-      this.setAuthorized(true);
-    }, error => {
-      // bad auth does nothing
-      return error;
-    });
+    let post = this._http.post('', { login, password });
+    post.then(success => this.setAuthorized(true), error => error); // bad auth does nothing
+
+    return post;
   }
 }
 

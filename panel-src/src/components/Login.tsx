@@ -11,14 +11,17 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
+let authState = {
+  name: '',
+  password: '',
+};
+
 class Login extends React.Component {
   props: {
     open: boolean;
   }
 
-  state = {
-    name: '',
-    password: '',
+  state: { password?: HTMLElement } = {
   };
 
   catchReturn = (evt: any) => {
@@ -28,15 +31,20 @@ class Login extends React.Component {
   }
 
   handleLogin = () => {
-    new Auth().login(this.state.name, this.state.password);
+    let auth = new Auth().login(authState.name, authState.password).then(() => {
+      authState.password = '';
+      (this.state.password as any).value = '';
+    }, error => {});
   };
 
   onChange = (evt: any) => {
-    let state: any = {};
     let element = evt.currentTarget as HTMLInputElement;
-    state[element.id] = element.value;
-    this.setState(state);
+    (authState as any)[element.id] = element.value;
   };
+
+  passwordField = (field: HTMLElement) => {
+    this.state.password = field;
+  }
 
   render() {
     return (
@@ -71,6 +79,7 @@ class Login extends React.Component {
               fullWidth
               onChange={this.onChange}
               onKeyPress={this.catchReturn}
+              inputRef={this.passwordField}
             />
           </DialogContent>
           <DialogActions>
