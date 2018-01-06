@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { State } from '../store';
 
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
@@ -8,9 +9,6 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-
-import X from '../store/Auth';
-console.log(X);
 
 class Login extends React.Component {
   props: {
@@ -39,8 +37,8 @@ class Login extends React.Component {
               autoFocus
               margin="dense"
               id="name"
-              label="Email Address"
-              type="email"
+              label="Login"
+              type="text"
               fullWidth
             />
             <TextField
@@ -62,13 +60,13 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state: any, props: any) => {
+const mapStateToProps = (state: State) => {
   return {
     open: !state.login.authorized,
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = () => {
   return {};
 };
 

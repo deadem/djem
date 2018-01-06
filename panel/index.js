@@ -38,8 +38,6 @@ var react_redux_1 = __webpack_require__(488);
 var Button_1 = __webpack_require__(70);
 var TextField_1 = __webpack_require__(143);
 var Dialog_1 = __webpack_require__(167);
-var Auth_1 = __webpack_require__(469);
-console.log(Auth_1.default);
 var Login = /** @class */ (function (_super) {
     __extends(Login, _super);
     function Login() {
@@ -54,19 +52,19 @@ var Login = /** @class */ (function (_super) {
                 React.createElement(Dialog_1.DialogTitle, { id: "form-dialog-title" }, "Login"),
                 React.createElement(Dialog_1.DialogContent, null,
                     React.createElement(Dialog_1.DialogContentText, null, "Please enter your credentials"),
-                    React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: "Email Address", type: "email", fullWidth: true }),
+                    React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: "Login", type: "text", fullWidth: true }),
                     React.createElement(TextField_1.default, { margin: "dense", id: "password", label: "Password", type: "password", fullWidth: true })),
                 React.createElement(Dialog_1.DialogActions, null,
                     React.createElement(Button_1.default, { onClick: this.handleClose, color: "primary" }, "Login")))));
     };
     return Login;
 }(React.Component));
-var mapStateToProps = function (state, props) {
+var mapStateToProps = function (state) {
     return {
         open: !state.login.authorized,
     };
 };
-var mapDispatchToProps = function (dispatch) {
+var mapDispatchToProps = function () {
     return {};
 };
 exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Login);
@@ -488,33 +486,6 @@ function compose() {
     };
   });
 }
-
-/***/ }),
-
-/***/ 469:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var redux_1 = __webpack_require__(470);
-function todos(state, action) {
-    switch (action.type) {
-        case 'ADD_TODO':
-            return state.concat([action.text]);
-        default:
-            return state;
-    }
-}
-var store = redux_1.createStore(todos, ['Use Redux']);
-store.dispatch({
-    type: 'ADD_TODO',
-    text: 'Read the docs'
-});
-console.log(store.getState());
-// [ 'Use Redux', 'Read the docs' ]
-exports.default = store;
-
 
 /***/ }),
 
@@ -2208,16 +2179,17 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(470);
 var reducers_1 = __webpack_require__(482);
-exports.store = redux_1.createStore(reducers_1.default, {
+var initialState = {
     login: {
         authorized: false,
     }
-});
-setInterval(function () {
-    exports.store.dispatch({
-        type: 'authorize'
-    });
-}, 1000);
+};
+exports.store = redux_1.createStore(reducers_1.default, initialState);
+// setInterval(() => {
+//   store.dispatch({
+//     type: 'authorize'
+//   });
+// }, 1000);
 
 
 /***/ })

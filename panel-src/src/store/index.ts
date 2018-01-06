@@ -1,14 +1,22 @@
 import { createStore } from 'redux';
 import reducers from '../reducers';
 
-export let store = createStore(reducers, {
+export interface State {
+  login: {
+    authorized: boolean;
+  };
+}
+
+let initialState: State = {
   login: {
     authorized: false,
   }
-});
+};
 
-setInterval(() => {
-  store.dispatch({
-    type: 'authorize'
-  });
-}, 1000);
+export let store = createStore(reducers, initialState);
+
+// setInterval(() => {
+//   store.dispatch({
+//     type: 'authorize'
+//   });
+// }, 1000);
