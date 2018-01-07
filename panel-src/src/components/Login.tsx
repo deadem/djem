@@ -2,14 +2,7 @@ import { connect } from 'react-redux';
 import { State } from '../store';
 import { Auth } from '../store/Proxy';
 
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
+import Mui from './Mui';
 
 let authState = {
   name: '',
@@ -49,19 +42,19 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <Dialog
+        <Mui.Dialog
           open={this.props.open}
           onClose={() => {}}
           aria-labelledby="form-dialog-title"
           disableBackdropClick={true}
           disableEscapeKeyDown={true}
         >
-          <DialogTitle id="form-dialog-title">Login</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+          <Mui.DialogTitle id="form-dialog-title">Login</Mui.DialogTitle>
+          <Mui.DialogContent>
+            <Mui.DialogContentText>
               Please enter your credentials
-            </DialogContentText>
-            <TextField
+            </Mui.DialogContentText>
+            <Mui.TextField
               autoFocus
               margin="dense"
               id="name"
@@ -71,7 +64,7 @@ class Login extends React.Component {
               onChange={this.onChange}
               onKeyPress={this.catchReturn}
             />
-            <TextField
+            <Mui.TextField
               margin="dense"
               id="password"
               label="Password"
@@ -81,13 +74,13 @@ class Login extends React.Component {
               onKeyPress={this.catchReturn}
               inputRef={this.passwordField}
             />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleLogin} color="primary">
+          </Mui.DialogContent>
+          <Mui.DialogActions>
+            <Mui.Button onClick={this.handleLogin} color="primary">
               Login
-            </Button>
-          </DialogActions>
-        </Dialog>
+            </Mui.Button>
+          </Mui.DialogActions>
+        </Mui.Dialog>
       </div>
     );
   }
