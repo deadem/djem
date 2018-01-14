@@ -14,11 +14,6 @@ var initialState = {
     }
 };
 exports.store = redux_1.createStore(reducers_1.default, initialState);
-// setInterval(() => {
-//   store.dispatch({
-//     type: 'authorize'
-//   });
-// }, 1000);
 
 
 /***/ }),
@@ -204,15 +199,7 @@ var Login = /** @class */ (function (_super) {
     };
     return Login;
 }(React.Component));
-var mapStateToProps = function (state) {
-    return {
-        open: !state.login.authorized,
-    };
-};
-var mapDispatchToProps = function () {
-    return {};
-};
-exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Login);
+exports.default = react_redux_1.connect(function (state) { return ({ open: !state.login.authorized }); }, function () { return ({}); })(Login);
 
 
 /***/ }),
@@ -331,7 +318,7 @@ function Proxy(Component) {
             component.load(httpProxy.instance());
         };
         ProxyConnection.prototype.render = function () {
-            return React.createElement(Component, __assign({}, this.props, this.state, { ref: function (child) { component = child; } }));
+            return React.createElement(Component, __assign({}, this.props, this.state, { ref: function (element) { component = element; } }));
         };
         return ProxyConnection;
     }(React.Component));
@@ -393,6 +380,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(238);
+var react_redux_1 = __webpack_require__(72);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree() {
@@ -408,7 +396,7 @@ var Tree = /** @class */ (function (_super) {
     return Tree;
 }(React.Component));
 ;
-exports.default = Proxy_1.Proxy(Tree);
+exports.default = react_redux_1.connect(function (state) { return ({ tree: state.tree }); }, function () { return ({}); })(Proxy_1.Proxy(Tree));
 
 
 /***/ })

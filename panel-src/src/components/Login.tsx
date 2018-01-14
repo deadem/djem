@@ -86,14 +86,4 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state: State) => {
-  return {
-    open: !state.login.authorized,
-  };
-};
-
-const mapDispatchToProps = () => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect((state: State) => ({ open: !state.login.authorized }), () => ({}))(Login);

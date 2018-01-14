@@ -83,6 +83,8 @@ export function Proxy(Component: any) {
   let component: any;
 
   class ProxyConnection extends React.Component {
+    props: typeof Component.props
+
     componentDidMount() {
       component.load(httpProxy.instance());
     }
@@ -92,7 +94,7 @@ export function Proxy(Component: any) {
     }
 
     render() {
-      return React.createElement(Component, { ...this.props, ...this.state, ref: child => { component = child; } });
+      return React.createElement(Component, { ...this.props, ...this.state, ref: element => { component = element; } });
     }
   }
 

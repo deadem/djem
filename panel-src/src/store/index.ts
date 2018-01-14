@@ -1,11 +1,17 @@
 import { createStore } from 'redux';
 import reducers from '../reducers';
 
-export interface State {
+interface Login {
   login: {
     authorized: boolean;
   };
 }
+
+interface Tree {
+  tree?: any;
+}
+
+export type State = Tree & Login;
 
 let initialState: State = {
   login: {
@@ -14,9 +20,3 @@ let initialState: State = {
 };
 
 export let store = createStore(reducers, initialState);
-
-// setInterval(() => {
-//   store.dispatch({
-//     type: 'authorize'
-//   });
-// }, 1000);
