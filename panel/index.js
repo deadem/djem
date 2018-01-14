@@ -28,6 +28,7 @@ var AppBar_1 = __webpack_require__(132);
 var Button_1 = __webpack_require__(103);
 var Dialog_1 = __webpack_require__(169);
 var IconButton_1 = __webpack_require__(53);
+var List_1 = __webpack_require__(192);
 var TextField_1 = __webpack_require__(180);
 var Toolbar_1 = __webpack_require__(109);
 var Typography_1 = __webpack_require__(27);
@@ -43,6 +44,10 @@ var Mui = /** @class */ (function () {
     Mui.DialogContentText = Dialog_1.DialogContentText;
     Mui.DialogTitle = Dialog_1.DialogTitle;
     Mui.IconButton = IconButton_1.default;
+    Mui.List = List_1.default;
+    Mui.ListItem = List_1.ListItem;
+    Mui.ListItemIcon = List_1.ListItemIcon;
+    Mui.ListItemText = List_1.ListItemText;
     Mui.TextField = TextField_1.default;
     Mui.Toolbar = Toolbar_1.default;
     Mui.Typography = Typography_1.default;
@@ -382,20 +387,25 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(238);
 var react_redux_1 = __webpack_require__(72);
+var Mui_1 = __webpack_require__(131);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     TreeNode.prototype.subNodes = function () {
-        return (this.props.nodes || []).map(function (node) {
-            return (React.createElement("div", null,
-                node.text,
-                node.items ? React.createElement(TreeNode, { nodes: node.items }) : null));
+        var result = [];
+        (this.props.nodes || []).forEach(function (node) {
+            result.push(React.createElement(Mui_1.default.ListItem, { button: true },
+                React.createElement(Mui_1.default.ListItemText, { inset: true, primary: node.text })));
+            if (node.items) {
+                result.push(React.createElement(TreeNode, { nodes: node.items }));
+            }
         });
+        return result;
     };
     TreeNode.prototype.render = function () {
-        return (React.createElement("div", null, this.subNodes()));
+        return (React.createElement(Mui_1.default.List, null, this.subNodes()));
     };
     return TreeNode;
 }(React.Component));

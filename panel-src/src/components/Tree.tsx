@@ -1,6 +1,7 @@
 import { Proxy, Http } from '../store/Proxy';
 import { connect } from 'react-redux';
 import { State, Store } from '../store';
+import Mui from './Mui';
 
 class TreeNode extends React.Component {
   props: {
@@ -8,19 +9,24 @@ class TreeNode extends React.Component {
   }
 
   subNodes() {
-    return (this.props.nodes || []).map(node => {
-      return (
-        <div>
-          {node.text}
-          {node.items ? <TreeNode nodes={node.items} /> : null}
-        </div>
+    let result: Array<JSX.Element> = [];
+    (this.props.nodes || []).forEach(node => {
+      result.push(
+        <Mui.ListItem button>
+          <Mui.ListItemText inset primary={node.text} />
+        </Mui.ListItem>
       );
+      if (node.items) {
+        result.push(<TreeNode nodes={node.items} />);
+      }
     });
+
+    return result;
   }
 
-  render(): any {
+  render() {
     return (
-      <div>{this.subNodes()}</div>
+      <Mui.List>{this.subNodes()}</Mui.List>
     );
   }
 }

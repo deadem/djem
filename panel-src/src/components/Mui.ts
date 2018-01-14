@@ -2,6 +2,7 @@ import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -16,6 +17,10 @@ export default class Mui {
   static DialogContentText = DialogContentText;
   static DialogTitle = DialogTitle;
   static IconButton = IconButton;
+  static List = List;
+  static ListItem = ListItem;
+  static ListItemIcon = ListItemIcon;
+  static ListItemText = ListItemText;
   static TextField = TextField;
   static Toolbar = Toolbar;
   static Typography = Typography;
