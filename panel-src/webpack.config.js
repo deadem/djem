@@ -10,7 +10,12 @@ module.exports = [
   {
     entry: {
       'index': './src/index.tsx',
-      'material-ui': 'material-ui',
+      'core': [
+        'material-ui',
+        'react-redux',
+        'redux',
+        'axios',
+      ]
     },
     output: {
       path: targetPath,
@@ -37,7 +42,7 @@ module.exports = [
     // devtool: '#eval-source-map'
     plugins: [
       new webpack.optimize.CommonsChunkPlugin({
-        'name': 'material-ui',
+        'name': 'core',
         minChunks: Infinity,
       }),
     ]
