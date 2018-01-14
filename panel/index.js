@@ -286,7 +286,7 @@ var Auth = /** @class */ (function (_super) {
     return Auth;
 }(Core));
 exports.Auth = Auth;
-var HttpProxy = /** @class */ (function (_super) {
+var httpProxy = new (/** @class */ (function (_super) {
     __extends(HttpProxy, _super);
     function HttpProxy() {
         var _this = _super.call(this) || this;
@@ -316,9 +316,8 @@ var HttpProxy = /** @class */ (function (_super) {
         return this._http;
     };
     return HttpProxy;
-}(Core));
+}(Core)));
 function Proxy(Component) {
-    var proxy = new HttpProxy();
     var component;
     var ProxyConnection = /** @class */ (function (_super) {
         __extends(ProxyConnection, _super);
@@ -326,10 +325,10 @@ function Proxy(Component) {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         ProxyConnection.prototype.componentDidMount = function () {
-            component.load(proxy.instance());
+            component.load(httpProxy.instance());
         };
         ProxyConnection.prototype.componentWillReceiveProps = function () {
-            component.load(proxy.instance());
+            component.load(httpProxy.instance());
         };
         ProxyConnection.prototype.render = function () {
             return React.createElement(Component, __assign({}, this.props, this.state, { ref: function (child) { component = child; } }));

@@ -45,7 +45,7 @@ export class Auth extends Core {
   }
 }
 
-class HttpProxy extends Core {
+let httpProxy = new (class HttpProxy extends Core {
   constructor() {
     super();
 
@@ -76,20 +76,19 @@ class HttpProxy extends Core {
   public instance() {
     return this._http;
   }
-}
+});
 
 export type Http = AxiosInstance;
 export function Proxy(Component: any) {
-  let proxy = new HttpProxy();
   let component: any;
 
   class ProxyConnection extends React.Component {
     componentDidMount() {
-      component.load(proxy.instance());
+      component.load(httpProxy.instance());
     }
 
     componentWillReceiveProps() {
-      component.load(proxy.instance());
+      component.load(httpProxy.instance());
     }
 
     render() {
