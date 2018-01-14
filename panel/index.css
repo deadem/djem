@@ -4,7 +4,7 @@ html, body {
   padding: 0;
   background-color: white;
   color: black;
-  overflow: hidden; }
+  overflow: auto; }
 
 ul {
   margin: 0; }
@@ -17,3 +17,17 @@ input {
 #app {
   height: 100%;
   width: 100%; }
+
+.Main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+  .Main__container {
+    flex: 1; }
+
+.Tree {
+  height: 100%;
+  width: 300px;
+  border: 1px solid red;
+  box-sizing: border-box; }

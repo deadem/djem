@@ -4,7 +4,7 @@ html, body {
   padding: 0;
   background-color: white;
   color: black;
-  overflow: hidden; // hide scrollbars
+  overflow: auto;
 }
 
 ul {
@@ -22,3 +22,5 @@ input {
   height: 100%;
   width: 100%;
 }
+
+@import './components/index';
