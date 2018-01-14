@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { store } from './index';
 
 let auth = {
@@ -45,7 +45,7 @@ export class Auth extends Core {
   }
 }
 
-export class Proxy extends Core {
+class HttpProxy extends Core {
   constructor() {
     super();
 
@@ -76,4 +76,26 @@ export class Proxy extends Core {
   public instance() {
     return this._http;
   }
+}
+
+export type Http = AxiosInstance;
+export function Proxy(Component: any) {
+  let proxy = new HttpProxy();
+  let component: any;
+
+  class ProxyConnection extends React.Component {
+    componentDidMount() {
+      component.load(proxy.instance());
+    }
+
+    componentWillReceiveProps() {
+      component.load(proxy.instance());
+    }
+
+    render() {
+      return React.createElement(Component, { ...this.props, ...this.state, ref: child => { component = child; } });
+    }
+  }
+
+  return ProxyConnection;
 }
