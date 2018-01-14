@@ -86,11 +86,11 @@ export function Proxy(Component: any) {
     props: typeof Component.props
 
     componentDidMount() {
-      component.load(httpProxy.instance());
+      component.load(httpProxy.instance(), store);
     }
 
     componentWillReceiveProps() {
-      component.load(httpProxy.instance());
+      // component.load(httpProxy.instance(), store);
     }
 
     render() {

@@ -89,8 +89,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var reducers = function (state, action) {
     switch (action.type) {
         case 'authorize':
-            console.log(state.login);
             return __assign({}, state, { login: __assign({}, state.login, { authorized: !state.login.authorized }) });
+        case 'tree':
+            return __assign({}, state, { tree: action.state.slice() });
         default:
             return state;
     }
@@ -312,10 +313,10 @@ function Proxy(Component) {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         ProxyConnection.prototype.componentDidMount = function () {
-            component.load(httpProxy.instance());
+            component.load(httpProxy.instance(), index_1.store);
         };
         ProxyConnection.prototype.componentWillReceiveProps = function () {
-            component.load(httpProxy.instance());
+            // component.load(httpProxy.instance(), store);
         };
         ProxyConnection.prototype.render = function () {
             return React.createElement(Component, __assign({}, this.props, this.state, { ref: function (element) { component = element; } }));
@@ -381,17 +382,39 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(238);
 var react_redux_1 = __webpack_require__(72);
+var TreeNode = /** @class */ (function (_super) {
+    __extends(TreeNode, _super);
+    function TreeNode() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TreeNode.prototype.subNodes = function () {
+        return (this.props.nodes || []).map(function (node) {
+            return (React.createElement("div", null,
+                node.text,
+                node.items ? React.createElement(TreeNode, { nodes: node.items }) : null));
+        });
+    };
+    TreeNode.prototype.render = function () {
+        return (React.createElement("div", null, this.subNodes()));
+    };
+    return TreeNode;
+}(React.Component));
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Tree.prototype.load = function (proxy) {
-        console.log('load');
-        proxy.post('tree', {});
+    Tree.prototype.load = function (proxy, store) {
+        proxy.post('tree', {}).then(function (response) {
+            store.dispatch({
+                type: 'tree',
+                state: response.data
+            });
+        });
     };
     Tree.prototype.render = function () {
-        return (React.createElement("div", { className: 'Tree' }, "tree"));
+        return (React.createElement("div", { className: 'Tree' },
+            React.createElement(TreeNode, { nodes: this.props.tree })));
     };
     return Tree;
 }(React.Component));

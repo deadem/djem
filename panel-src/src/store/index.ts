@@ -20,3 +20,4 @@ let initialState: State = {
 };
 
 export let store = createStore(reducers, initialState);
+export type Store = typeof store;

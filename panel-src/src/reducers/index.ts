@@ -2,13 +2,15 @@ import { State } from '../store';
 
 interface Action {
   type: string;
+  state?: any;
 }
 
-const reducers = (state: State, action: Action) => {
+const reducers = (state: State, action: Action): State => {
   switch (action.type) {
     case 'authorize':
-      console.log(state.login);
       return { ...state, login: { ...state.login, authorized: !state.login.authorized } };
+    case 'tree':
+      return { ...state, tree: [ ...action.state ] };
     default:
       return state;
   }
