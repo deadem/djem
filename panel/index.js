@@ -1,13 +1,13 @@
 webpackJsonp([0],{
 
-/***/ 124:
+/***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(77);
-var reducers_1 = __webpack_require__(235);
+var reducers_1 = __webpack_require__(236);
 var initialState = {
     login: {
         authorized: true,
@@ -18,56 +18,97 @@ exports.store = redux_1.createStore(reducers_1.default, initialState);
 
 /***/ }),
 
-/***/ 131:
+/***/ 127:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var AppBar_1 = __webpack_require__(132);
-var Button_1 = __webpack_require__(103);
-var Dialog_1 = __webpack_require__(169);
-var IconButton_1 = __webpack_require__(53);
-var List_1 = __webpack_require__(192);
-var TextField_1 = __webpack_require__(180);
-var Toolbar_1 = __webpack_require__(109);
-var Typography_1 = __webpack_require__(27);
-var styles_1 = __webpack_require__(110);
-var Mui = /** @class */ (function () {
-    function Mui() {
+var index_1 = __webpack_require__(126);
+var react_redux_1 = __webpack_require__(55);
+var core_1 = __webpack_require__(531);
+var httpProxy = new (/** @class */ (function (_super) {
+    __extends(HttpProxy, _super);
+    function HttpProxy() {
+        var _this = _super.call(this) || this;
+        _this._http.interceptors.response.use(function (response) { return response; }, function (error) { return _this.retry(error); });
+        return _this;
     }
-    Mui.AppBar = AppBar_1.default;
-    Mui.Button = Button_1.default;
-    Mui.Dialog = Dialog_1.default;
-    Mui.DialogActions = Dialog_1.DialogActions;
-    Mui.DialogContent = Dialog_1.DialogContent;
-    Mui.DialogContentText = Dialog_1.DialogContentText;
-    Mui.DialogTitle = Dialog_1.DialogTitle;
-    Mui.IconButton = IconButton_1.default;
-    Mui.List = List_1.default;
-    Mui.ListItem = List_1.ListItem;
-    Mui.ListItemIcon = List_1.ListItemIcon;
-    Mui.ListItemText = List_1.ListItemText;
-    Mui.TextField = TextField_1.default;
-    Mui.Toolbar = Toolbar_1.default;
-    Mui.Typography = Typography_1.default;
-    Mui.withStyles = styles_1.withStyles;
-    return Mui;
-}());
-exports.default = Mui;
+    HttpProxy.prototype.retry = function (error) {
+        var _this = this;
+        if ((error.response || {}).status === 401) {
+            this.setAuthorized(false);
+            var originalRequest_1 = error.config;
+            return new Promise(function (resolve, reject) {
+                var stopWatch = index_1.store.subscribe(function () {
+                    var state = index_1.store.getState();
+                    if (state.login.authorized) {
+                        stopWatch();
+                        originalRequest_1.baseURL = '';
+                        return _this._http.request(originalRequest_1).then(function (success) { return resolve(success); }, function (error) { return reject(error); });
+                    }
+                    return;
+                });
+            });
+        }
+        return Promise.reject(error);
+    };
+    HttpProxy.prototype.instance = function () {
+        return this._http;
+    };
+    return HttpProxy;
+}(core_1.Core)));
+function wrapper(fn) {
+    return function (params) {
+        return fn(params);
+    };
+}
+var Proxy = /** @class */ (function (_super) {
+    __extends(Proxy, _super);
+    function Proxy() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.dependencies = [];
+        return _this;
+    }
+    Proxy.prototype.load = function (proxy, store) {
+    };
+    Proxy.prototype.loadComponentData = function () {
+        this.load(httpProxy.instance(), index_1.store);
+    };
+    Proxy.prototype.componentDidMount = function () {
+        this.loadComponentData();
+    };
+    Proxy.prototype.componentWillReceiveProps = function () {
+        console.log(this.dependencies);
+        // this.loadComponentData();
+    };
+    Proxy.connect = wrapper(react_redux_1.connect);
+    return Proxy;
+}(React.Component));
+exports.Proxy = Proxy;
 
 
 /***/ }),
 
-/***/ 206:
+/***/ 207:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(72);
-var store_1 = __webpack_require__(124);
-var Main_1 = __webpack_require__(236);
+var react_redux_1 = __webpack_require__(55);
+var store_1 = __webpack_require__(126);
+var Main_1 = __webpack_require__(237);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
 parent && parent.removeChild(loader);
@@ -77,7 +118,7 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.sto
 
 /***/ }),
 
-/***/ 235:
+/***/ 236:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106,7 +147,7 @@ exports.default = reducers;
 
 /***/ }),
 
-/***/ 236:
+/***/ 237:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -122,9 +163,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Login_1 = __webpack_require__(237);
+var Login_1 = __webpack_require__(238);
 var Toolbar_1 = __webpack_require__(422);
-var Tree_1 = __webpack_require__(530);
+var Tree_1 = __webpack_require__(423);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
     function Main() {
@@ -144,7 +185,7 @@ exports.default = Main;
 
 /***/ }),
 
-/***/ 237:
+/***/ 238:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -160,9 +201,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(72);
-var Proxy_1 = __webpack_require__(238);
-var Mui_1 = __webpack_require__(131);
+var react_redux_1 = __webpack_require__(55);
+var Auth_1 = __webpack_require__(532);
+var Mui_1 = __webpack_require__(80);
 var authState = {
     name: '',
     password: '',
@@ -178,7 +219,7 @@ var Login = /** @class */ (function (_super) {
             }
         };
         _this.handleLogin = function () {
-            var auth = new Proxy_1.Auth().login(authState.name, authState.password).then(function () {
+            var auth = new Auth_1.Auth().login(authState.name, authState.password).then(function () {
                 authState.password = '';
                 _this.state.password.value = '';
             }, function (error) { });
@@ -210,7 +251,7 @@ exports.default = react_redux_1.connect(function (state) { return ({ open: !stat
 
 /***/ }),
 
-/***/ 238:
+/***/ 422:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -225,17 +266,100 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var axios_1 = __webpack_require__(125);
-var index_1 = __webpack_require__(124);
+var Mui_1 = __webpack_require__(80);
+var Toolbar = /** @class */ (function (_super) {
+    __extends(Toolbar, _super);
+    function Toolbar() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Toolbar.prototype.render = function () {
+        return (React.createElement(Mui_1.default.AppBar, { position: "static" },
+            React.createElement(Mui_1.default.Toolbar, null,
+                React.createElement(Mui_1.default.Typography, { type: "title", color: "inherit", noWrap: true }, "DJEM"))));
+    };
+    return Toolbar;
+}(React.Component));
+exports.default = Toolbar;
+
+
+/***/ }),
+
+/***/ 423:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Proxy_1 = __webpack_require__(127);
+var Mui_1 = __webpack_require__(80);
+var TreeNode = /** @class */ (function (_super) {
+    __extends(TreeNode, _super);
+    function TreeNode() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TreeNode.prototype.subNodes = function () {
+        var result = [];
+        (this.props.nodes || []).forEach(function (node) {
+            result.push(React.createElement(Mui_1.default.ListItem, { button: true, key: node.id },
+                React.createElement(Mui_1.default.ListItemText, { inset: true, primary: node.text })));
+            if (node.items) {
+                result.push(React.createElement(TreeNode, { key: "sub-" + node.id, nodes: node.items }));
+            }
+        });
+        return result;
+    };
+    TreeNode.prototype.render = function () {
+        return (React.createElement(Mui_1.default.List, null, this.subNodes()));
+    };
+    return TreeNode;
+}(React.Component));
+var Tree = /** @class */ (function (_super) {
+    __extends(Tree, _super);
+    function Tree() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.dependencies = ['id'];
+        return _this;
+    }
+    Tree.prototype.load = function (proxy, store) {
+        proxy.post('tree', {}).then(function (response) {
+            store.dispatch({
+                type: 'tree',
+                state: response.data
+            });
+        });
+    };
+    Tree.prototype.render = function () {
+        console.log(this.dependencies);
+        return (React.createElement("div", { className: 'Tree' },
+            React.createElement(TreeNode, { nodes: this.props.tree })));
+    };
+    return Tree;
+}(Proxy_1.Proxy));
+;
+exports.default = Tree.connect(function (state) { return { tree: state.tree }; })(Tree);
+
+
+/***/ }),
+
+/***/ 531:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var axios_1 = __webpack_require__(128);
+var index_1 = __webpack_require__(126);
 var auth = {
     token: '',
 };
@@ -265,6 +389,28 @@ var Core = /** @class */ (function () {
     };
     return Core;
 }());
+exports.Core = Core;
+
+
+/***/ }),
+
+/***/ 532:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(531);
 var Auth = /** @class */ (function (_super) {
     __extends(Auth, _super);
     function Auth() {
@@ -277,161 +423,51 @@ var Auth = /** @class */ (function (_super) {
         return post;
     };
     return Auth;
-}(Core));
+}(core_1.Core));
 exports.Auth = Auth;
-var httpProxy = new (/** @class */ (function (_super) {
-    __extends(HttpProxy, _super);
-    function HttpProxy() {
-        var _this = _super.call(this) || this;
-        _this._http.interceptors.response.use(function (response) { return response; }, function (error) { return _this.retry(error); });
-        return _this;
-    }
-    HttpProxy.prototype.retry = function (error) {
-        var _this = this;
-        if ((error.response || {}).status === 401) {
-            this.setAuthorized(false);
-            var originalRequest_1 = error.config;
-            return new Promise(function (resolve, reject) {
-                var stopWatch = index_1.store.subscribe(function () {
-                    var state = index_1.store.getState();
-                    if (state.login.authorized) {
-                        stopWatch();
-                        originalRequest_1.baseURL = '';
-                        return _this._http.request(originalRequest_1).then(function (success) { return resolve(success); }, function (error) { return reject(error); });
-                    }
-                    return;
-                });
-            });
-        }
-        return Promise.reject(error);
-    };
-    HttpProxy.prototype.instance = function () {
-        return this._http;
-    };
-    return HttpProxy;
-}(Core)));
-function Proxy(Component) {
-    var component;
-    var ProxyConnection = /** @class */ (function (_super) {
-        __extends(ProxyConnection, _super);
-        function ProxyConnection() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        ProxyConnection.prototype.componentDidMount = function () {
-            component.load(httpProxy.instance(), index_1.store);
-        };
-        ProxyConnection.prototype.componentWillReceiveProps = function () {
-            // component.load(httpProxy.instance(), store);
-        };
-        ProxyConnection.prototype.render = function () {
-            return React.createElement(Component, __assign({}, this.props, this.state, { ref: function (element) { component = element; } }));
-        };
-        return ProxyConnection;
-    }(React.Component));
-    return ProxyConnection;
-}
-exports.Proxy = Proxy;
 
 
 /***/ }),
 
-/***/ 422:
+/***/ 80:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Mui_1 = __webpack_require__(131);
-var Toolbar = /** @class */ (function (_super) {
-    __extends(Toolbar, _super);
-    function Toolbar() {
-        return _super !== null && _super.apply(this, arguments) || this;
+var AppBar_1 = __webpack_require__(134);
+var Button_1 = __webpack_require__(104);
+var Dialog_1 = __webpack_require__(171);
+var IconButton_1 = __webpack_require__(53);
+var List_1 = __webpack_require__(109);
+var TextField_1 = __webpack_require__(183);
+var Toolbar_1 = __webpack_require__(111);
+var Typography_1 = __webpack_require__(27);
+var styles_1 = __webpack_require__(112);
+var Mui = /** @class */ (function () {
+    function Mui() {
     }
-    Toolbar.prototype.render = function () {
-        return (React.createElement(Mui_1.default.AppBar, { position: "static" },
-            React.createElement(Mui_1.default.Toolbar, null,
-                React.createElement(Mui_1.default.Typography, { type: "title", color: "inherit", noWrap: true }, "DJEM"))));
-    };
-    return Toolbar;
-}(React.Component));
-exports.default = Toolbar;
-
-
-/***/ }),
-
-/***/ 530:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Proxy_1 = __webpack_require__(238);
-var react_redux_1 = __webpack_require__(72);
-var Mui_1 = __webpack_require__(131);
-var TreeNode = /** @class */ (function (_super) {
-    __extends(TreeNode, _super);
-    function TreeNode() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    TreeNode.prototype.subNodes = function () {
-        var result = [];
-        (this.props.nodes || []).forEach(function (node) {
-            result.push(React.createElement(Mui_1.default.ListItem, { button: true },
-                React.createElement(Mui_1.default.ListItemText, { inset: true, primary: node.text })));
-            if (node.items) {
-                result.push(React.createElement(TreeNode, { nodes: node.items }));
-            }
-        });
-        return result;
-    };
-    TreeNode.prototype.render = function () {
-        return (React.createElement(Mui_1.default.List, null, this.subNodes()));
-    };
-    return TreeNode;
-}(React.Component));
-var Tree = /** @class */ (function (_super) {
-    __extends(Tree, _super);
-    function Tree() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Tree.prototype.load = function (proxy, store) {
-        proxy.post('tree', {}).then(function (response) {
-            store.dispatch({
-                type: 'tree',
-                state: response.data
-            });
-        });
-    };
-    Tree.prototype.render = function () {
-        return (React.createElement("div", { className: 'Tree' },
-            React.createElement(TreeNode, { nodes: this.props.tree })));
-    };
-    return Tree;
-}(React.Component));
-;
-exports.default = react_redux_1.connect(function (state) { return ({ tree: state.tree }); }, function () { return ({}); })(Proxy_1.Proxy(Tree));
+    Mui.AppBar = AppBar_1.default;
+    Mui.Button = Button_1.default;
+    Mui.Dialog = Dialog_1.default;
+    Mui.DialogActions = Dialog_1.DialogActions;
+    Mui.DialogContent = Dialog_1.DialogContent;
+    Mui.DialogContentText = Dialog_1.DialogContentText;
+    Mui.DialogTitle = Dialog_1.DialogTitle;
+    Mui.IconButton = IconButton_1.default;
+    Mui.List = List_1.default;
+    Mui.ListItem = List_1.ListItem;
+    Mui.ListItemIcon = List_1.ListItemIcon;
+    Mui.ListItemText = List_1.ListItemText;
+    Mui.TextField = TextField_1.default;
+    Mui.Toolbar = Toolbar_1.default;
+    Mui.Typography = Typography_1.default;
+    Mui.withStyles = styles_1.withStyles;
+    return Mui;
+}());
+exports.default = Mui;
 
 
 /***/ })
 
-},[206]);
+},[207]);

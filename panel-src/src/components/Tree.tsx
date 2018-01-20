@@ -1,6 +1,4 @@
-import { Proxy, Http } from '../store/Proxy';
-import { connect } from 'react-redux';
-import { State, Store } from '../store';
+import { Proxy, Http, State, Store } from '../store/Proxy';
 import Mui from './Mui';
 
 class TreeNode extends React.Component {
@@ -12,12 +10,12 @@ class TreeNode extends React.Component {
     let result: Array<JSX.Element> = [];
     (this.props.nodes || []).forEach(node => {
       result.push(
-        <Mui.ListItem button>
+        <Mui.ListItem button key={node.id}>
           <Mui.ListItemText inset primary={node.text} />
         </Mui.ListItem>
       );
       if (node.items) {
-        result.push(<TreeNode nodes={node.items} />);
+        result.push(<TreeNode key={`sub-${node.id}`} nodes={node.items} />);
       }
     });
 
@@ -31,10 +29,12 @@ class TreeNode extends React.Component {
   }
 }
 
-class Tree extends React.Component {
+class Tree extends Proxy {
   props: {
     tree: any;
-  }
+  };
+
+  dependencies = [ 'id' ];
 
   load(proxy: Http, store: Store) {
     proxy.post('tree', {}).then((response) => {
@@ -46,6 +46,7 @@ class Tree extends React.Component {
   }
 
   render() {
+    console.log(this.dependencies);
     return (
       <div className='Tree'>
         <TreeNode nodes={this.props.tree} />
@@ -54,4 +55,4 @@ class Tree extends React.Component {
   }
 };
 
-export default connect((state: State) => ({ tree: state.tree }), () => ({}))(Proxy(Tree));
+export default Tree.connect((state: State) => { return { tree: state.tree }; })(Tree);

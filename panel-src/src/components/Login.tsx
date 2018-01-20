@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { State } from '../store';
-import { Auth } from '../store/Proxy';
+import { Auth } from '../store/Auth';
 
 import Mui from './Mui';
 

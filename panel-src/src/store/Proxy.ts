@@ -1,49 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
-import { store } from './index';
+import { State, Store, store } from './index';
+import { connect } from 'react-redux';
+import { Core } from './core';
 
-let auth = {
-  token: '',
-};
-
-class Core {
-  protected _http = axios.create({
-    baseURL: 'api',
-  });
-
-  constructor() {
-    this._http.interceptors.response.use(success => (this.updateToken(success), success), error => (this.updateToken(error.response), Promise.reject(error)));
-
-    this._http.interceptors.request.use(config => {
-      config.headers['X-CSRF-TOKEN'] = this.getToken();
-      return config;
-    });
-  }
-
-  private updateToken(response: any) {
-    auth.token = response.headers['x-csrf-token'];
-  }
-
-  private getToken() {
-    return auth.token;
-  }
-
-  protected setAuthorized(state: boolean) {
-    store.dispatch({
-      type: 'authorize',
-      state
-    });
-  }
-
-}
-
-export class Auth extends Core {
-  public login(login: string, password: string) {
-    let post = this._http.post('', { login, password });
-    post.then(success => this.setAuthorized(true), error => error); // bad auth does nothing
-
-    return post;
-  }
-}
+export type Http = AxiosInstance;
 
 let httpProxy = new (class HttpProxy extends Core {
   constructor() {
@@ -78,25 +38,32 @@ let httpProxy = new (class HttpProxy extends Core {
   }
 });
 
-export type Http = AxiosInstance;
-export function Proxy(Component: any) {
-  let component: any;
+function wrapper<In, Out>(fn: (params: In) => Out) {
+  return (params: In): Out => {
+    return fn(params);
+  }
+}
 
-  class ProxyConnection extends React.Component {
-    props: typeof Component.props
+export type Store = Store;
+export type State = State;
 
-    componentDidMount() {
-      component.load(httpProxy.instance(), store);
-    }
+export class Proxy extends React.Component {
+  static connect = wrapper(connect);
+  dependencies: Array<string> = [];
 
-    componentWillReceiveProps() {
-      // component.load(httpProxy.instance(), store);
-    }
-
-    render() {
-      return React.createElement(Component, { ...this.props, ...this.state, ref: element => { component = element; } });
-    }
+  protected load(proxy: Http, store: Store) {
   }
 
-  return ProxyConnection;
+  private loadComponentData() {
+    this.load(httpProxy.instance(), store);
+  }
+
+  componentDidMount() {
+    this.loadComponentData();
+  }
+
+  componentWillReceiveProps() {
+    console.log(this.dependencies);
+    // this.loadComponentData();
+  }
 }
