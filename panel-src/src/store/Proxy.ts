@@ -38,17 +38,17 @@ let httpProxy = new (class HttpProxy extends Core {
   }
 });
 
-function wrapper<In, Out>(fn: (params: In) => Out) {
-  return (params: In): Out => {
-    return fn(params);
-  }
-}
-
 export type Store = Store;
 export type State = State;
 
 export class Proxy extends React.Component {
-  static connect = wrapper(connect);
+  // redux connect wrapper
+  static connect = (function <In, Out>(fn: (params: In) => Out) {
+    return function<T>(this: T, params: In) {
+      return (fn(params) as any)(this) as T;
+    }
+  })(connect);
+
   dependencies: Array<string> = [];
 
   protected load(proxy: Http, store: Store) {
@@ -62,8 +62,14 @@ export class Proxy extends React.Component {
     this.loadComponentData();
   }
 
-  componentWillReceiveProps() {
-    console.log(this.dependencies);
-    // this.loadComponentData();
+  componentWillReceiveProps(nextProps: any) {
+    let props: any = this.props;
+    for (let i = 0; i < this.dependencies.length; ++i) {
+      const key = this.dependencies[i];
+      if (nextProps[key] !== props[key]) {
+        this.loadComponentData();
+        return;
+      }
+    }
   }
 }

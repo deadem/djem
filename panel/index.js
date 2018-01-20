@@ -68,11 +68,6 @@ var httpProxy = new (/** @class */ (function (_super) {
     };
     return HttpProxy;
 }(core_1.Core)));
-function wrapper(fn) {
-    return function (params) {
-        return fn(params);
-    };
-}
 var Proxy = /** @class */ (function (_super) {
     __extends(Proxy, _super);
     function Proxy() {
@@ -88,11 +83,22 @@ var Proxy = /** @class */ (function (_super) {
     Proxy.prototype.componentDidMount = function () {
         this.loadComponentData();
     };
-    Proxy.prototype.componentWillReceiveProps = function () {
-        console.log(this.dependencies);
-        // this.loadComponentData();
+    Proxy.prototype.componentWillReceiveProps = function (nextProps) {
+        var props = this.props;
+        for (var i = 0; i < this.dependencies.length; ++i) {
+            var key = this.dependencies[i];
+            if (nextProps[key] !== props[key]) {
+                this.loadComponentData();
+                return;
+            }
+        }
     };
-    Proxy.connect = wrapper(react_redux_1.connect);
+    // redux connect wrapper
+    Proxy.connect = (function (fn) {
+        return function (params) {
+            return fn(params)(this);
+        };
+    })(react_redux_1.connect);
     return Proxy;
 }(React.Component));
 exports.Proxy = Proxy;
@@ -246,7 +252,7 @@ var Login = /** @class */ (function (_super) {
     };
     return Login;
 }(React.Component));
-exports.default = react_redux_1.connect(function (state) { return ({ open: !state.login.authorized }); }, function () { return ({}); })(Login);
+exports.default = react_redux_1.connect(function (state) { return ({ open: !state.login.authorized }); })(Login);
 
 
 /***/ }),
@@ -340,14 +346,13 @@ var Tree = /** @class */ (function (_super) {
         });
     };
     Tree.prototype.render = function () {
-        console.log(this.dependencies);
         return (React.createElement("div", { className: 'Tree' },
             React.createElement(TreeNode, { nodes: this.props.tree })));
     };
     return Tree;
 }(Proxy_1.Proxy));
 ;
-exports.default = Tree.connect(function (state) { return { tree: state.tree }; })(Tree);
+exports.default = Tree.connect(function (state) { return { tree: state.tree }; });
 
 
 /***/ }),

@@ -86,4 +86,4 @@ class Login extends React.Component {
   }
 }
 
-export default connect((state: State) => ({ open: !state.login.authorized }), () => ({}))(Login);
+export default connect((state: State) => ({ open: !state.login.authorized }))(Login);

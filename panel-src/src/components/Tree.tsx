@@ -31,7 +31,7 @@ class TreeNode extends React.Component {
 
 class Tree extends Proxy {
   props: {
-    tree: any;
+    tree?: any
   };
 
   dependencies = [ 'id' ];
@@ -46,7 +46,6 @@ class Tree extends Proxy {
   }
 
   render() {
-    console.log(this.dependencies);
     return (
       <div className='Tree'>
         <TreeNode nodes={this.props.tree} />
@@ -55,4 +54,4 @@ class Tree extends Proxy {
   }
 };
 
-export default Tree.connect((state: State) => { return { tree: state.tree }; })(Tree);
+export default Tree.connect((state: State) => { return { tree: state.tree }; });
