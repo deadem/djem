@@ -21,6 +21,8 @@ const reducers = (state: State, action: Action): State => {
     return { ...state, tree: [ ...action.state ] };
   case Reducer.GridChange:
     return { ...state, grid: { ...state.grid, id: action.id } };
+  case Reducer.Grid:
+    return { ...state, grid: { ...state.grid, data: action.state } };
   default:
     return state;
   }

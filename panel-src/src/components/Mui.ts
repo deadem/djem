@@ -11,6 +11,11 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   TextField,
   Toolbar,
   Typography,
@@ -29,6 +34,11 @@ export default class Mui {
   public static ListItem = ListItem;
   public static ListItemIcon = ListItemIcon;
   public static ListItemText = ListItemText;
+  public static Table = Table;
+  public static TableBody = TableBody;
+  public static TableCell = TableCell;
+  public static TableHead = TableHead;
+  public static TableRow = TableRow;
   public static TextField = TextField;
   public static Toolbar = Toolbar;
   public static Typography = Typography;

@@ -1,10 +1,11 @@
 import { Proxy, Http, State, Store } from '../store/Proxy';
 import { Reducer } from '../reducers';
-// import Mui from './Mui';
+import Mui from './Mui';
 
 class Grid extends Proxy {
   public props: {
     id?: string;
+    grid?: any;
   };
 
   public dependencies = [ 'id' ];
@@ -12,7 +13,15 @@ class Grid extends Proxy {
   public render() {
     return (
       <div className='Grid'>
-        {this.props.id}
+        <Mui.Table>
+          <Mui.TableHead>
+            <Mui.TableRow>
+              {this.gridHeader()}
+            </Mui.TableRow>
+          </Mui.TableHead>
+          <Mui.TableBody>
+          </Mui.TableBody>
+        </Mui.Table>
       </div>
     );
   }
@@ -28,6 +37,19 @@ class Grid extends Proxy {
         state: response.data,
       });
     });
+  }
+
+  private gridHeader() {
+    let data = (((this.props.grid || {}).metaData || {}).columns || []);
+    let result: JSX.Element[] = [];
+
+    data.forEach((column: { text: string }) => {
+      result.push(
+        <Mui.TableCell>{column.text}</Mui.TableCell>
+      );
+    });
+
+    return result;
   }
 }
 

@@ -20,6 +20,7 @@
 
     //tslint-react
     "jsx-no-lambda": false,
+    "jsx-self-close": false,
 
     //tslint
     // "object-literal-key-quotes": [true, "as-needed"],

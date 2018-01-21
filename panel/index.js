@@ -159,6 +159,8 @@ var reducers = function (state, action) {
             return __assign({}, state, { tree: action.state.slice() });
         case Reducer.GridChange:
             return __assign({}, state, { grid: __assign({}, state.grid, { id: action.id }) });
+        case Reducer.Grid:
+            return __assign({}, state, { grid: __assign({}, state.grid, { data: action.state }) });
         default:
             return state;
     }
@@ -533,7 +535,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(205);
 var reducers_1 = __webpack_require__(235);
-// import Mui from './Mui';
+var Mui_1 = __webpack_require__(81);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid() {
@@ -542,7 +544,11 @@ var Grid = /** @class */ (function (_super) {
         return _this;
     }
     Grid.prototype.render = function () {
-        return (React.createElement("div", { className: 'Grid' }, this.props.id));
+        return (React.createElement("div", { className: 'Grid' },
+            React.createElement(Mui_1.default.Table, null,
+                React.createElement(Mui_1.default.TableHead, null,
+                    React.createElement(Mui_1.default.TableRow, null, this.gridHeader())),
+                React.createElement(Mui_1.default.TableBody, null))));
     };
     Grid.prototype.load = function (proxy, store) {
         if (!this.props.id) {
@@ -554,6 +560,14 @@ var Grid = /** @class */ (function (_super) {
                 state: response.data,
             });
         });
+    };
+    Grid.prototype.gridHeader = function () {
+        var data = (((this.props.grid || {}).metaData || {}).columns || []);
+        var result = [];
+        data.forEach(function (column) {
+            result.push(React.createElement(Mui_1.default.TableCell, null, column.text));
+        });
+        return result;
     };
     return Grid;
 }(Proxy_1.Proxy));
@@ -598,6 +612,11 @@ var Mui = /** @class */ (function () {
     Mui.ListItem = material_ui_1.ListItem;
     Mui.ListItemIcon = material_ui_1.ListItemIcon;
     Mui.ListItemText = material_ui_1.ListItemText;
+    Mui.Table = material_ui_1.Table;
+    Mui.TableBody = material_ui_1.TableBody;
+    Mui.TableCell = material_ui_1.TableCell;
+    Mui.TableHead = material_ui_1.TableHead;
+    Mui.TableRow = material_ui_1.TableRow;
     Mui.TextField = material_ui_1.TextField;
     Mui.Toolbar = material_ui_1.Toolbar;
     Mui.Typography = material_ui_1.Typography;
