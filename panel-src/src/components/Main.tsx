@@ -1,6 +1,7 @@
 import Login from './Login';
 import Toolbar from './Toolbar';
 import Tree from './Tree';
+import Grid from './Grid';
 
 class Main extends React.Component {
   render() {
@@ -10,6 +11,7 @@ class Main extends React.Component {
         <Toolbar />
         <div className='Main__container'>
           <Tree />
+          <Grid />
         </div>
       </div>
     );

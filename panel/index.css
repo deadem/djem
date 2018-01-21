@@ -24,10 +24,16 @@ input {
   display: flex;
   flex-direction: column; }
   .Main__container {
-    flex: 1; }
+    flex: 1;
+    display: flex; }
+    .Main__container .Tree {
+      display: flex; }
+    .Main__container .Grid {
+      display: flex;
+      flex: 1; }
 
 .Tree {
   height: 100%;
   width: 300px;
-  border: 1px solid red;
+  border-right: 1px solid #ccc;
   box-sizing: border-box; }
