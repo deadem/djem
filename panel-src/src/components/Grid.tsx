@@ -1,12 +1,10 @@
-import { Proxy, Http, State, Store } from '../store/Proxy';
-import Mui from './Mui';
+import { Proxy } from '../store/Proxy';
+// import Mui from './Mui';
 
 class Grid extends Proxy {
-  render() {
+  public render() {
     return (
-      <div className='Grid'>
-
-      </div>
+      <div className='Grid'/>
     );
   }
 }

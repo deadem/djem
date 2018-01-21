@@ -4,7 +4,7 @@ import Tree from './Tree';
 import Grid from './Grid';
 
 class Main extends React.Component {
-  render() {
+  public render() {
     return (
       <div className='Main'>
         <Login />

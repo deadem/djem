@@ -1,11 +1,11 @@
 import Mui from './Mui';
 
 class Toolbar extends React.Component {
-  render() {
+  public render() {
     return (
-      <Mui.AppBar position="static">
+      <Mui.AppBar position='static'>
         <Mui.Toolbar>
-          <Mui.Typography type="title" color="inherit" noWrap>DJEM</Mui.Typography>
+          <Mui.Typography type='title' color='inherit' noWrap={true}>DJEM</Mui.Typography>
         </Mui.Toolbar>
       </Mui.AppBar>
     );

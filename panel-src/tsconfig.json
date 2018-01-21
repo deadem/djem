@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
-        "strict": true,
-        "noImplicitReturns": true,
-        "target": "es5",
-        "experimentalDecorators": false,
-        "allowSyntheticDefaultImports": true,
-        "jsx": "react"
+      "strict": true,
+      "noUnusedParameters": true,
+      "noUnusedLocals": true,
+      "noImplicitReturns": true,
+      "target": "es5",
+      "experimentalDecorators": false,
+      "allowSyntheticDefaultImports": true,
+      "jsx": "react"
     },
     "include": [
         "./src/**/*"

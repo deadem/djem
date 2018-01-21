@@ -11,11 +11,27 @@ export class Core {
   });
 
   constructor() {
-    this._http.interceptors.response.use(success => (this.updateToken(success), success), error => (this.updateToken(error.response), Promise.reject(error)));
+    this._http.interceptors.response.use(
+      success => {
+        this.updateToken(success);
+        return success;
+      },
+      error => {
+        this.updateToken(error.response);
+        return Promise.reject(error);
+      }
+    );
 
     this._http.interceptors.request.use(config => {
       config.headers['X-CSRF-TOKEN'] = this.getToken();
       return config;
+    });
+  }
+
+  protected setAuthorized(state: boolean) {
+    store.dispatch({
+      type: 'authorize',
+      state,
     });
   }
 
@@ -27,10 +43,4 @@ export class Core {
     return auth.token;
   }
 
-  protected setAuthorized(state: boolean) {
-    store.dispatch({
-      type: 'authorize',
-      state
-    });
-  }
 }

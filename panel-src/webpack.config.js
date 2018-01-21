@@ -26,7 +26,18 @@ module.exports = [
       rules: [
         {
           test: /\.tsx?$/,
-          loader: 'ts-loader',
+          use: [
+            { loader: 'ts-loader' },
+            {
+              loader: 'tslint-loader',
+              options: {
+                emitErrors: true,
+                // failOnHint: true,
+                formatter: 'verbose',
+                configFile: '.tslint.json',
+              }
+            },
+          ],
           exclude: /node_modules/,
         },
         { test: /\.(png|jpg|gif|svg)$/, loader: 'file-loader', options: { name: '[name].[ext]?[hash]' } }
