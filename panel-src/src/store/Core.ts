@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Reducer } from '../reducers';
 import { store } from './index';
 
 let auth = {
@@ -30,7 +31,7 @@ export class Core {
 
   protected setAuthorized(state: boolean) {
     store.dispatch({
-      type: 'authorize',
+      type: Reducer.Authorize,
       state,
     });
   }
@@ -42,5 +43,4 @@ export class Core {
   private getToken() {
     return auth.token;
   }
-
 }

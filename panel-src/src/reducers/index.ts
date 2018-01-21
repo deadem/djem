@@ -1,18 +1,25 @@
 import { State } from '../store';
 
+export enum Reducer {
+  Authorize,
+  Tree,
+  GridChange,
+  Grid,
+}
+
 interface Action {
-  type: string;
+  type: Reducer;
   id?: string | number;
   state?: any;
 }
 
 const reducers = (state: State, action: Action): State => {
   switch (action.type) {
-  case 'authorize':
+  case Reducer.Authorize:
     return { ...state, login: { ...state.login, authorized: !state.login.authorized } };
-  case 'tree':
+  case Reducer.Tree:
     return { ...state, tree: [ ...action.state ] };
-  case 'grid':
+  case Reducer.GridChange:
     return { ...state, grid: { ...state.grid, id: action.id } };
   default:
     return state;

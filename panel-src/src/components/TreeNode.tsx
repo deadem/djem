@@ -1,4 +1,5 @@
 import { store } from '../store';
+import { Reducer } from '../reducers';
 import Mui from './Mui';
 
 export class TreeNode extends React.Component {
@@ -14,7 +15,7 @@ export class TreeNode extends React.Component {
 
   private selectNode(id: string | number) {
     store.dispatch({
-      type: 'grid',
+      type: Reducer.GridChange,
       id,
     });
   }

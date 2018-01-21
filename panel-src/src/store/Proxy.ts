@@ -23,16 +23,19 @@ export class Proxy extends React.Component {
     this.loadComponentData();
   }
 
-  public componentWillReceiveProps(nextProps: any) {
+  public componentDidUpdate(prevProps: any, _prevState: any) {
     let props: any = this.props;
     for (let i = 0; i < this.dependencies.length; ++i) {
       const key = this.dependencies[i];
-      if (nextProps[key] !== props[key]) {
+      if (prevProps[key] !== props[key]) {
         this.loadComponentData();
         return;
       }
     }
   }
+
+  // public componentWillReceiveProps(nextProps: any) {
+  // }
 
   protected load(_proxy: Http, _store: Store) {
     return;

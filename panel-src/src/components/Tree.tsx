@@ -1,4 +1,5 @@
 import { Proxy, Http, State, Store } from '../store/Proxy';
+import { Reducer } from '../reducers';
 import { TreeNode } from './TreeNode';
 
 class Tree extends Proxy {
@@ -19,7 +20,7 @@ class Tree extends Proxy {
   protected load(proxy: Http, store: Store) {
     proxy.post('tree', {}).then((response) => {
       store.dispatch({
-        type: 'tree',
+        type: Reducer.Tree,
         state: response.data,
       });
     });
