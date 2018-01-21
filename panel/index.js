@@ -492,6 +492,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(205);
+// import { Proxy, Http, State, Store } from '../store/Proxy';
 // import Mui from './Mui';
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
@@ -499,11 +500,29 @@ var Grid = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Grid.prototype.render = function () {
-        return (React.createElement("div", { className: 'Grid' }));
+        return (React.createElement("div", { className: 'Grid' }, this.props.id));
     };
     return Grid;
 }(Proxy_1.Proxy));
-exports.default = Grid;
+exports.default = Grid.connect(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); });
+
+
+/***/ }),
+
+/***/ 536:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.initialState = {
+    login: {
+        authorized: true,
+    },
+    grid: {
+        id: undefined,
+    },
+};
 
 
 /***/ }),
@@ -516,12 +535,8 @@ exports.default = Grid;
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(78);
 var reducers_1 = __webpack_require__(235);
-var initialState = {
-    login: {
-        authorized: true,
-    }
-};
-exports.store = redux_1.createStore(reducers_1.default, initialState);
+var store_1 = __webpack_require__(536);
+exports.store = redux_1.createStore(reducers_1.default, store_1.initialState);
 
 
 /***/ }),

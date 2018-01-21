@@ -1,23 +1,7 @@
 import { createStore } from 'redux';
 import reducers from '../reducers';
+import { State, initialState } from './store';
 
-interface Login {
-  login: {
-    authorized: boolean;
-  };
-}
-
-interface Tree {
-  tree?: any;
-}
-
-export type State = Tree & Login;
-
-let initialState: State = {
-  login: {
-    authorized: true,
-  }
-};
-
+export type State = State;
 export let store = createStore(reducers, initialState);
 export type Store = typeof store;
