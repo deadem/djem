@@ -10,7 +10,7 @@ interface Tree {
 
 interface Grid {
   grid: {
-    id: string | undefined;
+    id: string | number | undefined;
     data?: any;
   }
 }

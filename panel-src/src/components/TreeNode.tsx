@@ -1,3 +1,4 @@
+import { store } from '../store';
 import Mui from './Mui';
 
 export class TreeNode extends React.Component {
@@ -11,11 +12,18 @@ export class TreeNode extends React.Component {
     );
   }
 
+  private selectNode(id: string | number) {
+    store.dispatch({
+      type: 'grid',
+      id,
+    });
+  }
+
   private subNodes() {
     let result: JSX.Element[] = [];
     (this.props.nodes || []).forEach(node => {
       result.push(
-        <Mui.ListItem button={true} key={node.id}>
+        <Mui.ListItem button={true} key={node.id} onClick={() => this.selectNode(node.id)}>
           <Mui.ListItemText inset={true} primary={node.text} />
         </Mui.ListItem>
       );

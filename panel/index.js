@@ -66,7 +66,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = __webpack_require__(56);
 var react_redux_1 = __webpack_require__(54);
-var HttpProxy_1 = __webpack_require__(532);
+var HttpProxy_1 = __webpack_require__(533);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy = /** @class */ (function (_super) {
     __extends(Proxy, _super);
@@ -115,7 +115,7 @@ exports.Proxy = Proxy;
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(54);
 var store_1 = __webpack_require__(56);
-var Main_1 = __webpack_require__(236);
+var Main_1 = __webpack_require__(237);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
 if (parent) {
@@ -147,6 +147,8 @@ var reducers = function (state, action) {
             return __assign({}, state, { login: __assign({}, state.login, { authorized: !state.login.authorized }) });
         case 'tree':
             return __assign({}, state, { tree: action.state.slice() });
+        case 'grid':
+            return __assign({}, state, { grid: __assign({}, state.grid, { id: action.id }) });
         default:
             return state;
     }
@@ -161,37 +163,15 @@ exports.default = reducers;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Login_1 = __webpack_require__(237);
-var Toolbar_1 = __webpack_require__(530);
-var Tree_1 = __webpack_require__(531);
-var Grid_1 = __webpack_require__(534);
-var Main = /** @class */ (function (_super) {
-    __extends(Main, _super);
-    function Main() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Main.prototype.render = function () {
-        return (React.createElement("div", { className: 'Main' },
-            React.createElement(Login_1.default, null),
-            React.createElement(Toolbar_1.default, null),
-            React.createElement("div", { className: 'Main__container' },
-                React.createElement(Tree_1.default, null),
-                React.createElement(Grid_1.default, null))));
-    };
-    return Main;
-}(React.Component));
-exports.default = Main;
+exports.initialState = {
+    login: {
+        authorized: true,
+    },
+    grid: {
+        id: undefined,
+    },
+};
 
 
 /***/ }),
@@ -212,8 +192,48 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var Login_1 = __webpack_require__(238);
+var Toolbar_1 = __webpack_require__(531);
+var Tree_1 = __webpack_require__(532);
+var Grid_1 = __webpack_require__(535);
+var Main = /** @class */ (function (_super) {
+    __extends(Main, _super);
+    function Main() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Main.prototype.render = function () {
+        return (React.createElement("div", { className: 'Main' },
+            React.createElement(Login_1.default, null),
+            React.createElement(Toolbar_1.default, null),
+            React.createElement("div", { className: 'Main__container' },
+                React.createElement(Tree_1.default, null),
+                React.createElement(Grid_1.default, null))));
+    };
+    return Main;
+}(React.Component));
+exports.default = Main;
+
+
+/***/ }),
+
+/***/ 238:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(54);
-var Auth_1 = __webpack_require__(238);
+var Auth_1 = __webpack_require__(239);
 var Mui_1 = __webpack_require__(81);
 var authState = {
     name: '',
@@ -265,7 +285,7 @@ exports.default = react_redux_1.connect(function (state) { return ({ open: !stat
 
 /***/ }),
 
-/***/ 238:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -300,7 +320,7 @@ exports.Auth = Auth;
 
 /***/ }),
 
-/***/ 530:
+/***/ 531:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -334,7 +354,7 @@ exports.default = Toolbar;
 
 /***/ }),
 
-/***/ 531:
+/***/ 532:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -351,7 +371,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(205);
-var TreeNode_1 = __webpack_require__(533);
+var TreeNode_1 = __webpack_require__(534);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree() {
@@ -378,7 +398,7 @@ exports.default = Tree.connect(function (state) { return ({ tree: state.tree });
 
 /***/ }),
 
-/***/ 532:
+/***/ 533:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -432,7 +452,7 @@ exports.HttpProxy = HttpProxy;
 
 /***/ }),
 
-/***/ 533:
+/***/ 534:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -448,6 +468,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var store_1 = __webpack_require__(56);
 var Mui_1 = __webpack_require__(81);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
@@ -457,10 +478,17 @@ var TreeNode = /** @class */ (function (_super) {
     TreeNode.prototype.render = function () {
         return (React.createElement(Mui_1.default.List, null, this.subNodes()));
     };
+    TreeNode.prototype.selectNode = function (id) {
+        store_1.store.dispatch({
+            type: 'grid',
+            id: id,
+        });
+    };
     TreeNode.prototype.subNodes = function () {
+        var _this = this;
         var result = [];
         (this.props.nodes || []).forEach(function (node) {
-            result.push(React.createElement(Mui_1.default.ListItem, { button: true, key: node.id },
+            result.push(React.createElement(Mui_1.default.ListItem, { button: true, key: node.id, onClick: function () { return _this.selectNode(node.id); } },
                 React.createElement(Mui_1.default.ListItemText, { inset: true, primary: node.text })));
             if (node.items) {
                 result.push(React.createElement(TreeNode, { key: "sub-" + node.id, nodes: node.items }));
@@ -475,7 +503,7 @@ exports.TreeNode = TreeNode;
 
 /***/ }),
 
-/***/ 534:
+/***/ 535:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -509,24 +537,6 @@ exports.default = Grid.connect(function (state) { return ({ id: state.grid.id, g
 
 /***/ }),
 
-/***/ 536:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.initialState = {
-    login: {
-        authorized: true,
-    },
-    grid: {
-        id: undefined,
-    },
-};
-
-
-/***/ }),
-
 /***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -535,7 +545,7 @@ exports.initialState = {
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(78);
 var reducers_1 = __webpack_require__(235);
-var store_1 = __webpack_require__(536);
+var store_1 = __webpack_require__(236);
 exports.store = redux_1.createStore(reducers_1.default, store_1.initialState);
 
 

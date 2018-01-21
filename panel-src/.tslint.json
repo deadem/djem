@@ -18,6 +18,9 @@
     // "space-in-parens": [true, "never"],
     "ter-prefer-arrow-callback": [true],
 
+    //tslint-react
+    "jsx-no-lambda": false,
+
     //tslint
     // "object-literal-key-quotes": [true, "as-needed"],
     // "no-any": true,
@@ -38,7 +41,9 @@
     "no-bitwise": false,
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": [true, 1],
+    "no-console": false,
     "no-construct": true,
+    "no-debugger": false,
     "no-duplicate-imports": true,
     "no-duplicate-super": true,
     "no-duplicate-variable": true,
