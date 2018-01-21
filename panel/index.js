@@ -548,7 +548,7 @@ var Grid = /** @class */ (function (_super) {
             React.createElement(Mui_1.default.Table, null,
                 React.createElement(Mui_1.default.TableHead, null,
                     React.createElement(Mui_1.default.TableRow, null, this.gridHeader())),
-                React.createElement(Mui_1.default.TableBody, null))));
+                React.createElement(Mui_1.default.TableBody, null, this.gridRows()))));
     };
     Grid.prototype.load = function (proxy, store) {
         if (!this.props.id) {
@@ -561,13 +561,26 @@ var Grid = /** @class */ (function (_super) {
             });
         });
     };
+    Grid.prototype.gridColumns = function () {
+        return (((this.props.grid || {}).metaData || {}).columns || []);
+    };
     Grid.prototype.gridHeader = function () {
-        var data = (((this.props.grid || {}).metaData || {}).columns || []);
+        var data = this.gridColumns();
         var result = [];
         data.forEach(function (column) {
             result.push(React.createElement(Mui_1.default.TableCell, null, column.text));
         });
         return result;
+    };
+    Grid.prototype.gridRows = function () {
+        var data = this.gridColumns();
+        var items = ((this.props.grid || {}).items || []);
+        var row = function (item) {
+            return data.map(function (column) { return (React.createElement(Mui_1.default.TableCell, null, item[column.dataIndex])); });
+        };
+        return items.map(function (item) {
+            return (React.createElement(Mui_1.default.TableRow, { key: item.id }, row(item)));
+        });
     };
     return Grid;
 }(Proxy_1.Proxy));

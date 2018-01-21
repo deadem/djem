@@ -20,6 +20,7 @@ class Grid extends Proxy {
             </Mui.TableRow>
           </Mui.TableHead>
           <Mui.TableBody>
+            {this.gridRows()}
           </Mui.TableBody>
         </Mui.Table>
       </div>
@@ -39,8 +40,12 @@ class Grid extends Proxy {
     });
   }
 
+  private gridColumns() {
+    return (((this.props.grid || {}).metaData || {}).columns || []);
+  }
+
   private gridHeader() {
-    let data = (((this.props.grid || {}).metaData || {}).columns || []);
+    let data = this.gridColumns();
     let result: JSX.Element[] = [];
 
     data.forEach((column: { text: string }) => {
@@ -50,6 +55,25 @@ class Grid extends Proxy {
     });
 
     return result;
+  }
+
+  private gridRows() {
+    let data = this.gridColumns();
+    let items = ((this.props.grid || {}).items || []);
+
+    const row = (item: any) => {
+      return data.map((column: { dataIndex: string }) => (
+        <Mui.TableCell>{item[column.dataIndex]}</Mui.TableCell>
+      ));
+    };
+
+    return items.map((item: any) => {
+      return (
+        <Mui.TableRow key={item.id}>
+          {row(item)}
+        </Mui.TableRow>
+      );
+    });
   }
 }
 
