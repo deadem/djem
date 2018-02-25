@@ -51,17 +51,12 @@ class Grid extends Proxy.Component {
     return (((this.props.grid || {}).metaData || {}).columns || []);
   }
 
-  private gridHeader() {
-    let data = this.gridColumns();
-    let result: JSX.Element[] = [];
-
-    data.forEach((column: { text: string }, index: number) => {
-      result.push(
+  private gridHeader(): JSX.Element[] {
+    return this.gridColumns().map((column: { text: string }, index: number) => {
+      return (
         <Mui.TableCell key={index}>{column.text}</Mui.TableCell>
       );
     });
-
-    return result;
   }
 
   private selectRow(id: string) {

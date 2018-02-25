@@ -7,8 +7,8 @@ webpackJsonp([0],{
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(125);
-var reducers_1 = __webpack_require__(50);
-var index_1 = __webpack_require__(49);
+var reducers_1 = __webpack_require__(49);
+var index_1 = __webpack_require__(48);
 var auth = {
     token: '',
 };
@@ -65,8 +65,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(48);
-var index_1 = __webpack_require__(49);
+var react_redux_1 = __webpack_require__(59);
+var index_1 = __webpack_require__(48);
 var HttpProxy_1 = __webpack_require__(548);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy;
@@ -119,8 +119,8 @@ var Proxy;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(48);
-var store_1 = __webpack_require__(49);
+var react_redux_1 = __webpack_require__(59);
+var store_1 = __webpack_require__(48);
 var Main_1 = __webpack_require__(247);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
@@ -209,7 +209,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(48);
+var react_redux_1 = __webpack_require__(59);
 var Auth_1 = __webpack_require__(249);
 var Mui_1 = __webpack_require__(61);
 var authState = {
@@ -298,21 +298,21 @@ exports.Auth = Auth;
 
 /***/ }),
 
-/***/ 49:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(82);
-var reducers_1 = __webpack_require__(50);
+var reducers_1 = __webpack_require__(49);
 var store_1 = __webpack_require__(246);
 exports.store = redux_1.createStore(reducers_1.default, store_1.initialState);
 
 
 /***/ }),
 
-/***/ 50:
+/***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -403,7 +403,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(207);
-var reducers_1 = __webpack_require__(50);
+var reducers_1 = __webpack_require__(49);
 var TreeNode_1 = __webpack_require__(549);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
@@ -449,7 +449,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(124);
-var index_1 = __webpack_require__(49);
+var index_1 = __webpack_require__(48);
 var HttpProxy = /** @class */ (function (_super) {
     __extends(HttpProxy, _super);
     function HttpProxy() {
@@ -502,8 +502,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(49);
-var reducers_1 = __webpack_require__(50);
+var store_1 = __webpack_require__(48);
+var reducers_1 = __webpack_require__(49);
 var Mui_1 = __webpack_require__(61);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
@@ -523,15 +523,13 @@ var TreeNode = /** @class */ (function (_super) {
     };
     TreeNode.prototype.subNodes = function () {
         var _this = this;
-        var result = [];
-        (this.props.nodes || []).forEach(function (node) {
-            result.push(React.createElement(Mui_1.default.ListItem, { button: true, key: node.id, onClick: function () { return _this.selectNode(node.id); } },
-                React.createElement(Mui_1.default.ListItemText, { inset: true, primary: node.text })));
+        return (this.props.nodes || []).map(function (node) {
             if (node.items) {
-                result.push(React.createElement(TreeNode, { key: "sub-" + node.id, nodes: node.items }));
+                return (React.createElement(TreeNode, { key: "sub-" + node.id, nodes: node.items }));
             }
+            return (React.createElement(Mui_1.default.ListItem, { button: true, key: node.id, onClick: function () { return _this.selectNode(node.id); } },
+                React.createElement(Mui_1.default.ListItemText, { inset: true, primary: node.text })));
         });
-        return result;
     };
     return TreeNode;
 }(React.Component));
@@ -557,7 +555,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(207);
-var reducers_1 = __webpack_require__(50);
+var reducers_1 = __webpack_require__(49);
 var Mui_1 = __webpack_require__(61);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
@@ -589,12 +587,9 @@ var Grid = /** @class */ (function (_super) {
         return (((this.props.grid || {}).metaData || {}).columns || []);
     };
     Grid.prototype.gridHeader = function () {
-        var data = this.gridColumns();
-        var result = [];
-        data.forEach(function (column, index) {
-            result.push(React.createElement(Mui_1.default.TableCell, { key: index }, column.text));
+        return this.gridColumns().map(function (column, index) {
+            return (React.createElement(Mui_1.default.TableCell, { key: index }, column.text));
         });
-        return result;
     };
     Grid.prototype.selectRow = function (id) {
         console.log(id);

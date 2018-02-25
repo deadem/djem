@@ -28,19 +28,17 @@ export class TreeNode extends React.Component {
     });
   }
 
-  private subNodes() {
-    let result: JSX.Element[] = [];
-    (this.props.nodes || []).forEach(node => {
-      result.push(
+  private subNodes(): JSX.Element[] {
+    return (this.props.nodes || []).map(node => {
+      if (node.items) {
+        return (<TreeNode key={`sub-${node.id}`} nodes={node.items} />);
+      }
+
+      return (
         <Mui.ListItem button={true} key={node.id} onClick={() => this.selectNode(node.id)}>
           <Mui.ListItemText inset={true} primary={node.text} />
         </Mui.ListItem>
       );
-      if (node.items) {
-        result.push(<TreeNode key={`sub-${node.id}`} nodes={node.items} />);
-      }
     });
-
-    return result;
   }
 }
