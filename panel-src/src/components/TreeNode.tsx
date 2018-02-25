@@ -2,10 +2,18 @@ import { store } from '../store';
 import { Reducer } from '../reducers';
 import Mui from './Mui';
 
+interface Props {
+  nodes: any[];
+}
+
 export class TreeNode extends React.Component {
-  public props: {
-    nodes: any[];
-  } = { nodes: [] };
+  public props: Props;
+
+  public constructor(props: Props, context: any) {
+    super(props, context);
+
+    this.props = props;
+  }
 
   public render() {
     return (

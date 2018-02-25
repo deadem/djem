@@ -2,13 +2,20 @@ import { Proxy } from '../store/Proxy';
 import { Reducer } from '../reducers';
 import Mui from './Mui';
 
-class Grid extends Proxy.Component {
-  public props: {
-    id?: string;
-    grid?: any;
-  } = { };
+interface Props {
+  id?: string;
+  grid?: any;
+}
 
+class Grid extends Proxy.Component {
+  public props: Props;
   public dependencies = [ 'id' ];
+
+  public constructor(props: Props, context: any) {
+    super(props, context);
+
+    this.props = props;
+  }
 
   public render() {
     return (
@@ -48,29 +55,33 @@ class Grid extends Proxy.Component {
     let data = this.gridColumns();
     let result: JSX.Element[] = [];
 
-    data.forEach((column: { text: string }) => {
+    data.forEach((column: { text: string }, index: number) => {
       result.push(
-        <Mui.TableCell>{column.text}</Mui.TableCell>
+        <Mui.TableCell key={index}>{column.text}</Mui.TableCell>
       );
     });
 
     return result;
   }
 
+  private selectRow(id: string) {
+    console.log(id);
+  }
+
   private gridRows() {
     let data = this.gridColumns();
     let items = ((this.props.grid || {}).items || []);
 
-    const row = (item: any) => {
+    const row = (item: any, index: number) => {
       return data.map((column: { dataIndex: string }) => (
-        <Mui.TableCell>{item[column.dataIndex]}</Mui.TableCell>
+        <Mui.TableCell key={index} onClick={() => this.selectRow(item)}>{item[column.dataIndex]}</Mui.TableCell>
       ));
     };
 
-    return items.map((item: any) => {
+    return items.map((item: any, index: number) => {
       return (
-        <Mui.TableRow key={item.id}>
-          {row(item)}
+        <Mui.TableRow key={index}>
+          {row(item, index)}
         </Mui.TableRow>
       );
     });

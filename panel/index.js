@@ -218,9 +218,8 @@ var authState = {
 };
 var Login = /** @class */ (function (_super) {
     __extends(Login, _super);
-    function Login() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.props = { open: false };
+    function Login(props, context) {
+        var _this = _super.call(this, props, context) || this;
         _this.state = {};
         _this.catchReturn = function (evt) {
             if (evt.charCode == 13) {
@@ -240,6 +239,7 @@ var Login = /** @class */ (function (_super) {
         _this.passwordField = function (field) {
             _this.state.password = field;
         };
+        _this.props = props;
         return _this;
     }
     Login.prototype.render = function () {
@@ -407,10 +407,10 @@ var reducers_1 = __webpack_require__(50);
 var TreeNode_1 = __webpack_require__(549);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
-    function Tree() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.props = {};
+    function Tree(props, context) {
+        var _this = _super.call(this, props, context) || this;
         _this.dependencies = ['id'];
+        _this.props = props;
         return _this;
     }
     Tree.prototype.render = function () {
@@ -507,9 +507,9 @@ var reducers_1 = __webpack_require__(50);
 var Mui_1 = __webpack_require__(61);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
-    function TreeNode() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.props = { nodes: [] };
+    function TreeNode(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
         return _this;
     }
     TreeNode.prototype.render = function () {
@@ -561,10 +561,10 @@ var reducers_1 = __webpack_require__(50);
 var Mui_1 = __webpack_require__(61);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
-    function Grid() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.props = {};
+    function Grid(props, context) {
+        var _this = _super.call(this, props, context) || this;
         _this.dependencies = ['id'];
+        _this.props = props;
         return _this;
     }
     Grid.prototype.render = function () {
@@ -591,19 +591,23 @@ var Grid = /** @class */ (function (_super) {
     Grid.prototype.gridHeader = function () {
         var data = this.gridColumns();
         var result = [];
-        data.forEach(function (column) {
-            result.push(React.createElement(Mui_1.default.TableCell, null, column.text));
+        data.forEach(function (column, index) {
+            result.push(React.createElement(Mui_1.default.TableCell, { key: index }, column.text));
         });
         return result;
     };
+    Grid.prototype.selectRow = function (id) {
+        console.log(id);
+    };
     Grid.prototype.gridRows = function () {
+        var _this = this;
         var data = this.gridColumns();
         var items = ((this.props.grid || {}).items || []);
-        var row = function (item) {
-            return data.map(function (column) { return (React.createElement(Mui_1.default.TableCell, null, item[column.dataIndex])); });
+        var row = function (item, index) {
+            return data.map(function (column) { return (React.createElement(Mui_1.default.TableCell, { key: index, onClick: function () { return _this.selectRow(item); } }, item[column.dataIndex])); });
         };
-        return items.map(function (item) {
-            return (React.createElement(Mui_1.default.TableRow, { key: item.id }, row(item)));
+        return items.map(function (item, index) {
+            return (React.createElement(Mui_1.default.TableRow, { key: index }, row(item, index)));
         });
     };
     return Grid;

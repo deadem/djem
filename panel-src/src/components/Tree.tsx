@@ -2,12 +2,19 @@ import { Proxy } from '../store/Proxy';
 import { Reducer } from '../reducers';
 import { TreeNode } from './TreeNode';
 
-class Tree extends Proxy.Component {
-  public props: {
-    tree?: any;
-  } = { };
+interface Props {
+  tree?: any;
+}
 
+class Tree extends Proxy.Component {
+  public props: Props;
   protected dependencies = [ 'id' ];
+
+  public constructor(props: Props, context: any) {
+    super(props, context);
+
+    this.props = props;
+  }
 
   public render() {
     return (
