@@ -1,12 +1,13 @@
+import { connect } from 'react-redux';
 import { Proxy, Http, State, Store } from '../store/Proxy';
 import { Reducer } from '../reducers';
 import Mui from './Mui';
 
 class Grid extends Proxy {
   public props: {
-    id?: string;
-    grid?: any;
-  };
+    id: string | undefined;
+    grid: any;
+  } = { id: undefined, grid: undefined };
 
   public dependencies = [ 'id' ];
 
@@ -77,4 +78,4 @@ class Grid extends Proxy {
   }
 }
 
-export default Grid.connect((state: State) => ({ id: state.grid.id, grid: state.grid.data }));
+export default connect((state: State) => ({ id: state.grid.id, grid: state.grid.data }))(Grid);

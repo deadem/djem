@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 123:
+/***/ 124:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var axios_1 = __webpack_require__(124);
-var reducers_1 = __webpack_require__(235);
-var index_1 = __webpack_require__(56);
+var axios_1 = __webpack_require__(125);
+var reducers_1 = __webpack_require__(50);
+var index_1 = __webpack_require__(49);
 var auth = {
     token: '',
 };
@@ -49,7 +49,7 @@ exports.Core = Core;
 
 /***/ }),
 
-/***/ 205:
+/***/ 207:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65,9 +65,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = __webpack_require__(56);
-var react_redux_1 = __webpack_require__(54);
-var HttpProxy_1 = __webpack_require__(533);
+var index_1 = __webpack_require__(49);
+var HttpProxy_1 = __webpack_require__(548);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy = /** @class */ (function (_super) {
     __extends(Proxy, _super);
@@ -97,12 +96,6 @@ var Proxy = /** @class */ (function (_super) {
     Proxy.prototype.loadComponentData = function () {
         this.load(httpProxy.instance(), index_1.store);
     };
-    // redux connect wrapper
-    Proxy.connect = (function (fn) {
-        return function (params) {
-            return fn(params)(this);
-        };
-    })(react_redux_1.connect);
     return Proxy;
 }(React.Component));
 exports.Proxy = Proxy;
@@ -110,15 +103,15 @@ exports.Proxy = Proxy;
 
 /***/ }),
 
-/***/ 206:
+/***/ 208:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(54);
-var store_1 = __webpack_require__(56);
-var Main_1 = __webpack_require__(237);
+var react_redux_1 = __webpack_require__(48);
+var store_1 = __webpack_require__(49);
+var Main_1 = __webpack_require__(247);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
 if (parent) {
@@ -130,47 +123,7 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.sto
 
 /***/ }),
 
-/***/ 235:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var Reducer;
-(function (Reducer) {
-    Reducer[Reducer["Authorize"] = 0] = "Authorize";
-    Reducer[Reducer["Tree"] = 1] = "Tree";
-    Reducer[Reducer["GridChange"] = 2] = "GridChange";
-    Reducer[Reducer["Grid"] = 3] = "Grid";
-})(Reducer = exports.Reducer || (exports.Reducer = {}));
-var reducers = function (state, action) {
-    switch (action.type) {
-        case Reducer.Authorize:
-            return __assign({}, state, { login: __assign({}, state.login, { authorized: !state.login.authorized }) });
-        case Reducer.Tree:
-            return __assign({}, state, { tree: action.state.slice() });
-        case Reducer.GridChange:
-            return __assign({}, state, { grid: __assign({}, state.grid, { id: action.id }) });
-        case Reducer.Grid:
-            return __assign({}, state, { grid: __assign({}, state.grid, { data: action.state }) });
-        default:
-            return state;
-    }
-};
-exports.default = reducers;
-
-
-/***/ }),
-
-/***/ 236:
+/***/ 246:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -180,15 +133,17 @@ exports.initialState = {
     login: {
         authorized: true,
     },
+    tree: undefined,
     grid: {
         id: undefined,
+        data: undefined,
     },
 };
 
 
 /***/ }),
 
-/***/ 237:
+/***/ 247:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -204,10 +159,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Login_1 = __webpack_require__(238);
-var Toolbar_1 = __webpack_require__(531);
-var Tree_1 = __webpack_require__(532);
-var Grid_1 = __webpack_require__(535);
+var Login_1 = __webpack_require__(248);
+var Toolbar_1 = __webpack_require__(546);
+var Tree_1 = __webpack_require__(547);
+var Grid_1 = __webpack_require__(550);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
     function Main() {
@@ -228,7 +183,7 @@ exports.default = Main;
 
 /***/ }),
 
-/***/ 238:
+/***/ 248:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -244,9 +199,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(54);
-var Auth_1 = __webpack_require__(239);
-var Mui_1 = __webpack_require__(81);
+var react_redux_1 = __webpack_require__(48);
+var Auth_1 = __webpack_require__(249);
+var Mui_1 = __webpack_require__(61);
 var authState = {
     name: '',
     password: '',
@@ -255,6 +210,7 @@ var Login = /** @class */ (function (_super) {
     __extends(Login, _super);
     function Login() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.props = { open: false };
         _this.state = {};
         _this.catchReturn = function (evt) {
             if (evt.charCode == 13) {
@@ -297,7 +253,7 @@ exports.default = react_redux_1.connect(function (state) { return ({ open: !stat
 
 /***/ }),
 
-/***/ 239:
+/***/ 249:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -313,7 +269,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(123);
+var core_1 = __webpack_require__(124);
 var Auth = /** @class */ (function (_super) {
     __extends(Auth, _super);
     function Auth() {
@@ -332,7 +288,61 @@ exports.Auth = Auth;
 
 /***/ }),
 
-/***/ 531:
+/***/ 49:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_1 = __webpack_require__(82);
+var reducers_1 = __webpack_require__(50);
+var store_1 = __webpack_require__(246);
+exports.store = redux_1.createStore(reducers_1.default, store_1.initialState);
+
+
+/***/ }),
+
+/***/ 50:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Reducer;
+(function (Reducer) {
+    Reducer[Reducer["Authorize"] = 0] = "Authorize";
+    Reducer[Reducer["Tree"] = 1] = "Tree";
+    Reducer[Reducer["GridChange"] = 2] = "GridChange";
+    Reducer[Reducer["Grid"] = 3] = "Grid";
+})(Reducer = exports.Reducer || (exports.Reducer = {}));
+var reducers = function (state, action) {
+    switch (action.type) {
+        case Reducer.Authorize:
+            return __assign({}, state, { login: __assign({}, state.login, { authorized: !state.login.authorized }) });
+        case Reducer.Tree:
+            return __assign({}, state, { tree: action.state.slice() });
+        case Reducer.GridChange:
+            return __assign({}, state, { grid: __assign({}, state.grid, { id: action.id }) });
+        case Reducer.Grid:
+            return __assign({}, state, { grid: __assign({}, state.grid, { data: action.state }) });
+        default:
+            return state;
+    }
+};
+exports.default = reducers;
+
+
+/***/ }),
+
+/***/ 546:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -348,7 +358,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Mui_1 = __webpack_require__(81);
+var Mui_1 = __webpack_require__(61);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
     function Toolbar() {
@@ -357,7 +367,7 @@ var Toolbar = /** @class */ (function (_super) {
     Toolbar.prototype.render = function () {
         return (React.createElement(Mui_1.default.AppBar, { position: 'static' },
             React.createElement(Mui_1.default.Toolbar, null,
-                React.createElement(Mui_1.default.Typography, { type: 'title', color: 'inherit', noWrap: true }, "DJEM"))));
+                React.createElement(Mui_1.default.Typography, { color: 'inherit', noWrap: true }, "DJEM"))));
     };
     return Toolbar;
 }(React.Component));
@@ -366,7 +376,7 @@ exports.default = Toolbar;
 
 /***/ }),
 
-/***/ 532:
+/***/ 547:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -382,13 +392,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Proxy_1 = __webpack_require__(205);
-var reducers_1 = __webpack_require__(235);
-var TreeNode_1 = __webpack_require__(534);
+var react_redux_1 = __webpack_require__(48);
+var Proxy_1 = __webpack_require__(207);
+var reducers_1 = __webpack_require__(50);
+var TreeNode_1 = __webpack_require__(549);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.props = { tree: undefined };
         _this.dependencies = ['id'];
         return _this;
     }
@@ -406,12 +418,12 @@ var Tree = /** @class */ (function (_super) {
     };
     return Tree;
 }(Proxy_1.Proxy));
-exports.default = Tree.connect(function (state) { return ({ tree: state.tree }); });
+exports.default = react_redux_1.connect(function (state) { return ({ tree: state.tree }); })(Tree);
 
 
 /***/ }),
 
-/***/ 533:
+/***/ 548:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -427,8 +439,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(123);
-var index_1 = __webpack_require__(56);
+var core_1 = __webpack_require__(124);
+var index_1 = __webpack_require__(49);
 var HttpProxy = /** @class */ (function (_super) {
     __extends(HttpProxy, _super);
     function HttpProxy() {
@@ -465,7 +477,7 @@ exports.HttpProxy = HttpProxy;
 
 /***/ }),
 
-/***/ 534:
+/***/ 549:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -481,13 +493,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(56);
-var reducers_1 = __webpack_require__(235);
-var Mui_1 = __webpack_require__(81);
+var store_1 = __webpack_require__(49);
+var reducers_1 = __webpack_require__(50);
+var Mui_1 = __webpack_require__(61);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.props = { nodes: [] };
+        return _this;
     }
     TreeNode.prototype.render = function () {
         return (React.createElement(Mui_1.default.List, null, this.subNodes()));
@@ -517,7 +531,7 @@ exports.TreeNode = TreeNode;
 
 /***/ }),
 
-/***/ 535:
+/***/ 550:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -533,13 +547,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Proxy_1 = __webpack_require__(205);
-var reducers_1 = __webpack_require__(235);
-var Mui_1 = __webpack_require__(81);
+var react_redux_1 = __webpack_require__(48);
+var Proxy_1 = __webpack_require__(207);
+var reducers_1 = __webpack_require__(50);
+var Mui_1 = __webpack_require__(61);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.props = { id: undefined, grid: undefined };
         _this.dependencies = ['id'];
         return _this;
     }
@@ -584,32 +600,18 @@ var Grid = /** @class */ (function (_super) {
     };
     return Grid;
 }(Proxy_1.Proxy));
-exports.default = Grid.connect(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); });
+exports.default = react_redux_1.connect(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); })(Grid);
 
 
 /***/ }),
 
-/***/ 56:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_1 = __webpack_require__(78);
-var reducers_1 = __webpack_require__(235);
-var store_1 = __webpack_require__(236);
-exports.store = redux_1.createStore(reducers_1.default, store_1.initialState);
-
-
-/***/ }),
-
-/***/ 81:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var material_ui_1 = __webpack_require__(130);
+var material_ui_1 = __webpack_require__(131);
 var Mui = /** @class */ (function () {
     function Mui() {
     }
@@ -640,4 +642,4 @@ exports.default = Mui;
 
 /***/ })
 
-},[206]);
+},[208]);

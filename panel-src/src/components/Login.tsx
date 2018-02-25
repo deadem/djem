@@ -12,7 +12,7 @@ let authState = {
 class Login extends React.Component {
   public props: {
     open: boolean;
-  };
+  } = { open: false };
 
   public state: { password?: HTMLElement } = {
   };

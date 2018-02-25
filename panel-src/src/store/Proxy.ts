@@ -1,6 +1,5 @@
 import { AxiosInstance } from 'axios';
 import { State, Store, store } from './index';
-import { connect } from 'react-redux';
 import { HttpProxy } from './HttpProxy';
 
 export type Http = AxiosInstance;
@@ -10,13 +9,6 @@ export type State = State;
 let httpProxy = new HttpProxy();
 
 export class Proxy extends React.Component {
-  // redux connect wrapper
-  public static connect = (<In, Out>(fn: (params: In) => Out) => {
-    return function<T>(this: T, params: In) {
-      return (fn(params) as any)(this) as T;
-    };
-  })(connect);
-
   protected dependencies: string[] = [];
 
   public componentDidMount() {
@@ -44,5 +36,4 @@ export class Proxy extends React.Component {
   private loadComponentData() {
     this.load(httpProxy.instance(), store);
   }
-
 }

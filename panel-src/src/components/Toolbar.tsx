@@ -5,7 +5,7 @@ class Toolbar extends React.Component {
     return (
       <Mui.AppBar position='static'>
         <Mui.Toolbar>
-          <Mui.Typography type='title' color='inherit' noWrap={true}>DJEM</Mui.Typography>
+          <Mui.Typography color='inherit' noWrap={true}>DJEM</Mui.Typography>
         </Mui.Toolbar>
       </Mui.AppBar>
     );

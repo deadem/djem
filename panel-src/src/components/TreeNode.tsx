@@ -5,7 +5,7 @@ import Mui from './Mui';
 export class TreeNode extends React.Component {
   public props: {
     nodes: any[];
-  };
+  } = { nodes: [] };
 
   public render() {
     return (
