@@ -1,12 +1,11 @@
-import { connect } from 'react-redux';
 import { Proxy } from '../store/Proxy';
 import { Reducer } from '../reducers';
 import { TreeNode } from './TreeNode';
 
 class Tree extends Proxy.Component {
   public props: {
-    tree: any;
-  } = { tree: undefined };
+    tree?: any;
+  } = { };
 
   protected dependencies = [ 'id' ];
 
@@ -28,4 +27,4 @@ class Tree extends Proxy.Component {
   }
 }
 
-export default connect((state: Proxy.State) => ({ tree: state.tree }))(Tree);
+export default Proxy.connect(Tree)((state: Proxy.State) => ({ tree: state.tree }));

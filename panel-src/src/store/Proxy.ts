@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios';
+import { connect as connectRedux } from 'react-redux';
 import { State as StateType, Store as StoreType, store } from './index';
 import { HttpProxy } from './HttpProxy';
 
@@ -37,5 +38,11 @@ export namespace Proxy {
     private loadComponentData() {
       this.load(httpProxy.instance(), store);
     }
+  }
+
+  export function connect<T>(component: T) {
+    return (fn: (state: StateType) => any) => {
+      return connectRedux(fn)(component as any as React.ComponentType<T>) as any as T;
+    };
   }
 }

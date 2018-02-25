@@ -65,6 +65,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var react_redux_1 = __webpack_require__(48);
 var index_1 = __webpack_require__(49);
 var HttpProxy_1 = __webpack_require__(548);
 var httpProxy = new HttpProxy_1.HttpProxy();
@@ -101,6 +102,12 @@ var Proxy;
         return Component;
     }(React.Component));
     Proxy.Component = Component;
+    function connect(component) {
+        return function (fn) {
+            return react_redux_1.connect(fn)(component);
+        };
+    }
+    Proxy.connect = connect;
 })(Proxy = exports.Proxy || (exports.Proxy = {}));
 
 
@@ -395,7 +402,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(48);
 var Proxy_1 = __webpack_require__(207);
 var reducers_1 = __webpack_require__(50);
 var TreeNode_1 = __webpack_require__(549);
@@ -403,7 +409,7 @@ var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.props = { tree: undefined };
+        _this.props = {};
         _this.dependencies = ['id'];
         return _this;
     }
@@ -421,7 +427,7 @@ var Tree = /** @class */ (function (_super) {
     };
     return Tree;
 }(Proxy_1.Proxy.Component));
-exports.default = react_redux_1.connect(function (state) { return ({ tree: state.tree }); })(Tree);
+exports.default = Proxy_1.Proxy.connect(Tree)(function (state) { return ({ tree: state.tree }); });
 
 
 /***/ }),
@@ -550,7 +556,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(48);
 var Proxy_1 = __webpack_require__(207);
 var reducers_1 = __webpack_require__(50);
 var Mui_1 = __webpack_require__(61);
@@ -558,7 +563,7 @@ var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.props = { id: undefined, grid: undefined };
+        _this.props = {};
         _this.dependencies = ['id'];
         return _this;
     }
@@ -603,7 +608,7 @@ var Grid = /** @class */ (function (_super) {
     };
     return Grid;
 }(Proxy_1.Proxy.Component));
-exports.default = react_redux_1.connect(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); })(Grid);
+exports.default = Proxy_1.Proxy.connect(Grid)(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); });
 
 
 /***/ }),
