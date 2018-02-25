@@ -604,7 +604,7 @@ var Grid = /** @class */ (function (_super) {
         var data = this.gridColumns();
         var items = ((this.props.grid || {}).items || []);
         var row = function (item, index) {
-            return data.map(function (column) { return (React.createElement(Mui_1.default.TableCell, { key: index, onClick: function () { return _this.selectRow(item); } }, item[column.dataIndex])); });
+            return data.map(function (column, subindex) { return (React.createElement(Mui_1.default.TableCell, { key: index + "-" + subindex, onClick: function () { return _this.selectRow(item); } }, item[column.dataIndex])); });
         };
         return items.map(function (item, index) {
             return (React.createElement(Mui_1.default.TableRow, { key: index }, row(item, index)));

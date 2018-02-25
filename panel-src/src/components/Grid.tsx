@@ -73,8 +73,8 @@ class Grid extends Proxy.Component {
     let items = ((this.props.grid || {}).items || []);
 
     const row = (item: any, index: number) => {
-      return data.map((column: { dataIndex: string }) => (
-        <Mui.TableCell key={index} onClick={() => this.selectRow(item)}>{item[column.dataIndex]}</Mui.TableCell>
+      return data.map((column: { dataIndex: string }, subindex: number) => (
+        <Mui.TableCell key={`${index}-${subindex}`} onClick={() => this.selectRow(item)}>{item[column.dataIndex]}</Mui.TableCell>
       ));
     };
 
