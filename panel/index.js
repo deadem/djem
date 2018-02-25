@@ -108,7 +108,8 @@ var Proxy;
         };
     }
     Proxy.connect = connect;
-})(Proxy = exports.Proxy || (exports.Proxy = {}));
+})(Proxy || (Proxy = {}));
+exports.default = Proxy;
 
 
 /***/ }),
@@ -128,7 +129,7 @@ if (parent) {
     parent.removeChild(loader);
 }
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.store },
-    React.createElement(Main_1.default, null)), document.getElementById('app'));
+    React.createElement(Main_1.default, { content: 'grid' })), document.getElementById('app'));
 
 
 /***/ }),
@@ -148,6 +149,7 @@ exports.initialState = {
         id: undefined,
         data: undefined,
     },
+    content: 'grid',
 };
 
 
@@ -171,23 +173,26 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Login_1 = __webpack_require__(248);
 var Toolbar_1 = __webpack_require__(546);
-var Tree_1 = __webpack_require__(547);
 var Grid_1 = __webpack_require__(550);
+var Content_1 = __webpack_require__(552);
+var Proxy_1 = __webpack_require__(207);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
-    function Main() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Main(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
     }
     Main.prototype.render = function () {
+        // const content = this.props.content;
         return (React.createElement("div", { className: 'Main' },
             React.createElement(Login_1.default, null),
             React.createElement(Toolbar_1.default, null),
-            React.createElement("div", { className: 'Main__container' },
-                React.createElement(Tree_1.default, null),
-                React.createElement(Grid_1.default, null))));
+            React.createElement(Grid_1.default, null),
+            React.createElement(Content_1.default, null)));
     };
     return Main;
-}(React.Component));
+}(Proxy_1.default.Component));
 exports.default = Main;
 
 
@@ -426,8 +431,8 @@ var Tree = /** @class */ (function (_super) {
         });
     };
     return Tree;
-}(Proxy_1.Proxy.Component));
-exports.default = Proxy_1.Proxy.connect(Tree)(function (state) { return ({ tree: state.tree }); });
+}(Proxy_1.default.Component));
+exports.default = Proxy_1.default.connect(Tree)(function (state) { return ({ tree: state.tree }); });
 
 
 /***/ }),
@@ -556,6 +561,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Proxy_1 = __webpack_require__(207);
 var reducers_1 = __webpack_require__(49);
+var Tree_1 = __webpack_require__(547);
 var Mui_1 = __webpack_require__(61);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
@@ -567,10 +573,12 @@ var Grid = /** @class */ (function (_super) {
     }
     Grid.prototype.render = function () {
         return (React.createElement("div", { className: 'Grid' },
-            React.createElement(Mui_1.default.Table, null,
-                React.createElement(Mui_1.default.TableHead, null,
-                    React.createElement(Mui_1.default.TableRow, null, this.gridHeader())),
-                React.createElement(Mui_1.default.TableBody, null, this.gridRows()))));
+            React.createElement(Tree_1.default, null),
+            React.createElement("div", { className: 'Grid__container' },
+                React.createElement(Mui_1.default.Table, null,
+                    React.createElement(Mui_1.default.TableHead, null,
+                        React.createElement(Mui_1.default.TableRow, null, this.gridHeader())),
+                    React.createElement(Mui_1.default.TableBody, null, this.gridRows())))));
     };
     Grid.prototype.load = function (proxy, store) {
         if (!this.props.id) {
@@ -606,8 +614,40 @@ var Grid = /** @class */ (function (_super) {
         });
     };
     return Grid;
-}(Proxy_1.Proxy.Component));
-exports.default = Proxy_1.Proxy.connect(Grid)(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); });
+}(Proxy_1.default.Component));
+exports.default = Proxy_1.default.connect(Grid)(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); });
+
+
+/***/ }),
+
+/***/ 552:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Proxy_1 = __webpack_require__(207);
+var Content = /** @class */ (function (_super) {
+    __extends(Content, _super);
+    function Content() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Content.prototype.render = function () {
+        return (React.createElement("div", { className: 'Content' }));
+    };
+    return Content;
+}(Proxy_1.default.Component));
+exports.default = Content;
 
 
 /***/ }),

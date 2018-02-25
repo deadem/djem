@@ -23,17 +23,17 @@ input {
   width: 100%;
   display: flex;
   flex-direction: column; }
-  .Main__container {
+
+.Grid {
+  flex: 1;
+  display: flex; }
+  .Grid__container {
     flex: 1;
     display: flex; }
-    .Main__container .Tree {
-      display: flex; }
-    .Main__container .Grid {
-      display: flex;
-      flex: 1; }
 
 .Tree {
   height: 100%;
   width: 300px;
   border-right: 1px solid #ccc;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  display: flex; }

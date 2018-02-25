@@ -1,18 +1,33 @@
 import Login from './Login';
 import Toolbar from './Toolbar';
-import Tree from './Tree';
 import Grid from './Grid';
+import Content from './Content';
+import Proxy from '../store/Proxy';
 
-class Main extends React.Component {
+interface Props {
+  content: 'grid' | 'document';
+}
+
+class Main extends Proxy.Component {
+  public props: Props;
+
+  public constructor(props: Props, context: any) {
+    super(props, context);
+
+    this.props = props;
+  }
+
   public render() {
+    // const content = this.props.content;
+
     return (
       <div className='Main'>
         <Login />
         <Toolbar />
-        <div className='Main__container'>
-          <Tree />
-          <Grid />
-        </div>
+
+        <Grid />
+        <Content />
+
       </div>
     );
   }

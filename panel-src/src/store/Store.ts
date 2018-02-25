@@ -15,7 +15,11 @@ interface Grid {
   }
 }
 
-export type State = Login & Tree & Grid;
+interface Main {
+  content: 'grid' | 'document';
+}
+
+export type State = Login & Tree & Grid & Main;
 
 export let initialState: State = {
   login: {
@@ -26,4 +30,5 @@ export let initialState: State = {
     id: undefined,
     data: undefined,
   },
+  content: 'grid',
 };

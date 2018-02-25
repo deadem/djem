@@ -1,0 +1,9 @@
+.Grid {
+  flex: 1;
+  display: flex;
+
+  &__container {
+    flex: 1;
+    display: flex;
+  }
+}

@@ -1,5 +1,6 @@
-import { Proxy } from '../store/Proxy';
+import Proxy from '../store/Proxy';
 import { Reducer } from '../reducers';
+import Tree from './Tree';
 import Mui from './Mui';
 
 interface Props {
@@ -20,16 +21,19 @@ class Grid extends Proxy.Component {
   public render() {
     return (
       <div className='Grid'>
-        <Mui.Table>
-          <Mui.TableHead>
-            <Mui.TableRow>
-              {this.gridHeader()}
-            </Mui.TableRow>
-          </Mui.TableHead>
-          <Mui.TableBody>
-            {this.gridRows()}
-          </Mui.TableBody>
-        </Mui.Table>
+        <Tree />
+        <div className='Grid__container'>
+          <Mui.Table>
+            <Mui.TableHead>
+              <Mui.TableRow>
+                {this.gridHeader()}
+              </Mui.TableRow>
+            </Mui.TableHead>
+            <Mui.TableBody>
+              {this.gridRows()}
+            </Mui.TableBody>
+          </Mui.Table>
+        </div>
       </div>
     );
   }

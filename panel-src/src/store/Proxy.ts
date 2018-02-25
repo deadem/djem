@@ -5,7 +5,7 @@ import { HttpProxy } from './HttpProxy';
 
 let httpProxy = new HttpProxy();
 
-export namespace Proxy {
+namespace Proxy {
   export type Http = AxiosInstance;
   export type Store = StoreType;
   export type State = StateType;
@@ -46,3 +46,5 @@ export namespace Proxy {
     };
   }
 }
+
+export default Proxy;

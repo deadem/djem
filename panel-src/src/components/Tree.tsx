@@ -1,4 +1,4 @@
-import { Proxy } from '../store/Proxy';
+import Proxy from '../store/Proxy';
 import { Reducer } from '../reducers';
 import { TreeNode } from './TreeNode';
 
