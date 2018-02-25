@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { Proxy, Http, State, Store } from '../store/Proxy';
+import { Proxy } from '../store/Proxy';
 import { Reducer } from '../reducers';
 import { TreeNode } from './TreeNode';
 
-class Tree extends Proxy {
+class Tree extends Proxy.Component {
   public props: {
     tree: any;
   } = { tree: undefined };
@@ -18,7 +18,7 @@ class Tree extends Proxy {
     );
   }
 
-  protected load(proxy: Http, store: Store) {
+  protected load(proxy: Proxy.Http, store: Proxy.Store) {
     proxy.post('tree', {}).then((response) => {
       store.dispatch({
         type: Reducer.Tree,
@@ -28,4 +28,4 @@ class Tree extends Proxy {
   }
 }
 
-export default connect((state: State) => ({ tree: state.tree }))(Tree);
+export default connect((state: Proxy.State) => ({ tree: state.tree }))(Tree);

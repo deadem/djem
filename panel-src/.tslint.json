@@ -51,6 +51,7 @@
     "no-empty-interface": true,
     "no-invalid-this": true,
     "no-irregular-whitespace": true,
+    "no-namespace": false,
     "no-non-null-assertion": true,
     "no-object-literal-type-assertion": true,
     "no-shadowed-variable": true,

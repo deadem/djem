@@ -68,37 +68,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = __webpack_require__(49);
 var HttpProxy_1 = __webpack_require__(548);
 var httpProxy = new HttpProxy_1.HttpProxy();
-var Proxy = /** @class */ (function (_super) {
-    __extends(Proxy, _super);
-    function Proxy() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.dependencies = [];
-        return _this;
-    }
-    Proxy.prototype.componentDidMount = function () {
-        this.loadComponentData();
-    };
-    Proxy.prototype.componentDidUpdate = function (prevProps, _prevState) {
-        var props = this.props;
-        for (var i = 0; i < this.dependencies.length; ++i) {
-            var key = this.dependencies[i];
-            if (prevProps[key] !== props[key]) {
-                this.loadComponentData();
-                return;
-            }
+var Proxy;
+(function (Proxy) {
+    var Component = /** @class */ (function (_super) {
+        __extends(Component, _super);
+        function Component() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.dependencies = [];
+            return _this;
         }
-    };
-    // public componentWillReceiveProps(nextProps: any) {
-    // }
-    Proxy.prototype.load = function (_proxy, _store) {
-        return;
-    };
-    Proxy.prototype.loadComponentData = function () {
-        this.load(httpProxy.instance(), index_1.store);
-    };
-    return Proxy;
-}(React.Component));
-exports.Proxy = Proxy;
+        Component.prototype.componentDidMount = function () {
+            this.loadComponentData();
+        };
+        Component.prototype.componentDidUpdate = function (prevProps, _prevState) {
+            var props = this.props;
+            for (var i = 0; i < this.dependencies.length; ++i) {
+                var key = this.dependencies[i];
+                if (prevProps[key] !== props[key]) {
+                    this.loadComponentData();
+                    return;
+                }
+            }
+        };
+        // public componentWillReceiveProps(nextProps: any) {
+        // }
+        Component.prototype.load = function (_proxy, _store) {
+            return;
+        };
+        Component.prototype.loadComponentData = function () {
+            this.load(httpProxy.instance(), index_1.store);
+        };
+        return Component;
+    }(React.Component));
+    Proxy.Component = Component;
+})(Proxy = exports.Proxy || (exports.Proxy = {}));
 
 
 /***/ }),
@@ -417,7 +420,7 @@ var Tree = /** @class */ (function (_super) {
         });
     };
     return Tree;
-}(Proxy_1.Proxy));
+}(Proxy_1.Proxy.Component));
 exports.default = react_redux_1.connect(function (state) { return ({ tree: state.tree }); })(Tree);
 
 
@@ -599,7 +602,7 @@ var Grid = /** @class */ (function (_super) {
         });
     };
     return Grid;
-}(Proxy_1.Proxy));
+}(Proxy_1.Proxy.Component));
 exports.default = react_redux_1.connect(function (state) { return ({ id: state.grid.id, grid: state.grid.data }); })(Grid);
 
 
