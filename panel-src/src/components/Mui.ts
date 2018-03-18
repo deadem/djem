@@ -11,7 +11,9 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Tab,
   Table,
+  Tabs,
   TableBody,
   TableCell,
   TableHead,
@@ -34,7 +36,9 @@ export default class Mui {
   public static ListItem = ListItem;
   public static ListItemIcon = ListItemIcon;
   public static ListItemText = ListItemText;
+  public static Tab = Tab;
   public static Table = Table;
+  public static Tabs = Tabs;
   public static TableBody = TableBody;
   public static TableCell = TableCell;
   public static TableHead = TableHead;
