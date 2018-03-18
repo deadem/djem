@@ -1,5 +1,5 @@
 import Proxy from '../store/Proxy';
-import { Reducer } from '../reducers';
+import { Action } from '../reducers';
 import { TreeNode } from './TreeNode';
 
 interface Props {
@@ -24,12 +24,9 @@ class Tree extends Proxy.Component {
     );
   }
 
-  protected load(proxy: Proxy.Http, store: Proxy.Store) {
+  protected load(proxy: Proxy.Http) {
     proxy.post('tree', {}).then((response) => {
-      store.dispatch({
-        type: Reducer.Tree,
-        state: response.data,
-      });
+      Action.tree({ state: response.data });
     });
   }
 }

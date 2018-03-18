@@ -6,6 +6,7 @@ interface Login {
 
 interface Tree {
   tree: any;
+  tab: number | string | undefined;
 }
 
 interface Grid {
@@ -25,6 +26,7 @@ export let initialState: State = {
   login: {
     authorized: true,
   },
+  tab: 'root',
   tree: undefined,
   grid: {
     id: undefined,

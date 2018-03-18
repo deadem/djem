@@ -8,7 +8,6 @@ webpackJsonp([0],{
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(126);
 var reducers_1 = __webpack_require__(49);
-var index_1 = __webpack_require__(48);
 var auth = {
     token: '',
 };
@@ -31,10 +30,7 @@ var Core = /** @class */ (function () {
         });
     }
     Core.prototype.setAuthorized = function (state) {
-        index_1.store.dispatch({
-            type: reducers_1.Reducer.Authorize,
-            state: state,
-        });
+        reducers_1.Action.authorize({ state: state });
     };
     Core.prototype.updateToken = function (response) {
         auth.token = response.headers['x-csrf-token'];
@@ -79,6 +75,7 @@ exports.initialState = {
     login: {
         authorized: true,
     },
+    tab: 'root',
     tree: undefined,
     grid: {
         id: undefined,
@@ -266,28 +263,50 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Reducer;
-(function (Reducer) {
-    Reducer[Reducer["Authorize"] = 0] = "Authorize";
-    Reducer[Reducer["Tree"] = 1] = "Tree";
-    Reducer[Reducer["GridChange"] = 2] = "GridChange";
-    Reducer[Reducer["Grid"] = 3] = "Grid";
-})(Reducer = exports.Reducer || (exports.Reducer = {}));
-var reducers = function (state, action) {
-    switch (action.type) {
-        case Reducer.Authorize:
-            return __assign({}, state, { login: __assign({}, state.login, { authorized: !state.login.authorized }) });
-        case Reducer.Tree:
-            return __assign({}, state, { tree: action.state.slice() });
-        case Reducer.GridChange:
-            return __assign({}, state, { grid: __assign({}, state.grid, { id: action.id }) });
-        case Reducer.Grid:
-            return __assign({}, state, { grid: __assign({}, state.grid, { data: action.state }) });
-        default:
-            return state;
+var store_1 = __webpack_require__(48);
+var Action = /** @class */ (function () {
+    function Action() {
     }
+    Action.authorize = function (obj) {
+        return this.dispatch(this.authorize, obj);
+    };
+    Action.grid = function (obj) {
+        return this.dispatch(this.grid, obj);
+    };
+    Action.gridChange = function (obj) {
+        return this.dispatch(this.gridChange, obj);
+    };
+    Action.tabChange = function (obj) {
+        return this.dispatch(this.tabChange, obj);
+    };
+    Action.tree = function (obj) {
+        return this.dispatch(this.tree, obj);
+    };
+    Action.dispatch = function (type, obj) {
+        store_1.store.dispatch(__assign({}, obj, { type: type }));
+    };
+    return Action;
+}());
+exports.Action = Action;
+var reducer = function (type, func) {
+    return function (state, action) {
+        if (action.type === type) {
+            var clone = __assign({}, state);
+            return __assign({}, state, (func(clone) || clone));
+        }
+        return state;
+    };
 };
-exports.default = reducers;
+exports.default = (function (currentState, action) {
+    var reducers = [
+        reducer(Action.authorize, function (state) { state.login.authorized = !state.login.authorized; }),
+        reducer(Action.grid, function (state) { state.grid.data = action.state; }),
+        reducer(Action.gridChange, function (state) { state.grid.id = action.id; }),
+        reducer(Action.tabChange, function () { return ({ tab: action.id }); }),
+        reducer(Action.tree, function () { return ({ tree: action.state.slice() }); }),
+    ];
+    return reducers.reduce(function (value, func) { return func(value, action) || value; }, currentState);
+});
 
 
 /***/ }),
@@ -308,14 +327,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var Proxy_1 = __webpack_require__(78);
+var reducers_1 = __webpack_require__(49);
 var Mui_1 = __webpack_require__(61);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
-    function Toolbar() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            value: 0
-        };
+    function Toolbar(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        _this.selectTab('root');
         return _this;
     }
     // <Mui.Toolbar>
@@ -324,14 +344,17 @@ var Toolbar = /** @class */ (function (_super) {
     Toolbar.prototype.render = function () {
         var _this = this;
         return (React.createElement(Mui_1.default.AppBar, { position: 'static' },
-            React.createElement(Mui_1.default.Tabs, { value: this.state.value, onChange: function (_evt, value) { return _this.setState({ value: value }); } },
-                React.createElement(Mui_1.default.Tab, { label: 'DJEM' }),
+            React.createElement(Mui_1.default.Tabs, { value: this.props.tab, onChange: function (_evt, value) { return _this.selectTab(value); } },
+                React.createElement(Mui_1.default.Tab, { label: 'DJEM', value: 'root' }),
                 React.createElement(Mui_1.default.Tab, { label: 'Item Two' }),
                 React.createElement(Mui_1.default.Tab, { label: 'Item Three' }))));
     };
+    Toolbar.prototype.selectTab = function (id) {
+        reducers_1.Action.tabChange({ id: id });
+    };
     return Toolbar;
-}(React.Component));
-exports.default = Toolbar;
+}(Proxy_1.default.Component));
+exports.default = Proxy_1.default.connect(Toolbar)(function (state) { return ({ tab: state.tab }); });
 
 
 /***/ }),
@@ -373,15 +396,12 @@ var Grid = /** @class */ (function (_super) {
                         React.createElement(Mui_1.default.TableRow, null, this.gridHeader())),
                     React.createElement(Mui_1.default.TableBody, null, this.gridRows())))));
     };
-    Grid.prototype.load = function (proxy, store) {
+    Grid.prototype.load = function (proxy) {
         if (!this.props.id) {
             return;
         }
         proxy.post('grid', { tree: this.props.id }).then(function (response) {
-            store.dispatch({
-                type: reducers_1.Reducer.Grid,
-                state: response.data,
-            });
+            reducers_1.Action.grid({ state: response.data });
         });
     };
     Grid.prototype.gridColumns = function () {
@@ -498,12 +518,9 @@ var Tree = /** @class */ (function (_super) {
         return (React.createElement("div", { className: 'Tree' },
             React.createElement(TreeNode_1.TreeNode, { nodes: this.props.tree })));
     };
-    Tree.prototype.load = function (proxy, store) {
+    Tree.prototype.load = function (proxy) {
         proxy.post('tree', {}).then(function (response) {
-            store.dispatch({
-                type: reducers_1.Reducer.Tree,
-                state: response.data,
-            });
+            reducers_1.Action.tree({ state: response.data });
         });
     };
     return Tree;
@@ -529,7 +546,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(48);
 var reducers_1 = __webpack_require__(49);
 var Mui_1 = __webpack_require__(61);
 var TreeNode = /** @class */ (function (_super) {
@@ -543,10 +559,7 @@ var TreeNode = /** @class */ (function (_super) {
         return (React.createElement(Mui_1.default.List, null, this.subNodes()));
     };
     TreeNode.prototype.selectNode = function (id) {
-        store_1.store.dispatch({
-            type: reducers_1.Reducer.GridChange,
-            id: id,
-        });
+        reducers_1.Action.gridChange({ id: id });
     };
     TreeNode.prototype.subNodes = function () {
         var _this = this;

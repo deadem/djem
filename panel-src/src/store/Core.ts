@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Reducer } from '../reducers';
-import { store } from './index';
+import { Action } from '../reducers';
 
 let auth = {
   token: '',
@@ -30,10 +29,7 @@ export class Core {
   }
 
   protected setAuthorized(state: boolean) {
-    store.dispatch({
-      type: Reducer.Authorize,
-      state,
-    });
+    Action.authorize({ state });
   }
 
   private updateToken(response: any) {

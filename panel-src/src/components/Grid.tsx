@@ -1,5 +1,5 @@
 import Proxy from '../store/Proxy';
-import { Reducer } from '../reducers';
+import { Action } from '../reducers';
 import Tree from './Tree';
 import Mui from './Mui';
 
@@ -38,16 +38,13 @@ class Grid extends Proxy.Component {
     );
   }
 
-  protected load(proxy: Proxy.Http, store: Proxy.Store) {
+  protected load(proxy: Proxy.Http) {
     if (!this.props.id) {
       return;
     }
 
     proxy.post('grid', { tree: this.props.id }).then((response) => {
-      store.dispatch({
-        type: Reducer.Grid,
-        state: response.data,
-      });
+      Action.grid({ state: response.data });
     });
   }
 
