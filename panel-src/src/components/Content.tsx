@@ -1,4 +1,4 @@
-import Proxy from '../store/Proxy';
+import { Proxy } from '../store';
 
 export default class Content extends Proxy.Component {
 

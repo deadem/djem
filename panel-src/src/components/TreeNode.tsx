@@ -1,4 +1,4 @@
-import { Action } from '../store/Reducers';
+import { Action } from '../store';
 import Mui from './Mui';
 
 interface Props {

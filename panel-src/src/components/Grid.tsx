@@ -1,5 +1,4 @@
-import Proxy from '../store/Proxy';
-import { Action } from '../store/Reducers';
+import { Action, Proxy } from '../store';
 import Tree from './Tree';
 import Mui from './Mui';
 

@@ -2,7 +2,7 @@ import Login from './Login';
 import Toolbar from './Toolbar';
 import Grid from './Grid';
 import Content from './Content';
-import Proxy from '../store/Proxy';
+import { Proxy } from '../store';
 
 interface Props {
   tab?: string | number;
