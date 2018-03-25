@@ -1,46 +1,45 @@
 import { State, store } from '../store';
 
-interface Reducer {
-  type: any;
-  id?: string | number;
-  state?: any;
-}
-
 export class Action {
-  public static authorize(obj: {}) {
-    return this.dispatch((state, _action) => { state.login.authorized = !state.login.authorized; }, obj);
+  public static authorize(authorized: boolean) {
+    return this.dispatch(state => { state.login.authorized = authorized; });
   }
 
-  public static grid(obj: {}) {
-    return this.dispatch((state, action) => { state.grid.data = action.state; }, obj);
+  public static grid(data: any) {
+    return this.dispatch(state => { state.grid.data = data; });
   }
 
-  public static gridChange(obj: {}) {
-    return this.dispatch((state, action) => { state.grid.id = action.id; }, obj);
+  public static gridChange(id: string | number) {
+    return this.dispatch(state => { state.grid.id = id; });
   }
 
-  public static openContent(obj: {}) {
-    return this.tabChange(obj);
+  public static openContent(params: { doctype: string; id: string | number }) {
+    return this.dispatch(state => {
+      let id = `${params.doctype}--${params.id}`;
+
+      state.content[id] = { params, data: {} };
+      return { tab: id };
+    });
   }
 
-  public static tabChange(obj: {}) {
-    return this.dispatch((_state, action) => ({ tab: action.id }), obj);
+  public static tabChange(tab: string | number) {
+    return this.dispatch(() => ({ tab }));
   }
 
-  public static tree(obj: {}) {
-    return this.dispatch((_state, action) => ({ tree: action.state }), obj);
+  public static tree(tree: {}) {
+    return this.dispatch(() => ({ tree }));
   }
 
-  private static dispatch(type: (state: State, action: Reducer) => {} | void, obj: {}) {
-    store.dispatch({ ...obj, type });
+  private static dispatch(type: (state: State) => {} | void) {
+    store.dispatch({ type });
   }
 }
 
-export default (state: State, action: Reducer): State => {
+export function InitReducers(state: State, action: { id?: string | number; type: any }): State {
   if (typeof action.type == 'function') {
     let clone = { ...state };
-    return { ...state, ...(action.type(clone, action) || clone) };
+    return { ...state, ...(action.type(clone) || clone) };
   }
 
   return state;
-};
+}

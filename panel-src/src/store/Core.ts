@@ -29,7 +29,7 @@ export class Core {
   }
 
   protected setAuthorized(state: boolean) {
-    Action.authorize({ state });
+    Action.authorize(state);
   }
 
   private updateToken(response: any) {

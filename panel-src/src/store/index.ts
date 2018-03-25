@@ -1,9 +1,9 @@
 import { createStore } from 'redux';
-import reducers from './Reducers';
+import { InitReducers } from './Reducers';
 import { State, initialState } from './Store';
 
 export type State = State;
-export let store = createStore(reducers, initialState);
+export let store = createStore(InitReducers, initialState);
 export type Store = typeof store;
 
 export { Action } from './Reducers';

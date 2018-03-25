@@ -22,8 +22,8 @@ interface Content {
   tab: number | string | undefined;
   content: {
     [key: string]: {
-      params: {};
-      data: {};
+      params: any;
+      data: any;
     };
   }
 }

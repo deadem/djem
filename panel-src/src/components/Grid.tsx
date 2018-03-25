@@ -44,7 +44,7 @@ class Grid extends Proxy.Component {
     }
 
     proxy.post('grid', { tree: this.props.id }).then((response) => {
-      Action.grid({ state: response.data });
+      Action.grid(response.data);
     });
   }
 

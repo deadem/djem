@@ -36,7 +36,7 @@ class Tree extends Proxy.Component {
         }
       };
       walk(response.data);
-      Action.tree({ state: { refs, data: response.data } });
+      Action.tree({ refs, data: response.data });
     });
   }
 }

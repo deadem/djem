@@ -32,7 +32,7 @@ class Toolbar extends Proxy.Component {
   }
 
   private selectTab(id: string | number) {
-    Action.tabChange({ id });
+    Action.tabChange(id);
   }
 }
 

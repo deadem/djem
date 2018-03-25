@@ -21,7 +21,7 @@ export class TreeNode extends React.Component {
   }
 
   private selectNode(id: string | number) {
-    Action.gridChange({ id });
+    Action.gridChange(id);
   }
 
   private subNodes(): JSX.Element[] {
