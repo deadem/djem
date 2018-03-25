@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 import { State } from '../store';
 import { Auth } from '../store/Auth';
-
-import Mui from './Mui';
+import Mui from '../mui';
 
 let authState = {
   name: '',

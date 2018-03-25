@@ -260,7 +260,7 @@ var Main = /** @class */ (function (_super) {
         return (React.createElement("div", { className: 'Main' },
             React.createElement(Login_1.default, null),
             React.createElement(Toolbar_1.default, null),
-            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, null)));
+            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, { content: ({}) })));
     };
     return Main;
 }(store_1.Proxy.Component));
@@ -287,7 +287,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(58);
 var Auth_1 = __webpack_require__(268);
-var Mui_1 = __webpack_require__(60);
+var mui_1 = __webpack_require__(553);
 var authState = {
     name: '',
     password: '',
@@ -320,14 +320,14 @@ var Login = /** @class */ (function (_super) {
     }
     Login.prototype.render = function () {
         return (React.createElement("div", null,
-            React.createElement(Mui_1.default.Dialog, { open: this.props.open, onClose: this.empty, "aria-labelledby": 'form-dialog-title', disableBackdropClick: true, disableEscapeKeyDown: true },
-                React.createElement(Mui_1.default.DialogTitle, { id: 'form-dialog-title' }, "Login"),
-                React.createElement(Mui_1.default.DialogContent, null,
-                    React.createElement(Mui_1.default.DialogContentText, null, "Please enter your credentials"),
-                    React.createElement(Mui_1.default.TextField, { autoFocus: true, margin: 'dense', id: 'name', label: 'Login', type: 'text', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn }),
-                    React.createElement(Mui_1.default.TextField, { margin: 'dense', id: 'password', label: 'Password', type: 'password', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn, inputRef: this.passwordField })),
-                React.createElement(Mui_1.default.DialogActions, null,
-                    React.createElement(Mui_1.default.Button, { onClick: this.handleLogin, color: 'primary' }, "Login")))));
+            React.createElement(mui_1.default.Dialog, { open: this.props.open, onClose: this.empty, "aria-labelledby": 'form-dialog-title', disableBackdropClick: true, disableEscapeKeyDown: true },
+                React.createElement(mui_1.default.DialogTitle, { id: 'form-dialog-title' }, "Login"),
+                React.createElement(mui_1.default.DialogContent, null,
+                    React.createElement(mui_1.default.DialogContentText, null, "Please enter your credentials"),
+                    React.createElement(mui_1.default.TextField, { autoFocus: true, margin: 'dense', id: 'name', label: 'Login', type: 'text', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn }),
+                    React.createElement(mui_1.default.TextField, { margin: 'dense', id: 'password', label: 'Password', type: 'password', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn, inputRef: this.passwordField })),
+                React.createElement(mui_1.default.DialogActions, null,
+                    React.createElement(mui_1.default.Button, { onClick: this.handleLogin, color: 'primary' }, "Login")))));
     };
     Login.prototype.empty = function () {
         return;
@@ -391,7 +391,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(23);
-var Mui_1 = __webpack_require__(60);
+var mui_1 = __webpack_require__(553);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
     function Toolbar(props, context) {
@@ -405,11 +405,11 @@ var Toolbar = /** @class */ (function (_super) {
     // </Mui.Toolbar>
     Toolbar.prototype.render = function () {
         var _this = this;
-        return (React.createElement(Mui_1.default.AppBar, { position: 'static' },
-            React.createElement(Mui_1.default.Tabs, { value: this.props.tab, onChange: function (_evt, value) { return _this.selectTab(value); } },
-                React.createElement(Mui_1.default.Tab, { label: 'DJEM', value: 'grid' }),
-                React.createElement(Mui_1.default.Tab, { label: 'Item Two' }),
-                React.createElement(Mui_1.default.Tab, { label: 'Item Three' }))));
+        return (React.createElement(mui_1.default.AppBar, { position: 'static' },
+            React.createElement(mui_1.default.Tabs, { value: this.props.tab, onChange: function (_evt, value) { return _this.selectTab(value); } },
+                React.createElement(mui_1.default.Tab, { label: 'DJEM', value: 'grid' }),
+                React.createElement(mui_1.default.Tab, { label: 'Item Two' }),
+                React.createElement(mui_1.default.Tab, { label: 'Item Three' }))));
     };
     Toolbar.prototype.selectTab = function (id) {
         store_1.Action.tabChange(id);
@@ -439,7 +439,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(23);
 var Tree_1 = __webpack_require__(549);
-var Mui_1 = __webpack_require__(60);
+var mui_1 = __webpack_require__(553);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid(props, context) {
@@ -452,10 +452,10 @@ var Grid = /** @class */ (function (_super) {
         return (React.createElement("div", { className: 'Grid' },
             React.createElement(Tree_1.default, null),
             React.createElement("div", { className: 'Grid__container' },
-                React.createElement(Mui_1.default.Table, null,
-                    React.createElement(Mui_1.default.TableHead, null,
-                        React.createElement(Mui_1.default.TableRow, null, this.gridHeader())),
-                    React.createElement(Mui_1.default.TableBody, null, this.gridRows())))));
+                React.createElement(mui_1.default.Table, null,
+                    React.createElement(mui_1.default.TableHead, null,
+                        React.createElement(mui_1.default.TableRow, null, this.gridHeader())),
+                    React.createElement(mui_1.default.TableBody, null, this.gridRows())))));
     };
     Grid.prototype.load = function (proxy) {
         if (!this.props.id) {
@@ -470,7 +470,7 @@ var Grid = /** @class */ (function (_super) {
     };
     Grid.prototype.gridHeader = function () {
         return this.gridColumns().map(function (column, index) {
-            return (React.createElement(Mui_1.default.TableCell, { key: index }, column.text));
+            return (React.createElement(mui_1.default.TableCell, { key: index }, column.text));
         });
     };
     Grid.prototype.selectRow = function (item) {
@@ -482,10 +482,10 @@ var Grid = /** @class */ (function (_super) {
         var data = this.gridColumns();
         var items = ((this.props.grid || {}).items || []);
         var row = function (item, index) {
-            return data.map(function (column, subindex) { return (React.createElement(Mui_1.default.TableCell, { key: index + "-" + subindex, onClick: function () { return _this.selectRow(item); } }, item[column.dataIndex])); });
+            return data.map(function (column, subindex) { return (React.createElement(mui_1.default.TableCell, { key: index + "-" + subindex, onClick: function () { return _this.selectRow(item); } }, item[column.dataIndex])); });
         };
         return items.map(function (item, index) {
-            return (React.createElement(Mui_1.default.TableRow, { key: index }, row(item, index)));
+            return (React.createElement(mui_1.default.TableRow, { key: index }, row(item, index)));
         });
     };
     return Grid;
@@ -565,7 +565,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(23);
-var Mui_1 = __webpack_require__(60);
+var mui_1 = __webpack_require__(553);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode(props, context) {
@@ -574,7 +574,7 @@ var TreeNode = /** @class */ (function (_super) {
         return _this;
     }
     TreeNode.prototype.render = function () {
-        return (React.createElement(Mui_1.default.List, null, this.subNodes()));
+        return (React.createElement(mui_1.default.List, null, this.subNodes()));
     };
     TreeNode.prototype.selectNode = function (id) {
         store_1.Action.gridChange(id);
@@ -585,8 +585,8 @@ var TreeNode = /** @class */ (function (_super) {
             if (node.items) {
                 return (React.createElement(TreeNode, { key: "sub-" + node.id, nodes: node.items }));
             }
-            return (React.createElement(Mui_1.default.ListItem, { button: true, key: node.id, onClick: function () { return _this.selectNode(node.id); } },
-                React.createElement(Mui_1.default.ListItemText, { inset: true, primary: node.text })));
+            return (React.createElement(mui_1.default.ListItem, { button: true, key: node.id, onClick: function () { return _this.selectNode(node.id); } },
+                React.createElement(mui_1.default.ListItemText, { inset: true, primary: node.text })));
         });
     };
     return TreeNode;
@@ -615,20 +615,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(23);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
-    function Content() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Content(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
     }
     Content.prototype.render = function () {
         return (React.createElement("div", { className: 'Content' }, "content"));
     };
     return Content;
 }(store_1.Proxy.Component));
-exports.default = Content;
+exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ tab: state.tab, content: state.content }); });
 
 
 /***/ }),
 
-/***/ 60:
+/***/ 553:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

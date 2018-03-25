@@ -1,5 +1,5 @@
 import { Action } from '../store';
-import Mui from './Mui';
+import Mui from '../mui';
 
 interface Props {
   nodes: any[];

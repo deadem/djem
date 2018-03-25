@@ -1,5 +1,5 @@
 import { Proxy, Action } from '../store';
-import Mui from './Mui';
+import Mui from '../mui';
 
 interface Props {
   tab?: string | number;
@@ -36,4 +36,4 @@ class Toolbar extends Proxy.Component {
   }
 }
 
-export default Proxy.connect(Toolbar)((state: Proxy.State) => ({ tab: state.tab }));
+export default Proxy.connect(Toolbar)(state => ({ tab: state.tab }));

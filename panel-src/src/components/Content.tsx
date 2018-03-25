@@ -1,6 +1,23 @@
 import { Proxy } from '../store';
 
-export default class Content extends Proxy.Component {
+interface Props {
+  tab?: string | number;
+  content: {
+    [key: string]: {
+      params: any;
+      data: any;
+    };
+  }
+}
+
+class Content extends Proxy.Component {
+  public props: Props;
+
+  constructor(props: Props, context: any) {
+    super(props, context);
+
+    this.props = props;
+  }
 
   public render() {
     return (
@@ -10,3 +27,5 @@ export default class Content extends Proxy.Component {
     );
   }
 }
+
+export default Proxy.connect(Content)(state => ({ tab: state.tab, content: state.content }));

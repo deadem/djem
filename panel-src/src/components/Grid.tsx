@@ -1,6 +1,6 @@
 import { Action, Proxy } from '../store';
 import Tree from './Tree';
-import Mui from './Mui';
+import Mui from '../mui';
 
 interface Props {
   id: string;
@@ -85,4 +85,4 @@ class Grid extends Proxy.Component {
   }
 }
 
-export default Proxy.connect(Grid)((state: Proxy.State) => ({ id: state.grid.id, grid: state.grid.data, tree: state.tree }));
+export default Proxy.connect(Grid)(state => ({ id: state.grid.id, grid: state.grid.data, tree: state.tree }));

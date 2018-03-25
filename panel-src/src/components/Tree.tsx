@@ -41,4 +41,4 @@ class Tree extends Proxy.Component {
   }
 }
 
-export default Proxy.connect(Tree)((state: Proxy.State) => ({ tree: state.tree.data }));
+export default Proxy.connect(Tree)(state => ({ tree: state.tree.data }));

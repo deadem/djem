@@ -25,11 +25,11 @@ class Main extends Proxy.Component {
         <Login />
         <Toolbar />
 
-        {this.props.tab == 'grid' ? <Grid id='' /> : <Content />}
+        {this.props.tab == 'grid' ? <Grid id='' /> : <Content content={({})} />}
 
       </div>
     );
   }
 }
 
-export default Proxy.connect(Main)((state: Proxy.State) => ({ tab: state.tab }));
+export default Proxy.connect(Main)(state => ({ tab: state.tab }));
