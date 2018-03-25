@@ -5,7 +5,7 @@ import Content from './Content';
 import Proxy from '../store/Proxy';
 
 interface Props {
-  content: 'grid' | 'document';
+  tab?: string | number;
 }
 
 class Main extends Proxy.Component {
@@ -25,12 +25,11 @@ class Main extends Proxy.Component {
         <Login />
         <Toolbar />
 
-        <Grid />
-        <Content />
+        {this.props.tab == 'grid' ? <Grid /> : <Content />}
 
       </div>
     );
   }
 }
 
-export default Main;
+export default Proxy.connect(Main)((state: Proxy.State) => ({ tab: state.tab }));

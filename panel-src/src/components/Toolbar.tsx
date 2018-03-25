@@ -13,7 +13,7 @@ class Toolbar extends Proxy.Component {
     super(props, context);
 
     this.props = props;
-    this.selectTab('root');
+    this.selectTab('grid');
   }
 
   // <Mui.Toolbar>
@@ -24,7 +24,7 @@ class Toolbar extends Proxy.Component {
     return (
       <Mui.AppBar position='static'>
          <Mui.Tabs value={this.props.tab} onChange={(_evt, value) => this.selectTab(value)}>
-          <Mui.Tab label='DJEM' value='root' />
+          <Mui.Tab label='DJEM' value='grid' />
           <Mui.Tab label='Item Two'/>
           <Mui.Tab label='Item Three' />
         </Mui.Tabs>

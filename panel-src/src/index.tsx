@@ -11,7 +11,7 @@ if (parent) {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Main content='grid' />
+    <Main />
   </Provider>
   ,
   document.getElementById('app')

@@ -1,56 +1,42 @@
 import { State, store } from '../store';
 
-export class Action {
-  public static authorize(obj: {}) {
-    return this.dispatch(this.authorize, obj);
-  }
-
-  public static grid(obj: {}) {
-    return this.dispatch(this.grid, obj);
-  }
-
-  public static gridChange(obj: {}) {
-    return this.dispatch(this.gridChange, obj);
-  }
-
-  public static tabChange(obj: {}) {
-    return this.dispatch(this.tabChange, obj);
-  }
-
-  public static tree(obj: {}) {
-    return this.dispatch(this.tree, obj);
-  }
-
-  private static dispatch(type: any, obj: {}) {
-    store.dispatch({ ...obj, type });
-  }
-}
-
-interface ActionInterface {
+interface Reducer {
   type: any;
   id?: string | number;
   state?: any;
 }
 
-const reducer = (type: any, func: (state: State) => {} | void) => {
-  return (state: State, action: ActionInterface) => {
-    if (action.type === type) {
-      let clone = { ...state };
-      return { ...state, ...(func(clone) || clone) };
-    }
+export class Action {
+  public static authorize(obj: {}) {
+    return this.dispatch((state, _action) => { state.login.authorized = !state.login.authorized; }, obj);
+  }
 
-    return state;
-  };
-};
+  public static grid(obj: {}) {
+    return this.dispatch((state, action) => { state.grid.data = action.state; }, obj);
+  }
 
-export default (currentState: State, action: ActionInterface): State => {
-  const reducers = [
-    reducer(Action.authorize, (state) => { state.login.authorized = !state.login.authorized; }),
-    reducer(Action.grid, (state) => { state.grid.data = action.state; }),
-    reducer(Action.gridChange, (state) => { state.grid.id = action.id; }),
-    reducer(Action.tabChange, () => ({ tab: action.id })),
-    reducer(Action.tree, () => ({ tree: [ ...action.state ] })),
-  ];
+  public static gridChange(obj: {}) {
+    return this.dispatch((state, action) => { state.grid.id = action.id; }, obj);
+  }
 
-  return reducers.reduce((value, func) => func(value, action) || value, currentState);
+  public static tabChange(obj: {}) {
+    return this.dispatch((_state, action) => ({ tab: action.id }), obj);
+  }
+
+  public static tree(obj: {}) {
+    return this.dispatch((_state, action) => ({ tree: [ ...action.state ] }), obj);
+  }
+
+  private static dispatch(type: (state: State, action: Reducer) => {} | void, obj: {}) {
+    store.dispatch({ ...obj, type });
+  }
+}
+
+export default (state: State, action: Reducer): State => {
+  if (typeof action.type == 'function') {
+    let clone = { ...state };
+    return { ...state, ...(action.type(clone, action) || clone) };
+  }
+
+  return state;
 };
