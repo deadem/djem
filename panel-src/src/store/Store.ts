@@ -5,7 +5,10 @@ interface Login {
 }
 
 interface Tree {
-  tree: any;
+  tree: {
+    refs: {};
+    data: any[];
+  }
 }
 
 interface Grid {
@@ -17,7 +20,10 @@ interface Grid {
 
 interface Content {
   tab: number | string | undefined;
-  content: 'grid' | 'document';
+  content: {
+    active?: string | number;
+    data: {};
+  }
 }
 
 export type State = Login & Tree & Grid & Content;
@@ -26,11 +32,14 @@ export let initialState: State = {
   login: {
     authorized: true,
   },
-  tree: undefined,
+  tree: {
+    refs: {},
+    data: [],
+  },
   grid: {
     id: undefined,
     data: undefined,
   },
   tab: 'grid',
-  content: 'grid',
+  content: { data: {} },
 };

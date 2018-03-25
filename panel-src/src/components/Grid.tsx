@@ -1,11 +1,12 @@
 import Proxy from '../store/Proxy';
-import { Action } from '../reducers';
+import { Action } from '../store/Reducers';
 import Tree from './Tree';
 import Mui from './Mui';
 
 interface Props {
-  id?: string;
+  id: string;
   grid?: any;
+  tree?: any;
 }
 
 class Grid extends Proxy.Component {
@@ -60,8 +61,9 @@ class Grid extends Proxy.Component {
     });
   }
 
-  private selectRow(id: string) {
-    console.log(id);
+  private selectRow(item: any) {
+    let doctype = item._doctype || this.props.tree.refs[this.props.id]._doctype;
+    Action.openContent({ doctype, id: item.id });
   }
 
   private gridRows() {
@@ -84,4 +86,4 @@ class Grid extends Proxy.Component {
   }
 }
 
-export default Proxy.connect(Grid)((state: Proxy.State) => ({ id: state.grid.id, grid: state.grid.data }));
+export default Proxy.connect(Grid)((state: Proxy.State) => ({ id: state.grid.id, grid: state.grid.data, tree: state.tree }));

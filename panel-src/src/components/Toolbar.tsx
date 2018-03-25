@@ -1,5 +1,5 @@
 import Proxy from '../store/Proxy';
-import { Action } from '../reducers';
+import { Action } from '../store/Reducers';
 import Mui from './Mui';
 
 interface Props {

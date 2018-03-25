@@ -19,12 +19,16 @@ export class Action {
     return this.dispatch((state, action) => { state.grid.id = action.id; }, obj);
   }
 
+  public static openContent(obj: {}) {
+    return this.tabChange(obj);
+  }
+
   public static tabChange(obj: {}) {
     return this.dispatch((_state, action) => ({ tab: action.id }), obj);
   }
 
   public static tree(obj: {}) {
-    return this.dispatch((_state, action) => ({ tree: [ ...action.state ] }), obj);
+    return this.dispatch((_state, action) => ({ tree: action.state }), obj);
   }
 
   private static dispatch(type: (state: State, action: Reducer) => {} | void, obj: {}) {

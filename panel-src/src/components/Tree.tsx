@@ -1,5 +1,5 @@
 import Proxy from '../store/Proxy';
-import { Action } from '../reducers';
+import { Action } from '../store/Reducers';
 import { TreeNode } from './TreeNode';
 
 interface Props {
@@ -26,9 +26,20 @@ class Tree extends Proxy.Component {
 
   protected load(proxy: Proxy.Http) {
     proxy.post('tree', {}).then((response) => {
-      Action.tree({ state: response.data });
+      let refs: any = {};
+      const walk = (nodes: any[]) => {
+        for (let node of nodes) {
+          refs[node.id] = node;
+
+          if (node.items) {
+            walk(node.items);
+          }
+        }
+      };
+      walk(response.data);
+      Action.tree({ state: { refs, data: response.data } });
     });
   }
 }
 
-export default Proxy.connect(Tree)((state: Proxy.State) => ({ tree: state.tree }));
+export default Proxy.connect(Tree)((state: Proxy.State) => ({ tree: state.tree.data }));
