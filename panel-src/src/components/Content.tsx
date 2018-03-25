@@ -2,11 +2,9 @@ import { Proxy } from '../store';
 
 interface Props {
   tab?: string | number;
-  content: {
-    [key: string]: {
-      params: any;
-      data: any;
-    };
+  content?: {
+    params: any;
+    data: any;
   }
 }
 
@@ -22,10 +20,10 @@ class Content extends Proxy.Component {
   public render() {
     return (
       <div className='Content'>
-        content
+        {JSON.stringify(this.props.content)}
       </div>
     );
   }
 }
 
-export default Proxy.connect(Content)(state => ({ tab: state.tab, content: state.content }));
+export default Proxy.connect(Content)(state => ({ tab: state.tab, content: state.content[state.tab || ''] }));

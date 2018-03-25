@@ -260,7 +260,7 @@ var Main = /** @class */ (function (_super) {
         return (React.createElement("div", { className: 'Main' },
             React.createElement(Login_1.default, null),
             React.createElement(Toolbar_1.default, null),
-            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, { content: ({}) })));
+            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, null)));
     };
     return Main;
 }(store_1.Proxy.Component));
@@ -287,7 +287,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(58);
 var Auth_1 = __webpack_require__(268);
-var mui_1 = __webpack_require__(553);
+var mui_1 = __webpack_require__(60);
 var authState = {
     name: '',
     password: '',
@@ -391,7 +391,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(23);
-var mui_1 = __webpack_require__(553);
+var mui_1 = __webpack_require__(60);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
     function Toolbar(props, context) {
@@ -439,7 +439,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(23);
 var Tree_1 = __webpack_require__(549);
-var mui_1 = __webpack_require__(553);
+var mui_1 = __webpack_require__(60);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid(props, context) {
@@ -565,7 +565,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(23);
-var mui_1 = __webpack_require__(553);
+var mui_1 = __webpack_require__(60);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode(props, context) {
@@ -621,16 +621,16 @@ var Content = /** @class */ (function (_super) {
         return _this;
     }
     Content.prototype.render = function () {
-        return (React.createElement("div", { className: 'Content' }, "content"));
+        return (React.createElement("div", { className: 'Content' }, JSON.stringify(this.props.content)));
     };
     return Content;
 }(store_1.Proxy.Component));
-exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ tab: state.tab, content: state.content }); });
+exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ tab: state.tab, content: state.content[state.tab || ''] }); });
 
 
 /***/ }),
 
-/***/ 553:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
