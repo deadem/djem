@@ -21,8 +21,10 @@ interface Grid {
 interface Content {
   tab: number | string | undefined;
   content: {
-    active?: string | number;
-    data: {};
+    [key: string]: {
+      params: {};
+      data: {};
+    };
   }
 }
 
@@ -41,5 +43,5 @@ export let initialState: State = {
     data: undefined,
   },
   tab: 'grid',
-  content: { data: {} },
+  content: {},
 };
