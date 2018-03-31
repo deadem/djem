@@ -25,7 +25,7 @@ class Main extends Proxy.Component {
         <Login />
         <Toolbar />
 
-        {this.props.tab == 'grid' ? <Grid id='' /> : <Content />}
+        {this.props.tab == 'grid' ? <Grid id='' /> : <Content id='' />}
 
       </div>
     );

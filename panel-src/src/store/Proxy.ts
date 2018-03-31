@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { connect as connectRedux } from 'react-redux';
-import { State as StateType, Store as StoreType, store } from './index';
+import { State as StateType, Store as StoreType } from './index';
 import { HttpProxy } from './HttpProxy';
 
 let httpProxy = new HttpProxy();
@@ -31,12 +31,12 @@ namespace Proxy {
     // public componentWillReceiveProps(nextProps: any) {
     // }
 
-    protected load(_proxy: Http, _store: Store) {
+    protected load(_proxy: Http) {
       return;
     }
 
     private loadComponentData() {
-      this.load(httpProxy.instance(), store);
+      this.load(httpProxy.instance());
     }
   }
 

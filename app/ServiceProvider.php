@@ -30,11 +30,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             Route::any('djem/api/grid', 'Api\Main@grid');
             Route::any('djem/api/content/delete', 'Api\Content@delete');
             Route::any('djem/api/content/load', 'Api\Content@loadRelation');
-            Route::get('djem/api/content', 'Api\Content@get');
-            Route::post('djem/api/content', 'Api\Content@set');
+            Route::any('djem/api/content/get', 'Api\Content@get');
+            Route::any('djem/api/content/set', 'Api\Content@set');
+
             Route::get('djem/api/files', 'Api\Files@get');
             Route::post('djem/api/files/upload', 'Api\Files@upload');
             Route::post('djem/api/files', 'Api\Files@set');
+
+            // v1
+            Route::get('djem/api/content', 'Api\Content@get');
+            Route::post('djem/api/content', 'Api\Content@set');
         });
         Route::get('djem/{file?}', '\DJEM\Http\Controllers\StaticFiles@get')->where('file', '.*');
     }

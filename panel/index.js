@@ -52,7 +52,7 @@ exports.Core = Core;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(58);
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var Main_1 = __webpack_require__(266);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
@@ -61,24 +61,6 @@ if (parent) {
 }
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.store },
     React.createElement(Main_1.default, null)), document.getElementById('app'));
-
-
-/***/ }),
-
-/***/ 23:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var redux_1 = __webpack_require__(81);
-var Reducers_1 = __webpack_require__(82);
-var Store_1 = __webpack_require__(245);
-exports.store = redux_1.createStore(Reducers_1.InitReducers, Store_1.initialState);
-var Reducers_2 = __webpack_require__(82);
-exports.Action = Reducers_2.Action;
-var Proxy_1 = __webpack_require__(246);
-exports.Proxy = Proxy_1.default;
 
 
 /***/ }),
@@ -125,7 +107,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(58);
-var index_1 = __webpack_require__(23);
 var HttpProxy_1 = __webpack_require__(247);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy;
@@ -152,11 +133,11 @@ var Proxy;
         };
         // public componentWillReceiveProps(nextProps: any) {
         // }
-        Component.prototype.load = function (_proxy, _store) {
+        Component.prototype.load = function (_proxy) {
             return;
         };
         Component.prototype.loadComponentData = function () {
-            this.load(httpProxy.instance(), index_1.store);
+            this.load(httpProxy.instance());
         };
         return Component;
     }(React.Component));
@@ -190,7 +171,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(124);
-var index_1 = __webpack_require__(23);
+var index_1 = __webpack_require__(28);
 var HttpProxy = /** @class */ (function (_super) {
     __extends(HttpProxy, _super);
     function HttpProxy() {
@@ -247,7 +228,7 @@ var Login_1 = __webpack_require__(267);
 var Toolbar_1 = __webpack_require__(547);
 var Grid_1 = __webpack_require__(548);
 var Content_1 = __webpack_require__(551);
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
     function Main(props, context) {
@@ -260,7 +241,7 @@ var Main = /** @class */ (function (_super) {
         return (React.createElement("div", { className: 'Main' },
             React.createElement(Login_1.default, null),
             React.createElement(Toolbar_1.default, null),
-            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, null)));
+            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, { id: '' })));
     };
     return Main;
 }(store_1.Proxy.Component));
@@ -374,6 +355,24 @@ exports.Auth = Auth;
 
 /***/ }),
 
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_1 = __webpack_require__(81);
+var Reducers_1 = __webpack_require__(82);
+var Store_1 = __webpack_require__(245);
+exports.store = redux_1.createStore(Reducers_1.InitReducers, Store_1.initialState);
+var Reducers_2 = __webpack_require__(82);
+exports.Action = Reducers_2.Action;
+var Proxy_1 = __webpack_require__(246);
+exports.Proxy = Proxy_1.default;
+
+
+/***/ }),
+
 /***/ 547:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -390,7 +389,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var mui_1 = __webpack_require__(60);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
@@ -437,7 +436,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var Tree_1 = __webpack_require__(549);
 var mui_1 = __webpack_require__(60);
 var Grid = /** @class */ (function (_super) {
@@ -511,7 +510,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var TreeNode_1 = __webpack_require__(550);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
@@ -564,7 +563,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var mui_1 = __webpack_require__(60);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
@@ -612,7 +611,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content(props, context) {
@@ -623,9 +622,19 @@ var Content = /** @class */ (function (_super) {
     Content.prototype.render = function () {
         return (React.createElement("div", { className: 'Content' }, JSON.stringify(this.props.content)));
     };
+    Content.prototype.load = function (proxy) {
+        var _this = this;
+        if (!this.props.content || !this.props.content.params) {
+            return;
+        }
+        var params = this.props.content.params;
+        proxy.post('content/get', { _doctype: params.doctype, id: params.id }).then(function (response) {
+            store_1.Action.content(_this.props.id, response.data);
+        });
+    };
     return Content;
 }(store_1.Proxy.Component));
-exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ tab: state.tab, content: state.content[state.tab || ''] }); });
+exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id: state.tab, content: state.content[state.tab || ''] }); });
 
 
 /***/ }),
@@ -683,32 +692,40 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(23);
+var store_1 = __webpack_require__(28);
 var Action = /** @class */ (function () {
     function Action() {
     }
     Action.authorize = function (authorized) {
-        return this.dispatch(function (state) { state.login.authorized = authorized; });
-    };
-    Action.grid = function (data) {
-        return this.dispatch(function (state) { state.grid.data = data; });
+        return this.dispatch(function (state) { return (__assign({}, state, { login: __assign({}, state.login, { authorized: authorized }) })); });
     };
     Action.gridChange = function (id) {
-        return this.dispatch(function (state) { state.grid.id = id; });
+        return this.dispatch(function (state) { return (__assign({}, state, { grid: __assign({}, state.grid, { id: id }) })); });
     };
     Action.openContent = function (params) {
         return this.dispatch(function (state) {
             var id = params.doctype + "--" + params.id;
-            state.content[id] = { params: params, data: {} };
-            return { tab: id };
+            return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id });
+            var _a;
         });
     };
     Action.tabChange = function (tab) {
-        return this.dispatch(function () { return ({ tab: tab }); });
+        return this.dispatch(function (state) { return (__assign({}, state, { tab: tab })); });
+    };
+    // load data
+    Action.grid = function (data) {
+        return this.dispatch(function (state) { return (__assign({}, state, { grid: __assign({}, state.grid, { data: data }) })); });
     };
     Action.tree = function (tree) {
-        return this.dispatch(function () { return ({ tree: tree }); });
+        return this.dispatch(function (state) { return (__assign({}, state, { tree: tree })); });
     };
+    Action.content = function (id, data) {
+        return this.dispatch(function (state) {
+            return (__assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = __assign({}, state.content[id], { data: data }), _a)) }));
+            var _a;
+        });
+    };
+    // dispatch helper
     Action.dispatch = function (type) {
         store_1.store.dispatch({ type: type });
     };
@@ -717,8 +734,7 @@ var Action = /** @class */ (function () {
 exports.Action = Action;
 function InitReducers(state, action) {
     if (typeof action.type == 'function') {
-        var clone = __assign({}, state);
-        return __assign({}, state, (action.type(clone) || clone));
+        return action.type(state);
     }
     return state;
 }
