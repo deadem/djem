@@ -37,3 +37,9 @@ input {
   border-right: 1px solid #ccc;
   box-sizing: border-box;
   display: flex; }
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto; }

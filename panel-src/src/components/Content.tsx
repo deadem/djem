@@ -1,4 +1,5 @@
 import { Action, Proxy } from '../store';
+import DJEM from './fields';
 
 interface Props {
   id: string;
@@ -19,13 +20,14 @@ class Content extends Proxy.Component {
 
   public render() {
     let content = this.props.content;
-    if (!content) {
+    if (!content || !content.data || !content.data.view) {
       return (<div>No content</div>);
     }
 
     return (
       <div className='Content'>
         {JSON.stringify(content.data)}
+        <DJEM.Layout item={content.data.view} />
       </div>
     );
   }

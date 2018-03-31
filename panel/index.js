@@ -612,6 +612,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(28);
+var fields_1 = __webpack_require__(553);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content(props, context) {
@@ -621,10 +622,12 @@ var Content = /** @class */ (function (_super) {
     }
     Content.prototype.render = function () {
         var content = this.props.content;
-        if (!content) {
+        if (!content || !content.data || !content.data.view) {
             return (React.createElement("div", null, "No content"));
         }
-        return (React.createElement("div", { className: 'Content' }, JSON.stringify(content.data)));
+        return (React.createElement("div", { className: 'Content' },
+            JSON.stringify(content.data),
+            React.createElement(fields_1.default.Layout, { item: content.data.view })));
     };
     Content.prototype.load = function (proxy) {
         var _this = this;
@@ -639,6 +642,81 @@ var Content = /** @class */ (function (_super) {
     return Content;
 }(store_1.Proxy.Component));
 exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id: state.tab, content: state.content[state.tab || ''] }); });
+
+
+/***/ }),
+
+/***/ 553:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(554);
+var DJEM = /** @class */ (function () {
+    function DJEM() {
+    }
+    DJEM.Layout = Layout_1.default;
+    return DJEM;
+}());
+exports.default = DJEM;
+
+
+/***/ }),
+
+/***/ 554:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout = /** @class */ (function (_super) {
+    __extends(Layout, _super);
+    function Layout(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    Layout.prototype.render = function () {
+        var item = this.props.item;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-layout']).join(' '), style: this.styles(item) }, JSON.stringify(item)));
+    };
+    Layout.prototype.className = function (item) {
+        var className = [];
+        if (item.autoScroll) {
+            className.push('djem-layout-autoscroll');
+        }
+        var layout = item.layout;
+        if (layout) {
+            if (layout.align) {
+                className.push("djem-layout-align-" + layout.align);
+            }
+            if (layout.type) {
+                className.push("djem-layout-type-" + layout.type);
+            }
+        }
+        return className;
+    };
+    Layout.prototype.styles = function (item) {
+        var styles = {};
+        if (item.flex) {
+            styles.flex = +item.flex;
+        }
+        return styles;
+    };
+    return Layout;
+}(React.Component));
+exports.default = Layout;
 
 
 /***/ }),
