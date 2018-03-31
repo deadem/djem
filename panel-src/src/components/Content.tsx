@@ -18,9 +18,14 @@ class Content extends Proxy.Component {
   }
 
   public render() {
+    let content = this.props.content;
+    if (!content) {
+      return (<div>No content</div>);
+    }
+
     return (
       <div className='Content'>
-        {JSON.stringify(this.props.content)}
+        {JSON.stringify(content.data)}
       </div>
     );
   }
@@ -32,7 +37,7 @@ class Content extends Proxy.Component {
 
     let params = this.props.content.params;
 
-    proxy.post('content/get', { _doctype: params.doctype, id: params.id }).then(response => {
+    proxy.post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(response => {
       Action.content(this.props.id, response.data);
     });
   }

@@ -620,7 +620,11 @@ var Content = /** @class */ (function (_super) {
         return _this;
     }
     Content.prototype.render = function () {
-        return (React.createElement("div", { className: 'Content' }, JSON.stringify(this.props.content)));
+        var content = this.props.content;
+        if (!content) {
+            return (React.createElement("div", null, "No content"));
+        }
+        return (React.createElement("div", { className: 'Content' }, JSON.stringify(content.data)));
     };
     Content.prototype.load = function (proxy) {
         var _this = this;
@@ -628,7 +632,7 @@ var Content = /** @class */ (function (_super) {
             return;
         }
         var params = this.props.content.params;
-        proxy.post('content/get', { _doctype: params.doctype, id: params.id }).then(function (response) {
+        proxy.post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(function (response) {
             store_1.Action.content(_this.props.id, response.data);
         });
     };
