@@ -1,3 +1,5 @@
+import DJEM from './index';
+
 export default class Layout extends React.Component {
   public props: any;
 
@@ -10,11 +12,34 @@ export default class Layout extends React.Component {
   public render() {
     let item = this.props.item;
 
+    // {JSON.stringify(item)}
     return (
       <div className={[ ...this.className(item), 'djem-layout' ].join(' ')} style={this.styles(item)}>
-        {JSON.stringify(item)}
+        {this.items(item.items)}
       </div>
     );
+  }
+
+  protected items(items: any[]): JSX.Element[] {
+    const xtypes: { [key: string]: (item: any) => JSX.Element } = {
+      'djem.text': item => (<DJEM.Widget key={item} item={item} />),
+      'djem.tag': item => (<DJEM.Widget key={item} item={item} />),
+      'djem.html': item => (<DJEM.Widget key={item} item={item} />),
+      'djem.image': item => (<DJEM.Widget key={item} item={item} />),
+      'djem.images': item => (<DJEM.Widget key={item} item={item} />),
+      'button': item => (<DJEM.Widget key={item} item={item} />),
+      'label': item => (<DJEM.Widget key={item} item={item} />),
+    };
+
+    return (items || []).map(item => {
+      if (xtypes[item.xtype]) {
+        return xtypes[item.xtype](item);
+      }
+
+      return (
+        <DJEM.Layout key={item} item={item} />
+      );
+    });
   }
 
   protected className(item: any): string[] {
@@ -41,9 +66,21 @@ export default class Layout extends React.Component {
   protected styles(item: any): {} {
     let styles: any = {};
 
-    if (item.flex) {
-      styles.flex = +item.flex;
+    const styleResolver: { [key: string]: ((item: any) => string | number) | boolean } = {
+      flex: i => +i.flex,
+      height: true,
+      width: true,
+    };
+
+    for (const prop of Object.keys(item)) {
+      let resolver = styleResolver[prop];
+
+      if (resolver) {
+        styles[prop] = resolver === true ? item[prop] : resolver(item);
+      }
     }
+
+    styles.border = '1px dotted red';
 
     return styles;
   }

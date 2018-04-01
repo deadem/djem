@@ -49,3 +49,18 @@ input {
   flex-direction: column;
   height: 100%;
   overflow: auto; }
+
+.djem-layout-autoscroll {
+  overflow: auto; }
+
+.djem-layout-type-hbox {
+  flex-direction: row; }
+
+.djem-layout-type-vbox {
+  flex-direction: column; }
+
+.djem-layout {
+  display: flex; }
+
+.djem-widget {
+  border-collapse: collapse; }

@@ -51,9 +51,29 @@ exports.Core = Core;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(555);
+var Widget_1 = __webpack_require__(557);
+var DJEM = /** @class */ (function () {
+    function DJEM() {
+    }
+    DJEM.Layout = Layout_1.default;
+    DJEM.Widget = Widget_1.default;
+    return DJEM;
+}());
+exports.default = DJEM;
+
+
+/***/ }),
+
+/***/ 210:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(60);
 var store_1 = __webpack_require__(30);
-var Main_1 = __webpack_require__(268);
+var Main_1 = __webpack_require__(269);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
 if (parent) {
@@ -65,7 +85,7 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.sto
 
 /***/ }),
 
-/***/ 247:
+/***/ 248:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90,7 +110,7 @@ exports.initialState = {
 
 /***/ }),
 
-/***/ 248:
+/***/ 249:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -107,7 +127,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(60);
-var HttpProxy_1 = __webpack_require__(249);
+var HttpProxy_1 = __webpack_require__(250);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy;
 (function (Proxy) {
@@ -154,7 +174,7 @@ exports.default = Proxy;
 
 /***/ }),
 
-/***/ 249:
+/***/ 250:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -208,7 +228,7 @@ exports.HttpProxy = HttpProxy;
 
 /***/ }),
 
-/***/ 268:
+/***/ 269:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -224,10 +244,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Login_1 = __webpack_require__(269);
-var Toolbar_1 = __webpack_require__(549);
-var Grid_1 = __webpack_require__(550);
-var Content_1 = __webpack_require__(553);
+var Login_1 = __webpack_require__(270);
+var Toolbar_1 = __webpack_require__(550);
+var Grid_1 = __webpack_require__(551);
+var Content_1 = __webpack_require__(554);
 var store_1 = __webpack_require__(30);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
@@ -250,7 +270,7 @@ exports.default = store_1.Proxy.connect(Main)(function (state) { return ({ tab: 
 
 /***/ }),
 
-/***/ 269:
+/***/ 270:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -267,7 +287,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(60);
-var Auth_1 = __webpack_require__(270);
+var Auth_1 = __webpack_require__(271);
 var mui_1 = __webpack_require__(50);
 var authState = {
     name: '',
@@ -320,7 +340,7 @@ exports.default = react_redux_1.connect(function (state) { return ({ open: !stat
 
 /***/ }),
 
-/***/ 270:
+/***/ 271:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -363,11 +383,11 @@ exports.Auth = Auth;
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(83);
 var Reducers_1 = __webpack_require__(84);
-var Store_1 = __webpack_require__(247);
+var Store_1 = __webpack_require__(248);
 exports.store = redux_1.createStore(Reducers_1.InitReducers, Store_1.initialState);
 var Reducers_2 = __webpack_require__(84);
 exports.Action = Reducers_2.Action;
-var Proxy_1 = __webpack_require__(248);
+var Proxy_1 = __webpack_require__(249);
 exports.Proxy = Proxy_1.default;
 
 
@@ -413,7 +433,7 @@ exports.default = Mui;
 
 /***/ }),
 
-/***/ 549:
+/***/ 550:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -460,7 +480,7 @@ exports.default = store_1.Proxy.connect(Toolbar)(function (state) { return ({ ta
 
 /***/ }),
 
-/***/ 550:
+/***/ 551:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -477,7 +497,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(30);
-var Tree_1 = __webpack_require__(551);
+var Tree_1 = __webpack_require__(552);
 var mui_1 = __webpack_require__(50);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
@@ -534,7 +554,7 @@ exports.default = store_1.Proxy.connect(Grid)(function (state) { return ({ id: s
 
 /***/ }),
 
-/***/ 551:
+/***/ 552:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -551,7 +571,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(30);
-var TreeNode_1 = __webpack_require__(552);
+var TreeNode_1 = __webpack_require__(553);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree(props, context) {
@@ -587,7 +607,7 @@ exports.default = store_1.Proxy.connect(Tree)(function (state) { return ({ tree:
 
 /***/ }),
 
-/***/ 552:
+/***/ 553:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -635,7 +655,7 @@ exports.TreeNode = TreeNode;
 
 /***/ }),
 
-/***/ 553:
+/***/ 554:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -652,7 +672,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(30);
-var fields_1 = __webpack_require__(554);
+var fields_1 = __webpack_require__(209);
 var mui_1 = __webpack_require__(50);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
@@ -667,8 +687,8 @@ var Content = /** @class */ (function (_super) {
             return (React.createElement("div", { className: 'center' },
                 React.createElement(mui_1.default.CircularProgress, { size: 128, thickness: 2 })));
         }
+        // {JSON.stringify(content.data)}
         return (React.createElement("div", { className: 'Content' },
-            JSON.stringify(content.data),
             React.createElement(fields_1.default.Layout, { item: content.data.view })));
     };
     Content.prototype.load = function (proxy) {
@@ -684,24 +704,6 @@ var Content = /** @class */ (function (_super) {
     return Content;
 }(store_1.Proxy.Component));
 exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id: state.tab, content: state.content[state.tab || ''] }); });
-
-
-/***/ }),
-
-/***/ 554:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(555);
-var DJEM = /** @class */ (function () {
-    function DJEM() {
-    }
-    DJEM.Layout = Layout_1.default;
-    return DJEM;
-}());
-exports.default = DJEM;
 
 
 /***/ }),
@@ -722,6 +724,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var index_1 = __webpack_require__(209);
 var Layout = /** @class */ (function (_super) {
     __extends(Layout, _super);
     function Layout(props, context) {
@@ -731,7 +734,25 @@ var Layout = /** @class */ (function (_super) {
     }
     Layout.prototype.render = function () {
         var item = this.props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-layout']).join(' '), style: this.styles(item) }, JSON.stringify(item)));
+        // {JSON.stringify(item)}
+        return (React.createElement("div", { className: this.className(item).concat(['djem-layout']).join(' '), style: this.styles(item) }, this.items(item.items)));
+    };
+    Layout.prototype.items = function (items) {
+        var xtypes = {
+            'djem.text': function (item) { return (React.createElement(index_1.default.Widget, { key: item, item: item })); },
+            'djem.tag': function (item) { return (React.createElement(index_1.default.Widget, { key: item, item: item })); },
+            'djem.html': function (item) { return (React.createElement(index_1.default.Widget, { key: item, item: item })); },
+            'djem.image': function (item) { return (React.createElement(index_1.default.Widget, { key: item, item: item })); },
+            'djem.images': function (item) { return (React.createElement(index_1.default.Widget, { key: item, item: item })); },
+            'button': function (item) { return (React.createElement(index_1.default.Widget, { key: item, item: item })); },
+            'label': function (item) { return (React.createElement(index_1.default.Widget, { key: item, item: item })); },
+        };
+        return (items || []).map(function (item) {
+            if (xtypes[item.xtype]) {
+                return xtypes[item.xtype](item);
+            }
+            return (React.createElement(index_1.default.Layout, { key: item, item: item }));
+        });
     };
     Layout.prototype.className = function (item) {
         var className = [];
@@ -751,14 +772,65 @@ var Layout = /** @class */ (function (_super) {
     };
     Layout.prototype.styles = function (item) {
         var styles = {};
-        if (item.flex) {
-            styles.flex = +item.flex;
+        var styleResolver = {
+            flex: function (i) { return +i.flex; },
+            height: true,
+            width: true,
+        };
+        for (var _i = 0, _a = Object.keys(item); _i < _a.length; _i++) {
+            var prop = _a[_i];
+            var resolver = styleResolver[prop];
+            if (resolver) {
+                styles[prop] = resolver === true ? item[prop] : resolver(item);
+            }
         }
+        styles.border = '1px dotted red';
         return styles;
     };
     return Layout;
 }(React.Component));
 exports.default = Layout;
+
+
+/***/ }),
+
+/***/ 557:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(555);
+var Widget = /** @class */ (function (_super) {
+    __extends(Widget, _super);
+    function Widget(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    Widget.prototype.render = function () {
+        var item = this.props.item;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget']).join(' '), style: this.styles(item) },
+            "Name: ",
+            item.name,
+            item.fieldLabel && (React.createElement("div", null,
+                "Label: ",
+                item.fieldLabel)),
+            this.items(item.items)));
+    };
+    return Widget;
+}(Layout_1.default));
+exports.default = Widget;
 
 
 /***/ }),
@@ -828,4 +900,4 @@ exports.InitReducers = InitReducers;
 
 /***/ })
 
-},[209]);
+},[210]);

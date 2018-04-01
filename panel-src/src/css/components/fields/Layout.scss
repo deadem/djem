@@ -1,0 +1,18 @@
+.djem-layout-autoscroll {
+  overflow: auto;
+}
+
+.djem-layout-align-stretch {
+}
+
+.djem-layout-type-hbox {
+  flex-direction: row;
+}
+
+.djem-layout-type-vbox {
+  flex-direction: column;
+}
+
+.djem-layout {
+  display: flex;
+}

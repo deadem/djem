@@ -25,9 +25,10 @@ class Content extends Proxy.Component {
       return (<div className='center'><Mui.CircularProgress size={128} thickness={2} /></div>);
     }
 
+    // {JSON.stringify(content.data)}
+
     return (
       <div className='Content'>
-        {JSON.stringify(content.data)}
         <DJEM.Layout item={content.data.view} />
       </div>
     );
