@@ -1,6 +1,7 @@
 import {
   AppBar,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -26,6 +27,7 @@ import {
 export default class Mui {
   public static AppBar = AppBar;
   public static Button = Button;
+  public static CircularProgress = CircularProgress;
   public static Dialog = Dialog;
   public static DialogActions = DialogActions;
   public static DialogContent = DialogContent;

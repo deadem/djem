@@ -51,7 +51,7 @@ exports.Core = Core;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(59);
+var react_redux_1 = __webpack_require__(60);
 var store_1 = __webpack_require__(30);
 var Main_1 = __webpack_require__(268);
 var loader = document.getElementById('container-loader');
@@ -106,7 +106,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(59);
+var react_redux_1 = __webpack_require__(60);
 var HttpProxy_1 = __webpack_require__(249);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy;
@@ -266,9 +266,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(59);
+var react_redux_1 = __webpack_require__(60);
 var Auth_1 = __webpack_require__(270);
-var mui_1 = __webpack_require__(61);
+var mui_1 = __webpack_require__(50);
 var authState = {
     name: '',
     password: '',
@@ -373,6 +373,46 @@ exports.Proxy = Proxy_1.default;
 
 /***/ }),
 
+/***/ 50:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var material_ui_1 = __webpack_require__(134);
+var Mui = /** @class */ (function () {
+    function Mui() {
+    }
+    Mui.AppBar = material_ui_1.AppBar;
+    Mui.Button = material_ui_1.Button;
+    Mui.CircularProgress = material_ui_1.CircularProgress;
+    Mui.Dialog = material_ui_1.Dialog;
+    Mui.DialogActions = material_ui_1.DialogActions;
+    Mui.DialogContent = material_ui_1.DialogContent;
+    Mui.DialogContentText = material_ui_1.DialogContentText;
+    Mui.DialogTitle = material_ui_1.DialogTitle;
+    Mui.IconButton = material_ui_1.IconButton;
+    Mui.List = material_ui_1.List;
+    Mui.ListItem = material_ui_1.ListItem;
+    Mui.ListItemIcon = material_ui_1.ListItemIcon;
+    Mui.ListItemText = material_ui_1.ListItemText;
+    Mui.Tab = material_ui_1.Tab;
+    Mui.Table = material_ui_1.Table;
+    Mui.Tabs = material_ui_1.Tabs;
+    Mui.TableBody = material_ui_1.TableBody;
+    Mui.TableCell = material_ui_1.TableCell;
+    Mui.TableHead = material_ui_1.TableHead;
+    Mui.TableRow = material_ui_1.TableRow;
+    Mui.TextField = material_ui_1.TextField;
+    Mui.Toolbar = material_ui_1.Toolbar;
+    Mui.Typography = material_ui_1.Typography;
+    return Mui;
+}());
+exports.default = Mui;
+
+
+/***/ }),
+
 /***/ 549:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -390,7 +430,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(30);
-var mui_1 = __webpack_require__(61);
+var mui_1 = __webpack_require__(50);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
     function Toolbar(props, context) {
@@ -438,7 +478,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(30);
 var Tree_1 = __webpack_require__(551);
-var mui_1 = __webpack_require__(61);
+var mui_1 = __webpack_require__(50);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid(props, context) {
@@ -564,7 +604,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(30);
-var mui_1 = __webpack_require__(61);
+var mui_1 = __webpack_require__(50);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode(props, context) {
@@ -613,6 +653,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(30);
 var fields_1 = __webpack_require__(554);
+var mui_1 = __webpack_require__(50);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content(props, context) {
@@ -623,7 +664,8 @@ var Content = /** @class */ (function (_super) {
     Content.prototype.render = function () {
         var content = this.props.content;
         if (!content || !content.data || !content.data.view) {
-            return (React.createElement("div", null, "No content"));
+            return (React.createElement("div", { className: 'center' },
+                React.createElement(mui_1.default.CircularProgress, { size: 128, thickness: 2 })));
         }
         return (React.createElement("div", { className: 'Content' },
             JSON.stringify(content.data),
@@ -717,45 +759,6 @@ var Layout = /** @class */ (function (_super) {
     return Layout;
 }(React.Component));
 exports.default = Layout;
-
-
-/***/ }),
-
-/***/ 61:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var material_ui_1 = __webpack_require__(134);
-var Mui = /** @class */ (function () {
-    function Mui() {
-    }
-    Mui.AppBar = material_ui_1.AppBar;
-    Mui.Button = material_ui_1.Button;
-    Mui.Dialog = material_ui_1.Dialog;
-    Mui.DialogActions = material_ui_1.DialogActions;
-    Mui.DialogContent = material_ui_1.DialogContent;
-    Mui.DialogContentText = material_ui_1.DialogContentText;
-    Mui.DialogTitle = material_ui_1.DialogTitle;
-    Mui.IconButton = material_ui_1.IconButton;
-    Mui.List = material_ui_1.List;
-    Mui.ListItem = material_ui_1.ListItem;
-    Mui.ListItemIcon = material_ui_1.ListItemIcon;
-    Mui.ListItemText = material_ui_1.ListItemText;
-    Mui.Tab = material_ui_1.Tab;
-    Mui.Table = material_ui_1.Table;
-    Mui.Tabs = material_ui_1.Tabs;
-    Mui.TableBody = material_ui_1.TableBody;
-    Mui.TableCell = material_ui_1.TableCell;
-    Mui.TableHead = material_ui_1.TableHead;
-    Mui.TableRow = material_ui_1.TableRow;
-    Mui.TextField = material_ui_1.TextField;
-    Mui.Toolbar = material_ui_1.Toolbar;
-    Mui.Typography = material_ui_1.Typography;
-    return Mui;
-}());
-exports.default = Mui;
 
 
 /***/ }),

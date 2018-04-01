@@ -1,5 +1,6 @@
 import { Action, Proxy } from '../store';
 import DJEM from './fields';
+import Mui from '../mui';
 
 interface Props {
   id: string;
@@ -21,7 +22,7 @@ class Content extends Proxy.Component {
   public render() {
     let content = this.props.content;
     if (!content || !content.data || !content.data.view) {
-      return (<div>No content</div>);
+      return (<div className='center'><Mui.CircularProgress size={128} thickness={2} /></div>);
     }
 
     return (

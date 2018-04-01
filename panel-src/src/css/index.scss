@@ -23,4 +23,11 @@ input {
   width: 100%;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 @import './components/index';
