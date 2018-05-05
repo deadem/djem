@@ -1,5 +1,5 @@
 import { Proxy, Action } from '../store';
-import Mui from '../mui';
+import * as Mui from '../mui';
 
 interface Props {
   tab?: string | number;
