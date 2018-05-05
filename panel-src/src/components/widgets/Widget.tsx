@@ -14,8 +14,6 @@ export class Widget extends Layout {
 
     return (
       <div className={[ ...this.className(item), 'djem-widget', 'djem-widget-border' ].join(' ')} style={this.styles(item)}>
-        Name: {item.name}
-        {item.fieldLabel && (<div>Label: {item.fieldLabel}</div>)}
         {this.items(item.items)}
       </div>
     );

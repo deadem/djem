@@ -2,7 +2,7 @@
 
 namespace DJEM\Editor\Controls;
 
-class Button extends Item
+class Button extends Control
 {
     public function __construct($text = null)
     {

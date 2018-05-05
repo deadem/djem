@@ -32,14 +32,15 @@ export class Layout extends React.Component {
 
   protected items(items: any[]): JSX.Element[] {
     const xtypes: { [key: string]: React.ComponentClass<Props> } = {
+      'djem.button': DJEM.Button,
       'djem.html': DJEM.Widget,
       'djem.image': DJEM.Widget,
       'djem.images': DJEM.Widget,
       'djem.staticHtml': DJEM.StaticHtml,
-      'djem.text': DJEM.Text,
       'djem.tag': DJEM.Widget,
+      'djem.text': DJEM.Text,
 
-      'button': DJEM.Widget,
+      'button': DJEM.Button,
       'label': DJEM.Widget,
       'layout': DJEM.Layout,
     };
@@ -91,6 +92,10 @@ export class Layout extends React.Component {
       if (resolver) {
         styles[prop] = resolver === true ? item[prop] : resolver(item);
       }
+    }
+
+    if (styles.height && !styles['min-height']) {
+      styles['min-height'] = styles.height;
     }
 
     // styles.border = '1px dotted red';

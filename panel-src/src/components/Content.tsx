@@ -34,9 +34,8 @@ class Content extends Proxy.Component {
       if (!content) {
         return;
       }
-      const script = document.createElement('script');
-      script.innerHTML = content.data.code;
-      node.appendChild(script);
+
+      new Function(content.data.code).bind(node)();
     };
 
     return (

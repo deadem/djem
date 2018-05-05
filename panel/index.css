@@ -24,6 +24,9 @@ input {
   align-items: center;
   height: 100%; }
 
+.fullHeight {
+  height: 100%; }
+
 .Main {
   height: 100%;
   width: 100%;

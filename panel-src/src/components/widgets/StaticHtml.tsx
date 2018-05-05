@@ -15,6 +15,7 @@ export class StaticHtml extends Layout {
 
     return (
       <div
+        id={item.name}
         className={[ ...this.className(item), 'djem-widget', 'djem-static-html' ].join(' ')}
         style={this.styles(item)}
         dangerouslySetInnerHTML={{ __html: item.html }}

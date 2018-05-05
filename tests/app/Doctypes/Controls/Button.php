@@ -12,7 +12,7 @@ class Button extends \DJEM\Doctype
     {
         return parent::editor()->create(
             Control::vlayout()->items([
-                Control::button('Click me')->reference('name')->height(64)->color('black')->bgcolor('light-green'),
+                Control::button('Click me')->name('name')->height(64)->color('black')->bgcolor('light-green'),
 
                 $this->addHighlightedCode(__FILE__),
             ])
@@ -24,10 +24,7 @@ class Button extends \DJEM\Doctype
         $editor = $this->editor();
 
         $code = <<<'EOF'
-        var me = this;
-        me.lookupReference('name').on('click', function() {
-            Ext.Msg.alert('Click', 'Button clicked');
-        });
+        this.querySelector('#name').onclick = function() { alert('Button clicked'); };
 EOF;
         $code .= $this->highlightCode();
 

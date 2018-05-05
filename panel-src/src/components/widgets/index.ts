@@ -1,4 +1,5 @@
+export { Button } from './Button';
 export { Layout } from './Layout';
-export { Widget } from './Widget';
-export { Text } from './Text';
 export { StaticHtml } from './StaticHtml';
+export { Text } from './Text';
+export { Widget } from './Widget';

@@ -43,13 +43,14 @@ var Layout = /** @class */ (function (_super) {
     Layout.prototype.items = function (items) {
         var _this = this;
         var xtypes = {
+            'djem.button': DJEM.Button,
             'djem.html': DJEM.Widget,
             'djem.image': DJEM.Widget,
             'djem.images': DJEM.Widget,
             'djem.staticHtml': DJEM.StaticHtml,
-            'djem.text': DJEM.Text,
             'djem.tag': DJEM.Widget,
-            'button': DJEM.Widget,
+            'djem.text': DJEM.Text,
+            'button': DJEM.Button,
             'label': DJEM.Widget,
             'layout': DJEM.Layout,
         };
@@ -90,6 +91,9 @@ var Layout = /** @class */ (function (_super) {
             if (resolver) {
                 styles[prop] = resolver === true ? item[prop] : resolver(item);
             }
+        }
+        if (styles.height && !styles['min-height']) {
+            styles['min-height'] = styles.height;
         }
         // styles.border = '1px dotted red';
         return styles;
@@ -152,14 +156,16 @@ exports.Core = Core;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var Button_1 = __webpack_require__(573);
+exports.Button = Button_1.Button;
 var Layout_1 = __webpack_require__(123);
 exports.Layout = Layout_1.Layout;
-var Widget_1 = __webpack_require__(569);
-exports.Widget = Widget_1.Widget;
-var Text_1 = __webpack_require__(570);
-exports.Text = Text_1.Text;
 var StaticHtml_1 = __webpack_require__(572);
 exports.StaticHtml = StaticHtml_1.StaticHtml;
+var Text_1 = __webpack_require__(570);
+exports.Text = Text_1.Text;
+var Widget_1 = __webpack_require__(569);
+exports.Widget = Widget_1.Widget;
 
 
 /***/ }),
@@ -797,9 +803,7 @@ var Content = /** @class */ (function (_super) {
             if (!content) {
                 return;
             }
-            var script = document.createElement('script');
-            script.innerHTML = content.data.code;
-            node.appendChild(script);
+            new Function(content.data.code).bind(node)();
         };
         return (React.createElement("div", { className: 'Content', ref: function (el) { return el && inject(el); } },
             React.createElement(DJEM.Layout, { data: content.data.data, item: content.data.view, update: this.update() })));
@@ -847,13 +851,7 @@ var Widget = /** @class */ (function (_super) {
     }
     Widget.prototype.render = function () {
         var item = this.props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-widget-border']).join(' '), style: this.styles(item) },
-            "Name: ",
-            item.name,
-            item.fieldLabel && (React.createElement("div", null,
-                "Label: ",
-                item.fieldLabel)),
-            this.items(item.items)));
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-widget-border']).join(' '), style: this.styles(item) }, this.items(item.items)));
     };
     return Widget;
 }(Layout_1.Layout));
@@ -939,11 +937,49 @@ var StaticHtml = /** @class */ (function (_super) {
     StaticHtml.prototype.render = function () {
         var props = this.props;
         var item = props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-static-html']).join(' '), style: this.styles(item), dangerouslySetInnerHTML: { __html: item.html } }));
+        return (React.createElement("div", { id: item.name, className: this.className(item).concat(['djem-widget', 'djem-static-html']).join(' '), style: this.styles(item), dangerouslySetInnerHTML: { __html: item.html } }));
     };
     return StaticHtml;
 }(Layout_1.Layout));
 exports.StaticHtml = StaticHtml;
+
+
+/***/ }),
+
+/***/ 573:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(123);
+var Mui = __webpack_require__(47);
+var Button = /** @class */ (function (_super) {
+    __extends(Button, _super);
+    function Button(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    Button.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-button']).join(' '), style: this.styles(item) },
+            React.createElement(Mui.Button, { id: item.name, variant: 'raised', fullWidth: true, className: 'fullHeight' }, item.text)));
+    };
+    return Button;
+}(Layout_1.Layout));
+exports.Button = Button;
 
 
 /***/ }),
