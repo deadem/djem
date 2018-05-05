@@ -32,11 +32,13 @@ export class Layout extends React.Component {
 
   protected items(items: any[]): JSX.Element[] {
     const xtypes: { [key: string]: React.ComponentClass<Props> } = {
-      'djem.text': DJEM.Text,
-      'djem.tag': DJEM.Widget,
       'djem.html': DJEM.Widget,
       'djem.image': DJEM.Widget,
       'djem.images': DJEM.Widget,
+      'djem.staticHtml': DJEM.StaticHtml,
+      'djem.text': DJEM.Text,
+      'djem.tag': DJEM.Widget,
+
       'button': DJEM.Widget,
       'label': DJEM.Widget,
       'layout': DJEM.Layout,

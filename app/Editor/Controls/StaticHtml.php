@@ -17,6 +17,8 @@ class StaticHtml extends Item
 
     public function html($value)
     {
+        $this->xtype('djem.staticHtml');
+
         return $this->setProperty('html', $value);
     }
 }

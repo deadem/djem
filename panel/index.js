@@ -43,11 +43,12 @@ var Layout = /** @class */ (function (_super) {
     Layout.prototype.items = function (items) {
         var _this = this;
         var xtypes = {
-            'djem.text': DJEM.Text,
-            'djem.tag': DJEM.Widget,
             'djem.html': DJEM.Widget,
             'djem.image': DJEM.Widget,
             'djem.images': DJEM.Widget,
+            'djem.staticHtml': DJEM.StaticHtml,
+            'djem.text': DJEM.Text,
+            'djem.tag': DJEM.Widget,
             'button': DJEM.Widget,
             'label': DJEM.Widget,
             'layout': DJEM.Layout,
@@ -157,6 +158,8 @@ var Widget_1 = __webpack_require__(569);
 exports.Widget = Widget_1.Widget;
 var Text_1 = __webpack_require__(570);
 exports.Text = Text_1.Text;
+var StaticHtml_1 = __webpack_require__(572);
+exports.StaticHtml = StaticHtml_1.StaticHtml;
 
 
 /***/ }),
@@ -897,6 +900,42 @@ var Text = /** @class */ (function (_super) {
     return Text;
 }(Layout_1.Layout));
 exports.Text = Text;
+
+
+/***/ }),
+
+/***/ 572:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(123);
+var StaticHtml = /** @class */ (function (_super) {
+    __extends(StaticHtml, _super);
+    function StaticHtml(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    StaticHtml.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-static-html']).join(' '), style: this.styles(item), dangerouslySetInnerHTML: { __html: item.html } }));
+    };
+    return StaticHtml;
+}(Layout_1.Layout));
+exports.StaticHtml = StaticHtml;
 
 
 /***/ }),
