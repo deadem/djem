@@ -100,7 +100,7 @@ export class Layout extends React.Component {
 
   protected styles(item: any): {} {
     return styleResolver(item, {
-      flex: i => ({ flex: +i.flex }),
+      flex: i => ({ flex: +i }),
       height: i => ({ height: i, minHeight: i }),
       width: true,
     });

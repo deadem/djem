@@ -1068,7 +1068,7 @@ var Layout = /** @class */ (function (_super) {
     };
     Layout.prototype.styles = function (item) {
         return exports.styleResolver(item, {
-            flex: function (i) { return ({ flex: +i.flex }); },
+            flex: function (i) { return ({ flex: +i }); },
             height: function (i) { return ({ height: i, minHeight: i }); },
             width: true,
         });
