@@ -1,6 +1,6 @@
-import Layout from './Layout';
+import { Layout } from './Layout';
 
-export default class Widget extends Layout {
+export class Text extends Layout {
   public props: any;
 
   constructor(props: any, context: any) {
@@ -13,8 +13,8 @@ export default class Widget extends Layout {
     let item = this.props.item;
 
     return (
-      <div className={[ ...this.className(item), 'djem-widget' ].join(' ')} style={this.styles(item)}>
-        Name: {item.name}
+      <div className={[ ...this.className(item), 'djem-widget', 'djem-text' ].join(' ')} style={this.styles(item)}>
+        Name: Text: {item.name}
         {item.fieldLabel && (<div>Label: {item.fieldLabel}</div>)}
         {this.items(item.items)}
       </div>

@@ -1,5 +1,5 @@
 import { Action, Proxy } from '../store';
-import DJEM from './fields';
+import * as DJEM from './widgets';
 import Mui from '../mui';
 
 interface Props {

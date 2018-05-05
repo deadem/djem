@@ -1,6 +1,6 @@
-import DJEM from './index';
+import * as DJEM from './index';
 
-export default class Layout extends React.Component {
+export class Layout extends React.Component {
   public props: any;
 
   constructor(props: any, context: any) {
@@ -22,7 +22,7 @@ export default class Layout extends React.Component {
 
   protected items(items: any[]): JSX.Element[] {
     const xtypes: { [key: string]: (item: any) => JSX.Element } = {
-      'djem.text': item => (<DJEM.Widget key={item} item={item} />),
+      'djem.text': item => (<DJEM.Text key={item} item={item} />),
       'djem.tag': item => (<DJEM.Widget key={item} item={item} />),
       'djem.html': item => (<DJEM.Widget key={item} item={item} />),
       'djem.image': item => (<DJEM.Widget key={item} item={item} />),
