@@ -166,6 +166,7 @@ class ControlsTest extends TestCase
             'items' => [
                 (object) [
                     'html' => '<b>Static html content</b><p>Text content</p>',
+                    'xtype' => 'djem.staticHtml',
                 ],
             ],
         ], $view);
