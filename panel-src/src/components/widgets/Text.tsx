@@ -27,19 +27,16 @@ export class Text extends Layout {
           id={item.name}
           label={item.fieldLabel}
           fullWidth={true}
-          // className={classes.textField}
           value={this.state.value}
           onChange={this.onChange()}
-          // onChange={this.handleChange('name')}
-          // margin='normal'
         />
       </div>
     );
   }
 
   private onChange = () => (event: any) => {
-    this.setState({
-      value: event.target.value,
-    });
+    let value = event.target.value;
+    this.setState({ value });
+    this.props.update({ [this.props.item.name]: value });
   }
 }

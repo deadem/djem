@@ -15,12 +15,23 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var DJEM = __webpack_require__(215);
 var Layout = /** @class */ (function (_super) {
     __extends(Layout, _super);
     function Layout(props, context) {
         var _this = _super.call(this, props, context) || this;
+        _this.update = function () { return function (value) {
+            _this.props.update(__assign({}, value));
+        }; };
         _this.props = props;
         return _this;
     }
@@ -32,19 +43,21 @@ var Layout = /** @class */ (function (_super) {
     Layout.prototype.items = function (items) {
         var _this = this;
         var xtypes = {
-            'djem.text': function (item) { return (React.createElement(DJEM.Text, { key: item.name, data: _this.props.data, item: item })); },
-            'djem.tag': function (item) { return (React.createElement(DJEM.Widget, { key: item.name, data: _this.props.data, item: item })); },
-            'djem.html': function (item) { return (React.createElement(DJEM.Widget, { key: item.name, data: _this.props.data, item: item })); },
-            'djem.image': function (item) { return (React.createElement(DJEM.Widget, { key: item.name, data: _this.props.data, item: item })); },
-            'djem.images': function (item) { return (React.createElement(DJEM.Widget, { key: item.name, data: _this.props.data, item: item })); },
-            'button': function (item) { return (React.createElement(DJEM.Widget, { key: item.name, data: _this.props.data, item: item })); },
-            'label': function (item) { return (React.createElement(DJEM.Widget, { key: item.name, data: _this.props.data, item: item })); },
+            'djem.text': DJEM.Text,
+            'djem.tag': DJEM.Widget,
+            'djem.html': DJEM.Widget,
+            'djem.image': DJEM.Widget,
+            'djem.images': DJEM.Widget,
+            'button': DJEM.Widget,
+            'label': DJEM.Widget,
+            'layout': DJEM.Layout,
         };
         return (items || []).map(function (item) {
-            if (xtypes[item.xtype]) {
-                return xtypes[item.xtype](item);
+            var xtype = xtypes[item.xtype];
+            if (!xtype) {
+                xtype = xtypes.layout;
             }
-            return (React.createElement(DJEM.Layout, { data: _this.props.data, key: item.name, item: item }));
+            return React.createElement(xtype, __assign({}, _this.props, { key: item.name, item: item, update: _this.update() }));
         });
     };
     Layout.prototype.className = function (item) {
@@ -747,6 +760,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
 var DJEM = __webpack_require__(215);
@@ -755,6 +776,11 @@ var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content(props, context) {
         var _this = _super.call(this, props, context) || this;
+        _this.state = { data: {} };
+        _this.update = function () { return function (value) {
+            _this.setState({ data: __assign({}, _this.state, value) });
+            console.log(_this.state.data);
+        }; };
         _this.props = props;
         return _this;
     }
@@ -764,9 +790,8 @@ var Content = /** @class */ (function (_super) {
             return (React.createElement("div", { className: 'center' },
                 React.createElement(Mui.CircularProgress, { size: 128, thickness: 2 })));
         }
-        console.log(JSON.stringify(content.data));
         return (React.createElement("div", { className: 'Content' },
-            React.createElement(DJEM.Layout, { data: content.data.data, item: content.data.view })));
+            React.createElement(DJEM.Layout, { data: content.data.data, item: content.data.view, update: this.update() })));
     };
     Content.prototype.load = function (proxy) {
         var _this = this;
@@ -811,7 +836,7 @@ var Widget = /** @class */ (function (_super) {
     }
     Widget.prototype.render = function () {
         var item = this.props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-widget']).join(' '), style: this.styles(item) },
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-widget-border']).join(' '), style: this.styles(item) },
             "Name: ",
             item.name,
             item.fieldLabel && (React.createElement("div", null,
@@ -852,9 +877,10 @@ var Text = /** @class */ (function (_super) {
             value: ''
         };
         _this.onChange = function () { return function (event) {
-            _this.setState({
-                value: event.target.value,
-            });
+            var value = event.target.value;
+            _this.setState({ value: value });
+            _this.props.update((_a = {}, _a[_this.props.item.name] = value, _a));
+            var _a;
         }; };
         _this.state = {
             value: props.data[props.item.name]
@@ -866,9 +892,7 @@ var Text = /** @class */ (function (_super) {
         var props = this.props;
         var item = props.item;
         return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-text']).join(' '), style: this.styles(item) },
-            React.createElement(Mui.TextField, { id: item.name, label: item.fieldLabel, fullWidth: true, 
-                // className={classes.textField}
-                value: this.state.value, onChange: this.onChange() })));
+            React.createElement(Mui.TextField, { id: item.name, label: item.fieldLabel, fullWidth: true, value: this.state.value, onChange: this.onChange() })));
     };
     return Text;
 }(Layout_1.Layout));

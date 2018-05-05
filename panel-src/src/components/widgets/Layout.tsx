@@ -3,6 +3,7 @@ import * as DJEM from './index';
 export interface Props {
   data: any;
   item: any;
+  update(value: any): void;
 }
 
 export class Layout extends React.Component {
@@ -25,25 +26,30 @@ export class Layout extends React.Component {
     );
   }
 
+  public update = () => (value: any) => {
+    this.props.update({ ...value });
+  }
+
   protected items(items: any[]): JSX.Element[] {
-    const xtypes: { [key: string]: (item: any) => JSX.Element } = {
-      'djem.text': item => (<DJEM.Text key={item.name} data={this.props.data} item={item} />),
-      'djem.tag': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
-      'djem.html': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
-      'djem.image': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
-      'djem.images': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
-      'button': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
-      'label': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
+    const xtypes: { [key: string]: React.ComponentClass<Props> } = {
+      'djem.text': DJEM.Text,
+      'djem.tag': DJEM.Widget,
+      'djem.html': DJEM.Widget,
+      'djem.image': DJEM.Widget,
+      'djem.images': DJEM.Widget,
+      'button': DJEM.Widget,
+      'label': DJEM.Widget,
+      'layout': DJEM.Layout,
     };
 
     return (items || []).map(item => {
-      if (xtypes[item.xtype]) {
-        return xtypes[item.xtype](item);
+      let xtype = xtypes[item.xtype];
+
+      if (!xtype) {
+        xtype = xtypes.layout;
       }
 
-      return (
-        <DJEM.Layout data={this.props.data} key={item.name} item={item} />
-      );
+      return React.createElement(xtype, { ...this.props, key: item.name, item, update: this.update() });
     });
   }
 

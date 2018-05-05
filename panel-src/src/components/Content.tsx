@@ -15,6 +15,7 @@ interface Props {
 
 class Content extends Proxy.Component {
   public props: Props;
+  public state: { data: any } = { data: {} };
 
   constructor(props: Props, context: any) {
     super(props, context);
@@ -28,11 +29,9 @@ class Content extends Proxy.Component {
       return (<div className='center'><Mui.CircularProgress size={128} thickness={2} /></div>);
     }
 
-    console.log(JSON.stringify(content.data));
-
     return (
       <div className='Content'>
-        <DJEM.Layout data={content.data.data} item={content.data.view} />
+        <DJEM.Layout data={content.data.data} item={content.data.view} update={this.update()} />
       </div>
     );
   }
@@ -47,6 +46,11 @@ class Content extends Proxy.Component {
     proxy.post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(response => {
       Action.content(this.props.id, response.data);
     });
+  }
+
+  private update = () => (value: any) => {
+    this.setState({ data: { ...this.state, ...value } });
+    console.log(this.state.data);
   }
 }
 
