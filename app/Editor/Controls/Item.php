@@ -160,18 +160,14 @@ class Item
 
     public function color($value)
     {
-        $cls = $this->getProperty('cls') ? [$this->getProperty('cls')] : [];
-        array_push($cls, 'color-'.$value);
-        $this->setProperty('cls', implode(' ', $cls));
+        $this->setProperty('color', $value);
 
         return $this;
     }
 
     public function bgcolor($value)
     {
-        $cls = $this->getProperty('cls') ? [$this->getProperty('cls')] : [];
-        array_push($cls, 'bgcolor-'.$value);
-        $this->setProperty('cls', implode(' ', $cls));
+        $this->setProperty('bgcolor', $value);
 
         return $this;
     }

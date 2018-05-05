@@ -12,7 +12,7 @@ class Button extends \DJEM\Doctype
     {
         return parent::editor()->create(
             Control::vlayout()->items([
-                Control::button('Click me')->name('name')->height(64)->color('black')->bgcolor('light-green'),
+                Control::button('Click me')->name('name')->height(64)->color('#000000')->bgcolor('#4CAF50'),
 
                 $this->addHighlightedCode(__FILE__),
             ])

@@ -1,5 +1,25 @@
 import * as DJEM from './index';
 
+interface Resolver { [key: string]: ((item: any) => object) | boolean }
+
+export const styleResolver = (item: any, styleProps: Resolver): {} => {
+  let styles: any = {};
+
+  for (const prop of Object.keys(item)) {
+    let resolver = styleProps[prop];
+
+    if (resolver) {
+      if (resolver === true) {
+        styles[prop] = item[prop];
+      } else {
+        styles = { ...styles, ...resolver(item[prop]) };
+      }
+    }
+  }
+
+  return styles;
+};
+
 export interface Props {
   data: any;
   item: any;
@@ -78,28 +98,10 @@ export class Layout extends React.Component {
   }
 
   protected styles(item: any): {} {
-    let styles: any = {};
-
-    const styleResolver: { [key: string]: ((item: any) => string | number) | boolean } = {
-      flex: i => +i.flex,
-      height: true,
+    return styleResolver(item, {
+      flex: i => ({ flex: +i.flex }),
+      height: i => ({ 'height': i, 'min-height': i }),
       width: true,
-    };
-
-    for (const prop of Object.keys(item)) {
-      let resolver = styleResolver[prop];
-
-      if (resolver) {
-        styles[prop] = resolver === true ? item[prop] : resolver(item);
-      }
-    }
-
-    if (styles.height && !styles['min-height']) {
-      styles['min-height'] = styles.height;
-    }
-
-    // styles.border = '1px dotted red';
-
-    return styles;
+    });
   }
 }

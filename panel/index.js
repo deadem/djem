@@ -1,110 +1,5 @@
 webpackJsonp([0],{
 
-/***/ 123:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var DJEM = __webpack_require__(215);
-var Layout = /** @class */ (function (_super) {
-    __extends(Layout, _super);
-    function Layout(props, context) {
-        var _this = _super.call(this, props, context) || this;
-        _this.update = function () { return function (value) {
-            _this.props.update(__assign({}, value));
-        }; };
-        _this.props = props;
-        return _this;
-    }
-    Layout.prototype.render = function () {
-        var item = this.props.item;
-        // {JSON.stringify(item)}
-        return (React.createElement("div", { className: this.className(item).concat(['djem-layout']).join(' '), style: this.styles(item) }, this.items(item.items)));
-    };
-    Layout.prototype.items = function (items) {
-        var _this = this;
-        var xtypes = {
-            'djem.button': DJEM.Button,
-            'djem.html': DJEM.Widget,
-            'djem.image': DJEM.Widget,
-            'djem.images': DJEM.Widget,
-            'djem.staticHtml': DJEM.StaticHtml,
-            'djem.tag': DJEM.Widget,
-            'djem.text': DJEM.Text,
-            'button': DJEM.Button,
-            'label': DJEM.Widget,
-            'layout': DJEM.Layout,
-        };
-        return (items || []).map(function (item) {
-            var xtype = xtypes[item.xtype];
-            if (!xtype) {
-                xtype = xtypes.layout;
-            }
-            return React.createElement(xtype, __assign({}, _this.props, { key: item.name, item: item, update: _this.update() }));
-        });
-    };
-    Layout.prototype.className = function (item) {
-        var className = [];
-        if (item.autoScroll) {
-            className.push('djem-layout-autoscroll');
-        }
-        var layout = item.layout;
-        if (layout) {
-            if (layout.align) {
-                className.push("djem-layout-align-" + layout.align);
-            }
-            if (layout.type) {
-                className.push("djem-layout-type-" + layout.type);
-            }
-        }
-        return className;
-    };
-    Layout.prototype.styles = function (item) {
-        var styles = {};
-        var styleResolver = {
-            flex: function (i) { return +i.flex; },
-            height: true,
-            width: true,
-        };
-        for (var _i = 0, _a = Object.keys(item); _i < _a.length; _i++) {
-            var prop = _a[_i];
-            var resolver = styleResolver[prop];
-            if (resolver) {
-                styles[prop] = resolver === true ? item[prop] : resolver(item);
-            }
-        }
-        if (styles.height && !styles['min-height']) {
-            styles['min-height'] = styles.height;
-        }
-        // styles.border = '1px dotted red';
-        return styles;
-    };
-    return Layout;
-}(React.Component));
-exports.Layout = Layout;
-
-
-/***/ }),
-
 /***/ 135:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -112,7 +7,7 @@ exports.Layout = Layout;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(136);
-var Reducers_1 = __webpack_require__(88);
+var Reducers_1 = __webpack_require__(89);
 var auth = {
     token: '',
 };
@@ -156,29 +51,9 @@ exports.Core = Core;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Button_1 = __webpack_require__(573);
-exports.Button = Button_1.Button;
-var Layout_1 = __webpack_require__(123);
-exports.Layout = Layout_1.Layout;
-var StaticHtml_1 = __webpack_require__(572);
-exports.StaticHtml = StaticHtml_1.StaticHtml;
-var Text_1 = __webpack_require__(570);
-exports.Text = Text_1.Text;
-var Widget_1 = __webpack_require__(569);
-exports.Widget = Widget_1.Widget;
-
-
-/***/ }),
-
-/***/ 216:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(63);
+var react_redux_1 = __webpack_require__(64);
 var store_1 = __webpack_require__(31);
-var Main_1 = __webpack_require__(274);
+var Main_1 = __webpack_require__(273);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
 if (parent) {
@@ -190,7 +65,7 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.sto
 
 /***/ }),
 
-/***/ 253:
+/***/ 252:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -215,7 +90,7 @@ exports.initialState = {
 
 /***/ }),
 
-/***/ 254:
+/***/ 253:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -231,8 +106,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(63);
-var HttpProxy_1 = __webpack_require__(255);
+var react_redux_1 = __webpack_require__(64);
+var HttpProxy_1 = __webpack_require__(254);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy;
 (function (Proxy) {
@@ -279,7 +154,7 @@ exports.default = Proxy;
 
 /***/ }),
 
-/***/ 255:
+/***/ 254:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -333,7 +208,7 @@ exports.HttpProxy = HttpProxy;
 
 /***/ }),
 
-/***/ 274:
+/***/ 273:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -349,10 +224,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Login_1 = __webpack_require__(275);
-var Toolbar_1 = __webpack_require__(564);
-var Grid_1 = __webpack_require__(565);
-var Content_1 = __webpack_require__(568);
+var Login_1 = __webpack_require__(274);
+var Toolbar_1 = __webpack_require__(563);
+var Grid_1 = __webpack_require__(564);
+var Content_1 = __webpack_require__(567);
 var store_1 = __webpack_require__(31);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
@@ -375,7 +250,7 @@ exports.default = store_1.Proxy.connect(Main)(function (state) { return ({ tab: 
 
 /***/ }),
 
-/***/ 275:
+/***/ 274:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -391,9 +266,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(63);
-var Auth_1 = __webpack_require__(276);
-var Mui = __webpack_require__(47);
+var react_redux_1 = __webpack_require__(64);
+var Auth_1 = __webpack_require__(275);
+var Mui = __webpack_require__(40);
 var authState = {
     name: '',
     password: '',
@@ -445,7 +320,7 @@ exports.default = react_redux_1.connect(function (state) { return ({ open: !stat
 
 /***/ }),
 
-/***/ 276:
+/***/ 275:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -486,53 +361,70 @@ exports.Auth = Auth;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_1 = __webpack_require__(87);
-var Reducers_1 = __webpack_require__(88);
-var Store_1 = __webpack_require__(253);
+var redux_1 = __webpack_require__(88);
+var Reducers_1 = __webpack_require__(89);
+var Store_1 = __webpack_require__(252);
 exports.store = redux_1.createStore(Reducers_1.InitReducers, Store_1.initialState);
-var Reducers_2 = __webpack_require__(88);
+var Reducers_2 = __webpack_require__(89);
 exports.Action = Reducers_2.Action;
-var Proxy_1 = __webpack_require__(254);
+var Proxy_1 = __webpack_require__(253);
 exports.Proxy = Proxy_1.default;
 
 
 /***/ }),
 
-/***/ 47:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var material_ui_1 = __webpack_require__(142);
-exports.AppBar = material_ui_1.AppBar;
-exports.Button = material_ui_1.Button;
-exports.CircularProgress = material_ui_1.CircularProgress;
-exports.Dialog = material_ui_1.Dialog;
-exports.DialogActions = material_ui_1.DialogActions;
-exports.DialogContent = material_ui_1.DialogContent;
-exports.DialogContentText = material_ui_1.DialogContentText;
-exports.DialogTitle = material_ui_1.DialogTitle;
-exports.IconButton = material_ui_1.IconButton;
-exports.List = material_ui_1.List;
-exports.ListItem = material_ui_1.ListItem;
-exports.ListItemIcon = material_ui_1.ListItemIcon;
-exports.ListItemText = material_ui_1.ListItemText;
-exports.Tab = material_ui_1.Tab;
-exports.Table = material_ui_1.Table;
-exports.Tabs = material_ui_1.Tabs;
-exports.TableBody = material_ui_1.TableBody;
-exports.TableCell = material_ui_1.TableCell;
-exports.TableHead = material_ui_1.TableHead;
-exports.TableRow = material_ui_1.TableRow;
-exports.TextField = material_ui_1.TextField;
-exports.Toolbar = material_ui_1.Toolbar;
-exports.Typography = material_ui_1.Typography;
+function withStyles(styles) {
+    return function (component) {
+        return /** @class */ (function () {
+            function class_1() {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                var func = material_ui_1.withStyles(styles(args[0]))(component);
+                return new (func.bind.apply(func, [void 0].concat(args)))();
+            }
+            return class_1;
+        }());
+    };
+}
+exports.withStyles = withStyles;
+var material_ui_2 = __webpack_require__(142);
+exports.AppBar = material_ui_2.AppBar;
+exports.Button = material_ui_2.Button;
+exports.CircularProgress = material_ui_2.CircularProgress;
+exports.Dialog = material_ui_2.Dialog;
+exports.DialogActions = material_ui_2.DialogActions;
+exports.DialogContent = material_ui_2.DialogContent;
+exports.DialogContentText = material_ui_2.DialogContentText;
+exports.DialogTitle = material_ui_2.DialogTitle;
+exports.IconButton = material_ui_2.IconButton;
+exports.List = material_ui_2.List;
+exports.ListItem = material_ui_2.ListItem;
+exports.ListItemIcon = material_ui_2.ListItemIcon;
+exports.ListItemText = material_ui_2.ListItemText;
+exports.Tab = material_ui_2.Tab;
+exports.Table = material_ui_2.Table;
+exports.Tabs = material_ui_2.Tabs;
+exports.TableBody = material_ui_2.TableBody;
+exports.TableCell = material_ui_2.TableCell;
+exports.TableHead = material_ui_2.TableHead;
+exports.TableRow = material_ui_2.TableRow;
+exports.TextField = material_ui_2.TextField;
+exports.Toolbar = material_ui_2.Toolbar;
+exports.Typography = material_ui_2.Typography;
 
 
 /***/ }),
 
-/***/ 564:
+/***/ 563:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -549,7 +441,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var Mui = __webpack_require__(47);
+var Mui = __webpack_require__(40);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
     function Toolbar(props, context) {
@@ -579,7 +471,7 @@ exports.default = store_1.Proxy.connect(Toolbar)(function (state) { return ({ ta
 
 /***/ }),
 
-/***/ 565:
+/***/ 564:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -596,8 +488,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var Tree_1 = __webpack_require__(566);
-var Mui = __webpack_require__(47);
+var Tree_1 = __webpack_require__(565);
+var Mui = __webpack_require__(40);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid(props, context) {
@@ -653,7 +545,7 @@ exports.default = store_1.Proxy.connect(Grid)(function (state) { return ({ id: s
 
 /***/ }),
 
-/***/ 566:
+/***/ 565:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -670,7 +562,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var TreeNode_1 = __webpack_require__(567);
+var TreeNode_1 = __webpack_require__(566);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree(props, context) {
@@ -706,7 +598,7 @@ exports.default = store_1.Proxy.connect(Tree)(function (state) { return ({ tree:
 
 /***/ }),
 
-/***/ 567:
+/***/ 566:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -723,7 +615,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var Mui = __webpack_require__(47);
+var Mui = __webpack_require__(40);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode(props, context) {
@@ -754,7 +646,7 @@ exports.TreeNode = TreeNode;
 
 /***/ }),
 
-/***/ 568:
+/***/ 567:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -779,8 +671,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var DJEM = __webpack_require__(215);
-var Mui = __webpack_require__(47);
+var DJEM = __webpack_require__(568);
+var Mui = __webpack_require__(40);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content(props, context) {
@@ -825,6 +717,26 @@ exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id
 
 /***/ }),
 
+/***/ 568:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Button_1 = __webpack_require__(569);
+exports.Button = Button_1.Button;
+var Layout_1 = __webpack_require__(63);
+exports.Layout = Layout_1.Layout;
+var StaticHtml_1 = __webpack_require__(570);
+exports.StaticHtml = StaticHtml_1.StaticHtml;
+var Text_1 = __webpack_require__(571);
+exports.Text = Text_1.Text;
+var Widget_1 = __webpack_require__(572);
+exports.Widget = Widget_1.Widget;
+
+
+/***/ }),
+
 /***/ 569:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -840,22 +752,45 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(123);
-var Widget = /** @class */ (function (_super) {
-    __extends(Widget, _super);
-    function Widget(props, context) {
+var Layout_1 = __webpack_require__(63);
+var Mui = __webpack_require__(40);
+var Button = /** @class */ (function (_super) {
+    __extends(Button, _super);
+    function Button(props, context) {
         var _this = _super.call(this, props, context) || this;
         _this.props = props;
         return _this;
     }
-    Widget.prototype.render = function () {
-        var item = this.props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-widget-border']).join(' '), style: this.styles(item) }, this.items(item.items)));
+    Button.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        var classes = this.props.classes;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-button']).join(' '), style: this.styles(item) },
+            React.createElement(Mui.Button, { id: item.name, variant: 'raised', fullWidth: true, className: ['fullHeight', classes.root].join(' '), color: 'inherit' }, item.text)));
     };
-    return Widget;
+    return Button;
 }(Layout_1.Layout));
-exports.Widget = Widget;
+var styles = function (props) { return function (_theme) {
+    return {
+        root: __assign({}, Layout_1.styleResolver(props.item, {
+            bgcolor: function (i) { return ({ 'background-color': i }); },
+            color: true,
+        }), { '&:hover': Layout_1.styleResolver(props.item, {
+                bgcolor: function (i) { return ({ 'background-color': i }); },
+            }) })
+    };
+}; };
+var withStyles = Mui.withStyles(styles)(Button);
+exports.Button = withStyles;
 
 
 /***/ }),
@@ -876,8 +811,44 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(123);
-var Mui = __webpack_require__(47);
+var Layout_1 = __webpack_require__(63);
+var StaticHtml = /** @class */ (function (_super) {
+    __extends(StaticHtml, _super);
+    function StaticHtml(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    StaticHtml.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        return (React.createElement("div", { id: item.name, className: this.className(item).concat(['djem-widget', 'djem-static-html']).join(' '), style: this.styles(item), dangerouslySetInnerHTML: { __html: item.html } }));
+    };
+    return StaticHtml;
+}(Layout_1.Layout));
+exports.StaticHtml = StaticHtml;
+
+
+/***/ }),
+
+/***/ 571:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(63);
+var Mui = __webpack_require__(40);
 var Text = /** @class */ (function (_super) {
     __extends(Text, _super);
     function Text(props, context) {
@@ -926,27 +897,26 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(123);
-var StaticHtml = /** @class */ (function (_super) {
-    __extends(StaticHtml, _super);
-    function StaticHtml(props, context) {
+var Layout_1 = __webpack_require__(63);
+var Widget = /** @class */ (function (_super) {
+    __extends(Widget, _super);
+    function Widget(props, context) {
         var _this = _super.call(this, props, context) || this;
         _this.props = props;
         return _this;
     }
-    StaticHtml.prototype.render = function () {
-        var props = this.props;
-        var item = props.item;
-        return (React.createElement("div", { id: item.name, className: this.className(item).concat(['djem-widget', 'djem-static-html']).join(' '), style: this.styles(item), dangerouslySetInnerHTML: { __html: item.html } }));
+    Widget.prototype.render = function () {
+        var item = this.props.item;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-widget-border']).join(' '), style: this.styles(item) }, this.items(item.items)));
     };
-    return StaticHtml;
+    return Widget;
 }(Layout_1.Layout));
-exports.StaticHtml = StaticHtml;
+exports.Widget = Widget;
 
 
 /***/ }),
 
-/***/ 573:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -961,30 +931,100 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(123);
-var Mui = __webpack_require__(47);
-var Button = /** @class */ (function (_super) {
-    __extends(Button, _super);
-    function Button(props, context) {
+var DJEM = __webpack_require__(568);
+exports.styleResolver = function (item, styleProps) {
+    var styles = {};
+    for (var _i = 0, _a = Object.keys(item); _i < _a.length; _i++) {
+        var prop = _a[_i];
+        var resolver = styleProps[prop];
+        if (resolver) {
+            if (resolver === true) {
+                styles[prop] = item[prop];
+            }
+            else {
+                styles = __assign({}, styles, resolver(item[prop]));
+            }
+        }
+    }
+    return styles;
+};
+var Layout = /** @class */ (function (_super) {
+    __extends(Layout, _super);
+    function Layout(props, context) {
         var _this = _super.call(this, props, context) || this;
+        _this.update = function () { return function (value) {
+            _this.props.update(__assign({}, value));
+        }; };
         _this.props = props;
         return _this;
     }
-    Button.prototype.render = function () {
-        var props = this.props;
-        var item = props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-button']).join(' '), style: this.styles(item) },
-            React.createElement(Mui.Button, { id: item.name, variant: 'raised', fullWidth: true, className: 'fullHeight' }, item.text)));
+    Layout.prototype.render = function () {
+        var item = this.props.item;
+        // {JSON.stringify(item)}
+        return (React.createElement("div", { className: this.className(item).concat(['djem-layout']).join(' '), style: this.styles(item) }, this.items(item.items)));
     };
-    return Button;
-}(Layout_1.Layout));
-exports.Button = Button;
+    Layout.prototype.items = function (items) {
+        var _this = this;
+        var xtypes = {
+            'djem.button': DJEM.Button,
+            'djem.html': DJEM.Widget,
+            'djem.image': DJEM.Widget,
+            'djem.images': DJEM.Widget,
+            'djem.staticHtml': DJEM.StaticHtml,
+            'djem.tag': DJEM.Widget,
+            'djem.text': DJEM.Text,
+            'button': DJEM.Button,
+            'label': DJEM.Widget,
+            'layout': DJEM.Layout,
+        };
+        return (items || []).map(function (item) {
+            var xtype = xtypes[item.xtype];
+            if (!xtype) {
+                xtype = xtypes.layout;
+            }
+            return React.createElement(xtype, __assign({}, _this.props, { key: item.name, item: item, update: _this.update() }));
+        });
+    };
+    Layout.prototype.className = function (item) {
+        var className = [];
+        if (item.autoScroll) {
+            className.push('djem-layout-autoscroll');
+        }
+        var layout = item.layout;
+        if (layout) {
+            if (layout.align) {
+                className.push("djem-layout-align-" + layout.align);
+            }
+            if (layout.type) {
+                className.push("djem-layout-type-" + layout.type);
+            }
+        }
+        return className;
+    };
+    Layout.prototype.styles = function (item) {
+        return exports.styleResolver(item, {
+            flex: function (i) { return ({ flex: +i.flex }); },
+            height: function (i) { return ({ 'height': i, 'min-height': i }); },
+            width: true,
+        });
+    };
+    return Layout;
+}(React.Component));
+exports.Layout = Layout;
 
 
 /***/ }),
 
-/***/ 88:
+/***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1049,4 +1089,4 @@ exports.InitReducers = InitReducers;
 
 /***/ })
 
-},[216]);
+},[215]);
