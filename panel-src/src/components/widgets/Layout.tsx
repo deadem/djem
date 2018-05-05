@@ -1,9 +1,14 @@
 import * as DJEM from './index';
 
-export class Layout extends React.Component {
-  public props: any;
+export interface Props {
+  data: any;
+  item: any;
+}
 
-  constructor(props: any, context: any) {
+export class Layout extends React.Component {
+  public props: Props;
+
+  constructor(props: Props, context: any) {
     super(props, context);
 
     this.props = props;
@@ -22,13 +27,13 @@ export class Layout extends React.Component {
 
   protected items(items: any[]): JSX.Element[] {
     const xtypes: { [key: string]: (item: any) => JSX.Element } = {
-      'djem.text': item => (<DJEM.Text key={item} item={item} />),
-      'djem.tag': item => (<DJEM.Widget key={item} item={item} />),
-      'djem.html': item => (<DJEM.Widget key={item} item={item} />),
-      'djem.image': item => (<DJEM.Widget key={item} item={item} />),
-      'djem.images': item => (<DJEM.Widget key={item} item={item} />),
-      'button': item => (<DJEM.Widget key={item} item={item} />),
-      'label': item => (<DJEM.Widget key={item} item={item} />),
+      'djem.text': item => (<DJEM.Text key={item.name} data={this.props.data} item={item} />),
+      'djem.tag': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
+      'djem.html': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
+      'djem.image': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
+      'djem.images': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
+      'button': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
+      'label': item => (<DJEM.Widget key={item.name} data={this.props.data} item={item} />),
     };
 
     return (items || []).map(item => {
@@ -37,7 +42,7 @@ export class Layout extends React.Component {
       }
 
       return (
-        <DJEM.Layout key={item} item={item} />
+        <DJEM.Layout data={this.props.data} key={item.name} item={item} />
       );
     });
   }
@@ -80,7 +85,7 @@ export class Layout extends React.Component {
       }
     }
 
-    styles.border = '1px dotted red';
+    // styles.border = '1px dotted red';
 
     return styles;
   }

@@ -6,7 +6,10 @@ interface Props {
   id: string;
   content?: {
     params: any;
-    data: any;
+    data: {
+      data: any;
+      view: any;
+    };
   }
 }
 
@@ -25,11 +28,11 @@ class Content extends Proxy.Component {
       return (<div className='center'><Mui.CircularProgress size={128} thickness={2} /></div>);
     }
 
-    // {JSON.stringify(content.data)}
+    console.log(JSON.stringify(content.data));
 
     return (
       <div className='Content'>
-        <DJEM.Layout item={content.data.view} />
+        <DJEM.Layout data={content.data.data} item={content.data.view} />
       </div>
     );
   }
