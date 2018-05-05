@@ -10,11 +10,7 @@ trait HighlightCode
     public function highlightCode()
     {
         $code = file_get_contents(public_path().'/highlight.js/highlight.min.js');
-        $code .= 'Ext.select("PRE CODE").each(function(el) { hljs.highlightBlock(el.dom); });';
-        $code .= 'var tabs = this.lookupReference("highlightCode");';
-        $code .= 'tabs && tabs.on("tabchange", function() { '.
-            'Ext.select("PRE CODE").each(function(el) { hljs.highlightBlock(el.dom); });'.
-            '});';
+        $code .= 'document.querySelectorAll("PRE CODE").forEach(function(el) { hljs.highlightBlock(el); });';
 
         return $code;
     }
