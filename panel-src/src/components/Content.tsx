@@ -7,6 +7,7 @@ interface Props {
   content?: {
     params: any;
     data: {
+      code: string;
       data: any;
       view: any;
     };
@@ -29,8 +30,17 @@ class Content extends Proxy.Component {
       return (<div className='center'><Mui.CircularProgress size={128} thickness={2} /></div>);
     }
 
+    const inject = (node: HTMLElement) => {
+      if (!content) {
+        return;
+      }
+      const script = document.createElement('script');
+      script.innerHTML = content.data.code;
+      node.appendChild(script);
+    };
+
     return (
-      <div className='Content'>
+      <div className='Content' ref={el => el && inject(el)}>
         <DJEM.Layout data={content.data.data} item={content.data.view} update={this.update()} />
       </div>
     );

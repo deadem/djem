@@ -793,7 +793,15 @@ var Content = /** @class */ (function (_super) {
             return (React.createElement("div", { className: 'center' },
                 React.createElement(Mui.CircularProgress, { size: 128, thickness: 2 })));
         }
-        return (React.createElement("div", { className: 'Content' },
+        var inject = function (node) {
+            if (!content) {
+                return;
+            }
+            var script = document.createElement('script');
+            script.innerHTML = content.data.code;
+            node.appendChild(script);
+        };
+        return (React.createElement("div", { className: 'Content', ref: function (el) { return el && inject(el); } },
             React.createElement(DJEM.Layout, { data: content.data.data, item: content.data.view, update: this.update() })));
     };
     Content.prototype.load = function (proxy) {
