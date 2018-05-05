@@ -399,12 +399,14 @@ exports.withStyles = withStyles;
 var material_ui_2 = __webpack_require__(142);
 exports.AppBar = material_ui_2.AppBar;
 exports.Button = material_ui_2.Button;
+exports.Checkbox = material_ui_2.Checkbox;
 exports.CircularProgress = material_ui_2.CircularProgress;
 exports.Dialog = material_ui_2.Dialog;
 exports.DialogActions = material_ui_2.DialogActions;
 exports.DialogContent = material_ui_2.DialogContent;
 exports.DialogContentText = material_ui_2.DialogContentText;
 exports.DialogTitle = material_ui_2.DialogTitle;
+exports.FormControlLabel = material_ui_2.FormControlLabel;
 exports.IconButton = material_ui_2.IconButton;
 exports.List = material_ui_2.List;
 exports.ListItem = material_ui_2.ListItem;
@@ -679,8 +681,9 @@ var Content = /** @class */ (function (_super) {
         var _this = _super.call(this, props, context) || this;
         _this.state = { data: {} };
         _this.update = function () { return function (value) {
-            _this.setState({ data: __assign({}, _this.state, value) });
-            console.log(_this.state.data);
+            var data = __assign({}, _this.state.data, value);
+            _this.setState({ data: data });
+            console.log(data);
         }; };
         _this.props = props;
         return _this;
@@ -698,7 +701,7 @@ var Content = /** @class */ (function (_super) {
             new Function(content.data.code).bind(node)();
         };
         return (React.createElement("div", { className: 'Content', ref: function (el) { return el && inject(el); } },
-            React.createElement(DJEM.Layout, { data: content.data.data, item: content.data.view, update: this.update() })));
+            React.createElement(DJEM.Layout, { data: content.data.data || {}, item: content.data.view, update: this.update() })));
     };
     Content.prototype.load = function (proxy) {
         var _this = this;
@@ -725,6 +728,8 @@ exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id
 Object.defineProperty(exports, "__esModule", { value: true });
 var Button_1 = __webpack_require__(569);
 exports.Button = Button_1.Button;
+var Checkbox_1 = __webpack_require__(574);
+exports.Checkbox = Checkbox_1.Checkbox;
 var Layout_1 = __webpack_require__(63);
 exports.Layout = Layout_1.Layout;
 var StaticHtml_1 = __webpack_require__(570);
@@ -916,6 +921,56 @@ exports.Widget = Widget;
 
 /***/ }),
 
+/***/ 574:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(63);
+var Mui = __webpack_require__(40);
+var Checkbox = /** @class */ (function (_super) {
+    __extends(Checkbox, _super);
+    function Checkbox(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.state = {
+            value: ''
+        };
+        _this.onChange = function () { return function (event) {
+            var value = !!event.target.checked;
+            _this.setState({ value: value });
+            _this.props.update((_a = {}, _a[_this.props.item.name] = value, _a));
+            var _a;
+        }; };
+        _this.state = {
+            value: props.data[props.item.name]
+        };
+        _this.props = props;
+        return _this;
+    }
+    Checkbox.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-checkbox']).join(' '), style: this.styles(item) },
+            React.createElement(Mui.FormControlLabel, { control: React.createElement(Mui.Checkbox, { value: 'on', id: item.name, checked: this.state.value, onChange: this.onChange() }), label: item.boxLabel })));
+    };
+    return Checkbox;
+}(Layout_1.Layout));
+exports.Checkbox = Checkbox;
+
+
+/***/ }),
+
 /***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -976,6 +1031,7 @@ var Layout = /** @class */ (function (_super) {
         var _this = this;
         var xtypes = {
             'djem.button': DJEM.Button,
+            'djem.checkbox': DJEM.Checkbox,
             'djem.html': DJEM.Widget,
             'djem.image': DJEM.Widget,
             'djem.images': DJEM.Widget,
@@ -1013,7 +1069,7 @@ var Layout = /** @class */ (function (_super) {
     Layout.prototype.styles = function (item) {
         return exports.styleResolver(item, {
             flex: function (i) { return ({ flex: +i.flex }); },
-            height: function (i) { return ({ 'height': i, 'min-height': i }); },
+            height: function (i) { return ({ height: i, minHeight: i }); },
             width: true,
         });
     };

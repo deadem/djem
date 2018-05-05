@@ -40,7 +40,7 @@ class Content extends Proxy.Component {
 
     return (
       <div className='Content' ref={el => el && inject(el)}>
-        <DJEM.Layout data={content.data.data} item={content.data.view} update={this.update()} />
+        <DJEM.Layout data={content.data.data || {}} item={content.data.view} update={this.update()} />
       </div>
     );
   }
@@ -58,8 +58,9 @@ class Content extends Proxy.Component {
   }
 
   private update = () => (value: any) => {
-    this.setState({ data: { ...this.state, ...value } });
-    console.log(this.state.data);
+    let data = { ...this.state.data, ...value };
+    this.setState({ data });
+    console.log(data);
   }
 }
 

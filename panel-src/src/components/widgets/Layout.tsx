@@ -53,6 +53,7 @@ export class Layout extends React.Component {
   protected items(items: any[]): JSX.Element[] {
     const xtypes: { [key: string]: React.ComponentClass<Props> } = {
       'djem.button': DJEM.Button,
+      'djem.checkbox': DJEM.Checkbox,
       'djem.html': DJEM.Widget,
       'djem.image': DJEM.Widget,
       'djem.images': DJEM.Widget,
@@ -100,7 +101,7 @@ export class Layout extends React.Component {
   protected styles(item: any): {} {
     return styleResolver(item, {
       flex: i => ({ flex: +i.flex }),
-      height: i => ({ 'height': i, 'min-height': i }),
+      height: i => ({ height: i, minHeight: i }),
       width: true,
     });
   }
