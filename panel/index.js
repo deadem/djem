@@ -292,7 +292,11 @@ var Actions = /** @class */ (function () {
     Actions.prototype.openContent = function (params) {
         return this.store.dispatch(function (state) {
             var id = params.doctype + "--" + params.id;
-            return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id, tabs: state.tabs.concat([{ name: params.name, id: id }]) });
+            var tabs = state.tabs.slice();
+            if (!tabs.reduce(function (prev, item) { return (prev || item.id == id); }, false)) {
+                tabs.push({ name: params.name, id: id });
+            }
+            return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id, tabs: tabs });
             var _a;
         });
     };

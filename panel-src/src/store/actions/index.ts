@@ -18,7 +18,13 @@ export class Actions {
   public openContent(params: { doctype: string; id: string | number; name: string }) {
     return this.store.dispatch(state => {
       let id = `${params.doctype}--${params.id}`;
-      return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id, tabs: [ ...state.tabs, { name: params.name, id } ] };
+
+      let tabs = [ ...state.tabs ];
+      if (!tabs.reduce((prev, item) => (prev || item.id == id), false)) {
+        tabs.push({ name: params.name, id });
+      }
+
+      return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id, tabs };
     });
   }
 
