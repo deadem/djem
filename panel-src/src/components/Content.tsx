@@ -17,7 +17,7 @@ interface Props {
 class Content extends Proxy.Component {
   public props: Props;
   public state: { data: any } = { data: {} };
-  public dependencies = [ 'id' ];
+  // public dependencies = [ 'id' ];
 
   constructor(props: Props, context: any) {
     super(props, context);
@@ -41,7 +41,7 @@ class Content extends Proxy.Component {
 
     return (
       <div className='Content' ref={el => el && inject(el)}>
-        <DJEM.Layout data={content.data.data || {}} item={content.data.view} update={this.update()} />
+        <DJEM.Layout key={this.props.id} data={content.data.data || {}} item={content.data.view} update={this.update()} />
       </div>
     );
   }

@@ -824,6 +824,7 @@ var DJEM = __webpack_require__(215);
 var Mui = __webpack_require__(31);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
+    // public dependencies = [ 'id' ];
     function Content(props, context) {
         var _this = _super.call(this, props, context) || this;
         _this.state = { data: {} };
@@ -848,7 +849,7 @@ var Content = /** @class */ (function (_super) {
             new Function(content.data.code).bind(node)();
         };
         return (React.createElement("div", { className: 'Content', ref: function (el) { return el && inject(el); } },
-            React.createElement(DJEM.Layout, { data: content.data.data || {}, item: content.data.view, update: this.update() })));
+            React.createElement(DJEM.Layout, { key: this.props.id, data: content.data.data || {}, item: content.data.view, update: this.update() })));
     };
     Content.prototype.load = function (proxy) {
         var _this = this;
