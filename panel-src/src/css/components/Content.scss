@@ -4,3 +4,16 @@
   height: 100%;
   overflow: auto;
 }
+
+.Content-save-button {
+  position: fixed;
+  z-index: 1200;
+  right: 4px;
+  top: 4px;
+  height: 40px;
+  width: 128px;
+  button {
+    width: 100%;
+    height: 100%;
+  }
+}

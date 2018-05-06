@@ -41,6 +41,7 @@ class Content extends Proxy.Component {
 
     return (
       <div className='Content' ref={el => el && inject(el)}>
+        <div className='Content-save-button'><button>Save</button></div>
         <DJEM.Layout key={this.props.id} data={content.data.data || {}} item={content.data.view} update={this.update()} />
       </div>
     );
