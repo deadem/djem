@@ -3,6 +3,7 @@ import * as Mui from '../mui';
 
 interface Props {
   tab?: string | number;
+  tabs?: Array<{ name: string; id: string | number }>;
 }
 
 class Toolbar extends Proxy.Component {
@@ -23,7 +24,7 @@ class Toolbar extends Proxy.Component {
     return (
       <Mui.AppBar position='static'>
          <Mui.Tabs value={this.props.tab} onChange={(_evt, value) => this.selectTab(value)}>
-          <Mui.Tab label='DJEM' value='grid' />
+         {this.tabs()}
         </Mui.Tabs>
       </Mui.AppBar>
     );
@@ -32,6 +33,14 @@ class Toolbar extends Proxy.Component {
   private selectTab(id: string | number) {
     Action.tabChange(id);
   }
+
+  private tabs() {
+    return (this.props.tabs || []).map((tab) => {
+      return (
+        <Mui.Tab label={tab.name} value={tab.id} key={tab.id} />
+      );
+    });
+  }
 }
 
-export default Proxy.connect(Toolbar)(state => ({ tab: state.tab }));
+export default Proxy.connect(Toolbar)(state => ({ tab: state.tab, tabs: state.tabs }));

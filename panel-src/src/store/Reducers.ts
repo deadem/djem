@@ -12,7 +12,7 @@ export class Action {
   public static openContent(params: { doctype: string; id: string | number; name: string }) {
     return this.dispatch(state => {
       let id = `${params.doctype}--${params.id}`;
-      return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id, tabs: [ ...state.tabs, { name, id } ] };
+      return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id, tabs: [ ...state.tabs, { name: params.name, id } ] };
     });
   }
 

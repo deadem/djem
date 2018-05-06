@@ -603,15 +603,19 @@ var Toolbar = /** @class */ (function (_super) {
     Toolbar.prototype.render = function () {
         var _this = this;
         return (React.createElement(Mui.AppBar, { position: 'static' },
-            React.createElement(Mui.Tabs, { value: this.props.tab, onChange: function (_evt, value) { return _this.selectTab(value); } },
-                React.createElement(Mui.Tab, { label: 'DJEM', value: 'grid' }))));
+            React.createElement(Mui.Tabs, { value: this.props.tab, onChange: function (_evt, value) { return _this.selectTab(value); } }, this.tabs())));
     };
     Toolbar.prototype.selectTab = function (id) {
         store_1.Action.tabChange(id);
     };
+    Toolbar.prototype.tabs = function () {
+        return (this.props.tabs || []).map(function (tab) {
+            return (React.createElement(Mui.Tab, { label: tab.name, value: tab.id, key: tab.id }));
+        });
+    };
     return Toolbar;
 }(store_1.Proxy.Component));
-exports.default = store_1.Proxy.connect(Toolbar)(function (state) { return ({ tab: state.tab }); });
+exports.default = store_1.Proxy.connect(Toolbar)(function (state) { return ({ tab: state.tab, tabs: state.tabs }); });
 
 
 /***/ }),
@@ -1156,7 +1160,7 @@ var Action = /** @class */ (function () {
     Action.openContent = function (params) {
         return this.dispatch(function (state) {
             var id = params.doctype + "--" + params.id;
-            return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id, tabs: state.tabs.concat([{ name: name, id: id }]) });
+            return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id, tabs: state.tabs.concat([{ name: params.name, id: id }]) });
             var _a;
         });
     };
