@@ -1,17 +1,11 @@
-import { Action, Proxy } from '../store';
+import { Action, Proxy, State } from '../store';
 import * as DJEM from './widgets';
 import * as Mui from '../mui';
 
 interface Props {
-  id: string;
-  content?: {
-    params: any;
-    data: {
-      code: string;
-      data: any;
-      view: any;
-    };
-  }
+  id: State['tab'];
+  tab?: State['tab'];
+  content?: State['content'];
 }
 
 class Content extends Proxy.Component {
@@ -26,7 +20,7 @@ class Content extends Proxy.Component {
   }
 
   public render() {
-    let content = this.props.content;
+    let content = this.getContent();
     if (!content || !content.data || !content.data.view) {
       return (<div className='center'><Mui.CircularProgress size={128} thickness={2} /></div>);
     }
@@ -40,7 +34,7 @@ class Content extends Proxy.Component {
     };
 
     return (
-      <div className='Content' ref={el => el && inject(el)}>
+      <div className={[ 'Content', this.props.id == this.props.tab ? 'Content-visible' : '' ].join(' ')} ref={el => el && inject(el)}>
         <div className='Content-save-button'><button onClick={this.save()}>Save</button></div>
         <DJEM.Layout key={this.props.id} data={content.data.data || {}} item={content.data.view} update={this.update()} />
       </div>
@@ -48,11 +42,12 @@ class Content extends Proxy.Component {
   }
 
   protected load() {
-    if (!this.props.content || !this.props.content.params) {
+    let content = this.getContent();
+    if (!content) {
       return;
     }
 
-    let params = this.props.content.params;
+    let params = content.params;
 
     this.proxy().post('content/get', { _doctype: params.doctype, id: params.id }).then(response => {
       Action.content(this.props.id, response.data);
@@ -66,16 +61,26 @@ class Content extends Proxy.Component {
   }
 
   private save = () => () => {
-    if (!this.props.content) {
+    let content = this.getContent();
+
+    if (!content) {
       return;
     }
-    let params = this.props.content.params;
-    let data = { ...this.props.content.data.data, ...this.state.data };
+
+    let params = content.params;
+    let data = { ...content.data.data, ...this.state.data };
 
     this.proxy().post('content/set', { ...data, _doctype: params.doctype, id: params.id }).then(response => {
       Action.content(this.props.id, response.data);
     });
   }
+
+  private getContent() {
+    if (!this.props.content) {
+      return;
+    }
+    return this.props.content[this.props.id];
+  }
 }
 
-export default Proxy.connect(Content)(state => ({ id: state.tab, content: state.content[state.tab || ''] }));
+export default Proxy.connect(Content)(state => ({ tab: state.tab, content: state.content }));

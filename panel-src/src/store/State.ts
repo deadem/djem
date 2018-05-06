@@ -19,8 +19,8 @@ interface Grid {
 }
 
 interface Content {
-  tab: number | string | undefined;
-  tabs: Array<{ name: string; id: number | string}>;
+  tab: string;
+  tabs: Array<{ name: string; id: string}>;
   content: {
     [key: string]: {
       params: any;

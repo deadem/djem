@@ -35,7 +35,9 @@ input {
 
 .Grid {
   flex: 1;
-  display: flex; }
+  display: none; }
+  .Grid-visible {
+    display: flex; }
   .Grid__container {
     flex: 1;
     display: flex; }
@@ -47,11 +49,21 @@ input {
   box-sizing: border-box;
   display: flex; }
 
+.ContentContainer {
+  height: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: column; }
+  .ContentContainer-visible {
+    display: flex; }
+
 .Content {
-  display: flex;
+  display: none;
   flex-direction: column;
   height: 100%;
   overflow: auto; }
+  .Content-visible {
+    display: flex; }
 
 .Content-save-button {
   position: fixed;

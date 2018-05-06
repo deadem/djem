@@ -1,0 +1,10 @@
+.ContentContainer {
+  height: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+
+  &-visible {
+    display: flex;
+  }
+}

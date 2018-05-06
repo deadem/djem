@@ -4,6 +4,7 @@ import * as Mui from '../mui';
 
 interface Props {
   id: string;
+  visible: boolean;
   grid?: any;
   tree?: any;
 }
@@ -20,7 +21,7 @@ class Grid extends Proxy.Component {
 
   public render() {
     return (
-      <div className='Grid'>
+      <div className={[ 'Grid', this.props.visible && 'Grid-visible' ].join(' ')}>
         <Tree />
         <div className='Grid__container'>
           <Mui.Table>
@@ -85,4 +86,4 @@ class Grid extends Proxy.Component {
   }
 }
 
-export default Proxy.connect(Grid)(state => ({ id: state.grid.id, grid: state.grid.data, tree: state.tree }));
+export default Proxy.connect(Grid)(state => ({ id: state.grid.id, grid: state.grid.data, tree: state.tree, visible: state.tab == 'grid' }));

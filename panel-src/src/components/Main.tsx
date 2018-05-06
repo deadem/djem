@@ -1,7 +1,7 @@
 import Login from './Login';
 import Toolbar from './Toolbar';
 import Grid from './Grid';
-import Content from './Content';
+import ContentContainer from './ContentContainer';
 import { Proxy } from '../store';
 
 interface Props {
@@ -18,14 +18,13 @@ class Main extends Proxy.Component {
   }
 
   public render() {
-    // const content = this.props.content;
-
     return (
       <div className='Main'>
         <Login />
         <Toolbar />
 
-        {this.props.tab == 'grid' ? <Grid id='' /> : <Content id='' />}
+        <Grid id='' visible={true} />
+        <ContentContainer visible={false} tabs={[]} />
       </div>
     );
   }

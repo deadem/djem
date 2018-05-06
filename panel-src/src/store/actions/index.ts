@@ -28,7 +28,7 @@ export class Actions {
     });
   }
 
-  public tabChange(tab: string | number) {
+  public tabChange(tab: string) {
     return this.store.dispatch(state => ({ ...state, tab }));
   }
 

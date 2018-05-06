@@ -1,6 +1,10 @@
 .Grid {
   flex: 1;
-  display: flex;
+  display: none;
+
+  &-visible {
+    display: flex;
+  }
 
   &__container {
     flex: 1;

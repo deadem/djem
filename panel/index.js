@@ -342,7 +342,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Login_1 = __webpack_require__(276);
 var Toolbar_1 = __webpack_require__(565);
 var Grid_1 = __webpack_require__(566);
-var Content_1 = __webpack_require__(569);
+var ContentContainer_1 = __webpack_require__(577);
 var store_1 = __webpack_require__(31);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
@@ -352,11 +352,11 @@ var Main = /** @class */ (function (_super) {
         return _this;
     }
     Main.prototype.render = function () {
-        // const content = this.props.content;
         return (React.createElement("div", { className: 'Main' },
             React.createElement(Login_1.default, null),
             React.createElement(Toolbar_1.default, null),
-            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, { id: '' })));
+            React.createElement(Grid_1.default, { id: '', visible: true }),
+            React.createElement(ContentContainer_1.default, { visible: false, tabs: [] })));
     };
     return Main;
 }(store_1.Proxy.Component));
@@ -732,7 +732,7 @@ var Grid = /** @class */ (function (_super) {
         return _this;
     }
     Grid.prototype.render = function () {
-        return (React.createElement("div", { className: 'Grid' },
+        return (React.createElement("div", { className: ['Grid', this.props.visible && 'Grid-visible'].join(' ') },
             React.createElement(Tree_1.default, null),
             React.createElement("div", { className: 'Grid__container' },
                 React.createElement(Mui.Table, null,
@@ -773,7 +773,7 @@ var Grid = /** @class */ (function (_super) {
     };
     return Grid;
 }(store_1.Proxy.Component));
-exports.default = store_1.Proxy.connect(Grid)(function (state) { return ({ id: state.grid.id, grid: state.grid.data, tree: state.tree }); });
+exports.default = store_1.Proxy.connect(Grid)(function (state) { return ({ id: state.grid.id, grid: state.grid.data, tree: state.tree, visible: state.tab == 'grid' }); });
 
 
 /***/ }),
@@ -918,11 +918,12 @@ var Content = /** @class */ (function (_super) {
             console.log(data);
         }; };
         _this.save = function () { return function () {
-            if (!_this.props.content) {
+            var content = _this.getContent();
+            if (!content) {
                 return;
             }
-            var params = _this.props.content.params;
-            var data = __assign({}, _this.props.content.data.data, _this.state.data);
+            var params = content.params;
+            var data = __assign({}, content.data.data, _this.state.data);
             _this.proxy().post('content/set', __assign({}, data, { _doctype: params.doctype, id: params.id })).then(function (response) {
                 store_1.Action.content(_this.props.id, response.data);
             });
@@ -931,7 +932,7 @@ var Content = /** @class */ (function (_super) {
         return _this;
     }
     Content.prototype.render = function () {
-        var content = this.props.content;
+        var content = this.getContent();
         if (!content || !content.data || !content.data.view) {
             return (React.createElement("div", { className: 'center' },
                 React.createElement(Mui.CircularProgress, { size: 128, thickness: 2 })));
@@ -942,24 +943,31 @@ var Content = /** @class */ (function (_super) {
             }
             new Function(content.data.code).bind(node)();
         };
-        return (React.createElement("div", { className: 'Content', ref: function (el) { return el && inject(el); } },
+        return (React.createElement("div", { className: ['Content', this.props.id == this.props.tab ? 'Content-visible' : ''].join(' '), ref: function (el) { return el && inject(el); } },
             React.createElement("div", { className: 'Content-save-button' },
                 React.createElement("button", { onClick: this.save() }, "Save")),
             React.createElement(DJEM.Layout, { key: this.props.id, data: content.data.data || {}, item: content.data.view, update: this.update() })));
     };
     Content.prototype.load = function () {
         var _this = this;
-        if (!this.props.content || !this.props.content.params) {
+        var content = this.getContent();
+        if (!content) {
             return;
         }
-        var params = this.props.content.params;
+        var params = content.params;
         this.proxy().post('content/get', { _doctype: params.doctype, id: params.id }).then(function (response) {
             store_1.Action.content(_this.props.id, response.data);
         });
     };
+    Content.prototype.getContent = function () {
+        if (!this.props.content) {
+            return;
+        }
+        return this.props.content[this.props.id];
+    };
     return Content;
 }(store_1.Proxy.Component));
-exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id: state.tab, content: state.content[state.tab || ''] }); });
+exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ tab: state.tab, content: state.content }); });
 
 
 /***/ }),
@@ -1226,6 +1234,41 @@ var UnknownWidget = /** @class */ (function (_super) {
     return UnknownWidget;
 }(Layout_1.Layout));
 exports.UnknownWidget = UnknownWidget;
+
+
+/***/ }),
+
+/***/ 577:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var store_1 = __webpack_require__(31);
+var Content_1 = __webpack_require__(569);
+var ContentContainer = /** @class */ (function (_super) {
+    __extends(ContentContainer, _super);
+    function ContentContainer(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    ContentContainer.prototype.render = function () {
+        return (React.createElement("div", { className: ['ContentContainer', this.props.visible && 'ContentContainer-visible'].join(' ') }, this.props.tabs.filter(function (tab) { return tab.id != 'grid'; }).map(function (tab) { return (React.createElement(Content_1.default, { id: tab.id })); })));
+    };
+    return ContentContainer;
+}(store_1.Proxy.Component));
+exports.default = store_1.Proxy.connect(ContentContainer)(function (state) { return ({ visible: state.tab != 'grid', tabs: state.tabs }); });
 
 
 /***/ })

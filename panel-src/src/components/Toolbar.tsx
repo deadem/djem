@@ -1,9 +1,9 @@
-import { Proxy, Action } from '../store';
+import { Proxy, Action, State } from '../store';
 import * as Mui from '../mui';
 
 interface Props {
-  tab?: string | number;
-  tabs?: Array<{ name: string; id: string | number }>;
+  tab?: State['tab'];
+  tabs?: State['tabs'];
 }
 
 class Toolbar extends Proxy.Component {
@@ -30,7 +30,7 @@ class Toolbar extends Proxy.Component {
     );
   }
 
-  private selectTab(id: string | number) {
+  private selectTab(id: string) {
     Action.tabChange(id);
   }
 
