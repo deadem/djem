@@ -37,12 +37,8 @@ export class Layout extends React.Component {
     const xtypes: { [key: string]: React.ComponentClass<Props> } = {
       'djem.button': DJEM.Button,
       'djem.checkbox': DJEM.Checkbox,
-      'djem.html': DJEM.UnknownWidget,
-      'djem.image': DJEM.UnknownWidget,
-      'djem.images': DJEM.UnknownWidget,
       'djem.label': DJEM.Label,
       'djem.staticHtml': DJEM.StaticHtml,
-      'djem.tag': DJEM.UnknownWidget,
       'djem.text': DJEM.Text,
 
       'button': DJEM.Button,
@@ -54,7 +50,7 @@ export class Layout extends React.Component {
       let xtype = xtypes[item.xtype];
 
       if (!xtype) {
-        xtype = xtypes.layout;
+        xtype = item.xtype ? DJEM.UnknownWidget : xtypes.layout;
       }
 
       return React.createElement(xtype, { ...this.props, key: item.name, item, update: this.update() });

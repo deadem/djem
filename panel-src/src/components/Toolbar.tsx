@@ -23,7 +23,7 @@ class Toolbar extends Proxy.Component {
   public render() {
     return (
       <Mui.AppBar position='static'>
-         <Mui.Tabs value={this.props.tab} onChange={(_evt, value) => this.selectTab(value)}>
+         <Mui.Tabs value={this.props.tab} onChange={(_evt, value) => this.selectTab(value)} scrollable={true} scrollButtons='auto'>
          {this.tabs()}
         </Mui.Tabs>
       </Mui.AppBar>

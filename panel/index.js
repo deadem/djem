@@ -584,12 +584,8 @@ var Layout = /** @class */ (function (_super) {
         var xtypes = {
             'djem.button': DJEM.Button,
             'djem.checkbox': DJEM.Checkbox,
-            'djem.html': DJEM.UnknownWidget,
-            'djem.image': DJEM.UnknownWidget,
-            'djem.images': DJEM.UnknownWidget,
             'djem.label': DJEM.Label,
             'djem.staticHtml': DJEM.StaticHtml,
-            'djem.tag': DJEM.UnknownWidget,
             'djem.text': DJEM.Text,
             'button': DJEM.Button,
             'label': DJEM.Label,
@@ -598,7 +594,7 @@ var Layout = /** @class */ (function (_super) {
         return (items || []).map(function (item) {
             var xtype = xtypes[item.xtype];
             if (!xtype) {
-                xtype = xtypes.layout;
+                xtype = item.xtype ? DJEM.UnknownWidget : xtypes.layout;
             }
             return React.createElement(xtype, __assign({}, _this.props, { key: item.name, item: item, update: _this.update() }));
         });
@@ -691,7 +687,7 @@ var Toolbar = /** @class */ (function (_super) {
     Toolbar.prototype.render = function () {
         var _this = this;
         return (React.createElement(Mui.AppBar, { position: 'static' },
-            React.createElement(Mui.Tabs, { value: this.props.tab, onChange: function (_evt, value) { return _this.selectTab(value); } }, this.tabs())));
+            React.createElement(Mui.Tabs, { value: this.props.tab, onChange: function (_evt, value) { return _this.selectTab(value); }, scrollable: true, scrollButtons: 'auto' }, this.tabs())));
     };
     Toolbar.prototype.selectTab = function (id) {
         store_1.Action.tabChange(id);

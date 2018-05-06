@@ -25,6 +25,7 @@
     //tslint
     // "object-literal-key-quotes": [true, "as-needed"],
     // "no-any": true,
+    "prefer-conditional-expression": false,
     "adjacent-overload-signatures": true,
     "align": [true, "parameters", "statements", "members", "elements"],
     "arrow-return-shorthand": true,
