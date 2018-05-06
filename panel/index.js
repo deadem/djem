@@ -292,11 +292,11 @@ var Actions = /** @class */ (function () {
     Actions.prototype.openContent = function (params) {
         return this.store.dispatch(function (state) {
             var id = params.doctype + "--" + params.id;
-            var tabs = state.tabs.slice();
-            if (!tabs.reduce(function (prev, item) { return (prev || item.id == id); }, false)) {
-                tabs.push({ name: params.name, id: id });
+            if (!state.tabs.reduce(function (prev, item) { return (prev || item.id == id); }, false)) {
+                // new tab
+                return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id, tabs: state.tabs.concat([{ name: params.name, id: id }]) });
             }
-            return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id, tabs: tabs });
+            return __assign({}, state, { tab: id });
             var _a;
         });
     };
@@ -1264,7 +1264,7 @@ var ContentContainer = /** @class */ (function (_super) {
         return _this;
     }
     ContentContainer.prototype.render = function () {
-        return (React.createElement("div", { className: ['ContentContainer', this.props.visible && 'ContentContainer-visible'].join(' ') }, this.props.tabs.filter(function (tab) { return tab.id != 'grid'; }).map(function (tab) { return (React.createElement(Content_1.default, { id: tab.id })); })));
+        return (React.createElement("div", { className: ['ContentContainer', this.props.visible && 'ContentContainer-visible'].join(' ') }, this.props.tabs.filter(function (tab) { return tab.id != 'grid'; }).map(function (tab) { return (React.createElement(Content_1.default, { id: tab.id, key: tab.id })); })));
     };
     return ContentContainer;
 }(store_1.Proxy.Component));

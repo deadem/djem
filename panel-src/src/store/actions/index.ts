@@ -19,12 +19,12 @@ export class Actions {
     return this.store.dispatch(state => {
       let id = `${params.doctype}--${params.id}`;
 
-      let tabs = [ ...state.tabs ];
-      if (!tabs.reduce((prev, item) => (prev || item.id == id), false)) {
-        tabs.push({ name: params.name, id });
+      if (!state.tabs.reduce((prev, item) => (prev || item.id == id), false)) {
+        // new tab
+        return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id, tabs: [ ...state.tabs, { name: params.name, id } ] };
       }
 
-      return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id, tabs };
+      return { ...state, tab: id };
     });
   }
 

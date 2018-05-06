@@ -18,7 +18,7 @@ class ContentContainer extends Proxy.Component {
   public render() {
     return (
       <div className={[ 'ContentContainer', this.props.visible && 'ContentContainer-visible' ].join(' ')}>
-        {this.props.tabs.filter(tab => tab.id != 'grid').map(tab => (<Content id={tab.id} />))}
+        {this.props.tabs.filter(tab => tab.id != 'grid').map(tab => (<Content id={tab.id} key={tab.id} />))}
       </div>
     );
   }
