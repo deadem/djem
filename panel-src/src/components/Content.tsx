@@ -41,20 +41,20 @@ class Content extends Proxy.Component {
 
     return (
       <div className='Content' ref={el => el && inject(el)}>
-        <div className='Content-save-button'><button>Save</button></div>
+        <div className='Content-save-button'><button onClick={this.save()}>Save</button></div>
         <DJEM.Layout key={this.props.id} data={content.data.data || {}} item={content.data.view} update={this.update()} />
       </div>
     );
   }
 
-  protected load(proxy: Proxy.Http) {
+  protected load() {
     if (!this.props.content || !this.props.content.params) {
       return;
     }
 
     let params = this.props.content.params;
 
-    proxy.post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(response => {
+    this.proxy().post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(response => {
       Action.content(this.props.id, response.data);
     });
   }
@@ -63,6 +63,18 @@ class Content extends Proxy.Component {
     let data = { ...this.state.data, ...value };
     this.setState({ data });
     console.log(data);
+  }
+
+  private save = () => () => {
+    if (!this.props.content) {
+      return;
+    }
+    let params = this.props.content.params;
+
+    let data = { ...this.props.content.data.data, ...this.state.data };
+    this.proxy().post('content/set', { ...data, _doctype: params.doctype, id: params.id }).then(response => {
+      Action.content(this.props.id, response.data.metaData);
+    });
   }
 }
 

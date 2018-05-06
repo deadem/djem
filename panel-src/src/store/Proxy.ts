@@ -1,4 +1,3 @@
-import { AxiosInstance } from 'axios';
 import { connect as connectRedux } from 'react-redux';
 import { State as StateType } from './index';
 import { HttpProxy } from './HttpProxy';
@@ -6,14 +5,13 @@ import { HttpProxy } from './HttpProxy';
 let httpProxy = new HttpProxy();
 
 namespace Proxy {
-  export type Http = AxiosInstance;
   export type State = StateType;
 
   export class Component extends React.Component {
     protected dependencies: string[] = [];
 
     public componentDidMount() {
-      this.loadComponentData();
+      this.load();
     }
 
     public componentDidUpdate(prevProps: any, _prevState: any) {
@@ -21,7 +19,7 @@ namespace Proxy {
       for (let i = 0; i < this.dependencies.length; ++i) {
         const key = this.dependencies[i];
         if (prevProps[key] !== props[key]) {
-          this.loadComponentData();
+          this.load();
           return;
         }
       }
@@ -30,12 +28,12 @@ namespace Proxy {
     // public componentWillReceiveProps(nextProps: any) {
     // }
 
-    protected load(_proxy: Http) {
-      return;
+    protected proxy() {
+      return httpProxy.instance();
     }
 
-    private loadComponentData() {
-      this.load(httpProxy.instance());
+    protected load() {
+      return;
     }
   }
 

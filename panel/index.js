@@ -118,25 +118,25 @@ var Proxy;
             return _this;
         }
         Component.prototype.componentDidMount = function () {
-            this.loadComponentData();
+            this.load();
         };
         Component.prototype.componentDidUpdate = function (prevProps, _prevState) {
             var props = this.props;
             for (var i = 0; i < this.dependencies.length; ++i) {
                 var key = this.dependencies[i];
                 if (prevProps[key] !== props[key]) {
-                    this.loadComponentData();
+                    this.load();
                     return;
                 }
             }
         };
         // public componentWillReceiveProps(nextProps: any) {
         // }
-        Component.prototype.load = function (_proxy) {
-            return;
+        Component.prototype.proxy = function () {
+            return httpProxy.instance();
         };
-        Component.prototype.loadComponentData = function () {
-            this.load(httpProxy.instance());
+        Component.prototype.load = function () {
+            return;
         };
         return Component;
     }(React.Component));
@@ -740,11 +740,11 @@ var Grid = /** @class */ (function (_super) {
                         React.createElement(Mui.TableRow, null, this.gridHeader())),
                     React.createElement(Mui.TableBody, null, this.gridRows())))));
     };
-    Grid.prototype.load = function (proxy) {
+    Grid.prototype.load = function () {
         if (!this.props.id) {
             return;
         }
-        proxy.post('grid', { tree: this.props.id }).then(function (response) {
+        this.proxy().post('grid', { tree: this.props.id }).then(function (response) {
             store_1.Action.grid(response.data);
         });
     };
@@ -808,8 +808,8 @@ var Tree = /** @class */ (function (_super) {
         return (React.createElement("div", { className: 'Tree' },
             React.createElement(TreeNode_1.TreeNode, { nodes: this.props.tree })));
     };
-    Tree.prototype.load = function (proxy) {
-        proxy.post('tree', {}).then(function (response) {
+    Tree.prototype.load = function () {
+        this.proxy().post('tree', {}).then(function (response) {
             var refs = {};
             var walk = function (nodes) {
                 for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
@@ -917,6 +917,16 @@ var Content = /** @class */ (function (_super) {
             _this.setState({ data: data });
             console.log(data);
         }; };
+        _this.save = function () { return function () {
+            if (!_this.props.content) {
+                return;
+            }
+            var params = _this.props.content.params;
+            var data = __assign({}, _this.props.content.data.data, _this.state.data);
+            _this.proxy().post('content/set', __assign({}, data, { _doctype: params.doctype, id: params.id })).then(function (response) {
+                store_1.Action.content(_this.props.id, response.data.metaData);
+            });
+        }; };
         _this.props = props;
         return _this;
     }
@@ -934,16 +944,16 @@ var Content = /** @class */ (function (_super) {
         };
         return (React.createElement("div", { className: 'Content', ref: function (el) { return el && inject(el); } },
             React.createElement("div", { className: 'Content-save-button' },
-                React.createElement("button", null, "Save")),
+                React.createElement("button", { onClick: this.save() }, "Save")),
             React.createElement(DJEM.Layout, { key: this.props.id, data: content.data.data || {}, item: content.data.view, update: this.update() })));
     };
-    Content.prototype.load = function (proxy) {
+    Content.prototype.load = function () {
         var _this = this;
         if (!this.props.content || !this.props.content.params) {
             return;
         }
         var params = this.props.content.params;
-        proxy.post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(function (response) {
+        this.proxy().post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(function (response) {
             store_1.Action.content(_this.props.id, response.data);
         });
     };

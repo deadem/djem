@@ -38,12 +38,12 @@ class Grid extends Proxy.Component {
     );
   }
 
-  protected load(proxy: Proxy.Http) {
+  protected load() {
     if (!this.props.id) {
       return;
     }
 
-    proxy.post('grid', { tree: this.props.id }).then((response) => {
+    this.proxy().post('grid', { tree: this.props.id }).then((response) => {
       Action.grid(response.data);
     });
   }

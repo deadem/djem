@@ -23,8 +23,8 @@ class Tree extends Proxy.Component {
     );
   }
 
-  protected load(proxy: Proxy.Http) {
-    proxy.post('tree', {}).then((response) => {
+  protected load() {
+    this.proxy().post('tree', {}).then((response) => {
       let refs: any = {};
       const walk = (nodes: any[]) => {
         for (let node of nodes) {
