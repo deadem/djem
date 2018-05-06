@@ -17,6 +17,7 @@ interface Props {
 class Content extends Proxy.Component {
   public props: Props;
   public state: { data: any } = { data: {} };
+  public dependencies = [ 'id' ];
 
   constructor(props: Props, context: any) {
     super(props, context);
