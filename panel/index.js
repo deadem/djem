@@ -924,7 +924,7 @@ var Content = /** @class */ (function (_super) {
             var params = _this.props.content.params;
             var data = __assign({}, _this.props.content.data.data, _this.state.data);
             _this.proxy().post('content/set', __assign({}, data, { _doctype: params.doctype, id: params.id })).then(function (response) {
-                store_1.Action.content(_this.props.id, response.data.metaData);
+                store_1.Action.content(_this.props.id, response.data);
             });
         }; };
         _this.props = props;
@@ -953,7 +953,7 @@ var Content = /** @class */ (function (_super) {
             return;
         }
         var params = this.props.content.params;
-        this.proxy().post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(function (response) {
+        this.proxy().post('content/get', { _doctype: params.doctype, id: params.id }).then(function (response) {
             store_1.Action.content(_this.props.id, response.data);
         });
     };

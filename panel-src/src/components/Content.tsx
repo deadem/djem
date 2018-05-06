@@ -54,7 +54,7 @@ class Content extends Proxy.Component {
 
     let params = this.props.content.params;
 
-    this.proxy().post('content/get', { raw: true, _doctype: params.doctype, id: params.id }).then(response => {
+    this.proxy().post('content/get', { _doctype: params.doctype, id: params.id }).then(response => {
       Action.content(this.props.id, response.data);
     });
   }
@@ -70,10 +70,10 @@ class Content extends Proxy.Component {
       return;
     }
     let params = this.props.content.params;
-
     let data = { ...this.props.content.data.data, ...this.state.data };
+
     this.proxy().post('content/set', { ...data, _doctype: params.doctype, id: params.id }).then(response => {
-      Action.content(this.props.id, response.data.metaData);
+      Action.content(this.props.id, response.data);
     });
   }
 }

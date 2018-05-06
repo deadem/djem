@@ -24,13 +24,7 @@ class Content extends \Illuminate\Routing\Controller
     {
         $doctype = $this->doctype();
 
-        if ($this->request->input('raw')) {
-            return $doctype->load();
-        }
-
-        return [
-            'metaData' => $doctype->load(),
-        ];
+        return $doctype->load();
     }
 
     public function set()
