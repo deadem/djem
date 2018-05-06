@@ -1,392 +1,32 @@
 webpackJsonp([0],{
 
-/***/ 136:
+/***/ 207:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var axios_1 = __webpack_require__(137);
-var Reducers_1 = __webpack_require__(89);
-var auth = {
-    token: '',
-};
-var Core = /** @class */ (function () {
-    function Core() {
-        var _this = this;
-        this._http = axios_1.default.create({
-            baseURL: 'api',
-        });
-        this._http.interceptors.response.use(function (success) {
-            _this.updateToken(success);
-            return success;
-        }, function (error) {
-            _this.updateToken(error.response);
-            return Promise.reject(error);
-        });
-        this._http.interceptors.request.use(function (config) {
-            config.headers['X-CSRF-TOKEN'] = _this.getToken();
-            return config;
-        });
-    }
-    Core.prototype.setAuthorized = function (state) {
-        Reducers_1.Action.authorize(state);
-    };
-    Core.prototype.updateToken = function (response) {
-        auth.token = response.headers['x-csrf-token'];
-    };
-    Core.prototype.getToken = function () {
-        return auth.token;
-    };
-    return Core;
-}());
-exports.Core = Core;
-
-
-/***/ }),
-
-/***/ 215:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Button_1 = __webpack_require__(569);
-exports.Button = Button_1.Button;
-var Checkbox_1 = __webpack_require__(570);
-exports.Checkbox = Checkbox_1.Checkbox;
-var Label_1 = __webpack_require__(571);
-exports.Label = Label_1.Label;
-var Layout_1 = __webpack_require__(47);
-exports.Layout = Layout_1.Layout;
-var StaticHtml_1 = __webpack_require__(572);
-exports.StaticHtml = StaticHtml_1.StaticHtml;
-var Text_1 = __webpack_require__(573);
-exports.Text = Text_1.Text;
-var UnknownWidget_1 = __webpack_require__(574);
-exports.UnknownWidget = UnknownWidget_1.UnknownWidget;
-
-
-/***/ }),
-
-/***/ 216:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(64);
-var store_1 = __webpack_require__(35);
-var Main_1 = __webpack_require__(274);
+var react_redux_1 = __webpack_require__(503);
+var store_1 = __webpack_require__(554);
+var Main_1 = __webpack_require__(557);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
 if (parent) {
     parent.removeChild(loader);
 }
-ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.store },
+ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.Store.get() },
     React.createElement(Main_1.default, null)), document.getElementById('app'));
 
 
 /***/ }),
 
-/***/ 253:
+/***/ 553:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initialState = {
-    login: {
-        authorized: true,
-    },
-    tree: {
-        refs: {},
-        data: [],
-    },
-    grid: {
-        id: undefined,
-        data: undefined,
-    },
-    tab: 'grid',
-    tabs: [{ name: 'DJEM', id: 'grid' }],
-    content: {},
-};
-
-
-/***/ }),
-
-/***/ 254:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(64);
-var HttpProxy_1 = __webpack_require__(255);
-var httpProxy = new HttpProxy_1.HttpProxy();
-var Proxy;
-(function (Proxy) {
-    var Component = /** @class */ (function (_super) {
-        __extends(Component, _super);
-        function Component() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.dependencies = [];
-            return _this;
-        }
-        Component.prototype.componentDidMount = function () {
-            this.loadComponentData();
-        };
-        Component.prototype.componentDidUpdate = function (prevProps, _prevState) {
-            var props = this.props;
-            for (var i = 0; i < this.dependencies.length; ++i) {
-                var key = this.dependencies[i];
-                if (prevProps[key] !== props[key]) {
-                    this.loadComponentData();
-                    return;
-                }
-            }
-        };
-        // public componentWillReceiveProps(nextProps: any) {
-        // }
-        Component.prototype.load = function (_proxy) {
-            return;
-        };
-        Component.prototype.loadComponentData = function () {
-            this.load(httpProxy.instance());
-        };
-        return Component;
-    }(React.Component));
-    Proxy.Component = Component;
-    function connect(component) {
-        return function (fn) {
-            return react_redux_1.connect(fn)(component);
-        };
-    }
-    Proxy.connect = connect;
-})(Proxy || (Proxy = {}));
-exports.default = Proxy;
-
-
-/***/ }),
-
-/***/ 255:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(136);
-var index_1 = __webpack_require__(35);
-var HttpProxy = /** @class */ (function (_super) {
-    __extends(HttpProxy, _super);
-    function HttpProxy() {
-        var _this = _super.call(this) || this;
-        _this._http.interceptors.response.use(function (response) { return response; }, function (error) { return _this.retry(error); });
-        return _this;
-    }
-    HttpProxy.prototype.instance = function () {
-        return this._http;
-    };
-    HttpProxy.prototype.retry = function (error) {
-        var _this = this;
-        if ((error.response || {}).status === 401) {
-            this.setAuthorized(false);
-            var originalRequest_1 = error.config;
-            return new Promise(function (resolve, reject) {
-                var stopWatch = index_1.store.subscribe(function () {
-                    var state = index_1.store.getState();
-                    if (state.login.authorized) {
-                        stopWatch();
-                        originalRequest_1.baseURL = '';
-                        return _this._http.request(originalRequest_1).then(resolve, reject);
-                    }
-                    return;
-                });
-            });
-        }
-        return Promise.reject(error);
-    };
-    return HttpProxy;
-}(core_1.Core));
-exports.HttpProxy = HttpProxy;
-
-
-/***/ }),
-
-/***/ 274:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Login_1 = __webpack_require__(275);
-var Toolbar_1 = __webpack_require__(564);
-var Grid_1 = __webpack_require__(565);
-var Content_1 = __webpack_require__(568);
-var store_1 = __webpack_require__(35);
-var Main = /** @class */ (function (_super) {
-    __extends(Main, _super);
-    function Main(props, context) {
-        var _this = _super.call(this, props, context) || this;
-        _this.props = props;
-        return _this;
-    }
-    Main.prototype.render = function () {
-        // const content = this.props.content;
-        return (React.createElement("div", { className: 'Main' },
-            React.createElement(Login_1.default, null),
-            React.createElement(Toolbar_1.default, null),
-            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, { id: '' })));
-    };
-    return Main;
-}(store_1.Proxy.Component));
-exports.default = store_1.Proxy.connect(Main)(function (state) { return ({ tab: state.tab }); });
-
-
-/***/ }),
-
-/***/ 275:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = __webpack_require__(64);
-var Auth_1 = __webpack_require__(276);
-var Mui = __webpack_require__(31);
-var authState = {
-    name: '',
-    password: '',
-};
-var Login = /** @class */ (function (_super) {
-    __extends(Login, _super);
-    function Login(props, context) {
-        var _this = _super.call(this, props, context) || this;
-        _this.state = {};
-        _this.catchReturn = function (evt) {
-            if (evt.charCode == 13) {
-                return _this.handleLogin();
-            }
-        };
-        _this.handleLogin = function () {
-            new Auth_1.Auth().login(authState.name, authState.password).then(function () {
-                authState.password = '';
-                _this.state.password.value = '';
-            });
-        };
-        _this.onChange = function (evt) {
-            var element = evt.currentTarget;
-            authState[element.id] = element.value;
-        };
-        _this.passwordField = function (field) {
-            _this.state.password = field;
-        };
-        _this.props = props;
-        return _this;
-    }
-    Login.prototype.render = function () {
-        return (React.createElement("div", null,
-            React.createElement(Mui.Dialog, { open: this.props.open, onClose: this.empty, "aria-labelledby": 'form-dialog-title', disableBackdropClick: true, disableEscapeKeyDown: true },
-                React.createElement(Mui.DialogTitle, { id: 'form-dialog-title' }, "Login"),
-                React.createElement(Mui.DialogContent, null,
-                    React.createElement(Mui.DialogContentText, null, "Please enter your credentials"),
-                    React.createElement(Mui.TextField, { autoFocus: true, margin: 'dense', id: 'name', label: 'Login', type: 'text', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn }),
-                    React.createElement(Mui.TextField, { margin: 'dense', id: 'password', label: 'Password', type: 'password', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn, inputRef: this.passwordField })),
-                React.createElement(Mui.DialogActions, null,
-                    React.createElement(Mui.Button, { onClick: this.handleLogin, color: 'primary' }, "Login")))));
-    };
-    Login.prototype.empty = function () {
-        return;
-    };
-    return Login;
-}(React.Component));
-exports.default = react_redux_1.connect(function (state) { return ({ open: !state.login.authorized }); })(Login);
-
-
-/***/ }),
-
-/***/ 276:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(136);
-var Auth = /** @class */ (function (_super) {
-    __extends(Auth, _super);
-    function Auth() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Auth.prototype.login = function (login, password) {
-        var _this = this;
-        var post = this._http.post('', { login: login, password: password });
-        post.then(function () { return _this.setAuthorized(true); }, function (error) { return error; }); // bad auth does nothing
-        return post;
-    };
-    return Auth;
-}(core_1.Core));
-exports.Auth = Auth;
-
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var material_ui_1 = __webpack_require__(91);
+var material_ui_1 = __webpack_require__(209);
 function withStyles(styles) {
     return function (component) {
         return /** @class */ (function () {
@@ -403,7 +43,7 @@ function withStyles(styles) {
     };
 }
 exports.withStyles = withStyles;
-var material_ui_2 = __webpack_require__(91);
+var material_ui_2 = __webpack_require__(209);
 exports.AppBar = material_ui_2.AppBar;
 exports.Button = material_ui_2.Button;
 exports.Checkbox = material_ui_2.Checkbox;
@@ -433,25 +73,23 @@ exports.Typography = material_ui_2.Typography;
 
 /***/ }),
 
-/***/ 35:
+/***/ 554:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_1 = __webpack_require__(88);
-var Reducers_1 = __webpack_require__(89);
-var Store_1 = __webpack_require__(253);
-exports.store = redux_1.createStore(Reducers_1.InitReducers, Store_1.initialState);
-var Reducers_2 = __webpack_require__(89);
-exports.Action = Reducers_2.Action;
-var Proxy_1 = __webpack_require__(254);
+var Proxy_1 = __webpack_require__(574);
 exports.Proxy = Proxy_1.default;
+var Store_1 = __webpack_require__(572);
+var actions_1 = __webpack_require__(576);
+exports.Store = new Store_1.Store();
+exports.Action = new actions_1.Actions(exports.Store);
 
 
 /***/ }),
 
-/***/ 47:
+/***/ 555:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -475,7 +113,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var DJEM = __webpack_require__(215);
+var DJEM = __webpack_require__(556);
 var Layout = /** @class */ (function (_super) {
     __extends(Layout, _super);
     function Layout(props, context) {
@@ -571,7 +209,31 @@ exports.styles = function (props) { return function (_theme) {
 
 /***/ }),
 
-/***/ 564:
+/***/ 556:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Button_1 = __webpack_require__(566);
+exports.Button = Button_1.Button;
+var Checkbox_1 = __webpack_require__(567);
+exports.Checkbox = Checkbox_1.Checkbox;
+var Label_1 = __webpack_require__(568);
+exports.Label = Label_1.Label;
+var Layout_1 = __webpack_require__(555);
+exports.Layout = Layout_1.Layout;
+var StaticHtml_1 = __webpack_require__(569);
+exports.StaticHtml = StaticHtml_1.StaticHtml;
+var Text_1 = __webpack_require__(570);
+exports.Text = Text_1.Text;
+var UnknownWidget_1 = __webpack_require__(571);
+exports.UnknownWidget = UnknownWidget_1.UnknownWidget;
+
+
+/***/ }),
+
+/***/ 557:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -587,8 +249,200 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(35);
-var Mui = __webpack_require__(31);
+var Login_1 = __webpack_require__(558);
+var Toolbar_1 = __webpack_require__(561);
+var Grid_1 = __webpack_require__(562);
+var Content_1 = __webpack_require__(565);
+var store_1 = __webpack_require__(554);
+var Main = /** @class */ (function (_super) {
+    __extends(Main, _super);
+    function Main(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    Main.prototype.render = function () {
+        // const content = this.props.content;
+        return (React.createElement("div", { className: 'Main' },
+            React.createElement(Login_1.default, null),
+            React.createElement(Toolbar_1.default, null),
+            this.props.tab == 'grid' ? React.createElement(Grid_1.default, { id: '' }) : React.createElement(Content_1.default, { id: '' })));
+    };
+    return Main;
+}(store_1.Proxy.Component));
+exports.default = store_1.Proxy.connect(Main)(function (state) { return ({ tab: state.tab }); });
+
+
+/***/ }),
+
+/***/ 558:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_redux_1 = __webpack_require__(503);
+var Auth_1 = __webpack_require__(559);
+var Mui = __webpack_require__(553);
+var authState = {
+    name: '',
+    password: '',
+};
+var Login = /** @class */ (function (_super) {
+    __extends(Login, _super);
+    function Login(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.state = {};
+        _this.catchReturn = function (evt) {
+            if (evt.charCode == 13) {
+                return _this.handleLogin();
+            }
+        };
+        _this.handleLogin = function () {
+            new Auth_1.Auth().login(authState.name, authState.password).then(function () {
+                authState.password = '';
+                _this.state.password.value = '';
+            });
+        };
+        _this.onChange = function (evt) {
+            var element = evt.currentTarget;
+            authState[element.id] = element.value;
+        };
+        _this.passwordField = function (field) {
+            _this.state.password = field;
+        };
+        _this.props = props;
+        return _this;
+    }
+    Login.prototype.render = function () {
+        return (React.createElement("div", null,
+            React.createElement(Mui.Dialog, { open: this.props.open, onClose: this.empty, "aria-labelledby": 'form-dialog-title', disableBackdropClick: true, disableEscapeKeyDown: true },
+                React.createElement(Mui.DialogTitle, { id: 'form-dialog-title' }, "Login"),
+                React.createElement(Mui.DialogContent, null,
+                    React.createElement(Mui.DialogContentText, null, "Please enter your credentials"),
+                    React.createElement(Mui.TextField, { autoFocus: true, margin: 'dense', id: 'name', label: 'Login', type: 'text', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn }),
+                    React.createElement(Mui.TextField, { margin: 'dense', id: 'password', label: 'Password', type: 'password', fullWidth: true, onChange: this.onChange, onKeyPress: this.catchReturn, inputRef: this.passwordField })),
+                React.createElement(Mui.DialogActions, null,
+                    React.createElement(Mui.Button, { onClick: this.handleLogin, color: 'primary' }, "Login")))));
+    };
+    Login.prototype.empty = function () {
+        return;
+    };
+    return Login;
+}(React.Component));
+exports.default = react_redux_1.connect(function (state) { return ({ open: !state.login.authorized }); })(Login);
+
+
+/***/ }),
+
+/***/ 559:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(560);
+var Auth = /** @class */ (function (_super) {
+    __extends(Auth, _super);
+    function Auth() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Auth.prototype.login = function (login, password) {
+        var _this = this;
+        var post = this._http.post('', { login: login, password: password });
+        post.then(function () { return _this.setAuthorized(true); }, function (error) { return error; }); // bad auth does nothing
+        return post;
+    };
+    return Auth;
+}(core_1.Core));
+exports.Auth = Auth;
+
+
+/***/ }),
+
+/***/ 560:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var axios_1 = __webpack_require__(534);
+var index_1 = __webpack_require__(554);
+var auth = {
+    token: '',
+};
+var Core = /** @class */ (function () {
+    function Core() {
+        var _this = this;
+        this._http = axios_1.default.create({
+            baseURL: 'api',
+        });
+        this._http.interceptors.response.use(function (success) {
+            _this.updateToken(success);
+            return success;
+        }, function (error) {
+            _this.updateToken(error.response);
+            return Promise.reject(error);
+        });
+        this._http.interceptors.request.use(function (config) {
+            config.headers['X-CSRF-TOKEN'] = _this.getToken();
+            return config;
+        });
+    }
+    Core.prototype.setAuthorized = function (state) {
+        index_1.Action.authorize(state);
+    };
+    Core.prototype.updateToken = function (response) {
+        auth.token = response.headers['x-csrf-token'];
+    };
+    Core.prototype.getToken = function () {
+        return auth.token;
+    };
+    return Core;
+}());
+exports.Core = Core;
+
+
+/***/ }),
+
+/***/ 561:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var store_1 = __webpack_require__(554);
+var Mui = __webpack_require__(553);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
     function Toolbar(props, context) {
@@ -620,7 +474,7 @@ exports.default = store_1.Proxy.connect(Toolbar)(function (state) { return ({ ta
 
 /***/ }),
 
-/***/ 565:
+/***/ 562:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -636,9 +490,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(35);
-var Tree_1 = __webpack_require__(566);
-var Mui = __webpack_require__(31);
+var store_1 = __webpack_require__(554);
+var Tree_1 = __webpack_require__(563);
+var Mui = __webpack_require__(553);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid(props, context) {
@@ -694,7 +548,7 @@ exports.default = store_1.Proxy.connect(Grid)(function (state) { return ({ id: s
 
 /***/ }),
 
-/***/ 566:
+/***/ 563:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -710,8 +564,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(35);
-var TreeNode_1 = __webpack_require__(567);
+var store_1 = __webpack_require__(554);
+var TreeNode_1 = __webpack_require__(564);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree(props, context) {
@@ -747,7 +601,7 @@ exports.default = store_1.Proxy.connect(Tree)(function (state) { return ({ tree:
 
 /***/ }),
 
-/***/ 567:
+/***/ 564:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -763,8 +617,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(35);
-var Mui = __webpack_require__(31);
+var store_1 = __webpack_require__(554);
+var Mui = __webpack_require__(553);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode(props, context) {
@@ -795,7 +649,7 @@ exports.TreeNode = TreeNode;
 
 /***/ }),
 
-/***/ 568:
+/***/ 565:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -819,9 +673,9 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(35);
-var DJEM = __webpack_require__(215);
-var Mui = __webpack_require__(31);
+var store_1 = __webpack_require__(554);
+var DJEM = __webpack_require__(556);
+var Mui = __webpack_require__(553);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     // public dependencies = [ 'id' ];
@@ -868,7 +722,7 @@ exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id
 
 /***/ }),
 
-/***/ 569:
+/***/ 566:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -884,8 +738,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(47);
-var Mui = __webpack_require__(31);
+var Layout_1 = __webpack_require__(555);
+var Mui = __webpack_require__(553);
 var Button = /** @class */ (function (_super) {
     __extends(Button, _super);
     function Button(props, context) {
@@ -908,7 +762,7 @@ exports.Button = withStyles;
 
 /***/ }),
 
-/***/ 570:
+/***/ 567:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -924,8 +778,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(47);
-var Mui = __webpack_require__(31);
+var Layout_1 = __webpack_require__(555);
+var Mui = __webpack_require__(553);
 var Checkbox = /** @class */ (function (_super) {
     __extends(Checkbox, _super);
     function Checkbox(props, context) {
@@ -958,7 +812,7 @@ exports.Checkbox = Checkbox;
 
 /***/ }),
 
-/***/ 571:
+/***/ 568:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -974,8 +828,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(47);
-var Mui = __webpack_require__(31);
+var Layout_1 = __webpack_require__(555);
+var Mui = __webpack_require__(553);
 var Label = /** @class */ (function (_super) {
     __extends(Label, _super);
     function Label(props, context) {
@@ -998,7 +852,7 @@ exports.Label = withStyles;
 
 /***/ }),
 
-/***/ 572:
+/***/ 569:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1014,7 +868,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(47);
+var Layout_1 = __webpack_require__(555);
 var StaticHtml = /** @class */ (function (_super) {
     __extends(StaticHtml, _super);
     function StaticHtml(props, context) {
@@ -1034,7 +888,7 @@ exports.StaticHtml = StaticHtml;
 
 /***/ }),
 
-/***/ 573:
+/***/ 570:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1050,8 +904,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(47);
-var Mui = __webpack_require__(31);
+var Layout_1 = __webpack_require__(555);
+var Mui = __webpack_require__(553);
 var Text = /** @class */ (function (_super) {
     __extends(Text, _super);
     function Text(props, context) {
@@ -1084,7 +938,7 @@ exports.Text = Text;
 
 /***/ }),
 
-/***/ 574:
+/***/ 571:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1108,7 +962,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(47);
+var Layout_1 = __webpack_require__(555);
 var UnknownWidget = /** @class */ (function (_super) {
     __extends(UnknownWidget, _super);
     function UnknownWidget(props, context) {
@@ -1134,7 +988,183 @@ exports.UnknownWidget = UnknownWidget;
 
 /***/ }),
 
-/***/ 89:
+/***/ 572:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_1 = __webpack_require__(193);
+var State_1 = __webpack_require__(573);
+var Store = /** @class */ (function () {
+    function Store() {
+        this.store = redux_1.createStore(Store.init, State_1.initialState);
+    }
+    Store.init = function (state, action) {
+        if (typeof action.type == 'function') {
+            return action.type(state);
+        }
+        return state;
+    };
+    Store.prototype.get = function () {
+        return this.store;
+    };
+    // dispatch helper
+    Store.prototype.dispatch = function (type) {
+        this.store.dispatch({ type: type });
+    };
+    return Store;
+}());
+exports.Store = Store;
+
+
+/***/ }),
+
+/***/ 573:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.initialState = {
+    login: {
+        authorized: true,
+    },
+    tree: {
+        refs: {},
+        data: [],
+    },
+    grid: {
+        id: undefined,
+        data: undefined,
+    },
+    tab: 'grid',
+    tabs: [{ name: 'DJEM', id: 'grid' }],
+    content: {},
+};
+
+
+/***/ }),
+
+/***/ 574:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_redux_1 = __webpack_require__(503);
+var HttpProxy_1 = __webpack_require__(575);
+var httpProxy = new HttpProxy_1.HttpProxy();
+var Proxy;
+(function (Proxy) {
+    var Component = /** @class */ (function (_super) {
+        __extends(Component, _super);
+        function Component() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.dependencies = [];
+            return _this;
+        }
+        Component.prototype.componentDidMount = function () {
+            this.loadComponentData();
+        };
+        Component.prototype.componentDidUpdate = function (prevProps, _prevState) {
+            var props = this.props;
+            for (var i = 0; i < this.dependencies.length; ++i) {
+                var key = this.dependencies[i];
+                if (prevProps[key] !== props[key]) {
+                    this.loadComponentData();
+                    return;
+                }
+            }
+        };
+        // public componentWillReceiveProps(nextProps: any) {
+        // }
+        Component.prototype.load = function (_proxy) {
+            return;
+        };
+        Component.prototype.loadComponentData = function () {
+            this.load(httpProxy.instance());
+        };
+        return Component;
+    }(React.Component));
+    Proxy.Component = Component;
+    function connect(component) {
+        return function (fn) {
+            return react_redux_1.connect(fn)(component);
+        };
+    }
+    Proxy.connect = connect;
+})(Proxy || (Proxy = {}));
+exports.default = Proxy;
+
+
+/***/ }),
+
+/***/ 575:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(560);
+var index_1 = __webpack_require__(554);
+var HttpProxy = /** @class */ (function (_super) {
+    __extends(HttpProxy, _super);
+    function HttpProxy() {
+        var _this = _super.call(this) || this;
+        _this._http.interceptors.response.use(function (response) { return response; }, function (error) { return _this.retry(error); });
+        return _this;
+    }
+    HttpProxy.prototype.instance = function () {
+        return this._http;
+    };
+    HttpProxy.prototype.retry = function (error) {
+        var _this = this;
+        if ((error.response || {}).status === 401) {
+            this.setAuthorized(false);
+            var originalRequest_1 = error.config;
+            return new Promise(function (resolve, reject) {
+                var stopWatch = index_1.Store.get().subscribe(function () {
+                    var state = index_1.Store.get().getState();
+                    if (state.login.authorized) {
+                        stopWatch();
+                        originalRequest_1.baseURL = '';
+                        return _this._http.request(originalRequest_1).then(resolve, reject);
+                    }
+                    return;
+                });
+            });
+        }
+        return Promise.reject(error);
+    };
+    return HttpProxy;
+}(core_1.Core));
+exports.HttpProxy = HttpProxy;
+
+
+/***/ }),
+
+/***/ 576:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1148,55 +1178,44 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __webpack_require__(35);
-var Action = /** @class */ (function () {
-    function Action() {
+var Actions = /** @class */ (function () {
+    function Actions(store) {
+        this.store = store;
     }
-    Action.authorize = function (authorized) {
-        return this.dispatch(function (state) { return (__assign({}, state, { login: __assign({}, state.login, { authorized: authorized }) })); });
+    Actions.prototype.authorize = function (authorized) {
+        return this.store.dispatch(function (state) { return (__assign({}, state, { login: __assign({}, state.login, { authorized: authorized }) })); });
     };
-    Action.gridChange = function (id) {
-        return this.dispatch(function (state) { return (__assign({}, state, { grid: __assign({}, state.grid, { id: id }) })); });
+    Actions.prototype.gridChange = function (id) {
+        return this.store.dispatch(function (state) { return (__assign({}, state, { grid: __assign({}, state.grid, { id: id }) })); });
     };
-    Action.openContent = function (params) {
-        return this.dispatch(function (state) {
+    Actions.prototype.openContent = function (params) {
+        return this.store.dispatch(function (state) {
             var id = params.doctype + "--" + params.id;
             return __assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = { params: params, data: {} }, _a)), tab: id, tabs: state.tabs.concat([{ name: params.name, id: id }]) });
             var _a;
         });
     };
-    Action.tabChange = function (tab) {
-        return this.dispatch(function (state) { return (__assign({}, state, { tab: tab })); });
+    Actions.prototype.tabChange = function (tab) {
+        return this.store.dispatch(function (state) { return (__assign({}, state, { tab: tab })); });
     };
     // load data
-    Action.grid = function (data) {
-        return this.dispatch(function (state) { return (__assign({}, state, { grid: __assign({}, state.grid, { data: data }) })); });
+    Actions.prototype.grid = function (data) {
+        return this.store.dispatch(function (state) { return (__assign({}, state, { grid: __assign({}, state.grid, { data: data }) })); });
     };
-    Action.tree = function (tree) {
-        return this.dispatch(function (state) { return (__assign({}, state, { tree: tree })); });
+    Actions.prototype.tree = function (tree) {
+        return this.store.dispatch(function (state) { return (__assign({}, state, { tree: tree })); });
     };
-    Action.content = function (id, data) {
-        return this.dispatch(function (state) {
+    Actions.prototype.content = function (id, data) {
+        return this.store.dispatch(function (state) {
             return (__assign({}, state, { content: __assign({}, state.content, (_a = {}, _a[id] = __assign({}, state.content[id], { data: data }), _a)) }));
             var _a;
         });
     };
-    // dispatch helper
-    Action.dispatch = function (type) {
-        store_1.store.dispatch({ type: type });
-    };
-    return Action;
+    return Actions;
 }());
-exports.Action = Action;
-function InitReducers(state, action) {
-    if (typeof action.type == 'function') {
-        return action.type(state);
-    }
-    return state;
-}
-exports.InitReducers = InitReducers;
+exports.Actions = Actions;
 
 
 /***/ })
 
-},[216]);
+},[207]);

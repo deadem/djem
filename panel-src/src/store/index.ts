@@ -1,10 +1,8 @@
-import { createStore } from 'redux';
-import { InitReducers } from './Reducers';
-import { State, initialState } from './Store';
-
-export type State = State;
-export let store = createStore(InitReducers, initialState);
-export type Store = typeof store;
-
-export { Action } from './Reducers';
+export { State } from './State';
 export { default as Proxy } from './Proxy';
+
+import { Store as StoreClass } from './Store';
+import { Actions } from './actions';
+
+export let Store = new StoreClass();
+export let Action = new Actions(Store);

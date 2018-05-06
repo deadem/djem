@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { Store } from './store';
 
 import Main from './components/Main';
 
@@ -10,7 +10,7 @@ if (parent) {
 }
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={Store.get()}>
     <Main />
   </Provider>
   ,

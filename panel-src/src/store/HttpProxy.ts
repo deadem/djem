@@ -1,5 +1,5 @@
 import { Core } from './core';
-import { store } from './index';
+import { Store } from './index';
 
 export class HttpProxy extends Core {
   constructor() {
@@ -18,8 +18,8 @@ export class HttpProxy extends Core {
 
       let originalRequest = error.config;
       return new Promise((resolve, reject) => {
-        let stopWatch = store.subscribe(() => {
-          let state = store.getState();
+        let stopWatch = Store.get().subscribe(() => {
+          let state = Store.get().getState();
           if (state.login.authorized) {
             stopWatch();
             originalRequest.baseURL = '';

@@ -1,13 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { connect as connectRedux } from 'react-redux';
-import { State as StateType, Store as StoreType } from './index';
+import { State as StateType } from './index';
 import { HttpProxy } from './HttpProxy';
 
 let httpProxy = new HttpProxy();
 
 namespace Proxy {
   export type Http = AxiosInstance;
-  export type Store = StoreType;
   export type State = StateType;
 
   export class Component extends React.Component {

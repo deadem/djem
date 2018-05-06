@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Action } from './Reducers';
+import { Action } from './index';
 
 let auth = {
   token: '',

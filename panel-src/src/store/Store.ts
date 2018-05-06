@@ -1,49 +1,28 @@
-interface Login {
-  login: {
-    authorized: boolean;
-  };
-}
+import { createStore, Store as StoreInterface } from 'redux';
+import { initialState } from './State';
+import { State } from '../store';
 
-interface Tree {
-  tree: {
-    refs: {};
-    data: any[];
+export class Store {
+  private static init(state: DeepReadonlyObject<State>, action: { id?: string | number; type: any }): DeepReadonlyObject<State> {
+    if (typeof action.type == 'function') {
+      return action.type(state);
+    }
+
+    return state;
+  }
+
+  private store: StoreInterface<DeepReadonlyObject<State>>;
+
+  constructor() {
+    this.store = createStore(Store.init, initialState);
+  }
+
+  public get() {
+    return this.store;
+  }
+
+  // dispatch helper
+  public dispatch(type: (state: DeepReadonlyObject<State>) => DeepReadonlyObject<State>) {
+    this.store.dispatch({ type });
   }
 }
-
-interface Grid {
-  grid: {
-    id: string | number | undefined;
-    data: any;
-  }
-}
-
-interface Content {
-  tab: number | string | undefined;
-  tabs: Array<{ name: string; id: number | string}>;
-  content: {
-    [key: string]: {
-      params: any;
-      data: any;
-    };
-  }
-}
-
-export type State = Login & Tree & Grid & Content;
-
-export let initialState: State = {
-  login: {
-    authorized: true,
-  },
-  tree: {
-    refs: {},
-    data: [],
-  },
-  grid: {
-    id: undefined,
-    data: undefined,
-  },
-  tab: 'grid',
-  tabs: [ { name: 'DJEM', id: 'grid' } ],
-  content: {},
-};
