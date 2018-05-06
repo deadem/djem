@@ -23,10 +23,10 @@ class ControlsTest extends TestCase
                     'xtype' => 'button',
                     'text' => 'Click me',
                     'height' => 64,
-                    'name' => 'name'
-                    'color' => '#000000'
-                    'bgcolor' => '#4CAF50'
-                    'bind' => '{name}'
+                    'name' => 'name',
+                    'color' => '#000000',
+                    'bgcolor' => '#4CAF50',
+                    'bind' => '{name}',
                 ],
             ],
         ], $view);
