@@ -55,6 +55,8 @@ var Button_1 = __webpack_require__(569);
 exports.Button = Button_1.Button;
 var Checkbox_1 = __webpack_require__(570);
 exports.Checkbox = Checkbox_1.Checkbox;
+var Label_1 = __webpack_require__(576);
+exports.Label = Label_1.Label;
 var Layout_1 = __webpack_require__(54);
 exports.Layout = Layout_1.Layout;
 var StaticHtml_1 = __webpack_require__(571);
@@ -473,22 +475,6 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var DJEM = __webpack_require__(215);
-exports.styleResolver = function (item, styleProps) {
-    var styles = {};
-    for (var _i = 0, _a = Object.keys(item); _i < _a.length; _i++) {
-        var prop = _a[_i];
-        var resolver = styleProps[prop];
-        if (resolver) {
-            if (resolver === true) {
-                styles[prop] = item[prop];
-            }
-            else {
-                styles = __assign({}, styles, resolver(item[prop]));
-            }
-        }
-    }
-    return styles;
-};
 var Layout = /** @class */ (function (_super) {
     __extends(Layout, _super);
     function Layout(props, context) {
@@ -512,11 +498,12 @@ var Layout = /** @class */ (function (_super) {
             'djem.html': DJEM.UnknownWidget,
             'djem.image': DJEM.UnknownWidget,
             'djem.images': DJEM.UnknownWidget,
+            'djem.label': DJEM.Label,
             'djem.staticHtml': DJEM.StaticHtml,
             'djem.tag': DJEM.UnknownWidget,
             'djem.text': DJEM.Text,
             'button': DJEM.Button,
-            'label': DJEM.UnknownWidget,
+            'label': DJEM.Label,
             'layout': DJEM.Layout,
         };
         return (items || []).map(function (item) {
@@ -544,7 +531,7 @@ var Layout = /** @class */ (function (_super) {
         return className;
     };
     Layout.prototype.styles = function (item) {
-        return exports.styleResolver(item, {
+        return styleResolver(item, {
             flex: function (i) { return ({ flex: +i }); },
             height: function (i) { return ({ height: i, minHeight: i }); },
             width: true,
@@ -553,6 +540,32 @@ var Layout = /** @class */ (function (_super) {
     return Layout;
 }(React.Component));
 exports.Layout = Layout;
+var styleResolver = function (item, styleProps) {
+    var styleList = {};
+    for (var _i = 0, _a = Object.keys(item); _i < _a.length; _i++) {
+        var prop = _a[_i];
+        var resolver = styleProps[prop];
+        if (resolver) {
+            if (resolver === true) {
+                styleList[prop] = item[prop];
+            }
+            else {
+                styleList = __assign({}, styleList, resolver(item[prop]));
+            }
+        }
+    }
+    return styleList;
+};
+exports.styles = function (props) { return function (_theme) {
+    return {
+        root: __assign({}, styleResolver(props.item, {
+            bgcolor: function (i) { return ({ 'background-color': i }); },
+            color: true,
+        }), { '&:hover': styleResolver(props.item, {
+                bgcolor: function (i) { return ({ 'background-color': i }); },
+            }) })
+    };
+}; };
 
 
 /***/ }),
@@ -866,14 +879,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Layout_1 = __webpack_require__(54);
 var Mui = __webpack_require__(35);
@@ -893,17 +898,7 @@ var Button = /** @class */ (function (_super) {
     };
     return Button;
 }(Layout_1.Layout));
-var styles = function (props) { return function (_theme) {
-    return {
-        root: __assign({}, Layout_1.styleResolver(props.item, {
-            bgcolor: function (i) { return ({ 'background-color': i }); },
-            color: true,
-        }), { '&:hover': Layout_1.styleResolver(props.item, {
-                bgcolor: function (i) { return ({ 'background-color': i }); },
-            }) })
-    };
-}; };
-var withStyles = Mui.withStyles(styles)(Button);
+var withStyles = Mui.withStyles(Layout_1.styles)(Button);
 exports.Button = withStyles;
 
 
@@ -1091,6 +1086,46 @@ var UnknownWidget = /** @class */ (function (_super) {
     return UnknownWidget;
 }(Layout_1.Layout));
 exports.UnknownWidget = UnknownWidget;
+
+
+/***/ }),
+
+/***/ 576:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(54);
+var Mui = __webpack_require__(35);
+var Label = /** @class */ (function (_super) {
+    __extends(Label, _super);
+    function Label(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    Label.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        var classes = this.props.classes;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-label']).join(' '), style: this.styles(item) },
+            React.createElement(Mui.Typography, { id: item.name, className: ['fullHeight', classes.root].join(' ') }, item.text)));
+    };
+    return Label;
+}(Layout_1.Layout));
+var withStyles = Mui.withStyles(Layout_1.styles)(Label);
+exports.Label = withStyles;
 
 
 /***/ }),

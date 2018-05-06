@@ -1,7 +1,7 @@
 import { Layout, Props, PropsStyles, styles } from './Layout';
 import * as Mui from '../../mui';
 
-class Button extends Layout {
+class Label extends Layout {
   public props: PropsStyles;
 
   constructor(props: Props, context: any) {
@@ -17,14 +17,14 @@ class Button extends Layout {
     const { classes } = this.props;
 
     return (
-      <div className={[ ...this.className(item), 'djem-widget', 'djem-button' ].join(' ')} style={this.styles(item)}>
-        <Mui.Button id={item.name} variant='raised' fullWidth={true} className={[ 'fullHeight', classes.root ].join(' ')} color='inherit'>
+      <div className={[ ...this.className(item), 'djem-widget', 'djem-label' ].join(' ')} style={this.styles(item)}>
+        <Mui.Typography id={item.name} className={[ 'fullHeight', classes.root ].join(' ')}>
           {item.text}
-        </Mui.Button>
+        </Mui.Typography>
       </div>
     );
   }
 }
 
-const withStyles = Mui.withStyles(styles)(Button);
-export { withStyles as Button };
+const withStyles = Mui.withStyles(styles)(Label);
+export { withStyles as Label };

@@ -1,24 +1,7 @@
 import * as DJEM from './index';
+import * as Mui from '../../mui';
 
 interface Resolver { [key: string]: ((item: any) => object) | boolean }
-
-export const styleResolver = (item: any, styleProps: Resolver): {} => {
-  let styles: any = {};
-
-  for (const prop of Object.keys(item)) {
-    let resolver = styleProps[prop];
-
-    if (resolver) {
-      if (resolver === true) {
-        styles[prop] = item[prop];
-      } else {
-        styles = { ...styles, ...resolver(item[prop]) };
-      }
-    }
-  }
-
-  return styles;
-};
 
 export interface Props {
   data: any;
@@ -57,12 +40,13 @@ export class Layout extends React.Component {
       'djem.html': DJEM.UnknownWidget,
       'djem.image': DJEM.UnknownWidget,
       'djem.images': DJEM.UnknownWidget,
+      'djem.label': DJEM.Label,
       'djem.staticHtml': DJEM.StaticHtml,
       'djem.tag': DJEM.UnknownWidget,
       'djem.text': DJEM.Text,
 
       'button': DJEM.Button,
-      'label': DJEM.UnknownWidget,
+      'label': DJEM.Label,
       'layout': DJEM.Layout,
     };
 
@@ -106,3 +90,37 @@ export class Layout extends React.Component {
     });
   }
 }
+
+const styleResolver = (item: any, styleProps: Resolver): {} => {
+  let styleList: any = {};
+
+  for (const prop of Object.keys(item)) {
+    let resolver = styleProps[prop];
+
+    if (resolver) {
+      if (resolver === true) {
+        styleList[prop] = item[prop];
+      } else {
+        styleList = { ...styleList, ...resolver(item[prop]) };
+      }
+    }
+  }
+
+  return styleList;
+};
+
+export type PropsStyles = Props & Mui.WithStyles<'root'>;
+
+export const styles = (props: Props) => (_theme: any) => {
+  return {
+    root: {
+      ...styleResolver(props.item, {
+        bgcolor: i => ({ 'background-color': i }),
+        color: true,
+      }),
+      '&:hover': styleResolver(props.item, {
+        bgcolor: i => ({ 'background-color': i }),
+      }),
+    }
+  };
+};
