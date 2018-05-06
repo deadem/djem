@@ -54,15 +54,15 @@ export class Layout extends React.Component {
     const xtypes: { [key: string]: React.ComponentClass<Props> } = {
       'djem.button': DJEM.Button,
       'djem.checkbox': DJEM.Checkbox,
-      'djem.html': DJEM.Widget,
-      'djem.image': DJEM.Widget,
-      'djem.images': DJEM.Widget,
+      'djem.html': DJEM.UnknownWidget,
+      'djem.image': DJEM.UnknownWidget,
+      'djem.images': DJEM.UnknownWidget,
       'djem.staticHtml': DJEM.StaticHtml,
-      'djem.tag': DJEM.Widget,
+      'djem.tag': DJEM.UnknownWidget,
       'djem.text': DJEM.Text,
 
       'button': DJEM.Button,
-      'label': DJEM.Widget,
+      'label': DJEM.UnknownWidget,
       'layout': DJEM.Layout,
     };
 

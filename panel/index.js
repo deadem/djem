@@ -1,12 +1,12 @@
 webpackJsonp([0],{
 
-/***/ 135:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var axios_1 = __webpack_require__(136);
+var axios_1 = __webpack_require__(137);
 var Reducers_1 = __webpack_require__(89);
 var auth = {
     token: '',
@@ -51,9 +51,31 @@ exports.Core = Core;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var Button_1 = __webpack_require__(569);
+exports.Button = Button_1.Button;
+var Checkbox_1 = __webpack_require__(570);
+exports.Checkbox = Checkbox_1.Checkbox;
+var Layout_1 = __webpack_require__(54);
+exports.Layout = Layout_1.Layout;
+var StaticHtml_1 = __webpack_require__(571);
+exports.StaticHtml = StaticHtml_1.StaticHtml;
+var Text_1 = __webpack_require__(572);
+exports.Text = Text_1.Text;
+var UnknownWidget_1 = __webpack_require__(575);
+exports.UnknownWidget = UnknownWidget_1.UnknownWidget;
+
+
+/***/ }),
+
+/***/ 216:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(64);
 var store_1 = __webpack_require__(31);
-var Main_1 = __webpack_require__(273);
+var Main_1 = __webpack_require__(274);
 var loader = document.getElementById('container-loader');
 var parent = loader.parentNode;
 if (parent) {
@@ -65,7 +87,7 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.sto
 
 /***/ }),
 
-/***/ 252:
+/***/ 253:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90,7 +112,7 @@ exports.initialState = {
 
 /***/ }),
 
-/***/ 253:
+/***/ 254:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -107,7 +129,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(64);
-var HttpProxy_1 = __webpack_require__(254);
+var HttpProxy_1 = __webpack_require__(255);
 var httpProxy = new HttpProxy_1.HttpProxy();
 var Proxy;
 (function (Proxy) {
@@ -154,7 +176,7 @@ exports.default = Proxy;
 
 /***/ }),
 
-/***/ 254:
+/***/ 255:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -170,7 +192,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(135);
+var core_1 = __webpack_require__(136);
 var index_1 = __webpack_require__(31);
 var HttpProxy = /** @class */ (function (_super) {
     __extends(HttpProxy, _super);
@@ -208,7 +230,7 @@ exports.HttpProxy = HttpProxy;
 
 /***/ }),
 
-/***/ 273:
+/***/ 274:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -224,10 +246,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Login_1 = __webpack_require__(274);
-var Toolbar_1 = __webpack_require__(563);
-var Grid_1 = __webpack_require__(564);
-var Content_1 = __webpack_require__(567);
+var Login_1 = __webpack_require__(275);
+var Toolbar_1 = __webpack_require__(564);
+var Grid_1 = __webpack_require__(565);
+var Content_1 = __webpack_require__(568);
 var store_1 = __webpack_require__(31);
 var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
@@ -250,7 +272,7 @@ exports.default = store_1.Proxy.connect(Main)(function (state) { return ({ tab: 
 
 /***/ }),
 
-/***/ 274:
+/***/ 275:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -267,8 +289,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = __webpack_require__(64);
-var Auth_1 = __webpack_require__(275);
-var Mui = __webpack_require__(40);
+var Auth_1 = __webpack_require__(276);
+var Mui = __webpack_require__(35);
 var authState = {
     name: '',
     password: '',
@@ -320,7 +342,7 @@ exports.default = react_redux_1.connect(function (state) { return ({ open: !stat
 
 /***/ }),
 
-/***/ 275:
+/***/ 276:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -336,7 +358,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(135);
+var core_1 = __webpack_require__(136);
 var Auth = /** @class */ (function (_super) {
     __extends(Auth, _super);
     function Auth() {
@@ -363,23 +385,23 @@ exports.Auth = Auth;
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(88);
 var Reducers_1 = __webpack_require__(89);
-var Store_1 = __webpack_require__(252);
+var Store_1 = __webpack_require__(253);
 exports.store = redux_1.createStore(Reducers_1.InitReducers, Store_1.initialState);
 var Reducers_2 = __webpack_require__(89);
 exports.Action = Reducers_2.Action;
-var Proxy_1 = __webpack_require__(253);
+var Proxy_1 = __webpack_require__(254);
 exports.Proxy = Proxy_1.default;
 
 
 /***/ }),
 
-/***/ 40:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var material_ui_1 = __webpack_require__(142);
+var material_ui_1 = __webpack_require__(91);
 function withStyles(styles) {
     return function (component) {
         return /** @class */ (function () {
@@ -396,7 +418,7 @@ function withStyles(styles) {
     };
 }
 exports.withStyles = withStyles;
-var material_ui_2 = __webpack_require__(142);
+var material_ui_2 = __webpack_require__(91);
 exports.AppBar = material_ui_2.AppBar;
 exports.Button = material_ui_2.Button;
 exports.Checkbox = material_ui_2.Checkbox;
@@ -426,7 +448,116 @@ exports.Typography = material_ui_2.Typography;
 
 /***/ }),
 
-/***/ 563:
+/***/ 54:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var DJEM = __webpack_require__(215);
+exports.styleResolver = function (item, styleProps) {
+    var styles = {};
+    for (var _i = 0, _a = Object.keys(item); _i < _a.length; _i++) {
+        var prop = _a[_i];
+        var resolver = styleProps[prop];
+        if (resolver) {
+            if (resolver === true) {
+                styles[prop] = item[prop];
+            }
+            else {
+                styles = __assign({}, styles, resolver(item[prop]));
+            }
+        }
+    }
+    return styles;
+};
+var Layout = /** @class */ (function (_super) {
+    __extends(Layout, _super);
+    function Layout(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.update = function () { return function (value) {
+            _this.props.update(__assign({}, value));
+        }; };
+        _this.props = props;
+        return _this;
+    }
+    Layout.prototype.render = function () {
+        var item = this.props.item;
+        // {JSON.stringify(item)}
+        return (React.createElement("div", { className: this.className(item).concat(['djem-layout']).join(' '), style: this.styles(item) }, this.items(item.items)));
+    };
+    Layout.prototype.items = function (items) {
+        var _this = this;
+        var xtypes = {
+            'djem.button': DJEM.Button,
+            'djem.checkbox': DJEM.Checkbox,
+            'djem.html': DJEM.UnknownWidget,
+            'djem.image': DJEM.UnknownWidget,
+            'djem.images': DJEM.UnknownWidget,
+            'djem.staticHtml': DJEM.StaticHtml,
+            'djem.tag': DJEM.UnknownWidget,
+            'djem.text': DJEM.Text,
+            'button': DJEM.Button,
+            'label': DJEM.UnknownWidget,
+            'layout': DJEM.Layout,
+        };
+        return (items || []).map(function (item) {
+            var xtype = xtypes[item.xtype];
+            if (!xtype) {
+                xtype = xtypes.layout;
+            }
+            return React.createElement(xtype, __assign({}, _this.props, { key: item.name, item: item, update: _this.update() }));
+        });
+    };
+    Layout.prototype.className = function (item) {
+        var className = [];
+        if (item.autoScroll) {
+            className.push('djem-layout-autoscroll');
+        }
+        var layout = item.layout;
+        if (layout) {
+            if (layout.align) {
+                className.push("djem-layout-align-" + layout.align);
+            }
+            if (layout.type) {
+                className.push("djem-layout-type-" + layout.type);
+            }
+        }
+        return className;
+    };
+    Layout.prototype.styles = function (item) {
+        return exports.styleResolver(item, {
+            flex: function (i) { return ({ flex: +i }); },
+            height: function (i) { return ({ height: i, minHeight: i }); },
+            width: true,
+        });
+    };
+    return Layout;
+}(React.Component));
+exports.Layout = Layout;
+
+
+/***/ }),
+
+/***/ 564:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -443,7 +574,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var Mui = __webpack_require__(40);
+var Mui = __webpack_require__(35);
 var Toolbar = /** @class */ (function (_super) {
     __extends(Toolbar, _super);
     function Toolbar(props, context) {
@@ -473,7 +604,7 @@ exports.default = store_1.Proxy.connect(Toolbar)(function (state) { return ({ ta
 
 /***/ }),
 
-/***/ 564:
+/***/ 565:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -490,8 +621,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var Tree_1 = __webpack_require__(565);
-var Mui = __webpack_require__(40);
+var Tree_1 = __webpack_require__(566);
+var Mui = __webpack_require__(35);
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid(props, context) {
@@ -547,7 +678,7 @@ exports.default = store_1.Proxy.connect(Grid)(function (state) { return ({ id: s
 
 /***/ }),
 
-/***/ 565:
+/***/ 566:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -564,7 +695,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var TreeNode_1 = __webpack_require__(566);
+var TreeNode_1 = __webpack_require__(567);
 var Tree = /** @class */ (function (_super) {
     __extends(Tree, _super);
     function Tree(props, context) {
@@ -600,7 +731,7 @@ exports.default = store_1.Proxy.connect(Tree)(function (state) { return ({ tree:
 
 /***/ }),
 
-/***/ 566:
+/***/ 567:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -617,7 +748,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var Mui = __webpack_require__(40);
+var Mui = __webpack_require__(35);
 var TreeNode = /** @class */ (function (_super) {
     __extends(TreeNode, _super);
     function TreeNode(props, context) {
@@ -648,7 +779,7 @@ exports.TreeNode = TreeNode;
 
 /***/ }),
 
-/***/ 567:
+/***/ 568:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -673,8 +804,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_1 = __webpack_require__(31);
-var DJEM = __webpack_require__(568);
-var Mui = __webpack_require__(40);
+var DJEM = __webpack_require__(215);
+var Mui = __webpack_require__(35);
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content(props, context) {
@@ -720,28 +851,6 @@ exports.default = store_1.Proxy.connect(Content)(function (state) { return ({ id
 
 /***/ }),
 
-/***/ 568:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Button_1 = __webpack_require__(569);
-exports.Button = Button_1.Button;
-var Checkbox_1 = __webpack_require__(574);
-exports.Checkbox = Checkbox_1.Checkbox;
-var Layout_1 = __webpack_require__(63);
-exports.Layout = Layout_1.Layout;
-var StaticHtml_1 = __webpack_require__(570);
-exports.StaticHtml = StaticHtml_1.StaticHtml;
-var Text_1 = __webpack_require__(571);
-exports.Text = Text_1.Text;
-var Widget_1 = __webpack_require__(572);
-exports.Widget = Widget_1.Widget;
-
-
-/***/ }),
-
 /***/ 569:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -766,8 +875,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(63);
-var Mui = __webpack_require__(40);
+var Layout_1 = __webpack_require__(54);
+var Mui = __webpack_require__(35);
 var Button = /** @class */ (function (_super) {
     __extends(Button, _super);
     function Button(props, context) {
@@ -816,129 +925,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(63);
-var StaticHtml = /** @class */ (function (_super) {
-    __extends(StaticHtml, _super);
-    function StaticHtml(props, context) {
-        var _this = _super.call(this, props, context) || this;
-        _this.props = props;
-        return _this;
-    }
-    StaticHtml.prototype.render = function () {
-        var props = this.props;
-        var item = props.item;
-        return (React.createElement("div", { id: item.name, className: this.className(item).concat(['djem-widget', 'djem-static-html']).join(' '), style: this.styles(item), dangerouslySetInnerHTML: { __html: item.html } }));
-    };
-    return StaticHtml;
-}(Layout_1.Layout));
-exports.StaticHtml = StaticHtml;
-
-
-/***/ }),
-
-/***/ 571:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(63);
-var Mui = __webpack_require__(40);
-var Text = /** @class */ (function (_super) {
-    __extends(Text, _super);
-    function Text(props, context) {
-        var _this = _super.call(this, props, context) || this;
-        _this.state = {
-            value: ''
-        };
-        _this.onChange = function () { return function (event) {
-            var value = event.target.value;
-            _this.setState({ value: value });
-            _this.props.update((_a = {}, _a[_this.props.item.name] = value, _a));
-            var _a;
-        }; };
-        _this.state = {
-            value: props.data[props.item.name]
-        };
-        _this.props = props;
-        return _this;
-    }
-    Text.prototype.render = function () {
-        var props = this.props;
-        var item = props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-text']).join(' '), style: this.styles(item) },
-            React.createElement(Mui.TextField, { id: item.name, label: item.fieldLabel, fullWidth: true, value: this.state.value, onChange: this.onChange() })));
-    };
-    return Text;
-}(Layout_1.Layout));
-exports.Text = Text;
-
-
-/***/ }),
-
-/***/ 572:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(63);
-var Widget = /** @class */ (function (_super) {
-    __extends(Widget, _super);
-    function Widget(props, context) {
-        var _this = _super.call(this, props, context) || this;
-        _this.props = props;
-        return _this;
-    }
-    Widget.prototype.render = function () {
-        var item = this.props.item;
-        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-widget-border']).join(' '), style: this.styles(item) }, this.items(item.items)));
-    };
-    return Widget;
-}(Layout_1.Layout));
-exports.Widget = Widget;
-
-
-/***/ }),
-
-/***/ 574:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Layout_1 = __webpack_require__(63);
-var Mui = __webpack_require__(40);
+var Layout_1 = __webpack_require__(54);
+var Mui = __webpack_require__(35);
 var Checkbox = /** @class */ (function (_super) {
     __extends(Checkbox, _super);
     function Checkbox(props, context) {
@@ -971,7 +959,93 @@ exports.Checkbox = Checkbox;
 
 /***/ }),
 
-/***/ 63:
+/***/ 571:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(54);
+var StaticHtml = /** @class */ (function (_super) {
+    __extends(StaticHtml, _super);
+    function StaticHtml(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.props = props;
+        return _this;
+    }
+    StaticHtml.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        return (React.createElement("div", { id: item.name, className: this.className(item).concat(['djem-widget', 'djem-static-html']).join(' '), style: this.styles(item), dangerouslySetInnerHTML: { __html: item.html } }));
+    };
+    return StaticHtml;
+}(Layout_1.Layout));
+exports.StaticHtml = StaticHtml;
+
+
+/***/ }),
+
+/***/ 572:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Layout_1 = __webpack_require__(54);
+var Mui = __webpack_require__(35);
+var Text = /** @class */ (function (_super) {
+    __extends(Text, _super);
+    function Text(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        _this.state = {
+            value: ''
+        };
+        _this.onChange = function () { return function (event) {
+            var value = event.target.value;
+            _this.setState({ value: value });
+            _this.props.update((_a = {}, _a[_this.props.item.name] = value, _a));
+            var _a;
+        }; };
+        _this.state = {
+            value: props.data[props.item.name]
+        };
+        _this.props = props;
+        return _this;
+    }
+    Text.prototype.render = function () {
+        var props = this.props;
+        var item = props.item;
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-text']).join(' '), style: this.styles(item) },
+            React.createElement(Mui.TextField, { id: item.name, label: item.fieldLabel, fullWidth: true, value: this.state.value, onChange: this.onChange() })));
+    };
+    return Text;
+}(Layout_1.Layout));
+exports.Text = Text;
+
+
+/***/ }),
+
+/***/ 575:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -995,87 +1069,28 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var DJEM = __webpack_require__(568);
-exports.styleResolver = function (item, styleProps) {
-    var styles = {};
-    for (var _i = 0, _a = Object.keys(item); _i < _a.length; _i++) {
-        var prop = _a[_i];
-        var resolver = styleProps[prop];
-        if (resolver) {
-            if (resolver === true) {
-                styles[prop] = item[prop];
-            }
-            else {
-                styles = __assign({}, styles, resolver(item[prop]));
-            }
-        }
-    }
-    return styles;
-};
-var Layout = /** @class */ (function (_super) {
-    __extends(Layout, _super);
-    function Layout(props, context) {
+var Layout_1 = __webpack_require__(54);
+var UnknownWidget = /** @class */ (function (_super) {
+    __extends(UnknownWidget, _super);
+    function UnknownWidget(props, context) {
         var _this = _super.call(this, props, context) || this;
-        _this.update = function () { return function (value) {
-            _this.props.update(__assign({}, value));
-        }; };
         _this.props = props;
         return _this;
     }
-    Layout.prototype.render = function () {
+    UnknownWidget.prototype.render = function () {
         var item = this.props.item;
-        // {JSON.stringify(item)}
-        return (React.createElement("div", { className: this.className(item).concat(['djem-layout']).join(' '), style: this.styles(item) }, this.items(item.items)));
+        return (React.createElement("div", { className: this.className(item).concat(['djem-widget', 'djem-widget-border']).join(' '), style: this.styles(item) },
+            "UnknownWidget (",
+            item.xtype,
+            ")",
+            this.items(item.items)));
     };
-    Layout.prototype.items = function (items) {
-        var _this = this;
-        var xtypes = {
-            'djem.button': DJEM.Button,
-            'djem.checkbox': DJEM.Checkbox,
-            'djem.html': DJEM.Widget,
-            'djem.image': DJEM.Widget,
-            'djem.images': DJEM.Widget,
-            'djem.staticHtml': DJEM.StaticHtml,
-            'djem.tag': DJEM.Widget,
-            'djem.text': DJEM.Text,
-            'button': DJEM.Button,
-            'label': DJEM.Widget,
-            'layout': DJEM.Layout,
-        };
-        return (items || []).map(function (item) {
-            var xtype = xtypes[item.xtype];
-            if (!xtype) {
-                xtype = xtypes.layout;
-            }
-            return React.createElement(xtype, __assign({}, _this.props, { key: item.name, item: item, update: _this.update() }));
-        });
+    UnknownWidget.prototype.styles = function (item) {
+        return __assign({}, _super.prototype.styles.call(this, item), { border: '1px dotted red' });
     };
-    Layout.prototype.className = function (item) {
-        var className = [];
-        if (item.autoScroll) {
-            className.push('djem-layout-autoscroll');
-        }
-        var layout = item.layout;
-        if (layout) {
-            if (layout.align) {
-                className.push("djem-layout-align-" + layout.align);
-            }
-            if (layout.type) {
-                className.push("djem-layout-type-" + layout.type);
-            }
-        }
-        return className;
-    };
-    Layout.prototype.styles = function (item) {
-        return exports.styleResolver(item, {
-            flex: function (i) { return ({ flex: +i }); },
-            height: function (i) { return ({ height: i, minHeight: i }); },
-            width: true,
-        });
-    };
-    return Layout;
-}(React.Component));
-exports.Layout = Layout;
+    return UnknownWidget;
+}(Layout_1.Layout));
+exports.UnknownWidget = UnknownWidget;
 
 
 /***/ }),
@@ -1145,4 +1160,4 @@ exports.InitReducers = InitReducers;
 
 /***/ })
 
-},[215]);
+},[216]);
