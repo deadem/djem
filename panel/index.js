@@ -749,7 +749,7 @@ var Grid = /** @class */ (function (_super) {
         });
     };
     Grid.prototype.gridColumns = function () {
-        return (((this.props.grid || {}).metaData || {}).columns || []);
+        return ((this.props.grid || {}).columns || []);
     };
     Grid.prototype.gridHeader = function () {
         return this.gridColumns().map(function (column, index) {

@@ -21,7 +21,7 @@ class Main extends \Illuminate\Routing\Controller
         $grid = $doctypeObject->grid($id);
 
         $data = $grid->getData();
-        $data['metaData']['options'] += [
+        $data['options'] += [
             'doctypes' => $doctypeObject->getDoctypes(),
             '_doctype' => $doctype,
             'contextMenu' => $doctypeObject->getContextMenu(),

@@ -49,7 +49,7 @@ class Grid extends Proxy.Component {
   }
 
   private gridColumns() {
-    return (((this.props.grid || {}).metaData || {}).columns || []);
+    return ((this.props.grid || {}).columns || []);
   }
 
   private gridHeader(): JSX.Element[] {

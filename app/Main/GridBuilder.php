@@ -118,8 +118,7 @@ class GridBuilder extends \Illuminate\Support\Facades\Facade
             $metaData['columns'] = [];
         }
 
-        return [
-            'metaData' => $metaData,
+        return $metaData + [
             'items' => $items->all(),
             'total' => $total,
         ];
