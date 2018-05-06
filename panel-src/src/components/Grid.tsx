@@ -62,7 +62,7 @@ class Grid extends Proxy.Component {
 
   private selectRow(item: any) {
     let doctype = item._doctype || this.props.tree.refs[this.props.id]._doctype;
-    Action.openContent({ doctype, id: item.id });
+    Action.openContent({ doctype, id: item.id, name: item.name });
   }
 
   private gridRows() {

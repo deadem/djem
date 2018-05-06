@@ -24,8 +24,6 @@ class Toolbar extends Proxy.Component {
       <Mui.AppBar position='static'>
          <Mui.Tabs value={this.props.tab} onChange={(_evt, value) => this.selectTab(value)}>
           <Mui.Tab label='DJEM' value='grid' />
-          <Mui.Tab label='Item Two'/>
-          <Mui.Tab label='Item Three' />
         </Mui.Tabs>
       </Mui.AppBar>
     );

@@ -20,6 +20,7 @@ interface Grid {
 
 interface Content {
   tab: number | string | undefined;
+  tabs: Array<{ name: string; id: number | string}>;
   content: {
     [key: string]: {
       params: any;
@@ -43,5 +44,6 @@ export let initialState: State = {
     data: undefined,
   },
   tab: 'grid',
+  tabs: [ { name: 'DJEM', id: 'grid' } ],
   content: {},
 };

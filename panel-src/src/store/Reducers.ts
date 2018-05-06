@@ -1,8 +1,5 @@
 import { State, store } from '../store';
 
-type Primitive = number | string | boolean | symbol | null | undefined;
-type DeepReadOnly<T> = { readonly [P in keyof T]: T extends Primitive ? T : DeepReadOnly<T[P]> };
-
 export class Action {
   public static authorize(authorized: boolean) {
     return this.dispatch(state => ({ ...state, login: { ...state.login, authorized } }));
@@ -12,10 +9,10 @@ export class Action {
     return this.dispatch(state => ({ ...state, grid: { ...state.grid, id } }));
   }
 
-  public static openContent(params: { doctype: string; id: string | number }) {
+  public static openContent(params: { doctype: string; id: string | number; name: string }) {
     return this.dispatch(state => {
       let id = `${params.doctype}--${params.id}`;
-      return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id };
+      return { ...state, content: { ...state.content, [id]: { params, data: {} } }, tab: id, tabs: [ ...state.tabs, { name, id } ] };
     });
   }
 
@@ -37,12 +34,12 @@ export class Action {
   }
 
   // dispatch helper
-  private static dispatch(type: (state: DeepReadOnly<State>) => DeepReadOnly<State>) {
+  private static dispatch(type: (state: DeepReadonlyObject<State>) => DeepReadonlyObject<State>) {
     store.dispatch({ type });
   }
 }
 
-export function InitReducers(state: DeepReadOnly<State>, action: { id?: string | number; type: any }): DeepReadOnly<State> {
+export function InitReducers(state: DeepReadonlyObject<State>, action: { id?: string | number; type: any }): DeepReadonlyObject<State> {
   if (typeof action.type == 'function') {
     return action.type(state);
   }
