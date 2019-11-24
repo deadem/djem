@@ -2,8 +2,8 @@
 
 namespace Tests\Editor;
 
-use TestCase;
 use App\Doctypes\Controls;
+use TestCase;
 
 class ControlsTest extends TestCase
 {

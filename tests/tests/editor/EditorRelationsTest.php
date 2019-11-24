@@ -2,10 +2,10 @@
 
 namespace Tests\EditorRelations;
 
-use TestCase;
 use App\Models;
 use DJEM\Doctype;
 use Illuminate\Database\Eloquent\Model;
+use TestCase;
 
 class News extends Model
 {

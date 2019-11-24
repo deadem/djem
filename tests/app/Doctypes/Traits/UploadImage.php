@@ -26,7 +26,7 @@ trait UploadImage
             $model = new $model;
 
             $model->name = $fileData['name'];
-            list($model->path, $model->url) = $copyToPublic($fileData['file']);
+            [$model->path, $model->url] = $copyToPublic($fileData['file']);
 
             return $model;
         };
