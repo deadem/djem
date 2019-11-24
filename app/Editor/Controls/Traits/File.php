@@ -17,7 +17,15 @@ trait File
             }, $fileName);
             $file = file_get_contents($fileName, false, stream_context_create(
                 [
-                    'http' => ['ignore_errors' => true],
+                    'http' => [
+                        'ignore_errors' => true,
+                        'header' => implode("\r\n", [
+                            'Cache-Control: no-cache',
+                            'Connection: close',
+                            'Pragma: no-cache',
+                            'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+                        ]),
+                    ],
                     'ssl' => ['verify_peer' => false],
                 ]
             ));
