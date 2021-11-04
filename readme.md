@@ -1,8 +1,6 @@
 # DJEM
 
-[![Build Status](https://travis-ci.org/deadem/djem.svg)](https://travis-ci.org/deadem/djem)
 [![StyleCI](https://styleci.io/repos/46667003/shield)](https://styleci.io/repos/46667003)
-[![Coverage Status](https://coveralls.io/repos/github/deadem/djem/badge.svg)](https://coveralls.io/github/deadem/djem?branch=master)
 
 ## Installation
 ```
