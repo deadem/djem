@@ -35,14 +35,14 @@ class Main extends \Illuminate\Routing\Controller
         $idCounter = 1;
         $fixItems = function ($tree) use (&$idCounter) {
             return collect($tree)->map(function ($item) use (&$idCounter) {
-                $item['leaf'] = !isset($item['items']);
+                $item['leaf'] = ! isset($item['items']);
                 if (isset($item['doctype'])) {
                     $item['_doctype'] = $item['doctype'];
                 }
-                if (!isset($item['id'])) {
+                if (! isset($item['id'])) {
                     $item['id'] = $idCounter;
                 }
-                ++$idCounter;
+                $idCounter++;
 
                 return $item;
             })->toArray();
@@ -79,7 +79,7 @@ class Main extends \Illuminate\Routing\Controller
             $doctype = $leaf['_doctype'];
         }
 
-        if (!class_exists($doctype)) {
+        if (! class_exists($doctype)) {
             throw new BadMethodCallException('Can\'t create class '.$doctype);
         }
 
