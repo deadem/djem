@@ -2,11 +2,11 @@
 
 namespace Tests\EditorSaveRelations;
 
-use TestCase;
+use App\Tests\CheckModel;
 use DJEM\Doctype;
 use DJEM\Editor\Control;
-use App\Tests\CheckModel;
 use Illuminate\Database\Eloquent\Model;
+use TestCase;
 
 class LinkedValue extends Model
 {

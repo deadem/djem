@@ -2,8 +2,8 @@
 
 namespace DJEM\Editor\Controls;
 
-use ReflectionClass;
 use BadMethodCallException;
+use ReflectionClass;
 
 class Item
 {
@@ -15,7 +15,7 @@ class Item
 
     public function __construct($value = null)
     {
-        $value; // not used
+        // not used
     }
 
     public static function createControl($name, $args)
@@ -77,7 +77,7 @@ class Item
 
     public function getProperties($model)
     {
-        $model; // unused variable
+        // unused variable
 
         $properties = [];
         foreach ($this->properties as $key => $value) {

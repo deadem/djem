@@ -13,10 +13,9 @@ class Authenticate
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param string $usertype
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string  $usertype
      * @return mixed
      */
     public function handle(Request $request, Closure $next, $usertype = null)

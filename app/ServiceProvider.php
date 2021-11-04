@@ -42,7 +42,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Bootstrap the application services.
      *
-     * @param Router $router
+     * @param  Router  $router
      */
     public function boot(Router $router)
     {
