@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__.'/TestCase.php';
 
 class AuthTest extends TestCase
 {
@@ -13,7 +14,7 @@ class AuthTest extends TestCase
 
     public function testDjemApiAuthorized()
     {
-        $user = new App\User(['name' => 'deadem']);
+        $user = new App\Models\User(['name' => 'deadem']);
         $this->be($user);
         $response = $this->call('GET', '/djem/api');
         $this->assertNotEmpty($response->headers->get('x-csrf-token'));

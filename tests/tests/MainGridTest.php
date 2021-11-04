@@ -15,7 +15,7 @@ class MainGridTest extends TestCase
 
     public function testGridResponses()
     {
-        $user = new App\User(['name' => 'deadem']);
+        $user = new App\Models\User(['name' => 'deadem']);
         $this->be($user);
 
         $response = $this->call('GET', self::$api.'?tree=1');
@@ -25,7 +25,7 @@ class MainGridTest extends TestCase
 
     public function testSubGridResponses()
     {
-        $user = new App\User(['name' => 'deadem']);
+        $user = new App\Models\User(['name' => 'deadem']);
         $this->be($user);
 
         $response = $this->call('GET', self::$api.'?tree=5');

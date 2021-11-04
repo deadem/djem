@@ -4,7 +4,7 @@ class BasicTest extends TestCase
 {
     public function testBasic()
     {
-        $this->visit('/')->see('Laravel 5');
+        $this->visit('/')->see('Laravel');
     }
 
     public function testDjem()

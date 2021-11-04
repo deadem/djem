@@ -41,7 +41,7 @@ class NewsDoctype extends Doctype
     public $model = News::class;
 }
 
-class EditorSaveRelations extends TestCase
+class EditorSaveRelationsTest extends TestCase
 {
     use CheckModel;
 

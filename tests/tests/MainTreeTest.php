@@ -31,7 +31,7 @@ class MainTreeTest extends TestCase
 
     public function testRootTree()
     {
-        $user = new App\User(['name' => 'deadem']);
+        $user = new App\Models\User(['name' => 'deadem']);
         $this->be($user);
 
         $response = $this->call('GET', self::$api);
