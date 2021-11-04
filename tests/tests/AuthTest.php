@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__.'/TestCase.php';
 
 class AuthTest extends TestCase
