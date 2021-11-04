@@ -2,11 +2,11 @@
 
 namespace DJEM\Editor\Controls\Traits;
 
-use ReflectionClass;
-use DJEM\Editor\Controls;
 use BadMethodCallException;
-use Illuminate\Support\Collection;
+use DJEM\Editor\Controls;
 use Illuminate\Database\Eloquent\Relations;
+use Illuminate\Support\Collection;
+use ReflectionClass;
 
 trait Editor
 {

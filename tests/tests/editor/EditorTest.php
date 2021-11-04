@@ -2,10 +2,10 @@
 
 namespace Tests\Editor;
 
-use TestCase;
-use DJEM\Doctype;
 use App\Tests\CheckModel;
+use DJEM\Doctype;
 use Illuminate\Database\Eloquent\Model;
+use TestCase;
 
 class News extends Model
 {

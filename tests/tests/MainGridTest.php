@@ -1,6 +1,5 @@
 <?php
 
-
 class MainGridTest extends TestCase
 {
     private static $api = '/djem/api/grid';

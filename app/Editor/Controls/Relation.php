@@ -11,8 +11,6 @@ class Relation extends Control
 
     public function getProperties($model)
     {
-        $model;
-
         return [];
     }
 
