@@ -2,8 +2,8 @@
 
 namespace DJEM\Editor;
 
-use Request;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Request;
 
 class Validator
 {

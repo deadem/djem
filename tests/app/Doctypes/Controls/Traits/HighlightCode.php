@@ -2,8 +2,8 @@
 
 namespace App\Doctypes\Controls\Traits;
 
-use View;
 use DJEM\Editor\Control;
+use View;
 
 trait HighlightCode
 {

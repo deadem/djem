@@ -84,7 +84,7 @@ class Control extends Item
 
     public function initControl($controls)
     {
-        $controls; // не используется
+        // не используется
     }
 
     protected function getRelation($model)
