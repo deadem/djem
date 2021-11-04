@@ -3,7 +3,6 @@
 namespace DJEM\Editor;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Request;
 
 class Validator
 {
@@ -14,8 +13,6 @@ class Validator
     public function validate($input, $rules)
     {
         $validator = $this->getValidationFactory()->make($input, $rules);
-        if ($validator->fails()) {
-            $this->throwValidationException(Request::instance(), $validator);
-        }
+        $validator->validate();
     }
 }

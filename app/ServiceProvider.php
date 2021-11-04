@@ -2,8 +2,10 @@
 
 namespace DJEM;
 
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\ValidationException;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -41,8 +43,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Bootstrap the application services.
-     *
-     * @param  Router  $router
      */
     public function boot(Router $router)
     {
@@ -59,5 +59,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/djem.php', 'djem');
+
+        $exceptionHandler = resolve(ExceptionHandler::class);
+        $exceptionHandler->renderable(function (ValidationException $e, $request) {
+            return response()->json($e->errors(), 422);
+        });
     }
 }
