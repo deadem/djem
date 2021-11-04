@@ -9,14 +9,11 @@ class Files extends \Illuminate\Routing\Controller
 {
     public function get(Request $request)
     {
-        $request;
-
         return [];
     }
 
     public function set(Request $request)
     {
-        $request;
     }
 
     public function upload(Request $request)

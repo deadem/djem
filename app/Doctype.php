@@ -28,12 +28,13 @@ class Doctype extends \Illuminate\Routing\Controller
 
     /**
      * Load relation by request from admin panel.
+     *
      * @var string relation name
+     *
      * @return array related data
      */
     public function loadRelation($relation)
     {
-        $relation;
         abort(400, 'You must override Doctype::loadRelation()');
     }
 

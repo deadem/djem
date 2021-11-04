@@ -2,10 +2,9 @@
 
 namespace App\Doctypes;
 
-use Request;
 use App\Models;
-use DJEM\Main\Grid;
 use DJEM\Editor\Control;
+use DJEM\Main\Grid;
 
 class News extends \DJEM\Doctype
 {

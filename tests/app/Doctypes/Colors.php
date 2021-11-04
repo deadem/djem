@@ -2,9 +2,9 @@
 
 namespace App\Doctypes;
 
-use View;
-use DJEM\Main\Grid;
 use DJEM\Editor\Control;
+use DJEM\Main\Grid;
+use View;
 
 class Colors extends \DJEM\Doctype
 {

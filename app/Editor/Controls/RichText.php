@@ -56,7 +56,7 @@ class RichText extends Control
 
     public function putRelatedData($model)
     {
-        $model; // unused
+        // unused
         foreach ($this->relatedData as $row) {
             $row['relation']->attach($row['value']);
         }

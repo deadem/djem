@@ -60,8 +60,6 @@ class Grid extends Control
 
     public function prepareUserValue($values, $getValue = null)
     {
-        $values;
-
         return parent::prepareUserValue(null, $getValue);
     }
 }
