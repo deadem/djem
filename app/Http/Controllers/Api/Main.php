@@ -17,7 +17,7 @@ class Main extends \Illuminate\Routing\Controller
         $id = $request->input('tree');
 
         $doctype = $this->getDoctype($id);
-        $doctypeObject = new $doctype;
+        $doctypeObject = new $doctype();
         $grid = $doctypeObject->grid($id);
 
         $data = $grid->getData();
@@ -32,7 +32,23 @@ class Main extends \Illuminate\Routing\Controller
 
     protected function getTree($id = 0)
     {
-        return config('djem.tree');
+        $idCounter = 1;
+        $fixItems = function ($tree) use (&$idCounter) {
+            return collect($tree)->map(function ($item) use (&$idCounter) {
+                $item['leaf'] = !isset($item['items']);
+                if (isset($item['doctype'])) {
+                    $item['_doctype'] = $item['doctype'];
+                }
+                if (!isset($item['id'])) {
+                    $item['id'] = $idCounter;
+                }
+                ++$idCounter;
+
+                return $item;
+            })->toArray();
+        };
+
+        return $fixItems(config('djem.tree'));
     }
 
     protected function findLeaf($id, $tree = null)
@@ -63,7 +79,7 @@ class Main extends \Illuminate\Routing\Controller
             $doctype = $leaf['_doctype'];
         }
 
-        if (! class_exists($doctype)) {
+        if (!class_exists($doctype)) {
             throw new BadMethodCallException('Can\'t create class '.$doctype);
         }
 
