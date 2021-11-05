@@ -17,7 +17,7 @@ class Content extends \Illuminate\Routing\Controller
     {
         $doctype = $this->request->input('_doctype');
 
-        return new $doctype;
+        return new $doctype();
     }
 
     public function get()
