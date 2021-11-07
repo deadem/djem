@@ -83,6 +83,16 @@ class Doctype extends \Illuminate\Routing\Controller
     }
 
     /**
+     * Inject js code into editor.
+     *
+     * @return string
+     */
+    public function jscode()
+    {
+        return '';
+    }
+
+    /**
      * Save model handler.
      */
     public function save()
@@ -104,6 +114,7 @@ class Doctype extends \Illuminate\Routing\Controller
 
         return [
             'data' => $editor->getData(),
+            'code' => $this->jscode(),
             'view' => $editor->getView(),
         ];
     }
