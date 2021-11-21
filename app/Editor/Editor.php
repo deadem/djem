@@ -76,7 +76,7 @@ class Editor
             return;
         }
 
-        $data = (object) $model->getAttributes();
+        $data = (object) $model->attributesToArray();
 
         foreach ($controls as $field => $item) {
             if ($this->isRelation($field)) {
