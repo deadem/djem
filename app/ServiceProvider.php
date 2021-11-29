@@ -61,8 +61,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/djem.php', 'djem');
 
         $exceptionHandler = resolve(ExceptionHandler::class);
-        $exceptionHandler->renderable(function (ValidationException $e, $request) {
-            return response()->json($e->errors(), 422);
-        });
+        if (method_exists($exceptionHandler, 'renderable')) {
+            $exceptionHandler->renderable(function (ValidationException $e, $request) {
+                return response()->json($e->errors(), 422);
+            });
+        }
     }
 }
