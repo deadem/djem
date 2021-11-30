@@ -53,7 +53,7 @@ Ext.define('djem.widget.html', {
     me.getEl().addCls('app-field-filled');
 
     var id = me.inputEl.id;
-    var editor = me.editor = CKEDITOR.replace(id, {
+    var config = {
       customConfig: '',
       allowedContent: true,
       removeDialogTabs: 'link:advanced;link:target',
@@ -61,6 +61,7 @@ Ext.define('djem.widget.html', {
       removePlugins: 'image,elementspath,resize',
       toolbarGroups: [
         { name: 'clipboard', groups: ['undo', 'clipboard'] },
+        { name: 'styles' },
         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
         { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
         { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
@@ -70,9 +71,16 @@ Ext.define('djem.widget.html', {
         { name: 'colors', groups: ['colors'] }, { name: 'about', groups: ['about'] },
         { name: 'document', groups: ['mode', 'document', 'doctools'] }
       ],
-      removeButtons: 'Underline,Subscript,Superscript,Scayt,PasteFromWord,Maximize,About,Styles,Format,Blockquote',
+      stylesSet: me.styles,
+      removeButtons: 'Underline,Subscript,Superscript,Scayt,PasteFromWord,Maximize,About,Format,Blockquote' + (me.styles ? '' : ',Styles'),
       format_tags: 'p;pre'
-    });
+    };
+
+    if (me.contentsCss) {
+      config.contentsCss = me.contentsCss;
+    }
+
+    var editor = me.editor = CKEDITOR.replace(id, config);
 
     me.getEl().on('filechange', function(evt, target) {
       Ext.get(document.body).addCls('waitCursor');

@@ -25,6 +25,20 @@ class RichText extends Control
         return $this;
     }
 
+    public function styles($styles)
+    {
+        $this->setProperty('styles', $styles);
+
+        return $this;
+    }
+
+    public function css($path)
+    {
+        $this->setProperty('contentsCss', $path);
+
+        return $this;
+    }
+
     public function prepareUserValue($value, $getValue = null)
     {
         if (empty($this->images) || empty($this->imageSaveHandler)) {
