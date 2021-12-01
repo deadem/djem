@@ -2,6 +2,7 @@
 
 namespace DJEM\Editor\Controls;
 
+use BadMethodCallException;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 
@@ -89,6 +90,9 @@ class Images extends Control
 
         foreach ($values as $i => $value) {
             $relation = call_user_func($getValue->relation, $this->getName());
+            if (!$relation) {
+                throw new BadMethodCallException('Invalid relation: '.get_class(call_user_func($getValue->model, $this->getName())).'::'.$this->getName());
+            }
 
             if (isset($value['file'])) {
                 // если указан файл - это новая картинка, загружаем
