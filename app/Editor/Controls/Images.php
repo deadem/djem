@@ -90,7 +90,7 @@ class Images extends Control
 
         foreach ($values as $i => $value) {
             $relation = call_user_func($getValue->relation, $this->getName());
-            if (!$relation) {
+            if (! $relation) {
                 throw new BadMethodCallException('Invalid relation: '.get_class(call_user_func($getValue->model, $this->getName())).'::'.$this->getName());
             }
 
