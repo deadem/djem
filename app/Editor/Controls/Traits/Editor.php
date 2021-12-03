@@ -184,26 +184,21 @@ trait Editor
         $controls->each(function (Controls\Control $item, $field) {
             $item->putValueRelatedData($this->model());
 
+            $isSubclassOf = function ($class, $type) {
+                return is_a($class, $type, true) || is_subclass_of($class, $type, true);
+            };
+
             if ($this->isRelation($field)) {
-                switch (get_class($this->getRelation($field))) {
-                    case Relations\BelongsToMany::class:
-                    case Relations\MorphToMany::class:
-                        $this->addMultipleRelation($item, $field);
-                        break;
-
-                    case Relations\HasMany::class:
-                    case Relations\HasOne::class:
-                        $this->addReversedSingleRelation($item, $field);
-                        break;
-
-                    case Relations\BelongsTo::class:
-                        // это уже обработано
-                        break;
-
-                    default:
-                        // неизвестный relation
-                        throw new \Exception('Field: '.$field." \n".'Unknown relation: '.get_class($this->getRelation($field)));
-                        break;
+                $class = get_class($this->getRelation($field));
+                if ($isSubclassOf($class, Relations\BelongsToMany::class) || $isSubclassOf($class, Relations\MorphToMany::class)) {
+                    $this->addMultipleRelation($item, $field);
+                } elseif ($isSubclassOf($class, Relations\HasMany::class) || $isSubclassOf($class, Relations\HasOne::class)) {
+                    $this->addReversedSingleRelation($item, $field);
+                } elseif ($isSubclassOf($class, Relations\BelongsTo::class)) {
+                    // это уже обработано
+                } else {
+                    // неизвестный relation
+                    throw new \Exception('Field: '.$field.' '." \n".'Unknown relation: '.get_class($this->getRelation($field)));
                 }
             }
         });
