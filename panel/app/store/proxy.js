@@ -30,11 +30,21 @@ Ext.data.request.Ajax.override({
         return false;
       }
     } catch (e) {
+      var message = (e && e.message || '');
+      if (!message) {
+        try {
+          // try to get message from json-response
+          message = JSON.parse(me.xhr.response).message;
+        } catch (_) {
+          // skip errors
+        }
+      }
+
       var mbox = Ext.MessageBox.show({
         title: 'Error',
-        maxWidth: '80%',
+        maxWidth: 800,
         closable: false,
-        msg: (e && e.message || '') + me.xhr.response,
+        msg: message,
         buttons: Ext.MessageBox.OK,
         fn: function() {
           mbox.setHtml('');
