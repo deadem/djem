@@ -12,7 +12,7 @@ trait File
         if (isset($url['scheme']) && isset($url['path'])) {
             $newFileName = uniqid().'.'.basename($url['path']);
 
-            $fileName = preg_replace_callback('/\s/', function ($match) {
+            $fileName = preg_replace_callback('/\s|[\x7F-\xFF]/', function ($match) {
                 return sprintf('%%%02x', ord($match[0]));
             }, $fileName);
             $file = file_get_contents($fileName, false, stream_context_create(
@@ -30,10 +30,10 @@ trait File
                 ]
             ));
             if (empty($file)) {
-                return false;
+                throw new InvalidArgumentException('Can\'t read file ['.$fileName.'].');
             }
-            if (! file_put_contents(sys_get_temp_dir().'/'.$newFileName, $file)) {
-                return false;
+            if (!file_put_contents(sys_get_temp_dir().'/'.$newFileName, $file)) {
+                throw new InvalidArgumentException('Can\'t write file ['.$newFileName.'].');
             }
             $fileName = $newFileName;
         }
