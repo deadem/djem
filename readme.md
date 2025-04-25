@@ -1,7 +1,5 @@
 # DJEM
 
-[![StyleCI](https://styleci.io/repos/46667003/shield)](https://styleci.io/repos/46667003)
-
 ## Installation
 ```
 composer require deadem/djem:*@dev
